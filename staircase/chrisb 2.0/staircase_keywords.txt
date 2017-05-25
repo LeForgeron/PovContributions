@@ -1,0 +1,17 @@
+sc
+staircase
+stairs
+steps
+buildings
+house
+hall
+spiral
+tread
+riser
+carpet
+newel
+post
+baluster
+balustrade
+banister
+handrail

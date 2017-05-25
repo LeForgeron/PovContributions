@@ -1,0 +1,1 @@
+A torus that is scaled in the polar (y) direction, then rotated about its circular axis. In version 2.0, a fast-rendering lathe is added, and the container macro accommodates y scaling factors less than one.  In version 2.0a, corrections are made to the user manual.

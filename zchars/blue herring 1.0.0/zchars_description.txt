@@ -1,0 +1,5 @@
+ZChars is intended to extend the usefulness of the objects in chars.inc.  It includes
+- Objects for additional common characters not in chars.inc including comma, space, period, colon, semicolon, underline, equals, apostrophe, left and right curly braces, and question mark.
+- Macros to convert characters and strings to objects using these internal characters.
+- The ability to customize the mapping of any character to any object for any of the conversion macros.
+- A replacement macro for the text object, which will automatically fall back to the internal characters if a font file is not found.

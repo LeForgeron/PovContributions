@@ -1,0 +1,16 @@
+IntegrateLight
+ILight
+color
+colour
+emission
+emissive
+integrate
+integration
+light
+reflective
+spectra
+spectral
+spectral render
+spectral rendering
+SpectralRender
+spectrum

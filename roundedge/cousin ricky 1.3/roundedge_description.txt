@@ -1,0 +1,5 @@
+A set of macros and functions to facilitate modeling of rounded edges with CSG, isosurfaces, and blobs.
+
+In version 1.3:
+ - Some of the functions are given more intuitive names.
+ - Important notes are added to the documentation concerning sqrt() calls with the alternate isosurface blob function, and the demo scene is changed accordingly.

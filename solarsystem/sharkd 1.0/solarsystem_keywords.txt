@@ -1,0 +1,12 @@
+SolarSystem
+SSys
+outer
+space
+solar
+system
+planet
+asteroid
+sun
+star
+random
+generator

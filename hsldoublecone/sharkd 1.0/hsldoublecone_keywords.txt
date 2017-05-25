@@ -1,0 +1,13 @@
+HSLDoubleCone
+HSLD
+hsl
+hue
+saturation
+lightness
+luminance
+luminosity
+cone
+double
+double-cone
+pigment
+texture

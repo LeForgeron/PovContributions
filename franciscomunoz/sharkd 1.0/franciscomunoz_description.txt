@@ -1,0 +1,4 @@
+This is a collection of various POV-Ray objects created by
+Francisco Munoz Cotobal sometime in the late '90s. It was
+kindly released into the GPL recently, and I have compiled it
+and uploaded it to the Object Collection.

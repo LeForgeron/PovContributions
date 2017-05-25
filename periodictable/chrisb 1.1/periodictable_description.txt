@@ -1,0 +1,2 @@
+The Periodic Table of Elements, made up of coloured blocks with text engraved into their surface. This can be rendered using an orthographic camera to give a conventional flat view or in 3D with a perspective camera. You can easily change the shapes, fonts and colors to suit your particular needs.
+This version adds borders showing whether elements are natural (primordial), the results of decay of other elements, or sythesised. It also adds column titles and a header.

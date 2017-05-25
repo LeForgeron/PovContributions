@@ -1,0 +1,22 @@
+Blockwall
+stone
+stones
+stonework
+block
+blocks
+blockwork
+masonry
+wall
+walls
+walling
+mortar
+grouting
+tower
+stairs
+stairwell
+bridge
+bridges
+well
+wishing well
+house
+building

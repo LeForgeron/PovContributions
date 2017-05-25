@@ -1,0 +1,8 @@
+NXPlanets
+planet
+terrain
+clouds
+rings
+moon
+space
+solar system

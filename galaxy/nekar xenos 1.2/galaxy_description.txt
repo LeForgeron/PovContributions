@@ -1,0 +1,1 @@
+Customisable 3d Galaxy. You can change the number of arms, size of the nucleus and the tightness of the spiral. Includes 3d starfield and stars sky_sphere. Warning -  Very slow on Pov-ray 3.7 Beta

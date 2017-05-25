@@ -1,0 +1,1 @@
+An include file containing a macro that renders a grid and axes onto your scene. You can select the overall size, as well as the major and minor units. You can also choose to hide or show a particular plane, or hide the axes and show only the grid.

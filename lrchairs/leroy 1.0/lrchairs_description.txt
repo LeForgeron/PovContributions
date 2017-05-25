@@ -1,0 +1,1 @@
+Cheap chairs macro, the macro lets you change the textures of the frame and seat.

@@ -1,0 +1,3 @@
+This include file declares untextured chess piece objects as well as their textured counterparts. The textures can be easily overridden.
+
+It also defines two macros to easily create a whole chessboard. One of the macros creates a default chessboard with the pieces in their initial positions, and the other creates the chessboard by "playing" chess moves given to it as an array of strings (denoting chess moves, such as for example "E2E4", "E7E5", etc). The example image has been created by using this macro.

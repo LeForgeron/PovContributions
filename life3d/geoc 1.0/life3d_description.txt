@@ -1,0 +1,1 @@
+Macros by David Sharp to provide a 3D POV-Ray implementation of John Conway's 'Game of Life'. These macros take a simple set of rules that you supply and use the animation features of POV-Ray to show how cell creation and destruction would result in lifefrom development based on those rules.

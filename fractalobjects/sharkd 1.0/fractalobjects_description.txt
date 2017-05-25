@@ -1,0 +1,2 @@
+This is a collection of fractal objects and patterns. Currently, it only
+contains the Menger Sponge. See "FObjects_demo.pov" for an usage example.

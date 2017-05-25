@@ -1,0 +1,3 @@
+POV-Ray version 3.7
+Lightsys version 4 (Lightsys IV)
+SpectralRender version 0.20 or later

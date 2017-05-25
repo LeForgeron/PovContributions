@@ -1,0 +1,1 @@
+The 13 catalan solids, in mesh2 form. Also includes skeletons as a union of spheres and cylinders, plus the raw vertices in an array, and the means to sit the shapes on the x-z plane.

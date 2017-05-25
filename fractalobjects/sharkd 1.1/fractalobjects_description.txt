@@ -1,0 +1,4 @@
+This is a collection of fractal objects. In the future I hope to incorporate
+patterns as well. There are three fractals to choose from at the moment - the
+Menger Sponge, the Sierpinski Pyramid and the Sierpinski Tetrahedron. All three
+objects can be used in CSG operations.

@@ -1,0 +1,5 @@
+WarpGoban
+go
+goban
+board
+board game

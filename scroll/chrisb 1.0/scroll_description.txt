@@ -1,0 +1,2 @@
+A simple paper scroll defined initially as a set of points in a 2 dimensional array, then converted into a mesh object using a small macro.
+The array of points is defined as a spiral at one end, a straight bit in the middle and a spiral at the other end.

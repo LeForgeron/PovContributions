@@ -1,0 +1,195 @@
+/* integratelight.css
+ *
+ * Copyright 2016 Richard Callwood III.  Some rights reserved.
+ * This file is licensed under the terms of the CC-LGPL.
+ * See http://creativecommons.org/licenses/LGPL/2.1/ for more information.
+ *
+ * Version 1.0  2016-Nov-14
+ */
+a:link    { color:#00c; }
+a:visited { color:#606; }
+a:focus   { background:#ccc; }
+a:hover   { background:#fbd; }
+a:active  { background:red; color:white; }
+
+a:link    img { border:1px solid #00c; }
+a:visited img { border:1px solid #606; }
+a:focus   img { border:1px dotted #c00; }
+a:hover   img { border:1px solid red; }
+a:active  img { border:1px inset red; background:yellow; }
+
+address
+{ margin:0; padding:0; line-height:1.2;
+}
+body
+{ margin:0; padding:0 5%; line-height:1.2;
+  color:black; background:#f0eeea;
+}
+code
+{
+/* Consolas seems to the only monospace font with letter spacing that looks
+ * decent among proportional text.  Ironically, that means I'm best assuming
+ * that the user most likely has fonts that need adjusting, and avoiding
+ * Consolas.
+ */
+  font-family:"Lucida Console", "Liberation Mono", "Courier New", "DejaVu Sans Mono", monospace;
+  letter-spacing:-0.05em;
+/* Make it legible. */
+  font-size:100%;
+}
+dd
+{ margin:0.3em 0em 0.9em 2em;
+  padding:0;
+  line-height:1.2;
+}
+dl
+{ margin:0.6em 0%;
+  padding:0;
+  line-height:1.2;
+}
+div, dt
+{ margin:0; padding:0; line-height:1.2;
+}
+h1
+{ margin:0.3em 15%;
+  padding:0.25em;
+  line-height:1.2;
+  border:solid 3px;
+  border-radius:10px;
+  border-color:#ffe6ec #cc99a6 #cc99a6 #ffe6ec;
+  background:#ffccd9; color:black;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  text-align:center;
+}
+h2
+{ margin:0.6em -3% 0.3em;
+  padding:0.2em 0.6em;
+  line-height:1.2;
+  border:solid 2px;
+  border-color:#eef2ff #aab3cc #aab3cc #eef2ff;
+  background:#dde6ff; color:black;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  text-align:center;
+  clear:both;
+}
+h3
+{ margin:0.9em 0% 0.3em -2%;
+  padding:0;
+  line-height:1.2;
+  font-family:Arial, Helvetica, sans-serif;
+}
+h2+h3, h3+h4
+{ margin-top:0.6em;
+  padding:0;
+}
+h4
+{ margin:0.9em 0% 0.3em -1%;
+  padding:0;
+  line-height:1.2;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#f0eeea; color:#333;
+}
+hr
+{ display:none;
+}
+img
+{ vertical-align:middle;
+  padding:1px;
+  border:1px solid;
+  border-color:#e6cc7f #996600 #996600 #e6cc7f;
+  background:white;
+}
+li
+{ margin:0;
+  padding:0;
+  line-height:1.2;
+}
+ol, ul
+{ margin:0;
+  padding:0 0em 0 2em;
+  line-height:1.2;
+}
+p
+{ margin:0.6em 0 0.9em;
+  padding: 0;
+  line-height:1.2;
+}
+pre
+{ margin:0.3em 0 0.6em 0;
+  padding:0.4em 0.6em;
+  line-height:1.2;
+  background:#fee; color:black;
+  border:1px solid;
+  border-color:#cbb #fff #fff #cbb;
+ /*See note at code.*/
+  font-family:"Lucida Console", "Liberation Mono", "Courier New", "DejaVu Sans Mono", monospace;
+  font-size:100%;
+  letter-spacing:-0.05em;
+}
+table
+{ line-height:1.2;
+  margin:0.6em 0;
+  padding:0;
+  border:1px solid;
+  border-color:#fff #acaaa6 #acaaa6 #fff;
+  border-collapse:separate;
+  border-spacing:1px;
+}
+td, td+td+td+td+td
+{ line-height:1.2;
+  padding:0 0.3em;
+  border:1px solid;
+  border-color:#dcc #fff #fff #dcc;
+  color:black; background:#fee;
+}
+td+td
+{ border-color:#ddc #fff #fff #ddc;
+  color:black; background:#ffe;
+}
+td+td+td
+{ border-color:#cdc #fff #fff #cdc;
+  color:black; background:#efe;
+}
+td+td+td+td
+{ border-color:#c8ccdd #fff #fff #c8ccdd;
+  color:black; background:#eaeeff;
+}
+td+td+td+td+td
+{ border-color:#dcc #fff #fff #dcc;
+  color:black; background:#fee;
+}
+th
+{ line-height:1.2;
+  padding:0 0.3em;
+  border:1px solid;
+  border-color:#bdbbb7 #f9f7f3 #f9f7f3 #bdbbb7;
+  color:black; background:#dfddd9;
+}
+ul { list-style:square; }
+td ul,
+ul ul { list-style:disc; }
+var { font-family:serif; }
+
+.args
+{ margin:0.3em 0%;
+  padding:0.4em 0.6em 0em;
+  background:#fee; color:black;
+  border:1px solid;
+  border-color:#cbb #fff #fff #cbb;
+}
+.args dt
+{ margin:0;
+  padding:0;
+  width:8.0em;
+  float:left;
+  clear:left;
+}
+.args dd
+{ margin:0em 0em 0.6em 8.0em;
+  padding:0;
+}
+
+.demo
+{ float:right;
+  margin:0px 0px 0.3em 0.3em;
+}

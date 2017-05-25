@@ -1,0 +1,164 @@
+/* androidrobot.css
+ *
+ * Copyright 2011 - 2012 Richard Callwood III.  Some rights reserved.
+ * This file is licensed under the terms of the CC-LGPL.
+ * See http://creativecommons.org/licenses/LGPL/2.1/ for more information.
+ *
+ * 22-jul-2011  Created.
+ * 23-jul-2011  Updated.
+ * 26-jun-2012  Updated.
+ * 28-jun-2012  Tweaked.
+ */
+a:link    { color:#00a; }
+a:visited { color:#606; }
+a:focus   { background:#d7e5bd; }
+a:hover   { background:#A4C639; }
+a:active  { background:red; color:white; }
+
+a:link    img { border:1px solid #00c; }
+a:visited img { border:1px solid #606; }
+a:focus   img { border:1px solid #d7e5bd; }
+a:hover   img { border:1px solid #A4C639; }
+a:active  img { border:1px inset red; background:yellow; }
+
+address
+{ margin:0; padding:0; line-height:1.2;
+}
+body
+{ margin:2.4em 5%; padding:1.2em 5%; line-height:1.2;
+  color:black; background:#eee;
+}
+code
+{ font-family:"Courier New", monospace;
+  font-size:100%;
+  letter-spacing:-0.05em;
+}
+dd
+{ margin:0em 0em 0.6em 2em;
+  padding:0;
+  line-height:1.2;
+}
+dl
+{ margin:0.3em 0%;
+  padding:0.4em 0.6em 0em;
+  line-height:1.2;
+  border:1px solid;
+  border-color:#A4C639 #fff #fff #A4C639;
+  background:#ecf2e1; color:black;
+}
+div, dt
+{ margin:0; padding:0; line-height:1.2;
+}
+h1
+{ margin:0em 15% 0.3em;
+  padding:0.3em 0.6em;
+  line-height:1.2;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  border:solid #A4C639 5px;
+  border-radius:10px;
+  -moz-border-radius:10px;
+  text-align:center;
+  background:#d7e5bd; color:black;
+}
+h2
+{ margin:0.6em -3% 0.3em;
+  padding:0.2em 0.6em 0.3em;
+  line-height:1.2;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  text-align:center;
+  color:black; background:#d7e5bd;
+  border:none; border-top:solid #A4C639 2px;
+  clear:both;
+}
+h3
+{ margin:0.9em 0% 0.3em -3%;
+  padding:0.6em 0 0em;
+  line-height:1.2;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+h2+h3
+{ margin-top:0.6em;
+  padding:0;
+}
+hr { display:none; }
+html { background:#A4C639; }
+img
+{ vertical-align:middle;
+  padding:1px;
+  border:1px solid;
+  border-color:#d7e5bd #A4C639 #A4C639 #d7e5bd;
+  background:white;
+}
+ol, ul
+{ margin:0;
+  padding:0 0em 0 2em;
+  line-height:1.2;
+}
+ol li
+{ margin:0.9em 0;
+  padding:0;
+  line-height:1.2;
+}
+ul li
+{ margin:0;
+  padding:0;
+  line-height:1.2;
+}
+p
+{ margin:0.9em 0;
+  padding: 0;
+  line-height:1.2;
+}
+pre
+{ margin:0.3em 0 0.6em 0;
+  padding:0.4em 0.6em;
+  line-height:1.2;
+  border:1px solid;
+  border-color:#A4C639 #fff #fff #A4C639;
+  background:#ecf2e1; color:black;
+  font-family:"Courier New", monospace;
+  font-size:100%;
+  letter-spacing:-0.05em;
+}
+table
+{ line-height:1.2;
+  margin:0.6em 0;
+  padding:0;
+  border:1px solid;
+  border-color:#d7e5bd #78902a #78902a #d7e5bd;
+  border-collapse:separate;
+  border-spacing:1px;
+}
+td
+{ line-height:1.2;
+  padding:0 0.3em;
+  border:1px solid;
+  border-color:#cbb #fff #fff #cbb;
+  color:black; background:#fee;
+}
+td+td
+{ border-color:#ccb #fff #fff #ccb;
+  color:black; background:#ffe;
+}
+td+td+td
+{ border-color:#bbbfcc #fff #fff #bbbfcc;
+  color:black; background:#eef2ff;
+}
+th
+{ line-height:1.2;
+  padding:0 0.3em;
+  border-width:1px;
+  border-style:solid;
+  border-color:#A4C639 #ecf2e1 #ecf2e1 #A4C639;
+  color:black; background:#d7e5bd;
+}
+ul { list-style:square; }
+ul ul { list-style:disc; }
+var { font-family:serif; }
+
+.demo
+{ float:right;
+  margin:0px 0px 5px 5px;
+}
+
+.intro { margin-bottom:0; }

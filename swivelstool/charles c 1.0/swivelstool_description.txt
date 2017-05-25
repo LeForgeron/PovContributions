@@ -1,0 +1,3 @@
+A common style of swivel stool placed at origin and along the positive Y axis. Units are in inches. It lacks bolts.
+
+Can be rendered directly.  It is a self-demonstrating include file (if one line is uncommented).

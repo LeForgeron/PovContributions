@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>RC3Metal 1.2.1 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="rc3metal.css">
+</head>
+
+<body>
+
+<h1>RC3Metal 1.2.1 User&nbsp;Manual</h1>
+
+<h2>Abstract</h2>
+
+<p>
+<a href="rc3metal.jpg"><img class="demo" src="rc3metal_thumbnail.jpg" title="Larger demo image" alt="[Thumbnail which links to a demo image]"></a>
+RC3Metal is a library module from the
+<a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+<a href="http://lib.povray.org/">Object Collection</a>
+that defines macros for creating metallic textures.
+They produce results that are more realistic-looking than the metallic textures in the standard include files and, being parameter-driven, are more flexible. The idea is to have a small number of simple tools for creating a large variety of customized textures, rather than having a large number of fixed textures.
+<p>
+The primary rationale for this module is to automatically adjust the diffuse and ambient settings on metallic finishes in response to the specular reflection level and global illumination.
+<p>
+In addition to basic finishes, some common metal colors are suggested, and blurred reflection, galvanized metal, and a brushed normal are included.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Parameters">Global parameters</a>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#RC3Metal">RC3Metal</a>
+   <li><a href="#RC3Metal_Blur">RC3Metal_Blur</a>
+   <li><a href="#RC3Metal_Blur_t">RC3Metal_Blur_t</a>
+   <li><a href="#RC3Metal_Finish">RC3Metal_Finish</a>
+   <li><a href="#RC3Metal_Galvanized_t">RC3Metal_Galvanized_t</a>
+   <li><a href="#RC3Metal_Normal_blur">RC3Metal_Normal_blur</a>
+   <li><a href="#RC3Metal_Normal_blur_t">RC3Metal_Normal_blur_t</a>
+   <li><a href="#RC3Metal_Pigment">RC3Metal_Pigment</a>
+   <li><a href="#RC3Metal_Set_functions">RC3Metal_Set_functions</a>
+   <li><a href="#RC3Metal_Set_highlight">RC3Metal_Set_highlight</a>
+   <li><a href="#RC3Metal_Texture">RC3Metal_Texture</a>
+   <li><a href="#RC3M_Uncolor_v">RC3M_Uncolor_v, RC3M_Uncolour_v</a>
+  </ul>
+ <li><a href="#Other_identifiers">Other identifiers</a>
+  <ul>
+   <li><a href="#Suggested_colors">Suggested colors</a>
+   <li><a href="#Internal">Internal identifiers</a>
+  </ul>
+ <li><a href="#Demos">Feature demonstrations</a>
+ <li><a href="#About">About RC3Metal</a>
+  <ul>
+   <li><a href="#Categories">Categories</a>
+   <li><a href="#Changes">Change log</a>
+   <li><a href="#Acknowledgments">Acknowledgments</a>
+  </ul>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan="2">Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>rc3metal.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>rc3metal.inc</code></td>
+  <td>The RC3Metal software</td>
+ </tr><tr>
+  <td><code>rc3metal.jpg</code></td>
+  <td>Sample output</td>
+ </tr><tr>
+  <td><code>rc3metal.pov</code></td>
+  <td>A demonstration scene description file</td>
+ </tr><tr>
+  <td><code>rc3metal_brushed1.png</code></td>
+  <td rowspan="2">Illustrations for the user manual</td>
+ </tr><tr>
+  <td><code>rc3metal_brushed2.png</code></td>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <th colspan="2">Other Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>rc3metal_brushed.pov</code></td>
+  <td>A brushed normal demonstration scene description file</td>
+ </tr><tr>
+  <td><code>rc3metal.css</code></td>
+  <td>A file used by the user manual</td>
+ </tr><tr>
+  <td><code>rc3metal_demo.css</code></td>
+  <td rowspan="9">Feature demonstration files</td>
+ </tr>
+ <tr><td><code>rc3metal_demo.pov</code></td></tr>
+ <tr><td><code>rc3metal_demo_blur.ini</code></td></tr>
+ <tr><td><code>rc3metal_demo_colors.ini</code></td></tr>
+ <tr><td><code>rc3metal_demo_compg.ini</code></td></tr>
+ <tr><td><code>rc3metal_demo_compm.ini</code></td></tr>
+ <tr><td><code>rc3metal_demo_compt.ini</code></td></tr>
+ <tr><td><code>rc3metal_demo_galv.ini</code></td></tr>
+ <tr><td><code>rc3metal_demo_index.html</code></td></tr>
+ <tr>
+  <td><code>rc3metal_description.txt</code></td>
+  <td>A brief description of RC3Metal</td>
+ </tr><tr>
+  <td><code>rc3metal_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>rc3metal_prereqs.txt</code></td>
+  <td>Prerequisites (empty file)</td>
+ </tr><tr>
+  <td><code>rc3metal_thumbnail.jpg</code></td>
+  <td>An illustration for the user manual</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+  <td rowspan="2">Administrative files</td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p>Note: The file <code>rc3metal_cc-lgpl.png</code> is no longer used.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<p>RC3Metal requires POV-Ray version 3.5 or later.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>rc3metal.inc</code> comply fully with the Object Collection naming standards, as <a href="http://news.povray.org/povray.object-collection/message/%3C48ba92e8%241%40news.povray.org%3E/#%3C48ba92e8%241%40news.povray.org%3E">revised August 2008</a> and <a href="http://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The prefixes for this module are “<code>rc3metal</code>” and “<code>rc3m</code>,” including any uppercase and lowercase variants; to avoid conflicts, do not declare identifiers that start with these prefixes plus an underscore.
+
+<p>The standard include file <code>functions.inc</code> is used by <code>rc3metal.inc</code>.
+
+<h3 id="Usage">Usage</h3>
+
+<ul>
+ <li>Include this file once prior to using any of the macros:
+  <pre>#include "rc3metal.inc"</pre>
+  <p>Including the file more than once is harmless, though unnecessary.
+
+ <li>If you are using radiosity with a version of POV-Ray older than 3.7 (or with <code>#version</code> less than 3.7), I strongly recommend setting the following prior to using the macros:
+  <pre>#declare RC3M_Ambient = 0;</pre>
+</ul>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Parameters">Global Parameters</h2>
+
+<p>The following parameters may be modified by declaring them prior to #including <code>rc3metal.inc</code>.
+
+<table>
+ <tr><th>Parameter</th> <th>Type</th> <th>Description</th> <th>Default</th></tr>
+ <tr>
+  <td><code>RC3M_Albedo</code></td>
+  <td>float/Boolean</td>
+  <td>
+   <p>If true <em>and</em> if the POV-Ray version (or <code>#version</code>) is 3.7 or later, then the <code>albedo</code> keyword will be used in the finishes.
+   <p>If false or if the POV-Ray version (or <code>#version</code>) is less than 3.7, then the <code>albedo</code> keyword will be omitted, and specular highlight values&mdash;but <em>not</em> diffuse values&mdash;will be automatically adjusted behind the scenes to appear as if the <code>albedo</code> keyword had been used.
+  </td>
+  <td><code>yes</code></td>
+ </tr><tr>
+  <td><code>RC3M_Ambient</code></td>
+  <td>color</td>
+  <td>Set this to whatever value you use for <code>#default { finish { ambient } }</code>. If you do not change the default ambient finish, you may ignore this parameter. If you are using radiosity with a version of POV-Ray older than 3.7 (or with <code>#version</code> less than 3.7), I strongly recommend setting both values to zero.</td>
+  <td><code>rgb&nbsp;0.1</code></td>
+ </tr><tr>
+  <td><code>RC3M_Debug</code></td>
+  <td>float/Boolean</td>
+  <td>If true, the finish and pigment macros will write information to the debug stream.</td>
+  <td><code>off</code></td>
+ </tr><tr>
+  <td><code>RC3M_Diffuse</code></td>
+  <td>float</td>
+  <td>Set this to whatever value you use for <code>#default { finish { diffuse } }</code>. If you do not change the default diffuse reflection finish, you may ignore this parameter.</td>
+  <td>0.6</td>
+ </tr><tr>
+  <td><code>RC3M_Seed</code></td>
+  <td>float</td>
+  <td>A seed for stochastic (pseudorandom) effects.</td>
+  <td>0</td>
+ </tr>
+</table>
+
+<p>Note: <code>RC3M_Ambient</code> and <code>RC3M_Diffuse</code> are used by the macros as guidelines for setting ambient values on the metallic finishes. Setting these parameters does not affect the scene’s default finish; it is still up to the user to issue the appropriate <code>#default</code> directive.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros">Macros</h2>
+
+<h3 id="RC3Metal">RC3Metal (c_Color, Specularity, Diffuse_part)</h3>
+
+<p>Returns a pigment and a metallic finish. This macro may be called from within a <code>texture{}</code> statement. <code>quick_color</code> is set as described under <code><a href="#RC3Metal_Pigment">RC3Metal_Pigment()</a></code>.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>c_Color</code></td>
+  <td>color</td>
+  <td>The metal’s color.</td>
+ </tr><tr>
+  <td><code>Specularity</code></td>
+  <td>float</td>
+  <td>The amount of specular reflection.</td>
+ </tr><tr>
+  <td><code>Diffuse_part</code></td>
+  <td>float</td>
+  <td>The diffuse value that the metal would have if it had no specular reflection.</td>
+ </tr>
+</table>
+
+<h3 id="RC3Metal_Blur">RC3Metal_Blur (o_Object, t_Base, Blurriness, Scale, Samples)</h3>
+
+<p>Returns an object with blurred reflection. It uses the technique described in the <a href="http://wiki.povray.org/content/Knowledgebase:Language_Questions_and_Tips#Topic_13">POV-Wiki Knowledgebase</a>, but applied in a manner that prevents runaway calculations when there are mutually reflecting surfaces.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>o_Object</code></td>
+  <td>object</td>
+  <td>The object to which to apply the texture.</td>
+ </tr><tr>
+  <td><code>t_Base</code></td>
+  <td>texture</td>
+  <td>The shiny texture to be blurred. (Note: if a normal is desired, the macro <code><a href="#RC3Metal_Normal_blur">RC3Metal_Normal_blur()</a></code> should be used instead.)</td>
+ </tr><tr>
+  <td><code>Blurriness</code></td>
+  <td>float</td>
+  <td>The amount of blurriness.</td>
+ </tr><tr>
+  <td><code>Scale</code></td>
+  <td>float</td>
+  <td>The scaling of the blur normals.</td>
+ </tr><tr>
+  <td><code>Samples</code></td>
+  <td>float</td>
+  <td>The number of blur normals to be averaged.</td>
+ </tr>
+</table>
+
+<h3 id="RC3Metal_Blur_t">RC3Metal_Blur_t (t_Base, Blurriness, Scale, Samples)</h3>
+
+<p>Returns a texture with blurred reflection. The technique is described in the <a href="http://wiki.povray.org/content/Knowledgebase:Language_Questions_and_Tips#Topic_13">POV-Wiki Knowledgebase</a>.
+
+<p><strong>Warning:</strong> Use of this macro with mutually reflecting surfaces may result in a <em>catastrophic</em> slowdown in rendering, due to a runaway proliferation of rays to be calculated. This can be avoided by using the macro <a href="#RC3Metal_Blur"><code>RC3Metal_Blur()</code></a> <em>or</em> by doing several renders with <code>RC3Metal_Blur_t()</code> passing 1 for the <code>Samples</code> argument, then averaging the images with image-editing software. If averaging several renders, be sure to set <a href="#Parameters"><code>RC3M_Seed</code></a> to a different value for each render, and use a high dynamic range format (<code>+FE</code> or <code>+FH</code>) for best results with specular highlights.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>t_Base</code></td>
+  <td>texture</td>
+  <td>The shiny texture to be blurred. (Note: if a normal is desired, the macro <a href="#RC3Metal_Normal_blur_t"><code>RC3Metal_Normal_blur_t()</code></a> should be used instead.)</td>
+ </tr><tr>
+  <td><code>Blurriness</code></td>
+  <td>float</td>
+  <td>The amount of blurriness.</td>
+ </tr><tr>
+  <td><code>Scale</code></td>
+  <td>float</td>
+  <td>The scaling of the blur normals.</td>
+ </tr><tr>
+  <td><code>Samples</code></td>
+  <td>float</td>
+  <td>The number of blur normals to be averaged.</td>
+ </tr>
+</table>
+
+<h3 id="RC3Metal_Finish">RC3Metal_Finish (Specularity, Diffuse_part)</h3>
+
+<p>Returns a metallic finish.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Specularity</code></td>
+  <td>float</td>
+  <td>The amount of specular reflection.</td>
+ </tr><tr>
+  <td><code>Diffuse_part</code></td>
+  <td>float</td>
+  <td>The diffuse value that the metal would have if it had no specular reflection. Values from 0.6 to 0.8 work well.</td>
+ </tr>
+</table>
+
+<h3 id="RC3Metal_Galvanized_t">RC3Metal_Galvanized_t (c_Dull, c_Shiny, Dull, Shiny, Dark, Light, Shine)</h3>
+
+<p>Returns a galvanized texture.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>c_Dull</code></td>
+  <td>color</td>
+  <td>The color of the duller parts of the texture.</td>
+ </tr><tr>
+  <td><code>c_Shiny</code></td>
+  <td>color</td>
+  <td>The color of the shinier parts of the texture.</td>
+ </tr><tr>
+  <td><code>Dull</code></td>
+  <td>float</td>
+  <td>The amount of specular reflection of the duller parts of the texture.</td>
+ </tr><tr>
+  <td><code>Shiny</code></td>
+  <td>float</td>
+  <td>The amount of specular reflection of the shiniest parts of the texture.</td>
+ </tr><tr>
+  <td><code>Dark</code></td>
+  <td>float</td>
+  <td>The amount of diffuse reflection of the darkest parts of the texture (before adjustment for specular reflection).</td>
+ </tr><tr>
+  <td><code>Light</code></td>
+  <td>float</td>
+  <td>The amount of diffuse reflection of the lightest parts of the texture (before adjustment for specular reflection).</td>
+ </tr><tr>
+  <td><code>Shine</code></td>
+  <td>float</td>
+  <td>The amount of shiny vs dull crystals: 0.0 = no shiny crystals, 1.0 = maximum shiny crystals.</td>
+ </tr>
+</table>
+
+<h3 id="RC3Metal_Normal_blur">RC3Metal_Normal_blur (o_Object, t_Base, Blurriness, Scale, Samples, n_Normal)</h3>
+
+<p>Returns an object with a texture that has a normal and a blurred reflection. It uses the technique described in the <a href="http://wiki.povray.org/content/Knowledgebase:Language_Questions_and_Tips#Topic_13">POV-Wiki Knowledgebase</a>, but applied in a manner that prevents runaway calculations when there are mutually reflecting surfaces.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>o_Object</code></td>
+  <td>object</td>
+  <td>The object to which to apply the texture.</td>
+ </tr><tr>
+  <td><code>t_Base</code></td>
+  <td>texture</td>
+  <td>The shiny texture to be blurred.</td>
+ </tr><tr>
+  <td><code>Blurriness</code></td>
+  <td>float</td>
+  <td>The amount of blurriness. Note that this should be double the value that would be used in <code><a href="#RC3Metal_Blur">RC3Metal_Blur()</a></code>.</td>
+ </tr><tr>
+  <td><code>Scale</code></td>
+  <td>float</td>
+  <td>The scaling of the blur normals.</td>
+ </tr><tr>
+  <td><code>Samples</code></td>
+  <td>float</td>
+  <td>The number of blur normals to be averaged.</td>
+ </tr><tr>
+  <td><code>n_Normal</code></td>
+  <td>normal</td>
+  <td>A normal to be applied to the base texture. Note that the <code>bump_size</code> should be double that of the original non-blurred normal. If the original normal does not have a <code>bump_size</code>, then use <code>bump_size 1</code> in the blurred normal.</td>
+ </tr>
+</table>
+
+<h3 id="RC3Metal_Normal_blur_t">RC3Metal_Normal_blur_t (t_Base, Blurriness, Scale, Samples, n_Normal)</h3>
+
+<p>Returns a texture that has a normal and a blurred reflection. The technique is described in the <a href="http://wiki.povray.org/content/Knowledgebase:Language_Questions_and_Tips#Topic_13">POV-Wiki Knowledgebase</a>.
+
+<p><strong>Warning:</strong> Use of this macro with mutually reflecting surfaces may result in a <em>catastrophic</em> slowdown in rendering, due to a runaway proliferation of rays to be calculated. This can be avoided by using the macro <a href="#RC3Metal_Normal_blur"><code>RC3Metal_Normal_blur()</code></a> <em>or</em> by doing several renders with <code>RC3Metal_Normal_blur_t()</code> passing 1 for the <code>Samples</code> argument, then averaging the images with image-editing software. If averaging several renders, be sure to set <a href="#Parameters"><code>RC3M_Seed</code></a> to a different value for each render, and use a high dynamic range format (<code>+FE</code> or <code>+FH</code>) for best results with specular highlights.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>t_Base</code></td>
+  <td>texture</td>
+  <td>The shiny texture to be blurred.</td>
+ </tr><tr>
+  <td><code>Blurriness</code></td>
+  <td>float</td>
+  <td>The amount of blurriness. Note that this should be double the value that would be used in <code><a href="#RC3Metal_Blur_t">RC3Metal_Blur_t()</a></code>.</td>
+ </tr><tr>
+  <td><code>Scale</code></td>
+  <td>float</td>
+  <td>The scaling of the blur normals.</td>
+ </tr><tr>
+  <td><code>Samples</code></td>
+  <td>float</td>
+  <td>The number of blur normals to be averaged.</td>
+ </tr><tr>
+  <td><code>n_Normal</code></td>
+  <td>normal</td>
+  <td>A normal to be applied to the base texture. Note that the <code>bump_size</code> should be double that of the original non-blurred normal. If the original normal does not have a <code>bump_size</code>, then use <code>bump_size 1</code> in the blurred normal.</td>
+ </tr>
+</table>
+
+<h3 id="RC3Metal_Pigment">RC3Metal_Pigment (c_Color, Specularity)</h3>
+
+<p>Returns a pigment with <code>quick_color</code> set to compensate for the settings in <code><a href="#RC3Metal_Finish">RC3Metal_Finish()</a></code>. This works well for <a href="http://wiki.povray.org/content/Reference:Tracing_Options#Quality_Settings">quality settings</a> 2 through 5, but results in an oversaturated color at quality settings 0 and 1.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>c_Color</code></td>
+  <td>color</td>
+  <td>The metal’s color.</td>
+ </tr><tr>
+  <td><code>Specularity</code></td>
+  <td>float</td>
+  <td>The amount of specular reflection.</td>
+ </tr>
+</table>
+
+<h3 id="RC3Metal_Set_functions">RC3Metal_Set_functions (Hilite, Brilliance)</h3>
+
+<p>Redefines the functions (<a href="#Other_identifiers">q.v.</a>) that are used to determine specular highlight and brilliance finishes.
+
+
+<h4>Arguments</h4>
+<p>These arguments are floats, not functions! The functions will be defined automatically, based on the float values.
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Hilite</code></td>
+  <td>float</td>
+  <td>The amount of highlight on a surface with no specular reflection; i.e., the float value to be returned by <code>RC3M_fn_Specular(0.0)</code>. <code>RC3M_fn_Specular(1.0)</code> will be set to return 1.0, and for intermediate reflection values, the highlight value will be interpolated.</td>
+ </tr><tr>
+  <td><code>Brilliance</code></td>
+  <td>float</td>
+  <td>A constant brilliance float value to be returned by <code>RC3M_fn_Brilliance()</code>.</td>
+ </tr>
+</table>
+
+<p>Note: Theoretically, a surface with no specular reflection has no highlight; a low-level highlight is thus a sign of highly blurred reflection. However, this reflection is subtle and often not worth modeling, so a <code>Hilite</code> argument greater than zero is not unreasonable.
+
+<p>Example:
+<table>
+ <tr>
+  <th colspan="2"><code>RC3Metal_Set_functions (0.0, 1.0)</code></th>
+ </tr><tr>
+  <th>RC3Metal_Finish() Call</th>
+  <th>Resulting Finish Settings</th>
+ </tr><tr>
+  <td><code>RC3Metal_Finish (0.0, 0.6)</code></td>
+  <td><code>specular albedo 0.0 metallic brilliance 1.0</code></td>
+ </tr><tr>
+  <td><code>RC3Metal_Finish (0.5, 0.6)</code></td>
+  <td><code>specular albedo 0.5 metallic brilliance 1.0</code></td>
+ </tr><tr>
+  <td><code>RC3Metal_Finish (1.0, 0.6)</code></td>
+  <td><code>specular albedo 1.0 metallic brilliance 1.0</code></td>
+ </tr>
+</table>
+
+<p>Example:
+<table>
+ <tr>
+  <th colspan="2"><code>RC3Metal_Set_functions (0.2, 1.75)</code></th>
+ </tr><tr>
+  <th>RC3Metal_Finish() Call</th>
+  <th>Resulting Finish Settings</th>
+ </tr><tr>
+  <td><code>RC3Metal_Finish (0.0, 0.6)</code></td>
+  <td><code>specular albedo 0.2 metallic brilliance 1.75</code></td>
+ </tr><tr>
+  <td><code>RC3Metal_Finish (0.5, 0.6)</code></td>
+  <td><code>specular albedo 0.6 metallic brilliance 1.75</code></td>
+ </tr><tr>
+  <td><code>RC3Metal_Finish (1.0, 0.6)</code></td>
+  <td><code>specular albedo 1.0 metallic brilliance 1.75</code></td>
+ </tr>
+</table>
+
+<p>(If the <code>albedo</code> keyword is unavailable or if <code>RC3Metal_Albedo</code> is false, the above <code>specular</code> values will be automatically adjusted to appear as if the <code>albedo</code> keyword had been used.)
+
+<h3 id="RC3Metal_Set_highlight">RC3Metal_Set_highlight (Hilite)</h3>
+
+<p>Redefines the specular highlight and brilliance functions (<a href="#Other_identifiers">q.v.</a>) such that the specular highlight compensates exactly for the reduction in albedo caused by the brilliance.
+
+<p><strong>Side effect:</strong> Sets <code>RC3Metal_Albedo</code> to <code>false</code>, as using <code>diffuse albedo</code> would defeat the purpose of this macro. The specular value will be automatically adjusted to appear as if the <code>albedo</code> keyword had been used.
+
+<h4>Argument</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Hilite</code></td>
+  <td>float</td>
+  <td>The amount of highlight on a surface with no specular reflection; i.e., the float value to be returned by <code>RC3M_fn_Specular(0.0)</code>. <code>RC3M_fn_Specular(1.0)</code> will be set to return 1.0, and for intermediate reflection values, the highlight value will be interpolated.</td>
+ </tr>
+</table>
+
+<p>Note: Theoretically, a surface with no specular reflection has no highlight; a low-level highlight is thus a sign of highly blurred reflection. However, this reflection is subtle and often not worth modeling, so a <code>Hilite</code> argument greater than zero is not unreasonable. <code>RC3Metal_Set_highlight()</code> is an attempt to put some realism behind this fakery.
+
+<h3 id="RC3Metal_Texture">RC3Metal_Texture (c_Color, Specularity, Diffuse_part)</h3>
+
+<p>Returns a metallic texture. <code>quick_color</code> is set as described under <code><a href="#RC3Metal_Pigment">RC3Metal_Pigment()</a></code>.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>c_Color</code></td>
+  <td>color</td>
+  <td>The metal’s color.</td>
+ </tr><tr>
+  <td><code>Specularity</code></td>
+  <td>float</td>
+  <td>The amount of specular reflection.</td>
+ </tr><tr>
+  <td><code>Diffuse_part</code></td>
+  <td>float</td>
+  <td>The diffuse value that the metal would have if it had no specular reflection. Values from 0.6 to 0.8 work well.</td>
+ </tr>
+</table>
+
+<h3 id="RC3M_Uncolor_v">RC3M_Uncolor_v (c_Color)
+<br>RC3M_Uncolour_v (c_Color)</h3>
+
+<p>These macros return a color converted to a 3-D vector (i.e., without the filter and transmit components).
+
+<h4>Argument</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>c_Color</code></td>
+  <td>color</td>
+  <td>The color to be converted. (This argument is input-only, and is not changed.)</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other_identifiers">Other Identifiers</h2>
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+ <tr style="height:3.2em">
+  <td><code>RC3M_fn_Brilliance</code></td>
+  <td>function</td>
+  <td rowspan="2">Functions that are used by the macros to determine finish values as functions of specular reflection.
+   <p>Unlike the diffuse and ambient adjustments, there is no rigorous physical basis for these functions. The brilliance function can be changed using macro <a href="#RC3Metal_Set_functions"><code>RC3Metal_Set_functions()</code></a> or <a href="#RC3Metal_Set_highlight"><code>RC3Metal_Set_highlight()</code></a>. If you would like to substitute your own functions, you may <code>#undef</code> these <em>after</em> including <code>rc3metal.inc</code>, and then redefine them.
+  </td>
+  <td rowspan="2">N/A</td>
+ </tr><tr style="height:3.2em">
+  <td><code>RC3M_fn_Roughness</code></td>
+  <td>function</td>
+ </tr><tr>
+  <td><code>RC3M_fn_Specular</code></td>
+  <td>function</td>
+  <td>A function that is used by the macros to determine the specular highlight value as a function of specular reflection. The value returned will then be adjusted for albedo according to roughness. This function can be changed using macro <a href="#RC3Metal_Set_functions"><code>RC3Metal_Set_functions()</code></a> or <a href="#RC3Metal_Set_highlight"><code>RC3Metal_Set_highlight()</code></a>; or you may <code>#undef</code> and redefine it <em>after</em> including <code>rc3metal.inc</code>.
+  </td>
+  <td>N/A</td>
+ </tr><tr>
+  <td><code>RC3M_n_Brushed</code></td>
+  <td>normal</td>
+  <td>A brushed metal normal similar to that of texture <code>Brushed_Aluminum</code> in <code>textures.inc</code>. The grain is parallel to the <var>x</var>-axis. This normal is smoother where the <var>x</var>-component of the unperturbed surface normal is non-zero.<br>
+   <img src="rc3metal_brushed1.png" alt="[Brushed_Aluminum illustration]" title="texture { Brushed_Aluminum }">
+   <img src="rc3metal_brushed2.png" alt="[RC3M_n_Brushed illustration]" title="texture { Brushed_Aluminum normal { RC3M_n_Brushed } }">
+  </td>
+  <td>N/A</td>
+ </tr><tr>
+  <td><code>RC3METAL_VERSION</code></td>
+  <td>float</td>
+  <td>The RC3Metal version, in case the scene file needs that information.</td>
+  <td>1.21</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a>
+
+<h3 id="Suggested_colors">Suggested Colors for Metals and Alloys</h3>
+
+<p>The following color values are estimated from hardware from The Home Depot, household articles, illustrations from <a href="http://elementsales.com/">Metallium</a>, spectral data on the Web (which are never the same from one site to the next), and loose pocket change. They have not been measured; for actual sample measurements, I suggest <a href="http://www.ignorancia.org/en/index.php?page=Lightsys">LightsysIV</a>. N.B. The LightsysIV measurements tend to be about half as bright as corresponding RC3Metal color suggestions.
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th colspan="2">Notes</th></tr>
+ <tr>
+  <td><code>RC3M_C_ALUMINIUM</code><br><code>RC3M_C_ALUMINUM</code></td>
+  <td>color</td>
+  <td colspan="2">Aluminum/aluminium</td>
+ </tr><tr>
+  <td><code>RC3M_C_BRASS_COOL</code></td>
+  <td>color</td>
+  <td>A harsh, cold, yellow brass (a doorknob)</td>
+  <td rowspan="8">The brasses and bronzes are on the light side, so you may want to darken them for an older look.</td>
+ </tr><tr>
+  <td><code>RC3M_C_BRASS_LIGHT</code></td>
+  <td>color</td>
+  <td>A softer, light warm-hued brass (a brass-plated binder clip)</td>
+ </tr><tr>
+  <td><code>RC3M_C_BRASS</code></td>
+  <td>color</td>
+  <td>A deeper, warm-hued brass (a chalice or musical instrument)</td>
+ </tr><tr>
+  <td><code>RC3M_C_BRASS_WARM</code></td>
+  <td>color</td>
+  <td>A very deep orange brass (some hardware)</td>
+ </tr><tr>
+  <td><code>RC3M_C_BRONZE_NEW</code></td>
+  <td>color</td>
+  <td>A new, polished bronze with no patina</td>
+ </tr><tr>
+  <td><code>RC3M_C_BRONZE_COOL</code></td>
+  <td>color</td>
+  <td rowspan="3">Bronze can look like <em>anything.</em> These values are based on articles I have seen in novelty stores and in The Home Depot, but they may well have been painted with fake bronze paint.</td>
+ </tr><tr>
+  <td><code>RC3M_C_BRONZE</code></td>
+  <td>color</td>
+ </tr><tr>
+  <td><code>RC3M_C_BRONZE_WARM</code></td>
+  <td>color</td>
+ </tr><tr>
+  <td><code>RC3M_C_CHROME</code></td>
+  <td>color</td>
+  <td colspan="2">Electroplated chromium over nickel</td>
+ </tr><tr>
+  <td><code>RC3M_C_COPPER</code></td>
+  <td>color</td>
+  <td colspan="2">Brand new copper piping</td>
+ </tr><tr>
+  <td><code>RC3M_C_COPPER_LIGHT</code></td>
+  <td>color</td>
+  <td colspan="2">A freshly minted American penny, or packaged copper items</td>
+ </tr><tr>
+  <td><code>RC3M_C_GOLD</code></td>
+  <td>color</td>
+  <td colspan="2">A warm gold</td>
+ </tr><tr>
+  <td><code>RC3M_C_GOLD_LIGHT</code></td>
+  <td>color</td>
+  <td colspan="2">A yellower gold</td>
+ </tr><tr>
+  <td><code>RC3M_C_NICKEL</code></td>
+  <td>color</td>
+  <td colspan="2">Household fixtures</td>
+ </tr><tr>
+  <td><code>RC3M_C_PENNY</code></td>
+  <td>color</td>
+  <td colspan="2">An American penny that’s been well-handled, but hasn’t lost its shine; or copper piping that’s been sitting around for a while</td>
+ </tr><tr>
+  <td><code>RC3M_C_SILVER</code></td>
+  <td>color</td>
+  <td colspan="2">Silver</td>
+ </tr><tr>
+  <td><code>RC3M_C_SILVER_COIN</code></td>
+  <td>color</td>
+  <td colspan="2">Copper-nickel alloy</td>
+ </tr><tr>
+  <td><code>RC3M_C_STAINLESS</code></td>
+  <td>color</td>
+  <td colspan="2">Stainless steel (eating utensils)</td>
+ </tr><tr>
+  <td><code>RC3M_C_STAINLESS_WARM</code></td>
+  <td>color</td>
+  <td colspan="2">A warmer, lighter-colored stainless steel</td>
+ </tr><tr>
+  <td><code>RC3M_C_STEEL</code></td>
+  <td>color</td>
+  <td colspan="2">Steel</td>
+ </tr><tr>
+  <td><code>RC3M_C_ZINC</code></td>
+  <td>color</td>
+  <td colspan="2">Screws, hurricane connectors</td>
+ </tr><tr>
+  <td><code>RC3M_C_ZINC_COOL</code></td>
+  <td>color</td>
+  <td colspan="2">Old fence post</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Internal">Internal Identifiers</h3>
+
+<p>Any identifiers in <code>rc3metal.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Demos">Feature Demonstrations</h2>
+
+<p>Included in this distribution is a scene file that demonstrates various features of RC3Metal. Due to the large number of images (more than 100), they have not been pre-rendered. You can create them yourself by rendering each of the <code>.ini</code> files in the distribution. You can then view the demos by viewing the file <code>rc3metal_demo_index.html</code> with your Web browser.
+
+<p>The <code>.ini</code> files are preset to POV-Ray version 3.5. If you have POV-Ray 3.7, you can take advantage of 3.7 improvements by putting <code>Version=3.7</code> on the command line (or at the end of the command line if you are working from a terminal window).
+
+<p>In order to keep your Object Collection folder uncluttered, you may want to keep the demos in a separate folder. After creating this folder, move all files whose names start with “<code>rc3metal_demo</code>” into it. (This folder would not need to be in your library path.)
+
+<p>A description of each of the demos follows:
+
+<dl>
+ <dt><code>rc3metal_demo_blur.ini</code>
+ <dd>These scenes demonstrate blurred reflection with various arguments to <code>RC3Metal_Blur_t()</code>.
+ <dt><code>rc3metal_demo_colors.ini</code>
+ <dd>These scenes demonstrate RC3Metal’s built-in colors, using a metallic finish.
+ <dt><code>rc3metal_demo_compg.ini</code>
+ <dd>These scenes display the finishes from the standard include file <code>golds.inc</code> alongside comparable finishes from <code>RC3Metal_Finish()</code>.
+ <dt><code>rc3metal_demo_compm.ini</code>
+ <dd>These scenes display the finishes from the standard include file <code>metals.inc</code> alongside comparable finishes from <code>RC3Metal_Finish()</code>.
+ <dt><code>rc3metal_demo_compt.ini</code>
+ <dd>These scenes display selected metallic textures from the standard include file <code>textures.inc</code> alongside those same textures with the finish component replaced with a comparable <code>RC3Metal_Finish()</code>.
+ <dt><code>rc3metal_demo_galv.ini</code>
+ <dd>These scenes demonstrate galvanized textures with different <code>Shine</code> values passed to <code>RC3Metal_Galvanized_t()</code>.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About RC3Metal</h2>
+
+<address>Copyright © 2013 &ndash; 2016 Richard Callwood III.
+ <a href="http://creativecommons.org/licenses/LGPL/2.1/">
+  <img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+ </a>
+</address>
+
+<h3 id="Categories">Object Collection Categories</h3>
+
+<ul>
+ <li><strong>Contribution Types</strong>
+  <ul>
+   <li>Textures
+    <ul>
+     <li>Pigments
+     <li>Finishes
+     <li>Normals
+    </ul>
+   <li>Macros
+   <li>Functions
+    <ul>
+     <li>Other
+    </ul>
+  </ul>
+</ul>
+
+<h3 id="Changes">Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>N/A</td>
+  <td>2004 &ndash; 2008</td>
+  <td>
+   <ul>
+    <li>Pigment, finish, and galvanized macros are created.
+    <li>A proof-of-concept of the brushed normal is created.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.0</td>
+  <td>2013 March 9</td>
+  <td>
+   <ul>
+    <li>The software is adapted for the Object Collection.
+    <li>Blurred reflection macros are created.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.1</td>
+  <td>2013 April 23</td>
+  <td>
+   <ul>
+    <li>A macro is added to easily redefine finish functions.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.2</td>
+  <td>2013 September 6</td>
+  <td>
+   <ul>
+    <li>A macro is added to coordinate highlight and brilliance.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.2.1</td>
+  <td>2016 March 11</td>
+  <td>
+   <ul>
+    <li>Radiosity (POV-Ray 3.7 and later) and shadows (POV-Ray 3.5 and later) are optimized for objects with blurred textures.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<h3 id="Acknowledgments">Acknowledgments</h3>
+
+<ul>
+ <li>Alain of Montréal for the technique for preventing runaway calculations with blurred reflection.
+ <li>Christoph Lipka for copious information about reflection.
+</ul>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

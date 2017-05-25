@@ -1,0 +1,154 @@
+<html>
+<head>
+  <title>WarpGoban include file</title>
+  <style type="text/css"> <!--
+html { background-color: #FFDDCC; }
+body
+{
+  background-color: white;
+  margin-left: 7%;
+  margin-top: 16px;
+  margin-right: 7%;
+  padding-top: 2em;
+  padding-left: 7%;
+  padding-right: 7%;
+  padding-bottom: 2%;
+  border-color: black;
+  border: solid;
+  border-width: 1px;
+}
+
+h1
+{
+  text-align: center;
+  background-color: #FFEEBB;
+  padding-bottom: 0.2em;
+  padding-top: 0.1em;
+}
+
+h2
+{
+  background-color: #FFFFCC;
+  padding-left: 0.5em;
+}
+
+pre
+{
+  background-color: #E8E8E8;
+  padding-left: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+code
+{
+  font-family: monospace;
+  color: #900040;
+}
+  --> </style>
+</head>
+
+<body>
+
+<h1>WarpGoban include file</h1>
+
+<h2>The goban creation macro</h2>
+
+<p>This include file declares the macro:
+
+<pre>
+WarpGoban_CreateGoban(Kifu)
+</pre>
+
+<p>where the parameter is an array of strings, represeting a "kifu". The board
+will be created from it. The array should contain 19 strings, each string
+having 19 characters. If a character is '<code>X</code>' a black stone will
+be placed at that location, and if a character is '<code>O</code>' a white
+stone. Any other character will be ignored (and thus can be anything you like).
+
+<p>Here's an example array of an empty kifu definition (which you can copy
+into your code and fill with <code>X</code>'s and <code>O</code>'s as
+necessary):
+
+<pre>
+#declare Kifu = array[19]
+{ "+-----------------+", // T
+  "|.................|", // S
+  "|.................|", // R
+  "|..,.....,.....,..|", // Q
+  "|.................|", // P
+  "|.................|", // O
+  "|.................|", // N
+  "|.................|", // M
+  "|.................|", // L
+  "|..,.....,.....,..|", // K
+  "|.................|", // J
+  "|.................|", // H
+  "|.................|", // G
+  "|.................|", // F
+  "|.................|", // E
+  "|..,.....,.....,..|", // D
+  "|.................|", // C
+  "|.................|", // B
+  "+-----------------+", // A
+// 1234567890123456789
+};
+</pre>
+
+<p>The dimensions of the board are <code>&lt;42.1, -2, 45.6&gt;</code>.
+The macro centers the board about the origin.
+
+<p>The used textures can be overridden by #declaring any of the following
+texture identifiers before #including <code>"WarpGoban.inc"</code>:
+
+<pre>
+WarpGoban_BlackStoneMaterial
+WarpGoban_WhiteStoneMaterial
+WarpGoban_BoardWoodTexture
+WarpGoban_LinesTexture
+</pre>
+
+<h2>Declared objects</h2>
+
+<p>The include file also declares the following objects, which can be used
+separately:
+
+<pre>
+WarpGoban_BlackStone
+WarpGoban_WhiteStone
+WarpGoban_Board
+WarpGoban_Bowl (without stones)
+WarpGoban_BlackBowl (with some black stones)
+WarpGoban_WhiteBowl (with some white stones)
+WarpGoban_BowlLid
+</pre>
+
+<p>The texture of the bowl can be overridden by #declaring the following
+texture identifier before #including <code>"WarpGoban.inc"</code>:
+
+<pre>
+WarpGoban_BowlTexture
+</pre>
+
+<p>The following macro can be used to more easily place stones on the
+WarpGoban_Board object (which has not been transformed yet). The
+<code>CoordX</code> and <code>CoordZ</code> parameters should have values
+between 1 and 19.
+
+<pre>
+WarpGoban_StonePos(CoordX, CoordZ, Elevation)
+</pre>
+
+<h2>The bowl creation macro</h2>
+
+<p>The following macro is also defined:
+
+<pre>
+WarpGoban_CreateBowl(StoneObj, StoneAmnt, Seed)
+</pre>
+
+<p>This can be used to create a bowl with stones in it. (The stones may
+intersect each other, depending on the given seed.)
+
+</body>
+</html>

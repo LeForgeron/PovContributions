@@ -1,0 +1,1 @@
+A set of macros and functions to facilitate modeling of rounded edges with CSG, isosurfaces, and blobs.

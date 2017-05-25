@@ -1,0 +1,539 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%}
+</style>
+<head>
+  <title>POV-Ray Object Collection - os_correctingfluid macro</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>Office Supplies<br>Correcting Fluid Macro</h1>
+<hr>
+  <a href="#intro">Overview</a><br>
+  <a href="#macros">Macros</a><br>
+  <a href="#variables">Variables</a><br>
+  <a href="#files">Files</a><br>
+  <a href="#examples">Examples</a><br>
+  
+  
+</td><td>
+<img src="os_correctingfluid.jpg" width=320>
+</td></tr>
+</table>
+
+<hr>
+  <a name='intro'></a>
+  <h1>Overview</h1>
+The 'os_correctingfluid.inc' include file contains the <a href="#macros">OS_CorrectingFluid</a> macro which creates an object representing a bottle of correcting fluid. This macro simply calls the <a href="#macros">OS_CorrectingFluidBottle</a> macro, the <a href="#macros">OS_CorrectingFluidCap</a> macro and the <a href="#macros">OS_CorrectingFluidLabel</a> macro to generate a complete bottle from the 3 main components. These 3 components are generated based upon the settings of a range of <a href="#variables">control variables</a> all of which have default values.
+<p>
+Some <a href="#examples">examples</a> are provided <a href="#examples">below</a>. The file 'os_correctingfluid.pov' illustrates the use of these macros and the supporting files. 
+The file 'os_correctingfluidtest.pov' contains a list of the main control variables with alternative settings for dimensions and colours.
+<p>
+Dimensions are specified in metres. The ScaleConvert macro from the <a href="http://lib.povray.org/">POV-Ray Object Collection</a> can be used to convert between different units of measure.  
+<p>
+These macros were created by Chris Bartlett in January 2008 as part of the 'Office Supplies' theme assembled by Ben Chambers for the <a href="http://lib.povray.org/">POV-Ray Object Collection at http://lib.povray.org/</a> and is licensed under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a>. 
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+  <a name='macros'></a>
+  <h1>Macros</h1>
+  
+  <table border=1>
+    <tr><th class=macroheaders colspan=2>OS_CorrectingFluid macro      </th><tr>
+    <tr><td width=20></td><td>
+The OS_CorrectingFluid macro is used to generate an object based upon settings defined using <a href="#variables">control variables</a>.
+All of the control variables have defaults, so you can generate the default bottle object by just including the file and calling the macro:
+<div class=codesample>
+    light_source { <-15,7.5,-15>, rgb 2}
+<br>camera {location <-0.05,0.05,-0.07> look_at <0,0.035,0>}
+<br>#include "os_correctingfluid.inc"        
+<br>OS_CorrectingFluid()
+</div>
+You can apply standard POV-Ray transformations by wrapping the macro call inside an object statement:
+<div class=codesample>
+    object{OS_CorrectingFluid() rotate <20,0,10> translate <-0.02,-0.01,0>}
+</div>
+You can assign the object to an identifier and use it as you would use any other declared object:
+<div class=codesample>
+    #declare MyBottle = OS_CorrectingFluid()
+<br>object{MyBottle rotate <20,0,10> translate <-0.02,-0.01,0>}
+</div>
+    </td></tr> 
+    
+    <tr><th class=macroheaders colspan=2>OS_CorrectingFluidBottle macro      </th><tr>
+    <tr><td width=20></td><td>
+The OS_CorrectingFluidBottle macro generates just the bottle (no cap or label). You can call this directly to generate just the bottle or through the OS_CorrectingFluid macro to generate the complete object (bottle, cap and label).
+The bottle object is based upon settings defined using <a href="#variables">control variables</a>.
+All of the control variables have defaults, so you can generate the default bottle object by just including the file and calling this macro.
+    </td></tr> 
+    <tr><th class=macroheaders colspan=2>OS_CorrectingFluidCap macro      </th><tr>
+    <tr><td width=20></td><td>
+The OS_CorrectingFluidCap macro generates the cap of the bottle, along with the little applicator brush and a dab of correcting fluid on the end (no bottle or label) . You can call this directly or through the OS_CorrectingFluid macro to generate the complete object (bottle, cap and label).
+The cap object is based upon settings defined using <a href="#variables">control variables</a>.
+All of the control variables have defaults, so you can generate the default cap object by just including the file and calling this macro.
+    </td></tr> 
+    <tr><th class=macroheaders colspan=2>OS_CorrectingFluidLabel macro      </th><tr>
+    <tr><td width=20></td><td>
+The OS_CorrectingFluidLabel macro generates just the label (no bottle or cap). You can call this directly to generate just the label or through the OS_CorrectingFluid macro to generate the complete object (bottle, cap and label). Note that the graphical design of the label is externalised, so you can modify the label design to meet your needs without having to modify the macro. The default label file is 'os_correctingfluidlabel.inc', but you can use an alternative file by setting the 'OS_CorrectingFluid_LabelFile' control variable. If you want to see the full design of the label you can render a flattened version by opening the 'os_correctingfluidlabel.inc' file in POV-Ray and rendering that. 
+<p>
+The default label file illustrates how to superimpose multiple layers of text, shapes based on objects and image_mapped images. It is recommended that you take a copy of this file rather than modifying the original so that you can continue to refer back to the examples that it contains. 
+<p>
+The dimensions and the graphical design of the generated label object are based upon settings defined using <a href="#variables">control variables</a>.
+All of the control variables have defaults, so you can generate the default label object by just including the 'os_correctingfluid.inc' file and calling this macro.
+    </td></tr> 
+  </table> 
+  
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+  <a name='variables'></a>
+  <h1>Control Variables</h1>
+  <table border=1>
+    <tr><th>Variable</th><th>Description</th><th width=150>Used By:</th>
+    <tr><th>OS_CorrectingFluidBottleRadius          </th><td>
+The radius of the bottle.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+      <br>
+      OS_CorrectingFluidCap()
+      <br>
+      OS_CorrectingFluidLabel()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleHeight          </th><td>
+The height of the bottle.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleThickness          </th><td>
+The thickness of the bottle wall.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleNeckRadius          </th><td>
+The radius of the neck of the bottle.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleNeckBase          </th><td>
+The height of the base of the bottle neck above the bottom of the bottle.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleNeckTop          </th><td>
+The height of the top of the bottle neck above the bottom of the bottle.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleShoulderHeight          </th><td>
+The height of the shoulder of the bottle above the bottom of the bottle. The shoulder being the part of the bottle that curves in towards the neck.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleShoulderRoundness          </th><td>
+The shoulder is rounded. This is the radius used for rounding it.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleBaseRoundness          </th><td>
+The base of the bottle is rounded. This is the radius used for rounding it.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleBaseInsetRadius          </th><td>
+The centre of the base of the bottle contains a circular indent. This is the radius of that indent.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleBaseInsetRoundness          </th><td>
+The centre of the base of the bottle is indented. The junction between the indent and the base is rounded. This is the radius used for rounding it.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleStemBase         </th><td>
+Inside the bottle is a brush, attached to the cap via a plastic tube. This variable defines the height of the bottom of that tube above the base of the bottle.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleStemTop         </th><td>
+Inside the bottle is a brush, attached to the cap via a plastic tube. This variable defines the height of the top of that tube above the base of the bottle.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleStemRadius         </th><td>
+Inside the bottle is a brush, attached to the cap via a plastic tube. This variable defines the radius of that tube.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleBrushLength         </th><td>
+Inside the bottle is the brush used to apply the fluid to paper. This is attached to the cap via a plastic tube. This variable defines the length of the brush.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleBrushRadius         </th><td>
+Inside the bottle is the brush used to apply the fluid to paper. This is the nominal radius of the strands of the brush. This is actually the radius at the point where the strands of the brush attach to the plastic tube that joins the brush to the cap. The lower extremities of the brush splay out a little further than this.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleFibreCount         </th><td>
+The cap incorporates a brush to apply the fluid. This is the number of fibres in the brush. The radius of the fibre is calculated based on this number and on the radius of the brush.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleFibreSeed         </th><td>
+The cap incorporates a brush to apply the fluid. The random number stream used to position the individual fibres that make up the brush is determined using the value of a seed. This variable holds the value of a seed used for this and is not likely to need changing.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleCapRadius         </th><td>
+The radius of the cap of the bottle. This is actually the radius of the circular bottom lip of the cap.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleCapRecessHeight         </th><td>
+The top of the cap contains a deep circular recess. This is the height of the bottom of this recess above the bottom of the bottle.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleCapRecessLowerRadius         </th><td>
+The top of the cap contains a deep circular recess. This recess is broader at the top and tapers in as it decends into the cap. This is the radius at the bottom of the recess. ie at the height specified using OS_CorrectingFluidBottleCapRecessHeight.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleCapRecessUpperRadius         </th><td>
+The top of the cap contains a deep circular recess. This recess is broader at the top and tapers in as it decends into the cap. This is the radius at the top of the recess.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleCapLipThickness         </th><td>
+At the base of the cap is a thin circular lip. This is the thickness of the rim (the distance from the bottom of the rim to the top of the rim).
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleCapDentRadius         </th><td>
+The top part of the cap is shaped with 6 cylindrical indentations to provide grip when tightening and untightening the cap.
+This is the radius of those indentations.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidLabelRounding         </th><td>
+A thin paper label is applied around the outside of the bottle. The corners of the label are rounded. This variable defines the radius of the corners.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidLabel()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidLabelThickness         </th><td>
+A thin paper label is applied around the outside of the bottle. The corners of the label are rounded. This variable defines the radius of the corners.
+   </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidLabel()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidLabelGap         </th><td>
+A thin paper label is applied around the outside of the bottle. The label doesn't go all the way around but leaves a gap. This is the width of that gap. 
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidLabel()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidLabelBottom         </th><td>
+A thin paper label is applied around the outside of the bottle. This is the height of the bottom of the label above the bottom of the bottle.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidLabel()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidLabelTop         </th><td>
+A thin paper label is applied around the outside of the bottle. This is the height of the top of the label above the bottom of the bottle.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidLabel()
+    </td></tr>
+    <tr><th>OS_CorrectingFluid_LabelFile         </th><td>
+A thin paper label is applied around the outside of the bottle. The printing on the label is built up in layers, with the first layer providing the background colour and subsequent layers incorporating transparent regions that allow earlier layers to show through. These layers are specified using a separate file. This variable is used to indicate the name of that file. By default the 'os_correctingfluidlabel.inc' file is used. 
+<p>
+This file contains layers intended to illustrate how to combine text, graphic objects and bitmapped images. To change the text, graphics or images used to create the design of the label you can copy that file, modify it's contents to suit your needs and point the macro to that file by setting this variable to the name of the file that you have created. 
+<p>
+If the macro is unable to find the file you specify it will use the default file. If you get the default label when you were expecting one that you specified, check the name and extension is correct and that the file's location is in your #include path.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidLabel()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidLabelLayer         </th><td>
+A thin paper label is applied around the outside of the bottle. The printing on the label is built up in layers, with the first layer providing the background colour and subsequent layers incorporating transparent regions that allow earlier layers to show through. These layers are specified in a separate file (by default the 'os_correctingfluidlabel.inc' file). 
+<p>
+This array is used to store successive layers of pigment and to communicate that information back to the macro used to create the label. The macro checks for the existance of each array element before applying it. When building up the layers it makes sense to leave some gaps in the numbering sequence so that, if you need to reposition a layer you don't have to go through and renumber following layers. If you look at the example contained in the 'os_correctingfluidlabel.inc' file you will see that there are three main groups of layers with the small-print elements in one group, the main image portion in another and the bar-code elements in the last group. 
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidLabel()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBottleTexture         </th><td>
+By default the bottle is white, but you can specify any texture you want by defining this setting before calling the macro.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidCapTexture         </th><td>
+By default the cap of the bottle is white, but you can specify any texture you want by defining this setting before calling the macro.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBrushStemTexture         </th><td>
+By default the stem that holds the brush into the cap of the bottle is a sort of off-white colour, but you can specify any texture you want by defining this setting before calling the macro.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidBrushTexture         </th><td>
+By default the strands of the brush that are attached to the cap of the bottle are dark grey, but you can specify any texture you want by defining this setting before calling the macro.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidTexture         </th><td>
+The cap incorporates a brush for applying the fluid. The model has a blob of fluid on this brush. This is defined as a bright white colour by default, but you can specify any texture you want by defining this setting before calling the macro.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidDefaultBottleTexture         </th><td>
+By default the bottle is white, to override that for a single invocation of the macro you should use the OS_CorrectingFluidBottleTexture setting. If you want to replace the default texture for all scene files you can modify the definition of this variable within the 'os_correctingfluid.inc' file. Note. This setting defines the default for both the bottle and the cap.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidDefaultBrushStemTexture         </th><td>
+By default the brush stem is a sort of off-white. To override that for a single invocation of the macro you should use the OS_CorrectingFluidBrushStemTexture setting. If you want to replace the default texture for all scene files you can modify the definition of this variable within the 'os_correctingfluid.inc' file.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidDefaultBrushTexture         </th><td>
+By default the strands that make up the brush are grey. To override that for a single invocation of the macro you should use the OS_CorrectingFluidBrushTexture setting. If you want to replace the default texture for all scene files you can modify the definition of this variable within the 'os_correctingfluid.inc' file.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluidDefaultTexture         </th><td>
+By default the blob of correction fluid on the end of the brush is bright white. To override that for a single invocation of the macro you should use the OS_CorrectingFluidTexture setting. If you want to replace the default texture for all scene files you can modify the definition of this variable within the 'os_correctingfluid.inc' file.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidCap()
+    </td></tr>
+    <tr><th>OS_CorrectingFluid_DesignMode         </th><td>
+The 'os_correctingfluid.inc' file is usually included in a scene file and the camera settings and lighting from the scene file are used. When making changes to the definitions within the include file it can be convenient to render directly from the include file rather than having to flip back and forth between the include file and a scene file. Setting this variable to '1' enables you to use the camera definition and lighting at the bottom of the include file to render the scene. Remember to set this back to '0' when you want to revert to rendering from a scene file.    
+    
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidBottle()
+      <br>
+      OS_CorrectingFluidCap()
+      <br>
+      OS_CorrectingFluidLabel()
+    </td></tr>
+    <tr><th>OS_CorrectingFluid_LabelDesignMode         </th><td>
+The 'os_correctingfluidlabel.inc' file is usually automatically included in a scene file by the 'OS_CorrectingFluidLabel' macro. This macro sets OS_CorrectingFluid_LabelDesignMode to '0' which ignores the camera settings and lighting settings at the bottom of the 'os_correctingfluidlabel.inc' file.
+<p>
+However, when modifying the design of the label it can be useful to see it layed out flat and to not have to keep switching to a separate scene file to see the results of those changes. The camera settings and object definitions at the bottom of this file provide this view if the OS_CorrectingFluid_LabelDesignMode is set to '1' which is the default when you render the include file directly.
+    </td>
+    <td>
+      OS_CorrectingFluid()
+      <br>
+      OS_CorrectingFluidLabel()
+    </td></tr>
+  </table>
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+  <a name='files'></a>
+  <h1>Files</h1>
+You should have received the following files with this distribution. The latest versions are available from <a href="http://lib.povray.org">http://lib.povray.org</a>.
+  <h2>Main Files</h2>
+  <table border=1>
+    <tr><th>os_correctingfluid.inc  </th><td colspan=2>
+This is the main include file for the Correcting Fluid Bottle object and incorporates the macro described <a href="#macros">above</a>.
+    </td></tr>
+    <tr><th>os_correctingfluid.pov  </th><td colspan=2>
+This is a sample scene file illustrating the use of the macro.
+    </td></tr>
+    <tr><th>os_correctingfluid.html </th><td colspan=2>
+This document.
+    </td></tr>
+    <tr><th>os_correctingfluidtest.pov</th><td>
+This is a scene file that contains a fairly comprehensive list of the control variables with alternative settings for dimensions and colours. It renders a complete bottle alongside each of the 3 major components. There is an option that enables you to switch between using the alternative variable settings from the file or reverting to the default values. There is also an option to switch the camera and lighting from above the horizon to below the horizon.
+    </td><td>
+    <img src="os_correctingfluidtest.jpg">
+    </td></tr>
+    <tr><th>os_correctingfluidlabel.inc </th><td colspan=2>
+This file contains the definition of the layers of pigment that go to make up the label.
+If you want to create your own label you can copy this file, set the values to suit your needs and specify the name of your file in your scene file using the OS_CorrectingFluidLabelFile variable before calling the macros.
+    </td></tr>
+  </table>
+
+
+  <p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+  <a name='examples'></a>
+  <h1>Examples</h1>
+<table border=1>
+<tr><td>
+All of the control variables have defaults, so you can generate the default object by just including the file and calling the macro:
+<div class=codesample>
+    light_source { <-15,7.5,-15>, rgb 2}
+<br>camera {location <-0.05,0.08,-0.07> look_at <0,0.035,0>}
+<br>#include "os_correctingfluid.inc"        
+<br>OS_CorrectingFluid()
+</div>
+</td><td rowspan=2 align=center>
+<img src="os_correctingfluidfront.jpg">
+<img src="os_correctingfluidback.jpg">
+</td></tr>
+<tr><td>
+You can apply standard POV-Ray transformations by wrapping the call in an object statement:
+<div class=codesample>
+    object{OS_CorrectingFluid() rotate y*180}
+</div>
+</td></tr>
+<tr><td colspan=2>
+Further examples can be found in the <b>os_correctingfluid.pov</b> scene file which generates a scene containing 4 bottles as shown in the illustration below. The scene file contains a brief description of settings used to generate each bottle. The numbers in the figure below correspond to the numbers in the comments within the scene file.
+<p align=center>
+<img src="os_correctingfluidnumbered.jpg">
+</td></tr>
+</table>
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>   
+</body>
+</html>

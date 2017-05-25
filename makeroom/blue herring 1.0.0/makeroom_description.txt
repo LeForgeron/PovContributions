@@ -1,0 +1,8 @@
+Creates a low detail room interior for use as a setting or background.  The walls, ceiling, and floor can be individually textured.  Optionally the following features can be easily added to the room,
+
+- Windows, rectangular or elliptical, 5 styles each, with or without glass.
+- Door openings, 2 styles.
+- Baseboards, shape can be customized.
+- Crown molding, shape can be customized.
+
+Textures can be assigned to any and all of these elements.

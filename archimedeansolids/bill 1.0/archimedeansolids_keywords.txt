@@ -1,0 +1,4 @@
+ArchimedeanSolids
+Archimedean
+polyhedron
+polyhedra

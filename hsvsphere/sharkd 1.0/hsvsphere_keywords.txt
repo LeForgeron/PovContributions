@@ -1,0 +1,9 @@
+HSVSphere
+HSVS
+hsv
+hue
+saturation
+value
+sphere
+pigment
+texture

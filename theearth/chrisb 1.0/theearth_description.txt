@@ -1,0 +1,1 @@
+A simple rendering of the Earth, using an image map, mapped to a sphere with spherical mapping and a slightly larger sphere with a largely transparent, turbulent, bumpy texture.

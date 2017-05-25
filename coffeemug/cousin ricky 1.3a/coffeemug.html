@@ -1,0 +1,364 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>CoffeeMug 1.3a User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="coffeemug.css">
+</head>
+
+<h1>CoffeeMug 1.3a User Manual</h1>
+
+<p>A library module from the
+ <a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+ <a href="http://lib.povray.org/">Object Collection</a>.
+
+<h2>Abstract</h2>
+
+<p><a href="coffeemug.jpg"><img class="demo" src="coffeemug_thumbnail.jpg"
+ title="Larger image" alt="[Demo]"></a>
+Some objects, though not used directly in office work, are nevertheless
+indispensable for the efficient functioning of the office.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Usage">Usage</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+  </ul>
+ <li><a href="#Parameters">Global parameters</a>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#CoffeeMug_Mug">CoffeeMug_Mug</a>
+   <li><a href="#CoffeeMug_Detail">CoffeeMug_Detail</a>
+   <li><a href="#CoffeeMug_Beverage">CoffeeMug_Beverage</a>
+   <li><a href="#CoffeeMug_Height">CoffeeMug_Height</a>
+   <li><a href="#CoffeeMug_Pigment">CoffeeMug_Pigment</a>
+   <li><a href="#CoffeeMug_Texture">CoffeeMug_Texture</a>
+  </ul>
+ <li><a href="#Units">Units of Measure</a>
+ <li><a href="#Other">Other identifiers</a>
+ <li><a href="#About">About CoffeeMug</a>
+  <ul>
+   <li><a href="#Changes">Change log</a>
+  </ul>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<table>
+ <tr><th colspan="2">Key Files</th></tr>
+ <tr>
+  <th>File</th> <th>Description</th></tr>
+ </tr><tr>
+  <td><code>coffeemug.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>coffeemug.inc</code></td>
+  <td>The CoffeeMug software</td>
+ </tr><tr>
+  <td><code>coffeemug.jpg</code></td>
+  <td>Sample output</td>
+ </tr><tr>
+  <td><code>coffeemug.pov</code></td>
+  <td>An example scene file</td>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code>
+   (where <var>nnnnnn</var> is a 6-digit number)
+  </td>
+  <td>Important information about using the Object Collection</td>
+ </tr><tr>
+  <th colspan="2">Other Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>coffeemug.css</code></td>
+  <td>A support file for the user manual</td>
+ </tr><tr>
+  <td><code>coffeemug_fig1.jpg</code></td>
+  <td rowspan="4">Illustrations for the user manual</td>
+ </tr><tr>
+  <td><code>coffeemug_fig4.jpg</code></td>
+ </tr><tr>
+  <td><code>coffeemug_fig5.jpg</code></td>
+ </tr><tr>
+  <td><code>coffeemug_thumbnail.jpg</code></td>
+ </tr><tr>
+  <td><code>coffeemug_description.txt</code></td>
+  <td>A brief description of CoffeeMug</td>
+ </tr><tr>
+  <td><code>coffeemug_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>coffeemug_prereqs.txt</code></td>
+  <td>Prerequisites (empty file)</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+  <td rowspan="2">Administrative support files</td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code>
+   (where <var>nnnnnn</var> is a 6-digit number)
+  </td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Usage">Usage</h3>
+
+<p>The file <code>coffeemug.inc</code> defines macros that create a coffee
+mug and a beverage to fill it. Include this file once prior to using the macros:
+
+<pre>#include "coffeemug.inc"</pre>
+
+<p>Including the file more than once is harmless, though unnecessary.
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<p>Requires POV-Ray version 3.5 or later.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>coffeemug.inc</code> comply fully with the Object Collection naming standards, as <a href="http://news.povray.org/povray.object-collection/message/%3C48ba92e8%241%40news.povray.org%3E/#%3C48ba92e8%241%40news.povray.org%3E">revised August 2008</a> and <a href="http://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The prefix for this module is “<code>coffeemug</code>,” including any uppercase and lowercase variations; to avoid conflicts, do not declare identifiers that start with this prefix plus an underscore.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Parameters">Global Parameters</h2>
+
+<p>The following parameters are used by the macro <code>CoffeeMug_Beverage()</code>. They may be changed at any time by the user.
+
+<table>
+ <tr><th>Parameter</th> <th>Type</th> <th>Description</th> <th>Default</th></tr>
+ <tr>
+  <td><code>CoffeeMug_ConAngle</code></td>
+  <td>float</td>
+  <td>The contact angle of the meniscus, in degrees. Valid values are 0 (concave, completely wet) to 180 (convex, completely phobic).</td>
+  <td><code>8</code></td>
+ </tr><tr>
+  <td><code>CoffeeMug_rMeniscus</code></td>
+  <td>float</td>
+  <td>The radius of the meniscus curve, in millimeters.</td>
+  <td><code>2</code></td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros">Macros</h2>
+
+<h3 id="CoffeeMug_Mug">CoffeeMug_Mug (Radius, Capacity, Units, Use_merge)</h3>
+
+<p>An untextured coffee mug, with the handle pointing in the negative <var>z</var> direction.
+
+<h4>Arguments:</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>: <dd>Outer radius of the mug.
+ <dt><code>Capacity</code>:
+ <dd>Height or net volume of the mug. Unit of measure is determined by the <code>Units</code> argument.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+ <dt><code>Use_merge</code>:
+ <dd>Whether to use a union or a merge. In general, pass <code>yes</code> if the mug is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p>Note: <code>CoffeeMug_Mug()</code> calls macro <a href="#CoffeeMug_Detail">CoffeeMug_Detail()</code></a>, supplying its own automatically calculated arguments. If the mug is very short, the calculated handle dimensions will trigger a warning from <code>CoffeeMug_Detail()</code>.
+
+<p><a href="#toc">Table of contents</a>
+
+<h3 id="CoffeeMug_Detail">CoffeeMug_Detail (Radius, Wall, Capacity, Units, v_Handle, Handle_space, Use_merge)</h3>
+
+<p>An untextured coffee mug with more user control over the dimensions. The handle points in the negative <var>z</var> direction.
+
+<h4>Arguments:</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>: <dd>Outer radius of the mug.
+ <dt><code>Wall</code>: <dd>Thickness of the wall.
+ <dt><code>Capacity</code>:
+ <dd>Height or net volume of the mug. Unit of measure is determined by the <code>Units</code> argument.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+ <dt><code>v_Handle</code>: <dd>Dimensions of the handle.
+ <dt style="width:7.5em"><code>Handle_space</code>:
+ <dd>The finger space between the handle and the wall of the mug.
+ <dt><code>Use_merge</code>:
+ <dd>Whether to use a union or a merge. In general, pass <code>yes</code> if the mug is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p><a href="#toc">Table of contents</a>
+
+<h3 id="CoffeeMug_Beverage">CoffeeMug_Beverage (Radius, Wall, Capacity, Units, Epsilon)</h3>
+
+<p>A beverage pre-sculpted to fit the coffee mug. The object is untextured, allowing the user the choice of coffee black, café au lait, cocoa, tea, apple cider, Dasani<a href="#Acknowledgements">®</a>, rum and Coke<a href="#Acknowledgements">®</a>, or any of a number of other quaffs. The object will not contour to the rim of the mug. Carbonation for the rum and Coke is available separately from the <a href="http://lib.povray.org/searchcollection/index2.php?objectName=bubble&amp;contributorTag=charlesr">Object Collection’s bubble module</a>.
+
+<h4>Arguments:</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>: <dd>Outer radius of the mug.
+ <dt><code>Wall</code>:
+ <dd>Thickness of the mug’s wall. Use <code>0.0</code> if the mug is created with <code>CoffeeMug_Mug()</code>.
+ <dt><code>Capacity</code>:
+ <dd>Height or volume of the beverage. Unit of measure is determined by the <code>Units</code> argument.
+  <p>Note: The meniscus and the curvature of the floor of the mug are not considered in the volume-to-height calculation.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+  <p>Note: If set to <code>COFFEEMUG_HEIGHT</code>, the meniscus will not be modeled.
+ <dt><code>Epsilon</code>:
+ <dd>A tiny value to avoid a <a href="http://www.povray.org/documentation/view/3.6.1/33/">coincident surface</a> with the inner wall of the mug. A negative value creates a space between the liquid and the mug; a positive value intersects the mug.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="CoffeeMug_Height">CoffeeMug_Height (Radius, Capacity, Units)</h3>
+
+<p>Computes the height of a cylinder, given its capacity and radius.
+
+<h4>Arguments:</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>: <dd>Radius of the cylinder.
+ <dt><code>Capacity</code>:
+ <dd>Height or volume of the cylinder. Unit of measure is determined by the <code>Units</code> argument.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="CoffeeMug_Pigment">CoffeeMug_Pigment
+ (Radius, Wall, Capacity, Units, o_Print, p_Background, p_Foreground)</h3>
+
+<p>Returns a cylindrically-mapped block pigment from a user-supplied object. A slice is taken at the <var>x-y</var> plane, transformed to the middle-front of the mug, and wrapped around the mug. The object should be centered on the origin.
+
+<p id="illus">These illustrations show how an object is mapped to the mug.
+
+<p>
+<img src="coffeemug_fig1.jpg" alt="[An object and a mug.]">
+<img src="coffeemug_fig4.jpg"
+ alt="[How CoffeeMug_Pigment() or CoffeeMug_Texture() orients the object]">
+<img src="coffeemug_fig5.jpg" alt="[The fully textured mug.]">
+
+<h4>Arguments:</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>: <dd>Outer radius of the mug.
+ <dt><code>Wall</code>:
+ <dd>Thickness of the wall. Use <code>0.0</code> if the mug is created with <code>CoffeeMug_Mug()</code>.
+ <dt><code>Capacity</code>:
+ <dd>Height or net volume of the mug. Unit of measure is determined by the <code>Units</code> argument.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+ <dt><code>o_Print</code>: <dd>The object to be used as the pigment pattern.
+ <dt style="width:7.5em"><code>p_Background</code>: <dd>A background pigment.
+ <dt style="width:7.5em"><code>p_Foreground</code>: <dd>A foreground pigment.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="CoffeeMug_Texture">CoffeeMug_Texture
+ (Radius, Wall, Capacity, Units, o_Print, t_Background, t_Foreground)</h3>
+
+<p>Returns a cylindrically-mapped block texture from a user-supplied object. A slice is taken at the <var>x-y</var> plane, transformed to the middle-front of the mug, and wrapped around the mug, as shown in <a href="#illus">these illustrations</a>. The object should be centered on the origin.
+
+<h4>Arguments:</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>: <dd>Outer radius of the mug.
+ <dt><code>Wall</code>:
+ <dd>Thickness of the wall. Use <code>0.0</code> if the mug is created with <code>CoffeeMug_Mug()</code>.
+ <dt><code>Capacity</code>:
+ <dd>Height or net volume of the mug. Unit of measure is determined by the <code>Units</code> argument.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+ <dt><code>o_Print</code>: <dd>The object to be used as the texture pattern.
+ <dt style="width:7.5em"><code>t_Background</code>: <dd>A background texture.
+ <dt style="width:7.5em"><code>t_Foreground</code>: <dd>A foreground texture.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Units">Units of Measure</h2>
+
+<table>
+<tr><th>Code</th> <th>Linear POV-Unit</th> <th>Liquid Measure (Volume)</th></tr>
+<tr>
+ <td><code>COFFEEMUG_INCH</code></td>
+ <td>Inches</td>
+ <td>Fluid ounces</td>
+</tr><tr>
+ <td><code>COFFEEMUG_CM</code></td>
+ <td>Centimeters</td>
+ <td>Milliliters</td>
+</tr><tr>
+ <td><code>COFFEEMUG_MM</code></td>
+ <td>Millimeters</td>
+ <td>Milliliters</td>
+</tr><tr>
+ <td><code>COFFEEMUG_HEIGHT</code></td>
+ <td>Arbitrary</td>
+ <td>The capacity argument determines the height instead of the volume</td>
+</tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other">Other Identifiers</h2>
+
+<p>Any identifiers in <code>coffeemug.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About CoffeeMug</h2>
+
+<address>Copyright © 2008 &ndash; 2013 Richard Callwood III.
+ <a href="http://creativecommons.org/licenses/LGPL/2.1/">
+  <img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+ </a>
+</address>
+
+<h3 id="Changes">Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>1.0</td>
+  <td>August 7, 2008</td>
+  <td>Software is created.</td>
+ </tr><tr>
+  <td>1.1</td>
+  <td>August 8, 2008</td>
+  <td>Texture options are added.</td>
+ </tr><tr>
+  <td>1.2</td>
+  <td>August 31, 2008</td>
+  <td>Complies with the August 2008 revision to the naming standards.</td>
+ </tr><tr>
+  <td>1.3</td>
+  <td>May 20, 2013</td>
+  <td>Options for controlling the meniscus are added.</td>
+ </tr><tr>
+  <td>1.3a</td>
+  <td>May 21, 2013</td>
+  <td>Same as version 1.3, but with sample output corrected.</td>
+ </tr>
+</table>
+
+<h3 id="Acknowledgements">Acknowledgements</h3>
+
+<p>Coke<a href="#CoffeeMug_Beverage">®</a> and Dasani<a href="#CoffeeMug_Beverage">®</a> are registered trademarks of the Coca-Cola Company. No endorsement is implied.
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

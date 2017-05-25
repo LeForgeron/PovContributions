@@ -1,0 +1,3 @@
+A macro which creates an object representing a bottle of correcting fluid ("White-Out").
+
+These macros were created by Chris Bartlett in January 2008 as part of the 'Office Supplies' theme assembled by Ben Chambers for the POV-Ray Object Collection at http   lib.povray.org  and is licensed under the terms of the CC-LGPL.

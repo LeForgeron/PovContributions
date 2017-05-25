@@ -1,0 +1,180 @@
+
+<link REL="stylesheet" href="sc_doc.css"       type="text/css"></link>
+<link REL="stylesheet" href="sc_docprint.css"  type="text/css" media="print"> </link>
+<link REL="stylesheet" href="sc_docscreen.css" type="text/css" media="screen"></link>
+<script src="sc_doc.js"></script>
+<script> thisSection = 3; </script>
+<script> headerSection(); </script>
+<script> sectionToc(); </script>
+<script> tocFooter(); </script>
+
+<h2><a name="staircase"></a>The StairCase Macro</h2>
+The StairCase macro adds a staircase, or parts of a staircase, to a scene file. Control variables are used to control the path that the staircase follows and the components that are incorporated into the scene file. The following major components are included by default but can be suppressed by setting the appropriate control variable.
+<table width=100% border=1>
+  <tr>
+    <td><b>Major Component</b></td>
+    <td><b>Control Variable</b></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Stairs</td>
+    <td><a href="staircase_variables.html#StairCase_StairsOn">StairCase_StairsOn</a></td>
+    <td>Comprised of Risers and Treads.</td>
+  </tr>
+  <tr>
+    <td>Main Banister</td>
+    <td><a href="staircase_variables.html#StairCase_MainBanisterOn">StairCase_MainBanisterOn</a></td>
+    <td>Comprised of Newel Posts, Balusters, Hand Rail, Toe Rail and Stringer.</td>
+  </tr>
+  <tr>
+    <td>Paired Banister</td>
+    <td><a href="staircase_variables.html#StairCase_PairedBanisterOn">StairCase_PairedBanisterOn</a></td>
+    <td>Comprised of Newel Posts, Balusters, Hand Rail, Toe Rail and Stringer.</td>
+  </tr>
+  <tr>
+    <td>Landings</td>
+    <td><a href="staircase_variables.html#StairCase_LandingsOn">StairCase_LandingsOn</a></td>
+    <td>Comprised of Flooring with optional carpet.</td>
+  </tr>
+  <tr>
+    <td>Carpeting</td>
+    <td><a href="staircase_variables.html#StairCase_StairCarpetOn">StairCase_StairCarpetOn</a></td>
+  </tr>
+</table>
+
+The StairCase macro can be used to produce a single flight of stairs or a more complex structure with multiple flights of stairs connected together with landings. The path that the staircase follows is based upon the positions of newel posts as specified in the <a href="staircase_variables.html#StairCase_PostPositions">StairCase_PostPositions</a> control variable. The control variables used to control this macro are described with examples in the <a href="staircase_variables.html">Variables Reference</a> section of this document.
+
+
+<p>
+The StairCase macro is contained within the staircase.inc file along with sufficient default object definitions to generate the default staircase.
+<p>
+All of the control variables have default settings to enable the StairCase macro to be used by POV-Ray users without much experience.
+<p>
+The StairCase macro does not accept any parameters.
+
+
+
+<script> endSection(); </script>
+
+<h2><a name="StairCase_Spiral"></a>The StairCase_Spiral Macro</h2>
+The StairCase_Spiral macro adds a spiral staircase, or components of a spiral staircase, to a scene file. Control variables control the path that the spiral staircase will follow and the components to be rendered. The following major components are included by default but can be suppressed by setting the appropriate control variable.
+<table width=100% border=1>
+  <tr>
+    <td><b>Major Component</b></td>
+    <td><b>Control Variable</b></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Stairs</td>
+    <td><a href="staircase_variables.html#StairCase_StairsOn">StairCase_StairsOn</a></td>
+    <td>Comprised of Risers and Treads.</td>
+  </tr>
+  <tr>
+    <td>Main Banister</td>
+    <td><a href="staircase_variables.html#StairCase_MainBanisterOn">StairCase_MainBanisterOn</a></td>
+    <td>Comprised of Newel Posts, Balusters, Hand Rail, Toe Rail and Stringer.</td>
+  </tr>
+  <tr>
+    <td>Paired Banister</td>
+    <td><a href="staircase_variables.html#StairCase_PairedBanisterOn">StairCase_PairedBanisterOn</a></td>
+    <td>Comprised of Newel Posts, Balusters, Hand Rail, Toe Rail and Stringer. The paired banister is suppressed by default.</td>
+  </tr>
+  <tr>
+    <td>Carpeting</td>
+    <td><a href="staircase_variables.html#StairCase_StairCarpetOn">StairCase_StairCarpetOn</a></td>
+  </tr>
+  <tr>
+    <td>Spiral Core</td>
+    <td><a href="staircase_variables.html#StairCase_SpiralCoreOn">StairCase_SpiralCoreOn</a></td>
+    <td>The spiral core is a cylindrical column at the centre of the staircase.</td>
+  </tr>
+</table>
+
+The SpiralStairCase macro can be used to produce a single spiral flight of stairs. The path that the staircase follows is based upon the positions of newel posts as specified in the <a href="staircase_variables.html#StairCase_PostPositions">StairCase_PostPositions</a> control variable. The control variables used to control this macro are described with examples in the <a href="staircase_variables.html">Variables Reference</a> section of this document.
+
+<p>
+The SpiralStairCase macro is contained within the staircase.inc file along with sufficient default object definitions to generate the default spiral staircase which consists of a spiral centred at the origin and rising up around the +y axis. The default stair width is 1 POV-Ray unit which is intended to represent 1 metre.
+<p>
+All of the control variables have default settings to enable the SpiralStairCase macro to be used by POV-Ray users without much experience.
+<p>
+The SpiralStairCase macro does not accept any parameters.
+
+<script> endSection(); </script>
+
+
+<h2><a name="StairCase_Undef"></a>The StairCase_Undef Macro</h2>
+This macro resets control variables by issuing an '#undef' for any that have been defined. This essentially re-initialises
+settings so that they revert to their default values the next time one of the staircase macros is called.
+<p>
+For example, the sample scene file 'staircase_example05.pov' creates a set of stone steps with a stonework balustrade around a building. It then calls the 'StairCase_Undef' macro to revert to the default wooden staircase components and textures before generating the interior staircases and perimeter handrails.
+<script> endSection(); </script>
+
+    
+<h2><a name="StairCase_BannisterGen"></a>The StairCase_BannisterGen Macro</h2>
+This macro is used by the <a href="#staircase">StairCase</a> macro to define the banister rail that connects two newel posts.
+Certain variables must be set before this macro is called. This macro is not intended to be called directly from a scene file.
+This macro requires 3 parameters:
+<table cellpadding=5>
+  <tr>
+    <td></td><td><b>Start </b></td>
+    <td>A 3D vector defining the position of the base of the newel post at one end of the rail.</td>
+  </tr><tr>
+    <td></td><td><b>End   </b></td>
+    <td>A 3D vector defining the position of the base of the newel post at the other end of the rail.</td>
+  </tr><tr>
+    <td></td><td><b>Height</b></td>
+    <td>The height, in POV-Ray units of the handrail.</td>
+  </tr>
+</table>
+<script> endSection(); </script>
+
+    
+<h2><a name="StairCase_SpiralBannisterGen"></a>The StairCase_SpiralBannisterGen Macro</h2>
+This macro is used by the <a href="#StairCase_Spiral">StairCase_Spiral</a> macro to define the banister rail that connects two newel posts on a spiral staircase.
+Certain variables must be set before this macro is called. This macro is not intended to be called directly from a scene file.
+This macro requires 5 parameters:
+<table cellpadding=5>
+  <tr>
+    <td></td><td><b>Start </b></td>
+    <td>A 3D vector defining the position of the base of the newel post at one end of the rail.</td>
+  </tr><tr>
+    <td></td><td><b>Height </b></td>
+    <td>The height of the spiral, which is usually the same as the distance from the top of the first step to the top of the last step.</td>
+  </tr><tr>
+    <td></td><td><b>PositionDelta </b></td>
+    <td>A vector indicating the amount that each slice of the spiral needs to be moved out (or in) by.</td>
+  </tr><tr>
+    <td></td><td><b>StartRadius</b></td>
+    <td>The radius of the spiral at the start of the handrail.</td>
+  </tr><tr>
+    <td></td><td><b>EndRadius</b></td>
+    <td>The radius of the spiral at the end of the handrail</td>
+  </tr>
+</table>
+<script> endSection(); </script>
+
+<h2><a name="StairCase_Compatibility"></a>The StairCase_Compatibility Macro</h2>
+This macro is called by the <a href="#staircase">StairCase</a> macro if the <a href="staircase_variables.html#StairCase_CompatibilityMode">StairCase_CompatibilityMode</a> variable is set to '1', to provide a degree of compatibility with the old POV-Stairs package. The primary difference between the two is that POV-Stairs used variable names with a prefix of 'sc' where this version uses the prefix 'StairCase_' (in order to conform to the naming conventions of the POV-Ray Object Collection). For any 'current' variable that is not set, where the 'old' variable name is set, this macro copies the value across to the corresponding current variable names. 
+<p>
+<b>Note</b>
+This is not a foolproof technique where you call the 'StairCase' macro more than once in a single scene file because the first call to the macro will initialise all variables, so any settings assigned to old variable names between an initial call to the 'StairCase' macro and a second call to the macro will be ignored. The recommended approach is to go through your scene file and rename variables. This can usually be achieved pretty quickly using the search and replace option provided by most text editors (including the POV-Ray Windows editor).
+<script> endSection(); </script>
+
+    
+<h2><a name="StairCase_NewelShape"></a>The StairCase_NewelShape Macro</h2>
+This macro is defined in the file 'StairCase_Samples.inc' and can be used to define a newel post based upon a set of standard definitions embedded within the macro.
+You can use this macro as illustrated in the description for the use of the <a href="staircase_variables.html#StairCase_NewelPost">StairCase_NewelPost</a> variable.
+<script> endSection(); </script>
+
+<h2><a name="StairCase_BalusterShape"></a>The StairCase_BalusterShape Macro</h2>
+This macro is defined in the file 'StairCase_Samples.inc' and can be used to define a baluster based upon a set of standard definitions embedded within the macro.
+You can use this macro as illustrated in the description for the use of the <a href="staircase_variables.html#StairCase_Baluster">StairCase_Baluster</a> variable.
+
+
+<script> tocFooter(); </script>
+<script> footer(); </script>
+    
+    
+    
+    
+    

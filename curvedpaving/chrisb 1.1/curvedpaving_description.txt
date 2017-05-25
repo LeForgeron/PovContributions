@@ -1,0 +1,1 @@
+Macros to generate areas of street paving in the bogen style, which is a common traditional European style. This style uses continuous runs of interleaved arcs of stone or brick blocks. These macros provide plenty of optional settings, all with default values. This version corrects a bug that prevented colors from being set to override the defaults.

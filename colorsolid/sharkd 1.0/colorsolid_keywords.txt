@@ -1,0 +1,13 @@
+ColorSolid
+CSolid
+color space
+color model
+color solid
+sphere
+cylinder
+cone
+double
+double-cone
+Munsell
+pigment
+texture

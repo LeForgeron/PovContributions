@@ -1,0 +1,10 @@
+HSLCylinder
+HSLY
+hsl
+hue
+saturation
+lightness
+luminance
+cylinder
+pigment
+texture

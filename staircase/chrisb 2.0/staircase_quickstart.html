@@ -1,0 +1,227 @@
+
+<link REL="stylesheet" href="sc_doc.css"       type="text/css"></link>
+<link REL="stylesheet" href="sc_docprint.css"  type="text/css" media="print"> </link>
+<link REL="stylesheet" href="sc_docscreen.css" type="text/css" media="screen"></link>
+<script src="sc_doc.js"></script>
+<script> thisSection = 1; </script>
+<script> headerSection(); </script>
+<script> sectionToc(); </script>
+<script> tocFooter(); </script>
+
+
+The StairCase Macros are designed to add staircases to scene files created using the free
+<a href="http://en.wikipedia.org/wiki/POV-Ray">POV-Ray</a> <a href="http://en.wikipedia.org/wiki/Raytracing">raytracing</a> software.
+<a href="http://en.wikipedia.org/wiki/POV-Ray">POV-Ray</a> can be used to create photo-realistic images. It can be <a href="http://www.povray.org/download/">downloaded</a> from the POV-Ray website at 
+<a href="http://www.povray.org">http://www.povray.org</a>. It is well supported on the newsgroups at <a href="http://news.povray.org/groups/">http://news.povray.org/groups/</a>
+<p>
+The <a href="staircase_macros.html#staircase">StairCase</a> Macro adds segments of straight staircases to a scene (and flat landings). The <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> Macro adds segments of spiral staircase to a scene. The component parts of the staircase can all be controlled/replaced to produce a staircase of your own design.
+<p>
+
+<h2><a name="downloading"></a>Downloading the StairCase Macros</h2>
+
+You can Download StairCase V2.0
+<a href="http://lib.povray.org/searchcollection/download.php?objectName=StairCase&contributorTag=chrisb&version=2.0">
+here 
+</a>.
+<p>
+The <script> PSHomeLink(); </script>
+are contained in a single 'include' file called 'staircase.inc' which incorporates: 
+
+<ul>
+<li>default definitions for the component parts that are used to construct a staircase
+<li>the 'StairCase' macro to generate multiple straight flights of stairs and landings 
+<li>the 'StairCase_Spiral' macro to generate spiral staircases
+<li>a number of utility macros to help you tailor a staircase to your needs.
+</ul>
+Various alternative component definitions are provided in separate files, including definitions for stone balustrades and alternative turned wooden shaped newel posts and balusters.
+The StairCase Macros have been written using POV-Ray 3.5 and POV-Ray 3.6, but should also be compatible with more recent versions.
+<p>
+A zip file containing the latest version of this include file, numerous examples and this documentation can be downloaded from the
+<a href="http://lib.povray.org">POV-Ray Object Collection</a> (Search for 'StairCase'). You should unzip these files to a location of your choice. To confirm that the download was successful you should test the StairCase Macros by opening one of the 'staircase_example' scene files in POV-Ray and rendering it. You should see a simple example of a staircase, though some of the later examples are more complex and may take a couple of minutes to render.
+<p>
+To make the StairCase Macro include file available to any scene file you render using POV-Ray, copy the include file into your standard POV-Ray include directory (alternatively you can simply add a copy into the directory containing your scene).
+<p>
+You can incorporate the StairCase Macros into code that you subsequently re-distribute by simply including the 'staircase.inc' file in your distribution (along with any additional optional files you may have that define non-default components).
+<p>
+<script> endSection(); </script>
+
+
+
+<h2><a name="adding"></a>Adding a staircase to your scene</h2>
+With POV-Ray you create scene files that describe the scene you want to render. 
+To add a staircase to your scene you need to add at least two lines to your POV-Ray scene file (in addition to a camera and a light source). For example:
+<div class="samplecode">
+  light_source {<0,20,-10> color rgb 1.2}<br>
+  camera {location <0,3,-5> look_at  0}<br>
+  #include "staircase.inc"<br>
+  StairCase()
+</div>
+or, for a spiral staircase:
+<div class="samplecode">
+  light_source {<0,20,-10> color rgb 1.2}<br>
+  camera {location <0,3,-5> look_at  0}<br>
+  #include "staircase.inc"<br>
+  StairCase_Spiral()
+</div>
+<ul>
+  <li>The <b>staircase.inc</b> file contains the definitions of default component parts and the StairCase macros.
+  <li>The <b>StairCase</b> macro adds a staircase to the scene at the positions defined by default for the newel posts. 
+</ul>
+Both the StairCase and the StairCase_Spiral macros define a staircase at the origin by default, using 1 POV-Ray unit to represent 1 metre.
+<p>
+By wrapping the StairCase macro call in an 'object' definition you can treat it as a standard POV-Ray object. The following example adds a staircase to the scene and scales it by a factor of 5.
+<div class="samplecode">
+  object {StairCase() scale 5}
+</div>
+<p>
+To specify the path the staircase should follow you need to set the 3D coordinates of the bottoms of each newel post (the posts supporting the ends of the handrail). You are also likely to need to set the width of the stairs. the StairCase Macro draws newel posts at the positions you specify, joins them together with banister rails and a stringers and draws treads and risers off at right angles to the banister rails. It adds a second banister rail on the opposite side of the stairs and a parallelogram shaped landings to transition the flooring around the corners. Finally you can decide whether to carpet the stairs and whether the carpet should span the full width of the stairs or leave the edges bare.
+<p>
+There are about 50 different <a href="staircase_variables.html">control variables</a> that you can set to tailor the stairs to your needs, but that shouldn't put you off because all of them have sensible defaults, so it should be easy to generate a staircase straight away. If you run the StairCase macro without changing anything, you get a staircase with three flights of stairs starting at the origin and rising up a total of about 3 POV-Ray units at a scale where 1 POV-Ray unit = 1 Metre. You can assign the output of the StairCase Macros to a variable or wrap it in an object definition so that you can transform it to be any scale you want.
+<p>
+The StairCase Macro control variables are all specified with units of 1 POV-Ray unit = 1 Metre.
+<p>
+All of the StairCase Macro control variables and macro names start with the prefix 'StairCase_' so as to reduce the likelihood that these names will conflict with variable names that you have used elsewhere in your scene file. 
+<p>
+The most important control variable uses an array to specify a sequence of coordinates for the positions of the newel posts. This is the 'StairCase_PostPositions' variable.
+
+
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_PostPositions = array [3] {<0,0,0>,<0,2,2.5>,<-2.5,4,2.5>};<br>
+  StairCase()
+</div>
+In this example, the <a href="staircase_variables.html#StairCase_Positions">StairCase_Positions</a>  variable is defined as an array containing 3 sets of coordinates which will result in the generation of 2 flights of stairs joined by a small landing:
+<ul>
+  <li>The 'floor level' of the first newel post will be located at the origin. 
+  <li>The second newel post will be raised up by 2 metres and will be 2.5 metres along in the direction of the positive 'z' axis.
+  <li>The third will be 2.5 metres away to the left of the line from the first to the second and will be raised to a height of 4 metres.
+</ul>
+This gives two flights of stairs at right angles to one another and will, by default include a little landing joining the two flights. By default the stairs are drawn to the right of the newel posts as you look along the lines joining them in the sequence that they are defined. This 'handedness' can be changed by setting the 'StairCase_StairHandedness' control variable to '-1'.
+</td><td align=right >
+<a href="staircase_documentimages01.png" target="example"><img src="staircase_documentimages01.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+
+<p>
+If you specify adjacent newel post positions that have the same 'y' value, the StairCase Macros adds more level sections of landing as the following example illustrates:
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  camera {location <-6,5.2,2> look_at  <0,0,1.2>}<br>
+  #include "staircase.inc"<br>
+  #declare StairCase_StairWidth = 1.5;<br>
+  #declare StairCase_StairCarpetWidth = 1.2;<br>
+  #declare StairCase_PostPositions = array [6] {<0,2,0>,<0,1,3>,<-1,1,3>,<-2,0,2>,<-2,0,1>,<-2,-1,-2>};<br>
+  StairCase()
+</div>
+In this example the <a href="staircase_variables.html#StairCase_Positions">StairCase_Positions</a> variable is defined as an array containing 6 sets of coordinates:
+<ul>
+  <li>The second and third newel posts are at the same height. the StairCase Macros therefore creates a level section between the newel posts. 
+  <li>The fourth and fifth posts are also at the same level, so the StairCase Macros adds another level section here.
+</ul>
+This still gives three flights of stairs, but creates extended landings between each flight.
+<p>
+This example also illustrates the use of the <a href="staircase_variables.html#StairCase_StairWidth">StairCase_StairWidth</a> and <a href="staircase_variables.html#StairCase_StairCarpetWidth">StairCase_StairCarpetWidth</a> control variables to specify a stair width of 1.5 units and a carpet width of 1.2 units, leaving a bare section of timber on either side of the carpet. 
+</td><td align=right >
+<a href="staircase_documentimages47.png" target="example"><img src="staircase_documentimages47.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+
+<p>
+Stairs can clearly go up or down. The following example illustrates the definition for a set of stairs that changes direction. It is normal to have a level section between any such change.
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  camera {location <0,3,-5> look_at  <0,0,0>}<br>
+  #include "staircase.inc"<br>
+  #declare StairCase_PostPositions = array [6] {<-3,0,0>,<-2,0,0>,<-1,-1,0>,<1,-1,0>,<2,0,0>,<3,0,0>};<br>
+  StairCase()<br>
+</div>
+In this example the <a href="staircase_variables.html#StairCase_Positions">StairCase_Positions</a>  variable is defined as an array containing 6  sets of coordinates:
+<ul>
+  <li>The first and last two sections are all at the same height 
+  <li>The section joining the second and third newel post drops down by 1 unit.
+  <li>A level section joining newel posts 3 and 4 is followed by a rise by 1 unit between newel posts 4 and 5.
+</ul>
+</td><td align=right >
+<a href="staircase_documentimages48.png" target="example"><img src="staircase_documentimages48.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h2><a name="more"></a>Adding separate flights of stairs</h2>
+
+<p>
+There are various ways to provide an opening in the banister rail in the middle. The following example illustrates one approach.
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  camera {location <0,3,-5> look_at  <0,0,0>}<br>
+  #include "staircase.inc"<br>
+  #declare StairCase_PairedBanisterOn = 0;<br>
+  #declare StairCase_PostPositions = array [6] {<-3,0,0>,<-2,0,0>,<-1,-1,0>,<1,-1,0>,<2,0,0>,<3,0,0>};<br>
+  StairCase()<p>
+  
+  #declare StairCase_PairedBanisterOn = 1;<br>
+  #declare StairCase_MainBanisterOn = 0;<br>
+  #declare StairCase_StairsOn = 0;<br>
+  #declare StairCase_PostPositions = array [3] {<-3,0,0>,<-2,0,0>,<-1,-1,0>};<br>
+  StairCase()<p>
+  
+  #declare StairCase_PostPositions = array [3] {<1,-1,0>,<2,0,0>,<3,0,0>};<br>
+  StairCase()<p>
+  
+  #declare StairCase_MainBanisterOn = 1;<br>
+  #declare StairCase_StairsOn = 1;<br>
+  #declare StairCase_StairWidth=2;<br>
+  #declare StairCase_PostPositions = array [2] {<-1,-1.5,-1.65>,<-1,-1,-1>};<br>
+  StairCase()<br>
+</div>
+The <a href="staircase_variables.html#StairCase_Positions">StairCase_Positions</a> variable is redefined between successive <a href="staircase_macros.html#StairCase">StairCase</a> macro calls:
+<ul>
+  <li>The first call uses a <a href="staircase_variables.html#StairCase_PairedBanisterOn">StairCase_PairedBanisterOn</a> variable setting of '0' so that the banister rail nearest to the camera is not created.
+  <li>The second call creates only a banister rail joining the first 3 newel posts.
+  <li>The third call creates a banister rail joining the last 3 newel posts.
+  <li>The final call creates a full flight of stairs leading into the gap we have left in the banister rail.
+</ul>
+</td><td align=right >
+<a href="staircase_documentimages49.png" target="example"><img src="staircase_documentimages49.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+
+<p>
+The following example creates three separate flights of stairs with no landing in between.
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_PostPositions = array [2] {<0,0,0>,<0,2,2.5>};<br>
+  StairCase()<br>
+  #declare StairCase_PostPositions = array [2] {<0,2,2.5>,<-2.5,4,2.5>};<br>
+  StairCase()<br>
+  #declare StairCase_PostPositions = array [2] {<0,2,2.5>,< 2.5,4,2.5>};<br>
+  StairCase()
+</div>
+</td><td align=right >
+<a href="staircase_documentimages02.png" target="example"><img src="staircase_documentimages02.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+
+<p>
+The positions specified don't have to define flights of stairs that are at right angles to one another. the StairCase Macros calculates the coordinates of the landing in one of two ways depending upon the amount through which the staircase needs to turn at that landing. If it turns through an angle that is greater than the setting of <a href="staircase_variables.html#StairCase_LandingThreshold">StairCase_LandingThreshold</a> then it adds a fourth newel post and calculates a parallelogram. Otherwise it uses the existing 3 newel posts to define a triangular landing. This works fairly well, but may not provide the level of control that you need. If the automatically generated landings are not satisfactory, simply split the staircase into multiple sections and code landings of your own in your scene file.
+
+<script> endSection(); </script>
+
+  
+
+<script> tocFooter(); </script>
+<script> footer(); </script>
+    
+    
+    
+    
+    
+    
+    

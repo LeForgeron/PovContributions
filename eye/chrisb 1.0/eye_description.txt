@@ -1,0 +1,3 @@
+An include file containing a macro to generate a human eyeball and a sample scene file illustration the use of the macro.
+The textures used for the exterior and interior surfaces can be overridden.
+Control settings are described in the Eye.html file accompanying the object.

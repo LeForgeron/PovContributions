@@ -1,0 +1,1 @@
+This simple object representing a traditional Halloween lantern made by carving out a pumpkin. It is constructed using Constructive Solid Geometry (CSG) to assemble primitive POV-Ray objects. The main shape consists of a set of a squashed spheres rotated around an axis to give a sort of segmented look.

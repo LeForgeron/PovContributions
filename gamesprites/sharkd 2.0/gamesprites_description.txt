@@ -1,0 +1,10 @@
+This is a collection of POV-Ray objects designed to be used as sprites in 2D video games. There are five main collections at present.
+
+- Walls - 16-frame animations that adjust to connect with
+  adjacent tiles. A mix of "personal" and "map" scale sizes.
+- Floors - single-frame "personal" scale indoor floor tiles.
+- Terrain - single-frame "map" scale outdoor ground tiles.
+- Hills - 16-frame animations that adjust to meet adjacent
+  tiles, just like walls.
+- Scenery - various props that get layered on top of terrain
+  tiles. Mostly "map" scale sizes.

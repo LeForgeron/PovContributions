@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CoffeeMug 2.0 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="coffeemug.css">
+</head>
+
+<h1>CoffeeMug 2.0 User&nbsp;Manual</h1>
+
+<p class="intro">A library module from the
+ <a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+ <a href="http://lib.povray.org/">Object Collection</a>.
+
+<h2>Abstract</h2>
+
+<p><a href="coffeemug.jpg"><img class="demo" src="coffeemug_thumbnail.jpg"
+ title="Montage of larger demo images" alt="[Thumbnail which links to a montage of larger demo images]"></a>
+Some objects, though not used directly in office work, are nevertheless indispensable for the efficient functioning of the office. This module defines macros for a coffee mug and a beverage object to fill it.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#CoffeeMug_Mug">CoffeeMug_Mug</a>
+   <li><a href="#CoffeeMug_Detail">CoffeeMug_Detail</a>
+   <li><a href="#CoffeeMug_Beverage">CoffeeMug_Beverage</a>
+   <li><a href="#CoffeeMug_Height">CoffeeMug_Height</a>
+   <li><a href="#CoffeeMug_Stack_height">CoffeeMug_Stack_height</a>
+   <li><a href="#CoffeeMug_Pigment">CoffeeMug_Pigment</a>
+   <li><a href="#CoffeeMug_Texture">CoffeeMug_Texture</a>
+   <li><a href="#CoffeeMug_Wrap">CoffeeMug_Wrap</a>
+  </ul>
+ <li><a href="#Units">Units of Measure</a>
+ <li><a href="#Other">Other identifiers</a>
+  <ul>
+   <li><a href="#Parameters">Global parameters</a>
+   <li><a href="#Reference">Reference identifiers</a>
+   <li><a href="#Short">Short form identifiers</a>
+   <li><a href="#Internal">Internal identifiers</a>
+  </ul>
+ <li><a href="#About">About CoffeeMug</a>
+  <ul>
+   <li><a href="#Changes">Change log</a>
+   <li><a href="#Acknowledgments">Acknowledgments</a>
+  </ul>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr><th colspan="2">Key Files</th></tr>
+ <tr>
+  <th>File</th> <th>Description</th>
+ </tr><tr>
+  <td><code>coffeemug.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>coffeemug.inc</code></td>
+  <td>The CoffeeMug software</td>
+ </tr><tr>
+  <td><code>coffeemug.jpg</code></td>
+  <td>Sample output</td>
+ </tr><tr>
+  <td><code>coffeemug.pov</code></td>
+  <td>An example scene description file, demonstrating how to use <code>coffeemug.inc</code>.</td>
+ </tr><tr>
+  <td><code>coffeemug_map.jpg</code></td>
+  <td>An image used by the example scene description file</td>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <th colspan="2">Other Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>coffeemug.css</code></td>
+  <td>A file used by the user manual</td>
+ </tr><tr>
+  <td><code>coffeemug_fig1.jpg</code></td>
+  <td rowspan="4">Illustrations for the user manual</td>
+ </tr><tr>
+  <td><code>coffeemug_fig4.jpg</code></td>
+ </tr><tr>
+  <td><code>coffeemug_fig5.jpg</code></td>
+ </tr><tr>
+  <td><code>coffeemug_thumbnail.jpg</code></td>
+ </tr><tr>
+  <td><code>coffeemug_description.txt</code></td>
+  <td>A brief description of CoffeeMug</td>
+ </tr><tr>
+  <td><code>coffeemug_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>coffeemug_prereqs.txt</code></td>
+  <td>Prerequisites (empty file)</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+  <td rowspan="2">Administrative files</td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p>Note: The file <code>coffeemug_cc-lgpl.png</code> is no longer used.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<p>CoffeeMug requires POV-Ray version 3.5 or later.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>coffeemug.inc</code> comply fully with the Object Collection naming standards, as <a href="http://news.povray.org/povray.object-collection/message/%3C48ba92e8%241%40news.povray.org%3E/#%3C48ba92e8%241%40news.povray.org%3E">revised August 2008</a> and <a href="http://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The prefixes for this module are “<code>coffeemug</code>” and “<code>mug</code>,” including any uppercase and lowercase variations; to avoid conflicts, do not declare identifiers that start with either of these prefixes plus an underscore.
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include this file once prior to using the macros:
+
+<pre>#include "coffeemug.inc"</pre>
+
+<p>Including the file more than once is harmless, though unnecessary.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros">Macros</h2>
+
+<h3 id="CoffeeMug_Mug">CoffeeMug_Mug (Radius, Capacity, Units, Use_merge)</h3>
+
+<p>An untextured coffee mug, with the bottom center of the mug at the origin, and the handle pointing in the negative <var>z</var> direction.
+
+<h4>Arguments</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>:
+ <dd>The outer radius of the mug.
+ <dt><code>Capacity</code>:
+ <dd>The height or net volume of the mug. The unit of measure is determined by the <code>Units</code> argument.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+ <dt><code>Use_merge</code>:
+ <dd>Whether to use a union or a merge. In general, pass <code>yes</code> if the mug is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p>Note: <code>CoffeeMug_Mug()</code> calls macro <a href="#CoffeeMug_Detail"><code>CoffeeMug_Detail()</code></a>, supplying its own automatically calculated arguments. If the mug is very short, the calculated handle dimensions will trigger a warning from <code>CoffeeMug_Detail()</code>.
+
+<p><a href="#toc">Table of contents</a>
+
+<h3 id="CoffeeMug_Detail">CoffeeMug_Detail (Radius, Wall, Capacity, Units, v_Handle, Handle_space, Use_merge)</h3>
+
+<p>An untextured coffee mug with more user control over the dimensions. The bottom center of the mug is at the origin, and the handle points in the negative <var>z</var> direction.
+
+<h4>Arguments</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>:
+ <dd>The outer radius of the mug.
+ <dt><code>Wall</code>:
+ <dd>The thickness of the wall.
+ <dt><code>Capacity</code>:
+ <dd>The height or net volume of the mug. The unit of measure is determined by the <code>Units</code> argument.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+ <dt><code>v_Handle</code>:
+ <dd>The dimensions of the handle.
+ <dt><code>Handle_space</code>:
+ <dd>The horizontal finger space between the handle and the wall of the mug.
+ <dt><code>Use_merge</code>:
+ <dd>Whether to use a union or a merge. In general, pass <code>yes</code> if the mug is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p><a href="#toc">Table of contents</a>
+
+<h3 id="CoffeeMug_Beverage">CoffeeMug_Beverage (Radius, Wall, Capacity, Units, Epsilon)</h3>
+
+<p>A beverage pre-sculpted to fit the coffee mug. The object is untextured, so you can create and apply your own materials for black coffee, café au lait, cocoa, tea, apple cider, Dasani<a href="#Acknowledgments">®</a>, rum and Coke<a href="#Acknowledgments">®</a>, or any of a number of other quaffs. The object will not contour to the rim of the mug. Carbonation for rum and Coke is available separately from the <a href="http://lib.povray.org/searchcollection/index2.php?objectName=bubble&amp;contributorTag=charlesr">Object Collection’s bubble module</a>.
+
+<p>Due to some technical considerations, no beverage materials are defined in <code>coffeemug.inc</code>. However, the example scene <code>coffeemug.pov</code> demonstrates an example material for café au lait, which you can copy and modify to your taste.
+
+<h4>Arguments</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>:
+ <dd>The outer radius of the mug for which the beverage is intended.
+ <dt><code>Wall</code>:
+ <dd>The thickness of the mug’s wall. Use 0 if the mug is created with <code>CoffeeMug_Mug()</code>.
+ <dt><code>Capacity</code>:
+ <dd>The height or volume of the beverage. The unit of measure is determined by the <code>Units</code> argument.
+  <p>Note: The meniscus and the curvature of the floor of the mug are not considered in the volume-to-height calculation.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+  <p>Note: If set to <code>COFFEEMUG_HEIGHT</code> or <code>MUG_HEIGHT</code>, the meniscus will not be modeled.
+ <dt><code>Epsilon</code>:
+ <dd>A tiny value to avoid a <a href="http://wiki.povray.org/content/Documentation:Tutorial_Section_2.1#Co-incident_Surfaces">coincident surface</a> with the inner wall of the mug. A negative value creates a space between the liquid and the mug; a positive value intersects the mug.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="CoffeeMug_Height">CoffeeMug_Height (Radius, Capacity, Units)</h3>
+
+<p>Returns the height of a cylinder, given its capacity and radius.
+
+<h4>Arguments</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>:
+ <dd>The radius of the cylinder.
+ <dt><code>Capacity</code>:
+ <dd>The height or volume of the cylinder. The unit of measure is determined by the <code>Units</code> argument.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="CoffeeMug_Stack_height">CoffeeMug_Stack_height (Radius, Wall, Capacity, Units)</h3>
+
+<p>Returns the height a mug is raised when stacked on top of another.
+
+<h4>Arguments</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>:
+ <dd>The radius of the mugs.
+ <dt><code>Wall</code>:
+ <dd>The thickness of the mugs’ walls. Use 0 if the mugs are created with <code>CoffeeMug_Mug()</code>.
+ <dt><code>Capacity</code>:
+ <dd>The height or volume of the bottom mug. The unit of measure is determined by the <code>Units</code> argument.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+</dl>
+
+<h4>Example</h4>
+
+<pre>CoffeeMug_Mug (3.75, 300, MUG_CM, no)
+#declare Stack = CoffeeMug_Stack_height (3.75, 0, 300, MUG_CM);
+object
+{ CoffeeMug_Mug (3.75, 240, MUG_CM, no)
+  translate Stack * y
+}
+#declare Stack = Stack + CoffeeMug_Stack_height (3.75, 0, 240, MUG_CM);
+object
+{ CoffeeMug_Mug (3.75, 280, MUG_CM, no)
+  translate Stack * y
+}</pre>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="CoffeeMug_Pigment">CoffeeMug_Pigment (Radius, Wall, Capacity, Units, o_Mask, p_Background, p_Foreground)</h3>
+
+<p>Returns a cylindrical pigment, based on user-supplied pigments. A slice of the foreground pigment is taken at the <var>x-y</var> plane, optionally masked by an object, transformed to the middle-front of a hypothetical mug, and wrapped around the mug.
+
+<p id="illus">These illustrations show how the masking object is mapped to the mug. As of CoffeeMug version 2.0, pigments and textures are also mapped in the same manner.
+
+<p>
+<img src="coffeemug_fig1.jpg" alt="[An object and a mug.]">
+<img src="coffeemug_fig4.jpg"
+ alt="[How CoffeeMug_Pigment() or CoffeeMug_Texture() orients the object]">
+<img src="coffeemug_fig5.jpg" alt="[The fully textured mug.]">
+
+<h4>Arguments</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>:
+ <dd>The outer radius of the mug for which the pigment is intended.
+ <dt><code>Wall</code>:
+ <dd>The thickness of the mug’s wall. Use 0 if the mug is created with <code>CoffeeMug_Mug()</code>.
+ <dt><code>Capacity</code>:
+ <dd>The height or net volume of the mug. The unit of measure is determined by the <code>Units</code> argument.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+ <dt><code>o_Mask</code>:
+ <dd>The object to be used as the pigment mask, which must be centered on the origin. Use <code>MUG_NO_MASK</code> if no mask is to be used.
+ <dt><code>p_Background</code>:
+ <dd>The pigment to be used for the area outside the mask, including the inside and bottom of the mug. This pigment will not be cylindrically mapped or otherwise transformed.
+ <dt><code>p_Foreground</code>:
+ <dd>The pigment to be mapped to the mug, which must be centered on the origin.
+</dl>
+
+<h4>Example</h4>
+
+<pre>#declare P = pigment
+{ image_map { png "bumpmap_" }
+  translate -0.5 // Center the image.
+  scale &lt;3.2, 2, 1>
+}
+object
+{ CoffeeMug_Mug (1.5, 3.5, MUG_HEIGHT, no)
+  CoffeeMug_Pigment
+  ( 1.5, 0, 3.5, MUG_HEIGHT,
+    box { -&lt;1.6, 1, 1>, &lt;1.6, 1, 1> }, rgb &lt;0, 1, 1>, P
+  )
+}</pre>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="CoffeeMug_Texture">CoffeeMug_Texture (Radius, Wall, Capacity, Units, o_Mask, t_Background, t_Foreground)</h3>
+
+<p>Returns a cylindrical texture, based on user-supplied textures. A slice of the foreground texture is taken at the <var>x-y</var> plane, optionally masked by an object, transformed to the middle-front of a hypothetical mug, and wrapped around the mug, as shown in <a href="#illus">these illustrations</a>.
+
+<h4>Arguments</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>:
+ <dd>The outer radius of the mug for which the texture is intended.
+ <dt><code>Wall</code>:
+ <dd>The thickness of the mug’s wall. Use 0 if the mug is created with <code>CoffeeMug_Mug()</code>.
+ <dt><code>Capacity</code>:
+ <dd>The height or net volume of the mug. The unit of measure is determined by the <code>Units</code> argument.
+ <dt><code>Units</code>:
+ <dd>Determines the <a href="#Units">units of measure</a>.
+ <dt><code>o_Mask</code>:
+ <dd>The object to be used as the texture mask, which must be centered on the origin. Use <code>MUG_NO_MASK</code> if no mask is to be used.
+ <dt><code>p_Background</code>:
+ <dd>The texture to used for the area outside the mask, including the inside and bottom of the mug. This texture will not be cylindrically mapped or otherwise transformed.
+ <dt><code>p_Foreground</code>:
+ <dd>The texture to be mapped to the mug, which must be centered on the origin.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="CoffeeMug_Wrap">CoffeeMug_Wrap (Radius)</h3>
+
+<p>Transforms a pigment, a normal, or a texture map such that it wraps around a hypothetical cylinder. The pattern is transformed such that the <var>x-y</var> plane is rotated to the +<var>z</var> side of a cylinder centered on the origin, then wrapped around it, in the same manner as the object shown in <a href="#illus">these illustrations</a>.
+
+<h4>Argument</h4>
+
+<dl class="args">
+ <dt><code>Radius</code>:
+ <dd>The radius of the cylinder around which the pattern is to be wrapped.
+</dl>
+
+<h4>Example</h4>
+
+<pre>cylinder
+{ -y, y, 1.5
+  pigment
+  { checker scale 0.5
+    CoffeeMug_Wrap (1.5)
+  }
+}</pre>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Units">Units of Measure</h2>
+
+<table>
+<tr><th>Code</th> <th>Alternate Code</th> <th>Linear POV-Unit</th> <th>Assumed Capacity Unit</th></tr>
+<tr>
+ <td><code>COFFEEMUG_INCH</code></td>
+ <td><code>MUG_INCH</code></td>
+ <td>Inches</td>
+ <td>Fluid ounces</td>
+</tr><tr>
+ <td><code>COFFEEMUG_CM</code></td>
+ <td><code>MUG_CM</code></td>
+ <td>Centimeters</td>
+ <td>Milliliters</td>
+</tr><tr>
+ <td><code>COFFEEMUG_MM</code></td>
+ <td><code>MUG_MM</code></td>
+ <td>Millimeters</td>
+ <td>Milliliters</td>
+</tr><tr>
+ <td><code>COFFEEMUG_HEIGHT</code></td>
+ <td><code>MUG_HEIGHT</code></td>
+ <td>Arbitrary</td>
+ <td>The capacity argument determines the height instead of the volume</td>
+</tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other">Other Identifiers</h2>
+
+<h3 id="Parameters">Global Parameters</h3>
+
+<p>The following parameters are used by the macro <code>CoffeeMug_Beverage()</code>. They may be changed at any time by the user.
+
+<table>
+ <tr><th>Parameter</th> <th>Type</th> <th>Description</th> <th>Default</th></tr>
+ <tr>
+  <td><code>CoffeeMug_ConAngle</code></td>
+  <td>float</td>
+  <td>The contact angle of the meniscus, in degrees. Valid values are 0 (concave, completely wet) to 180 (convex, completely <a href="https://en.wikipedia.org/wiki/Hydrophobe">phobic</a>).</td>
+  <td><code>8</code></td>
+ </tr><tr>
+  <td><code>CoffeeMug_rMeniscus</code></td>
+  <td>float</td>
+  <td>The radius of the meniscus curve, in millimeters.</td>
+  <td><code>2</code></td>
+ </tr>
+</table>
+
+<h3 id="Reference">Reference Identifiers</h3>
+
+<table>
+ <tr>
+  <th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th>
+ </tr><tr>
+  <td><code>COFFEEMUG_NO_MASK</code></td>
+  <td>object</td>
+  <td>This may be passed to <code>CoffeeMug_Pigment()</code> or <code>CoffeeMug_Texture()</code> as the <code>o_Mask</code> argument to indicate that there is no object mask.</td>
+  <td></td>
+ </tr><tr>
+  <td><code>COFFEEMUG_VERSION</code></td>
+  <td>float</td>
+  <td>The CoffeeMug version, in case the scene file needs that information.</td>
+  <td>2.0</td>
+ </tr>
+</table>
+
+<h3 id="Short">Short Form Identifiers</h3>
+
+With the introduction of the short prefix “<code>mug</code>,” many of the identifiers in CoffeeMug have been given shortened alternatives. These identifiers and their alternatives are listed in this table. (Please note that warning messages from macros will announce the longer form, regardless of which form is called from your scene file.)
+
+<table>
+ <tr>
+  <th>Long Form</th> <th>Short Form</th>
+ </tr><tr>
+  <td><code>CoffeeMug_Beverage</code></td>
+  <td><code>Mug_Beverage</code></td>
+ </tr><tr>
+  <td><code>COFFEEMUG_CM</code></td>
+  <td><code>MUG_CM</code></td>
+ </tr><tr>
+  <td><code>CoffeeMug_Detail</code></td>
+  <td><code>Mug_Detail</code></td>
+ </tr><tr>
+  <td><code>CoffeeMug_Height</code></td>
+  <td><code>Mug_Height</code></td>
+ </tr><tr>
+  <td><code>COFFEEMUG_HEIGHT</code></td>
+  <td><code>MUG_HEIGHT</code></td>
+ </tr><tr>
+  <td><code>COFFEEMUG_INCH</code></td>
+  <td><code>MUG_INCH</code></td>
+ </tr><tr>
+  <td><code>COFFEEMUG_MM</code></td>
+  <td><code>MUG_MM</code></td>
+ </tr><tr>
+  <td><code>CoffeeMug_Mug</code></td>
+  <td><code>Mug_Mug</code></td>
+ </tr><tr>
+  <td><code>COFFEEMUG_NO_MASK</code></td>
+  <td><code>MUG_NO_MASK</code></td>
+ </tr><tr>
+  <td><code>CoffeeMug_Pigment</code></td>
+  <td><code>Mug_Pigment</code></td>
+ </tr><tr>
+  <td><code>CoffeeMug_Stack_height</code></td>
+  <td><code>Mug_Stack_height</code></td>
+ </tr><tr>
+  <td><code>CoffeeMug_Texture</code></td>
+  <td><code>Mug_Texture</code></td>
+ </tr><tr>
+  <td><code>CoffeeMug_Wrap</code></td>
+  <td><code>Mug_Wrap</code></td>
+ </tr>
+</table>
+
+<h3 id="Internal">Internal Identifiers</h3>
+
+<p>Any identifiers in <code>coffeemug.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About CoffeeMug</h2>
+
+<address>Copyright © 2008 &ndash; 2015 Richard Callwood III.
+ <a href="http://creativecommons.org/licenses/LGPL/2.1/">
+  <img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+ </a>
+</address>
+
+<h3 id="Changes">Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>1.0</td>
+  <td>2008 August 7</td>
+  <td>
+   <ul>
+    <li>The initial upload.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.1</td>
+  <td>2008 August 8</td>
+  <td>
+   <ul>
+    <li>Pigment and texture options are added.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.2</td>
+  <td>2008 August 31</td>
+  <td>
+   <ul>
+    <li>Local identifiers are renamed to comply with the August 2008 revision to the naming standards.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.3</td>
+  <td>2013 May 20</td>
+  <td>
+   <ul>
+    <li>Options for controlling the meniscus are added.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.3a</td>
+  <td>2013 May 21</td>
+  <td>Same as version 1.3, but with the sample output corrected.</td>
+ </tr><tr>
+  <td>2.0</td>
+  <td>2015 March 05</td>
+  <td>
+   <ul>
+    <li>Pigments and textures are cylindrically mapped, allowing for more than simple object masks.
+    <li>A macro to compute the stacking height of a mug is added.
+    <li>A short prefix is introduced.
+    <li>A version identifier is added.
+    <li>The bottom of the mug is remodeled.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<h3 id="Acknowledgments">Acknowledgments</h3>
+
+<ul>
+ <li>Coke<a href="#CoffeeMug_Beverage">®</a> and Dasani<a href="#CoffeeMug_Beverage">®</a> are registered trademarks of the Coca-Cola Company. No endorsement is implied.
+ <li>Thomas de Groot doesn’t know it yet, but he was helpful in revising the texture macro for CoffeeMug 2.0.
+</ul>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

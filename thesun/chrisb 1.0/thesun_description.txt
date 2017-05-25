@@ -1,0 +1,1 @@
+A simple model of the Sun using an animated repeating texture on a sphere.

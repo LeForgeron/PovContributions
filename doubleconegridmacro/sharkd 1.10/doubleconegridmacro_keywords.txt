@@ -1,0 +1,14 @@
+DoubleConeGridMacro
+DoubleConeGrid
+double
+cone
+double-cone
+grid
+macro
+latitude
+longitude
+radius
+radii
+height
+pigment
+texture

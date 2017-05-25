@@ -1,0 +1,2 @@
+A scroll object with many settings enabling you to generate paper scrolls, wallpaper, kitchen roll, rolls of tin-foil etc. Scene files and documentation is included to provide examples of generating all of these things.
+Text setting functions are provided to write onto the scroll. This includes the ability to 'Full' justify text and to specify page margins.

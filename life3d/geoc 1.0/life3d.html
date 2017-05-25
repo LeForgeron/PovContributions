@@ -1,0 +1,207 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%;vertical-align:top;padding-bottom:3px}
+  .codesample td {padding-bottom:0px}
+</style>
+<head>
+  <title>POV-Ray Object Collection - Life3D include file</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>Life3D include file</h1>
+<hr>
+  <a href="#intro"    >Overview                       </a><br>
+  <a href="#options"  >Available Configuration Options</a><br>
+  <a href="#changes"  >Change History                 </a><br>
+<p>
+  <center>
+  <a href="http://lib.povray.org/searchcollection/download.php?objectName=Life3D&contributorTag=geoc&version=1.0"
+    onclick="if (navigator.appName=='Microsoft Internet Explorer') this.click();"  
+  >
+    <input type=button value="Download Life3D V1.0">
+  </a>
+  </center>
+<p>
+There is an NNTP newsgroup specifically for the support of this object collection at <a href="http://news.povray.org/povray.object-collection/">http://news.povray.org/povray.object-collection/</a>.   
+  
+</td><td>
+<img src="life3d.jpg" width=640 height=480>
+</td></tr>
+</table>
+
+<hr>
+
+
+
+  <a name='intro'></a>
+  <h1>Overview</h1>
+These Macros were created by David Sharp to provide a 3D POV-Ray implementation of John Conway's 'Game of Life'. David has given his permission for them to be released under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a> to enable you to use, modify and redistribute them for both commercial and non-commercial purposes.  You can help improve the macros by submitting enhanced versions back into the collection by registering yourself on the web site.  This download consists of:
+<ul>
+<li>an include file containing the Life3D macros
+<li>sample scene files and an animation ini file to illustrate the use of the include file
+<li>a copy of this documentation and the image files used in it
+<li>a few other files that you may find handy if you submit a new version to the collection
+</ul>
+<p>
+You can add a 3D lifeform to your scene file by including the "life3d.inc" file and running the 'Life3D' macro with appropriate parameter settings. The macros are intended to be used along with POV-Ray's animation options to create an animated sequence of images, illustrating the development and growth of 3D forms based upon a simple set of control parameters. The 'life3d.ini' file can be used to specify the animation options, or you can add your own animation options via the command-line. To see the following lifeform evolve over time you can try the animation command-line options '+kfi1 +kff55'. 
+
+<div class=codesample>
+&nbsp;&nbsp;camera {location <-2, 2,-20> look_at <0,0,0>}
+<br>&nbsp;&nbsp;light_source {<-300, 200,-1000> color rgb 1}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#include "life3d.inc"
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;object{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Life3D(
+<table>
+<tr><td width=25></td><td width=100>12,12,12,   </td><td>// Dimensions             </td></tr>
+<tr><td>          </td><td>array[4]{3,5,4,5},   </td><td>// Rules array            </td></tr>
+<tr><td>          </td><td>Life3D_fromliveArray,</td><td>// First generation source</td></tr>
+<tr><td>          </td><td>Life3D_blobCells,    </td><td>// Cell type              </td></tr>
+<tr><td>          </td><td>true,                </td><td>// Wrapping               </td></tr>
+<tr><td>          </td><td>frame_number-1       </td><td>// Generation indicator   </td></tr>
+</table>
+&nbsp;&nbsp;&nbsp;&nbsp;)
+<br>&nbsp;&nbsp;}
+</div>
+<p>
+The main macro that you need to call to add a 3D lifeform to your scene file is:
+<p>
+&nbsp;&nbsp;<b>Life3D(xSize, ySize, zSize, rules, gen1From, cellType, wrap, genNum)</b>                      
+<p>
+Where:                                                                                             
+<table>
+<tr><td><b>&nbsp;&nbsp;xSize</b></td><td>&nbsp;=&nbsp;</td><td colspan=2>an integer specifying the 'x' dimension of the array of cells.</td></tr>
+<tr><td><b>&nbsp;&nbsp;ySize</b></td><td>&nbsp;=&nbsp;</td><td colspan=2>an integer specifying the 'y' dimension of the array of cells.</td></tr>
+<tr><td><b>&nbsp;&nbsp;zSize</b></td><td>&nbsp;=&nbsp;</td><td colspan=2>an integer specifying the 'z' dimension of the array of cells.</td></tr>          
+
+<tr><td><b>&nbsp;&nbsp;rules</b></td><td>&nbsp;=&nbsp;</td><td colspan=2>an array[4] of integers specifying the Life rules</td></tr>
+<tr><td colspan=2>                        </td><td colspan=2>Using rules=array[4]{r1,r2,r3,r4}; makes the rule:</td></tr>
+<tr><td colspan=3>                        </td><td>
+If a cell is already 'live' and it has from r1 through r2 (inclusive) live neighbors, then it remains alive in the next generation. That is, it will survive.                                                     
+<br>
+Otherwise it becomes 'dead'.                                                          
+<br>
+On the other hand, if the cell is now dead, but has from r3 through r4 (inclusive) live neighbors then it will be alive in the next generation.                                      
+</td></tr>
+<tr><td><b>&nbsp;&nbsp;gen1From</b></td><td>&nbsp;=&nbsp;</td><td colspan=2>an integer to tell the macro where the first generation comes from. Constants are declared in the 'life3d.inc' file that you can use for this parameter:</td></tr>
+<tr><td colspan=2>                        </td><td>&nbsp;&nbsp;<b>Life3D_fromliveArray</b></td><td colspan=2>(2)
+Takes an array of cell indices and each cell in the array will be 'alive' in the first generation. For example, using the array
+<br>&nbsp;&nbsp;#declare Life3D_liveArray= array[2][3]={{0,0,1},{0,0,0}}                       
+<br>would make two cells alive: the cell at 0,0,1 and the cell at 0,0,0. The second index of the array must be '3' since a cell is specified by three indices. 
+</td></tr>
+<tr><td colspan=2>                        </td><td>&nbsp;&nbsp;<b>Life3D_fromFile</b></td><td colspan=2>(1)
+Gets the first generation from a file. You'll need to set up such a file and assign the file name to 'Life3D_initialGenerationFile'. The file needs to contain the cell values for all of the cells in the Life game where cell value > 0 is alive and cell value <=0 is dead.
+</td></tr>
+<tr><td colspan=2>                        </td><td>&nbsp;&nbsp;<b>Life3D_fromRandom</b></td><td colspan=2>(0)
+Generates the first generation randomly with 'Life3D_livePercent' of the cells alive.
+</td></tr>
+
+<tr><td><b>&nbsp;&nbsp;cellType</b></td><td>&nbsp;=&nbsp;</td><td colspan=2>an integer to tell the macro the type of cells to generate. Constants are declared in the 'life3d.inc' file that you can use for this parameter:</td></tr>
+<tr><td colspan=2>                        </td><td>&nbsp;&nbsp;<b>Life3D_cubeCells</b></td><td colspan=2>(0)
+plain cubes occupy live cells, or some other object declared as 'Life3D_cellObject'.
+</td></tr>
+<tr><td colspan=2>                        </td><td>&nbsp;&nbsp;<b>Life3D_blobCells</b></td><td colspan=2>(1)
+blobs are used to populate live cells.
+</td></tr>
+
+<tr><td><b>&nbsp;&nbsp;wrap</b></td><td>&nbsp;=&nbsp;</td><td colspan=2>an integer to tell the macro whether to wrap the cell array or not. Constants are declared in the 'life3d.inc' file that you can use for this parameter:</td></tr>
+<tr><td colspan=2>                        </td><td>&nbsp;&nbsp;<b>Life3D_nowrap</b></td><td colspan=2>
+(0 or false) Means that a cell on the edge of the cell array has no neighboring cells outside the array.
+</td></tr>
+<tr><td colspan=2>                        </td><td>&nbsp;&nbsp;<b>Life3D_toruswrap</b></td><td colspan=2>
+(1 or true) 'wraps' the array around from top to bottom and left to right. so a cell at the edge has neighboring cells on the other side of the array.
+</td></tr>
+
+<tr><td><b>&nbsp;&nbsp;genNum</b></td><td>&nbsp;=&nbsp;</td><td colspan=2>an integer to indicate which generation this is. The first generation is '0'. Currently this is only important to the macro to distinguish the first generation from the rest. If Initial_Frame = 1 (which is the default value) then you can use frame_number-1 for genNum.
+</td></tr>
+
+</table>          
+
+
+<p>
+<br><center><a href=#toc>Return to Table of Contents</a></center>
+<hr>
+<p>
+
+
+
+  <a name='options'></a>
+  <h1>Available Configuration Options</h1>
+All of the following options have default values, so you don't need to change any of them unless you wish to tweak the output. Some of the options influence the shape, size and color of the generated object. Others influence the 'growth' of the lifeform as it evolves through successive animation frames.
+<p>
+
+<table border=1>
+<tr><td><b>Life3D_RS1           </b></td><td>A random number seed used by the 'Life3D_fillCellArrayRandomly' macro when the 'gen1From' parameter on the  'Life3D' macro is set to 'Life3D_fromRandom'. <p> The default is 'seed(12)', but you can set this to generate a different randomised initial cell start configuration. For example:<div class=codesample>&nbsp;&nbsp;#declare Life3D_RS1=seed(341);                                   </div></td></tr>
+<tr><td><b>Life3D_gbNewTexture  </b></td><td>The texture to be applied to newly 'alive' cells in the matrix. This defaults to a flat green color. To set it to Cyan, you could specify:<div class=codesample>&nbsp;&nbsp;#declare Life3D_gbNewTexture=texture{pigment{rgb<0,1,1>}}        </div></td></tr>
+<tr><td><b>Life3D_gbOldTexture  </b></td><td>The texture to be applied to mature (previously existing) cells in the matrix. This defaults to a flat red color. To set it to Aquamarine by name, using the 'colors.inc', you could specify:
+<div class=codesample>
+&nbsp;&nbsp;#include "colors.inc"
+<br>&nbsp;&nbsp;#declare Life3D_gbOldTexture=texture{pigment{Aquamarine}}
+</div></td></tr>
+<tr><td><b>Life3D_gbDiedTexture </b></td><td>The texture to be applied to newly 'deceased' cells in the matrix. This defaults to a highly transparent White color. To make it a little less transparent (using the 'colors.inc'), you could specify:
+<div class=codesample>
+&nbsp;&nbsp;#include "colors.inc"
+<br>&nbsp;&nbsp;#declare Life3D_gbDiedTexture=texture{pigment{White transmit .5}}
+</div></td></tr>
+<tr><td><b>Life3D_diffScale     </b></td><td>If this value is greater than zero, then old cells and dead cells are represented using a different size as well as a different color, compared to one-generation old cells. Older cells are larger, dead cells smaller. This value indicates how much larger/smaller and defaults to '0'. For example, try a setting of: <div class=codesample>&nbsp;&nbsp;#declare Life3D_diffScale=.5;                                    </div></td></tr>
+<tr><td><b>Life3D_livePercent   </b></td><td>An integer between 1 and 100 used by the 'Life3D_fillCellArrayRandomly' macro when the 'gen1From' parameter on the  'Life3D' macro is set to ' Life3D_fromRandom'. <p> This defaults to '10' generating a matrix where about 10 percent of the cells will be alive. You can adjust this percentage. For example:<div class=codesample>&nbsp;&nbsp;#declare Life3D_livePercent=20;                                  </div></td></tr>
+<tr><td><b>Life3D_liveArray     </b></td><td>You can use this array to initially populate the matrix with living cells when the 'gen1From' parameter on the 'Life3D' macro is set to 'Life3D_fromliveArray'. This 3D array can be set by hand, or you can use one of the predefined arrays 'Life3D_OOOArray', 'Life3D_liveGlider5766', or 'Life3D_liveGlider4555'. For example:<div class=codesample>&nbsp;&nbsp;#declare Life3D_liveArray=Life3D_liveGlider4555;                 </div></td></tr>
+<tr><td><b>Life3D_initialGenerationFile     </b></td><td>You can use this identifier to specify the name of a file that will be used to populate the matrix with living cells when the 'gen1From' parameter on the 'Life3D' macro is set to 'Life3D_fromFile'. For example:<div class=codesample>&nbsp;&nbsp;#declare Life3D_initialGenerationFile='myfile.txt';                 </div></td></tr>
+<tr><td><b>Life3D_cellObject    </b></td><td>You can use this object declaration to override the default object used to represent a cell when the 'cellType' parameter on the 'Life3D' macro is set to 'Life3D_cubeCells'. For example:<div class=codesample>&nbsp;&nbsp;#declare Life3D_cellObject=sphere{0,1/2}                         </div></td></tr>
+<tr><td><b>Life3D_tempCellfilename</b></td><td>Each generation (each frame in an animation sequence) saves the last generation of the lifeform matrix into a file. By default it uses a file called 'life3d.tmp'. If you need to change the file used for this you can override the default. For example:<div class='codesample'>
+&nbsp;&nbsp;#declare Life3D_tempCellfilename="tempfile.tmp";
+</div>
+The first three numbers in the file are the cell array dimensions. Then come the 'x layers' of cells. Each x layer is a 'yz' array of cell values.</td></tr>                
+
+</table>
+
+<br><center><a href=#toc>Return to Table of Contents</a></center>
+<hr>
+<p>
+
+
+
+
+<a name='changes'></a>
+<h2>Change History</h2>
+The Life3D macros were created by David Sharp. He made them available for download from Geocities until the web server service closed in October 2009, at which point he kindly gave his permission for them to be redistributed on the POV-Ray Object Collection license (CC-LGPL).
+<p>
+Version 1.0 of the include file was adapted to conform to the naming conventions for the POV-Ray Object Collection by Chris Bartlett in October 2009. All identifiers are now prefixed with 'Life3D_' and all file names start with 'life3d'. The following additional changes were made:
+<ul>
+<li>This documentation was added based upon comments found in the various files.
+<li>The main macro was renamed as 'Life3D'.
+<li>A new, shorter example was added and used for the images in this document. The existing examples were renamed and are also included in the download.
+<li>Added a line to limit Life3D_genNum so that it never goes below zero. This means that, if a scene is rendered without any animation options being specified, the first frame will still be generated. 
+<li>Added the Life3D_Debug setting and rewrote 'Life3D_nextGenCells' to improve performance.
+</ul>
+
+<p>
+<center>
+<a href="life3d.gif" target="Detail"><img src="life3d.gif" width=320 height=240></a>
+</center>
+  
+
+<br><center><a href=#toc>Return to Table of Contents</a></center>
+<hr>
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+
+</body>
+</html>

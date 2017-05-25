@@ -1,0 +1,10 @@
+DoubleConeGridMacro
+cone
+double
+double-cone
+macro
+pattern
+grid
+latitude
+longitude
+height

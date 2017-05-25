@@ -1,0 +1,1 @@
+3d Galaxy. Nice for space exploration animations. Includes 3d starfield and stars sky_sphere. It does take long to render though. I am also working on a more versatile version

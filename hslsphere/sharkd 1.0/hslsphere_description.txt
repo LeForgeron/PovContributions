@@ -1,0 +1,1 @@
+A pigment for mapping the HSL (Hue, Saturation, Lightness) color model to a unit sphere centered on the origin. Note - this pigment uses the standard parametric form of a sphere; for the Munsell sphere, see the other pigment.

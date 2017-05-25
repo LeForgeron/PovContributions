@@ -1,0 +1,1 @@
+Generates a texture for planets or asteroids for use in other applications. Consists only of height data.

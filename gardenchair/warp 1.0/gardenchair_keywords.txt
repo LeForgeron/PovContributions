@@ -1,0 +1,4 @@
+GardenChair
+chair
+furniture
+garden

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IntegrateLight 1.0 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="integratelight.css">
+</head>
+
+<body>
+
+<h1>IntegrateLight 1.0 User&nbsp;Manual</h1>
+
+<h2>Abstract</h2>
+
+<p>
+<a href="integratelight.jpg"><img class="demo" src="integratelight_thumbnail.jpg" title="Montage of larger demo images" alt="[Thumbnail which links to a montage of larger demo images]"></a>
+IntegrateLight is a library module from the
+<a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+<a href="http://lib.povray.org/">Object Collection</a>
+that prepares spectra for use with Lilysoft’s SpectralRender package. The impetus for creating this module was to provide a more accurate render of lights with sharp peaks in their emission spectra by integrating spectral curves rather than by sampling them. However, it is useful for converting any continuous spectrum.
+
+<p>The user is also given better control over light source luminosities.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Compare">Comparison with SpectralRender stock lamps</a>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#Arguments">Macro arguments</a>
+   <li><a href="#ILight_Blackbody">ILight_Blackbody</a>
+   <li><a href="#ILight_Continuous">ILight_Continuous</a>
+   <li><a href="#ILight_Daylight">ILight_Daylight</a>
+   <li><a href="#ILight_Reflective">ILight_Reflective</a>
+  </ul>
+ <li><a href="#Other_identifiers">Other identifiers</a>
+ <li><a href="#About">About IntegrateLight</a>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan="2">Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>integratelight.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>integratelight.inc</code></td>
+  <td>The IntegrateLight software</td>
+ </tr><tr>
+  <td><code>integratelight_compare.pov</code></td>
+  <td rowspan="3">Scene description files demonstrating the features of IntegrateLight</td>
+ </tr><tr>
+  <td><code>integratelight_disperse.pov</code></td>
+ </tr><tr>
+  <td><code>integratelight_scene.pov</code></td>
+ </tr><tr>
+  <td><code>integratelight.jpg</code></td>
+  <td rowspan="3">Sample output</td>
+ </tr><tr>
+  <td><code>integratelight_compare.png</code></td>
+ </tr><tr>
+  <td><code>integratelight_thumbnail.jpg</code></td>
+ </tr><tr>
+  <th colspan="2">Administrative Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <td><code>integratelight_description.txt</code></td>
+  <td>A brief description of IntegrateLight</td>
+ </tr><tr>
+  <td><code>integratelight_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>integratelight_prereqs.txt</code></td>
+  <td>Prerequisites</td>
+ </tr><tr>
+  <td><code>integratelight.css</code></td>
+  <td rowspan="3">Other administrative files</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<ul>
+ <li>POV-Ray version 3.7 or later.
+ <li><a href="http://www.ignorancia.org/en/index.php?page=Lightsys">Lightsys version 4</a> (Lightsys IV), available under a separate license.
+  <ul>
+   <li><strong>Do not</strong> save Lightsys to your Object Collection folder, but do make sure that it is in your <a href="http://wiki.povray.org/content/Reference:Scene_Parsing_Options#Library_Paths">library path</a>.
+  </ul>
+ <li><a href="http://www.lilysoft.org/CGI/SR/Spectral%20Render.htm">SpectralRender</a> version 0.20 or later, available under a separate license.
+  <ul>
+   <li><strong>Do not</strong> save SpectralRender to your Object Collection folder, but do make sure that it is in your library path.
+  </ul>
+</ul>
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>integratelight.inc</code> comply fully with the Object Collection naming standards, as <a href="http://news.povray.org/povray.object-collection/message/%3C48ba92e8%241%40news.povray.org%3E/#%3C48ba92e8%241%40news.povray.org%3E">revised August 2008</a> and <a href="http://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The prefixes for this module are “<code>IntegrateLight</code>” and “<code>ILight</code>,” including any uppercase and lowercase variants; to avoid conflicts, do not declare identifiers that start with these prefixes plus an underscore.
+
+<p>IntegrateLight reads files from Lightsys and SpectralRender, and references some of their identifiers. As Lightsys and SpectralRender are not part of the Object Collection, there is no guarantee that their identifiers will not conflict with those of compliant Object Collection modules. If necessary, most Lightsys identifiers can be destroyed by macro <code>CIE_ReleaseMemory()</code>, <em>after</em> all spectral colors and materials are defined, and there is no further use of the features of any of these three packages. (The identifiers that remain are those defined in <code>lightsys.inc</code>, <code>lightsys_colors.inc</code>, and <code>lightsys_constants.inc</code>. IntegrateLight does not use any of these files.) SpectralRender does not have a similar deallocation macro, but as of the release of IntegrateLight 1.0, its identifiers do not conflict with any compliant Object Collection modules.
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include these files once, in this order, prior to using any of the macros:
+<pre>#include "spectral.inc" // from SpectralRender
+#include "integratelight.inc"</pre>
+<p>Including <code>integratelight.inc</code> more than once is harmless, but <code>spectral.inc</code> should be included only once. If the render halts with a message that it cannot find file <code>CIE.inc</code>, then Lightsys IV was not installed properly, or is not in the library path.
+
+<p>POV-Ray will issue a warning that the experimental feature spline is used. This is normal and expected.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Compare">Comparison with SpectralRender Stock Lamps</h2>
+
+<p>SpectralRender samples Lightsys IV spectral curve splines rather than integrating them. This results in marked differences between some of the built-in SpectralRender lamps and the IntegrateLight equivalents. These lamps are the four Mitsubishi bulbs, the Philips high pressure sodium, and the Philips MasterColor 3K, as illustrated below. In the illustration, the left half of each rectangular swatch is the color of the lamp using SpectralRender’s built-in sampled values, and the right half is the color of the IntegrateLight equivalent.
+
+<p>
+<img src="integratelight_compare.png" alt="[SpectralRender vs. IntegrateLight lamps comparison]">
+
+<p>The scene description file for this illustration is <code>integratelight_compare.pov</code>. A preview render of this scene (not illustrated), for which SpectralRender defers to Lightsys IV, shows that the IntegrateLight colors are very close to those yielded by Lightsys IV.
+
+<p>Note: In the Lightsys IV file <code>espd_lightsys.inc</code>, the spline <code>ES_Phillips_HPS</code> (the Philips high pressure sodium lamp) may contain the line <code>598,&nbsp;0.2300</code>. This line should be <code>498,&nbsp;0.2300</code>.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros">Macros</h2>
+
+<h3 id="Arguments">Macro Arguments</h3>
+
+<h4>Integration Method (the Simpson Argument)</h4>
+
+<p>Macros <code>ILight_Continuous()</code> and <code>ILight_Continuous()</code> use numerical integration to prepare the spectra. Two methods are available: the trapezoidal rule and Simpson’s rule. The trapezoidal rule treats a spectral curve as a series of straight line segments, whereas Simpson’s rule treats the spectrum as a series of parabolic curves. For daylight illuminants (e.g., D65), the trapezoidal rule is sufficient at the default <a href="#External">integral step</a> of 5.
+
+<h4 id="Normalization">Normalization</h4>
+
+<p>For the <code>Normalization</code> argument, use one of the following values:
+
+<dl class="args">
+ <dt><code>ILIGHT_NONE</code>
+ <dd>No normalization is done.
+ <dt><code>ILIGHT_MAX</code>
+ <dd>The spectrum is normalized such that the maximum array value is 1.0.
+ <dt><code>ILIGHT_MEAN</code>
+ <dd>The spectrum is normalized such that the mean value is 1.0.
+ <dt><code>ILIGHT_GRAY</code>
+ <dd>The spectrum is normalized such that, after conversion to RGB, the resulting <code>.gray</code> value is 1.0. The RGB value is calculated according to the current Lightsys color system and gamut mapping settings.
+ <dt><code>ILIGHT_GREY</code>
+ <dd>Same as <code>ILIGHT_GRAY</code>.
+ <dt><code>ILIGHT_XYY</code>
+ <dd>The spectrum is normalized such that, after conversion to <a href="https://en.wikipedia.org/wiki/CIE_1931_color_space#CIE_xy_chromaticity_diagram_and_the_CIE_xyY_color_space"><var>xyY</var></a>, the <var>Y</var> component is 1.0.
+ <dt><code>ILIGHT_XYZ</code>
+ <dd>The spectrum is normalized such that, after conversion to <a href="https://en.wikipedia.org/wiki/CIE_1931_color_space#CIE_xy_chromaticity_diagram_and_the_CIE_xyY_color_space"><var>xyz</var></a>, the sum of <var>x</var>, <var>y</var>, and <var>z</var> is 1.0.
+ <dt><var>wavelength value</var>
+ <dd>Any value 300 or greater is treated as a wavelength in nanometers, and the spectrum is normalized such that this wavelength’s intensity is 1.0.
+  <p>Note that the value of the array element corresponding to <var>wavelength value</var> (if any) may not be exactly 1.0, because it will contain the integrated value, not the point value.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="ILight_Blackbody">ILight_Blackbody (TempK)</h3>
+
+<p>Returns a black body spectral curve in the form of a spline. The spline is suitable to be passed to macro <a href="#ILight_Continuous"><code>ILight_Continuous()</code></a>
+
+<h4>Argument</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>TempK</code></td>
+  <td>float</td>
+  <td>The color temperature, in kelvins.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="ILight_Continuous">ILight_Continuous (Curve, Simpson, Normalization, Level)</h3>
+
+<p>Integrates a continuous emission spectral curve spline and returns a data structure that can be passed to SpectralRender macros such as <code>SpectralEmission()</code>. The curve is integrated from 375 nm to 735 nm in steps no larger than <a href="#External"><code>CIE_IntegralStep</code></a>. (If the scene is rendered in SpectralRender preview mode, the color is calculated using Lightsys IV’s current gamut mapping setting.)
+
+<p>Example emission spectral curve splines may be found in the include files starting with “<code>espd_</code>” in the Lightsys IV package.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Curve</code></td>
+  <td>spline</td>
+  <td>A continuous emission spectral curve. The spline parameter is in nanometers, and the <var>y</var> component is the emission value.</td>
+ </tr><tr>
+  <td><code>Simpson</code></td>
+  <td>float/Boolean</td>
+  <td>Determines the method of integration. If true, Simpson’s rule will be used for the integration; if false, the trapezoidal rule will be used.</td>
+ </tr><tr>
+  <td><code>Normalization</code></td>
+  <td>float</td>
+  <td>See the <a href="#Normalization">description of the <code>Normalization</code> argument</a>. To match Lightsys IV luminosities, use <code>ILIGHT_XYZ</code>.</td>
+ </tr><tr>
+  <td><code>Level</code></td>
+  <td>float</td>
+  <td>A factor by which to scale the result after normalization.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="ILight_Daylight">ILight_Daylight (TempK)</h3>
+
+<p>Returns a daylight spectral curve in the form of a spline. The spline is suitable to be passed to macro <a href="#ILight_Continuous"><code>ILight_Continuous()</code></a>
+
+<h4>Argument</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>TempK</code></td>
+  <td>float</td>
+  <td>The correlated color temperature, in kelvins.</td>
+ </tr>
+</table>
+
+<h3 id="ILight_Reflective">ILight_Reflective (Curve, Simpson, Level)</h3>
+
+<p>Integrates a reflective spectral curve spline and returns a data structure that can be passed to SpectralRender macros such as <code>T_Spectral_Matte()</code>. The curve is integrated from 375 nm to 735 nm in steps no larger than <a href="#External"><code>CIE_IntegralStep</code></a>. (If the scene is rendered in SpectralRender preview mode, the color is calculated using Lightsys IV’s current gamut mapping setting.)
+
+<p>Example reflection spectral curve splines may be found in the include files starting with “<code>rspd_</code>” in the Lightsys IV package.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Curve</code></td>
+  <td>spline</td>
+  <td>A reflective spectral curve. The spline parameter is in nanometers, and the <var>y</var> component is the reflection value.</td>
+ </tr><tr>
+  <td><code>Simpson</code></td>
+  <td>float/Boolean</td>
+  <td>Determines the method of integration. If true, Simpson’s rule will be used for the integration; if false, the trapezoidal rule will be used.</td>
+ </tr><tr>
+  <td><code>Level</code></td>
+  <td>float</td>
+  <td>A factor by which to scale the result.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other_identifiers">Other Identifiers</h2>
+
+<h3 id="External">External Parameter</h3>
+
+<table>
+ <tr>
+  <th>Identifier</th> <th>Source Module</th>
+  <th>Type</th> <th>Description</th> <th>Default</th>
+ </tr><tr>
+  <td><code>CIE_IntegralStep</code></td>
+  <td>Lightsys IV (file <code>CIE.inc</code>)</td>
+  <td>float</td>
+  <td>This parameter is used to determine the integral step size, in nanometers. If its value does not divide evenly into 10 (for trapezoidal integration) or 5 (for Simpson’s rule integration), IntegrateLight will use the next smaller value which does.</td>
+  <td>5</td>
+ </tr>
+</table>
+
+<h3>Reference Identifier</h3>
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+ <tr>
+  <td><code>INTEGRATELIGHT_VERSION</code></td>
+  <td>float</td>
+  <td>The IntegrateLight version, in case the scene file needs that information.</td>
+  <td>1.0</td>
+ </tr>
+</table>
+
+<h3>Internal Identifiers</h3>
+
+<p>Any identifiers in <code>integratelight.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About IntegrateLight</h2>
+
+<address>Copyright © 2016 Richard Callwood III.
+ <a href="http://creativecommons.org/licenses/LGPL/2.1/">
+  <img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+ </a>
+</address>
+
+<h3 id="Categories">Object Collection Categories</h3>
+
+<ul>
+ <li><strong>Contribution Types</strong>
+  <ul>
+   <li>Pigments
+   <li>Macros
+  </ul>
+</ul>
+
+<h3>Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>1.0</td>
+  <td>2016 November 14</td>
+  <td>The initial public release.</td>
+ </tr>
+</table>
+
+<h3>Acknowledgments</h3>
+
+<ul>
+ <li>Scott Boham, for assistance with proper usage of Lightsys IV’s color matching function.
+</ul>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

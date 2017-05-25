@@ -1,0 +1,11 @@
+SphereGridMacro
+SphereGrid
+sphere
+grid
+macro
+latitude
+longitude
+radius
+radii
+pigment
+texture

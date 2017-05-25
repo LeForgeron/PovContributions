@@ -1,0 +1,115 @@
+<html>
+<head>
+  <title>Rubik's Cube and Rubik's Revenge include file</title>
+  <style type="text/css"> <!--
+html { background-color: #FFDDCC; }
+body
+{
+  background-color: white;
+  margin-left: 7%;
+  margin-top: 16px;
+  margin-right: 7%;
+  padding-top: 2em;
+  padding-left: 7%;
+  padding-right: 7%;
+  padding-bottom: 2%;
+  border-color: black;
+  border: solid;
+  border-width: 1px;
+}
+
+h1
+{
+  text-align: center;
+  background-color: #FFEEBB;
+  padding-bottom: 0.2em;
+  padding-top: 0.1em;
+}
+
+h2
+{
+  background-color: #FFFFCC;
+  padding-left: 0.5em;
+}
+
+pre
+{
+  background-color: #E8E8E8;
+  padding-left: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+code
+{
+  font-family: monospace;
+  color: #900040;
+}
+  --> </style>
+</head>
+
+<body bgcolor="white">
+
+<h1>Rubik's Cube and Rubik's Revenge include file</h1>
+
+<p>This include file defines two macros which can be used to create a
+Rubik's Cube (3x3x3) and a Rubik's Revenge (4x4x4):
+
+<pre>
+WRC_RubiksCube("...")
+WRC_RubiksRevenge("...")
+</pre>
+
+<p>The parameter is a string containing rotations (an empty string is ok).
+
+<p>Uses actual measures of the real Rubik's cubes:
+
+<ul>
+ <li>1 pov unit = 1 cm
+ <li>Rubik's Cube width = 5.7 cm + 0.02 cm for stickers
+ <li>Rubik's Revenge width = 6.6 cm + 0.02 cm for stickers
+ <li>The lower-left-front corner of the cubes is located at
+     <code>&lt;0, 0, 0&gt;</code>.
+</ul>
+
+<p>Rotation syntax:
+
+<ul>
+ <li>A rotation character (<code>U</code>, <code>F</code>, <code>L</code>,
+     <code>R</code>, <code>B</code>, <code>D</code>) rotates the correspondent
+     outermost slice clockwise (U=upper, F=front, L=left, R=right,
+     B=back, D=down).
+
+ <li>For Rubik's Revenge, if written in lowercase, rotates the inner slice.
+
+ <li>An aphostrophe (<code>'</code>) immediately following the character
+     rotates the slice counter-clockwise.
+
+ <li>The character '<code>2</code>' immediately following the character
+     rotates the slice twice.
+
+ <li>Spaces between rotations are optional.
+</ul>
+
+<p>Examples:
+
+<pre>
+WRC_RubiksCube("F2 D L2 D R U R L' B' D U' B' R' F2 R' U2")
+WRC_RubiksRevenge("U L' F f L2 F2 D")
+</pre>
+
+<p>The last rotation can be made incomplete by declaring the following
+float identifier before calling the macros:
+
+<pre>
+WRC_LastMoveRotationFactor
+</pre>
+
+<p>The value should be a factor between 0 and 1, where 0 means that the
+  last rotation is not made at all, and 1 means that it's done as normal.
+  Values between 0 and 1 will rotate it by that relative amount. (Note
+  that in the parameter string there must not be any whitespace after the
+  last rotation for this to work.)
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+HSLSphereMunsell
+HSLM
+sphere
+hsl
+hue
+saturation
+lightness
+luminance
+luminosity
+pigment
+texture

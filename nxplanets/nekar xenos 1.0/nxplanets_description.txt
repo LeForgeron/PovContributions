@@ -1,0 +1,1 @@
+macro that creates planets with terrain, clouds and rings. Caution - Clouds slow it down a lot.

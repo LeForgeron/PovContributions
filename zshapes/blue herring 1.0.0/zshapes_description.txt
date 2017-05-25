@@ -1,0 +1,1 @@
+A collection of objects and macros to make some basic shapes.  The shapes include a duo sphere, tri sphere, duo torus, octahedron, pyramid, solid triangle, sphere cap, tube, and rounded tube.

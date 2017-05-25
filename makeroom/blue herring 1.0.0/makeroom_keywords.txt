@@ -1,0 +1,17 @@
+MakeRoom
+MR
+background
+baseboard
+ceiling
+ceilings
+door
+doors
+floor
+floors
+glass
+indoor
+molding
+room
+rooms
+window
+windows

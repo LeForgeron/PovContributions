@@ -1,0 +1,1 @@
+An include file created from a Moray model by Israel Barzel to add an anatomical model of an eye to your scene. Options are provided to enable you to take sections through individual components of the eye and you can optionally incorporate phacoemulcification tools to illustrate modern cataract surgery.

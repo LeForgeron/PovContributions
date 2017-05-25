@@ -1,0 +1,168 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%}
+</style>
+<head>
+  <title>POV-Ray Object Collection - EyeSection include file</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>EyeSection include file</h1>
+<hr>
+  <a href="#intro"    >Overview             </a><br>
+  <a href="#controls" >Controlling the Model</a><br>
+  <a href="#changes"  >Change History       </a><br>
+<p>
+  <center>
+  <a href="http://lib.povray.org/searchcollection/download.php?objectName=EyeSection&contributorTag=chrisb&version=1.0"
+    onclick="if (navigator.appName=='Microsoft Internet Explorer') this.click();"  
+  >
+    <input type=button value="Download EyeSection V1.0">
+  </a>
+  </center>
+  
+</td><td>
+<img src="eyesection.jpg" width=640 height=480>
+</td></tr>
+</table>
+
+<hr>
+
+
+
+  <a name='intro'></a>
+  <h1>Overview</h1>
+This include file was created by Israel Barzel and is released under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a> to enable you to use, modify and redistribute it for both commercial and non-commercial purposes.  You can help improve the model by submitting enhanced versions back into the collection by registering yourself on the web site.  This download consists of:
+<ul>
+<li>an include file containing the object definition for an Eye
+<li>the original Moray model
+<li>a sample scene file to illustrate the use of the include file
+<li>a copy of this documentation and the image files used in it
+<li>a few other files that you may find handy if you submit a new version to the collection
+</ul>
+<p>
+This model was developed by Israel in 1997 to illustrate the procedures for conducting cataract surgery by Phacoemulcification, which is now the most common procedure used for cataract surgery. The model therefore incorporates a Phaco probe and an Infusion tube, but you can simply switch these off if you wish to use the model for other purposes. The model cuts channels into the lens, representing the emulsification of the cataracts during the procedure. These cuts can also easily be switched off, leaving the lens intact. The model can slice each component of the eye in half. This sectioning can be switched off for whichever components you want.
+<p>
+You can add the Eye Section to your scene file by including the "eyesection.inc" file. 
+<p>
+<div class=codesample>
+    light_source { <-15,100,-15>, rgb 1}
+<br>camera {location < -20, 40,-60> look_at < 0,18,0> angle 30}
+<br>#include "eyesection.inc"        
+</div>
+<p>
+The file returns a single object centred at the origin with the front of the eye pointing straight up. The eye has a radius of about 20 POV-Ray units. The top of the cornea is the highest part of the model at a height of about 28 POV-Ray units. You can wrap the returned object in an object statement and transform it as required to fit into your scene. For example:
+<p>
+<div class=codesample>
+    light_source { <-15,7.5,-15>, rgb 1}
+<br>camera {location <-5,5,-5> look_at <5,0,3>}
+<br>object {
+<br>&nbsp;&nbsp;#include "eyesection.inc"
+<br>&nbsp;&nbsp;scale 0.2
+<br>&nbsp;&nbsp;rotate <0,30,0> 
+<br>&nbsp;&nbsp;translate <5,0,3>
+<br>}       
+</div>
+<br>
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+<p>
+
+
+  <a name='controls'></a>
+  <h1>Controlling the Model</h1>
+The materials used to construct the model are declared in the file 'eyesection_materials.inc', so you can readily change colors and textures etc. 
+<p>
+You can control or suppress the elements specific to the Phacoemulcification procedure by declaring any of the following variables before including the 'eyesection.inc' file in your scene:
+<a href="eyesection_noop.jpg" target=Detail><img src="eyesection_noop.jpg" align=right height=300></a>
+<center>
+<table border=1>
+  <tr><th>EyeSection_CutLens  </th><td>Set to 'true', 'yes' or '1' to add cylindrical cuts to the surface of the lens. Set to 'false', 'no' or '0' to suppress the cuts.</td></tr>
+  <tr><th>EyeSection_PhacoProbeDepth </th><td>Set to a value between '0' and '1', where '0' suppresses the probe completely and any other value up to '1' determines how far into the eye the probe is inserted.</td></tr>
+  <tr><th>EyeSection_InfusionTubeDepth </th><td>Set to a value between '0' and '1', where '0' suppresses the tube completely and any other value up to '1' determines how far into the eye the tube is inserted.</td></tr>
+</table>
+</center>
+<p>
+The following example suppresses all 3 of the features specific to the Phacoemulcification procedure, as illustrated in the image on the right.
+<p>
+<div class=codesample>
+    #declare EyeSection_CutLens = false;
+<br>#declare EyeSection_PhacoProbeDepth = 0;
+<br>#declare EyeSection_InfusionTubeDepth = 0;
+<br>object {#include "eyesection.inc"}       
+</div>
+<br clear=all>
+
+<p>
+You can control which parts of the eye are shown in section and which parts are complete by setting any of the following variables, where 'true', 'yes' or '1' results in that part being shown in section and 'false', 'no' or '0' shows that part of the eye without sectioning it. 
+<p>
+<a href="eyesection_partial.jpg" target=Detail><img src="eyesection_partial.jpg" align=right height=300></a>
+<center>
+<table border=1>
+  <tr><th>EyeSection_SectionLens  </th><td>The Lens is just behind the Iris and is usually transparent, but turns opaque when a cataract develops. The lens changes shape to enable images to be brought into sharp focus on the Retina.</td></tr>
+  <tr><th>EyeSection_SectionIris </th><td>The Iris is the colored disk that dilates or contracts to regulate the amount of light entering the eye.</td></tr>
+  <tr><th>EyeSection_SectionOra </th><td>The Ora Serrata covers the front inner surface of the eye where it transitions from the non-photosensitive area of the retina to the photosensitive Retina.</td></tr>
+  <tr><th>EyeSection_SectionCornea  </th><td>The Cornea is the transparent dome covering the front of the eye. This provides a powerful refracting surface, delivering 2/3 of the eye's total focusing power.</td></tr>
+  <tr><th>EyeSection_SectionChoroid </th><td>The Choroid consists of layers of blood vessels behind the retina.</td></tr>
+  <tr><th>EyeSection_SectionRetina </th><td>The Retina lines the back of the inside of the eye and incorporates a complex photosensitive structure that converts the image into signals that are sent down the optic nerve to the brain.</td></tr>
+  <tr><th>EyeSection_SectionSclera </th><td>The Sclera is the white outer shell of the eyeball.</td></tr>
+  <tr><th>EyeSection_SectionOpticNerve </th><td>The Optic Nerve carries visual signals to the brain.</td></tr>
+</table>
+</center>
+<p>
+The following example suppresses the sectioning of the components of the eye except for the White outer enclosure (the Sclera). The result is illustrated in the image on the right.
+<p>
+<div class=codesample>
+    #declare EyeSection_SectionLens    = 0;
+<br>#declare EyeSection_SectionIris    = 0;
+<br>#declare EyeSection_SectionOra     = 0;
+<br>#declare EyeSection_SectionCornea  = 0;
+<br>#declare EyeSection_SectionChoroid = 0;
+<br>#declare EyeSection_SectionRetina  = 0;
+<br>#declare EyeSection_SectionSclera  = 1;
+<br>#declare EyeSection_SectionOpticNerve = 0;
+<br>object {#include "eyesection.inc"}       
+</div>
+<br clear=all>
+<p>
+The final assembly of the various components of the eye is performed in a short 'union' statement at the bottom of the 'eyesection.inc' file. You can completely suppress individual components by simply commenting out the corresponding lines from that 'union' statement. 
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+<a name='changes'></a>
+<h2>Change History</h2>
+The initial model was created by Israel Barzel using Moray. He made it available for download from Geocities until the web server service closed in October 2009, at which point he kindly gave his permission for it to be redistributed on the POV-Ray Object Collection license (CC-LGPL).
+<p>
+Version 1.0 of the include file was adapted to conform to the naming conventions for the POV-Ray Object Collection by Chris Bartlett in September 2009. All identifiers are now prefixed with 'EyeSection_' and all file names start with 'eyesection'. The following additional changes were made:
+<ul>
+<li>The model was split out into a separate include file, which was modified to return a single object so that it could be readily transformed as a single object.
+<li>The controls described above were added. 
+</ul>
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+
+</body>
+</html>

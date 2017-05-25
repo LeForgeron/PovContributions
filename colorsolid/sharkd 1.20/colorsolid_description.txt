@@ -1,0 +1,11 @@
+This include file contains a collection of pigments that, when
+used along with the appropriate shapes, may be used to make a
+color solid. The HSL, HSV and RGB color models are supported,
+as well as the following shapes.
+
+- cube (HSL, HSV, RGB), bottom corner centered on the origin
+- cylinder (HSL, HSV, RGB), base centered on the origin
+- cone (HSV), bottom vertex centered on the origin
+- double-cone (HSL), centered on the origin
+- parametric sphere (HSL, HSV, RGB), centered on the origin
+- Munsell sphere (HSL, HSV, RGB), centered on the origin

@@ -1,0 +1,2 @@
+A set of macros to add ropes to your scene. You can select from a range of different styles and can 'construct' a path for the rope to follow by adding together different rope shapes such as knots, coils and catenaries.
+Instructions are included to enable you to add new rope styles (colors, textures, twist etc.) and new custom shapes (eg. more knots).

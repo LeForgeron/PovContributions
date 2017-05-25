@@ -1,0 +1,15 @@
+DoubleConeInvGridMacro
+DoubleConeinvGrid
+double
+cone
+double-cone
+inverted
+grid
+macro
+latitude
+longitude
+radius
+radii
+height
+pigment
+texture

@@ -1,0 +1,6 @@
+This is a collection of POV-Ray objects designed to be used as
+sprites in 2D isometric video games. There are five main
+collections at present.
+
+An additional, sixth collection was not included but is
+available from my website.

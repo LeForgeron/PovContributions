@@ -1,0 +1,1 @@
+Some examples use the Rope macro if present.

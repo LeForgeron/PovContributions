@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BrightStar5 1.0 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="brightstar5.css">
+</head>
+
+<body>
+
+<h1>BrightStar5 1.0 User&nbsp;Manual</h1>
+
+<h2>Abstract</h2>
+
+<p>
+<a href="brightstar5.png"><img class="demo" src="brightstar5_thumbnail.png" title="Larger demo image" alt="[Thumbnail which links to a larger demo image]"></a>
+BrightStar5 is a library module from the
+<a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+<a href="http://lib.povray.org/">Object Collection</a>
+that presents selected data from the Yale Bright Star Catalogue, preliminary 5th edition (BSC5) in a form suitable for POV-Ray. The BSC5 contains all nighttime stars of magnitude 6.5 and brighter (roughly all nighttime stars visible to the naked eye), plus a few dimmer ones. Macros are included for star coloration and Bayer designation labels.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Parameters">Global parameter</a>
+ <li><a href="#Data">The data arrays</a>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#BSC5_Bayer_label">BSC5_Bayer_label</a>
+   <li><a href="#BSC5_Bayer_label_by_index">BSC5_Bayer_label_by_index</a>
+   <li><a href="#BSC5_Color">BSC5_Color, BSC5_Colour</a>
+   <li><a href="#BSC5_Greek_char">BSC5_Greek_char</a>
+   <li><a href="#BSC5_Seek_Bayer">BSC5_Seek_Bayer</a>
+   <li><a href="#BSC5_Seek_Draper">BSC5_Seek_Draper</a>
+   <li><a href="#BSC5_Seek_Flamsteed">BSC5_Seek_Flamsteed</a>
+   <li><a href="#BSC5_Seek_HR">BSC5_Seek_HR</a>
+   <li><a href="#BSC5_Seek_SAO">BSC5_Seek_SAO</a>
+   <li><a href="#BSC5_Update">BSC5_Update</a>
+  </ul>
+ <li><a href="#Functions">Function</a>
+  <ul>
+   <li><a href="#BSC5_fn_Brightness">BSC5_fn_Brightness</a>
+  </ul>
+ <li><a href="#Other_identifiers">Other identifiers</a>
+ <li><a href="#About">About BrightStar5</a>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan="2">Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>brightstar5.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>brightstar5.inc</code></td>
+  <td>Tools for using stellar data</td>
+ </tr><tr>
+  <td><code>brightstar5_data.inc</code></td>
+  <td>Stellar data</td>
+ </tr><tr>
+  <td><code>brightstar5.pov</code></td>
+  <td>A scene description file demonstrating many of the features of BrightStar5</td>
+ </tr><tr>
+  <td><code>brightstar5.png</code></td>
+  <td rowspan="2">Sample output</td>
+ </tr><tr>
+  <td><code>brightstar5_thumbnail.png</code></td>
+ </tr><tr>
+  <th colspan="2">Administrative Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <td><code>brightstar5_description.txt</code></td>
+  <td>A brief description of BrightStar5</td>
+ </tr><tr>
+  <td><code>brightstar5_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>brightstar5_prereqs.txt</code></td>
+  <td>Prerequisites</td>
+ </tr><tr>
+  <td><code>brightstar5.css</code></td>
+  <td rowspan="3">Other administrative files</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<ul>
+ <li>BrightStar5 requires POV-Ray version 3.5 or later.
+ <li>The creation of <a href="https://en.wikipedia.org/wiki/Bayer_designation">Bayer designation</a> text objects requires a Unicode font that includes both the Latin and Greek alphabets. The fonts bundled with POV-Ray do not contain the Greek alphabet. However, fonts that suffice are widely available; such fonts are bundled with recent versions of Microsoft Windows, Macintosh OS X, and most likely any feature-rich GNU/Linux distro.
+ <li>The demo scene uses the font Times New Roman (<code>times.ttf</code>) from Monotype Imaging, which comes standard with Microsoft Windows. If you do not have this font file, you may edit the scene file to use any Unicode font that contains both the Latin and Greek alphabets.
+</ul>
+
+<p><strong>Warning!</strong> POV-Ray 3.7.1 beta 2 will crash with this module. The problem will be fixed in the next POV-Ray beta release.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in the include files comply fully with the Object Collection naming standards, as <a href="http://news.povray.org/povray.object-collection/message/%3C48ba92e8%241%40news.povray.org%3E/#%3C48ba92e8%241%40news.povray.org%3E">revised August 2008</a> and <a href="http://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The reserved prefixes for this module are “<code>BrightStar5</code>” and “<code>BSC5</code>,” including any uppercase and lowercase variants. To avoid conflicts, do not introduce into your scene description file any identifiers with these names, or any identifiers that start with these names plus an underscore.
+
+<p>The standard include file <code>math.inc</code> is used by <code>brightstar5.inc</code>.
+
+<h3 id="Usage">Usage</h3>
+
+<ol>
+ <li>
+  <p>If your scene’s <code>assumed_gamma</code> is not 1.0, then set <code>BSC5_Gamma</code> to that same value. For example:
+  <pre>global_settings { assumed_gamma 1.8 }
+#declare BSC5_Gamma = 1.8;</pre>
+ <li>
+  <p>Include this file once prior to using any of the macros:
+  <pre>#include "brightstar5.inc"</pre>
+  <p>Including the file more than once is harmless, though unnecessary.
+</ol>
+
+<p>In order to accommodate Greek letters, the <code>charset</code> is automatically set to <code>utf8</code>.
+
+<p>POV-Ray will issue a warning that the experimental feature spline is used. This is normal and expected.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Parameters">Global Parameter</h2>
+
+<table>
+ <tr>
+  <th>Identifier</th>
+  <th>Type</th>
+  <th>Description</th>
+  <th>Default</th>
+ </tr><tr>
+  <td><code>BSC5_Gamma</code></td>
+  <td>float</td>
+  <td>
+   <p>In order for the color macros to work properly, this parameter must be declared with the same value as the scene’s <code>assumed_gamma</code> prior to using those macros.
+   <ul>
+    <li>If your <code>assumed_gamma</code> is 1.0, you do not need to set this parameter.
+    <li>If your <code>assumed_gamma</code> is <code>srgb</code>, set this parameter to 2.2.
+    <li>If you omit <code>assumed_gamma</code>, the proper value will vary depending on your POV-Ray version and <code>#version</code> setting. Omitting <code>assumed_gamma</code> is not recommended.
+   </ul>
+   <p>Note: BrightStar5 does not actually set the scene’s <code>assumed_gamma</code>; this remains the user’s responsibility.
+  </td>
+  <td>1.0</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Data">The Data Arrays</h2>
+
+<p>The stellar data are stored in two 2 dimensional arrays. Array <code>BSC5_Data</code> contains numerical data, and array <code>BSC5_s_Data</code> contains string data. Each row of the arrays contains data for one object. The stars are stored in order by catalog ID, also known as the HR number. The rows are not indexed in this version of BrightStar5, therefore, except for macro <code>BSC5_Seek_HR()</code>, the macros use linear searches to retrieve stars.
+
+<p>If a numerical field in the BSC5 is blank, then the corresponding element of <code>BSC5_Data</code> will contain the value <code>BSC5_NO_DATA</code>. If a character field in the BSC5 is blank, then the corresponding element of <code>BSC5_s_Data</code> will contain the null string.
+
+<p>The BSC contains 14 novae and non-stellar objects whose data are mostly omitted from the 5th edition. Accordingly, the corresponding array fields are blank. Since these are the only objects in the BSC5 that are not cross-referenced to the Draper Catalogue, they can be identified by having an HD number of <code>BSC5_NO_DATA</code> in the <code>BSC5_Data</code> array.
+
+<h3>Numeric Data Columns</h3>
+
+<table>
+ <caption>This table lists the columns of float array <code>BSC5_Data</code>.</caption>
+ <tr><th>Index Name</th> <th>Field Description</th> <th>Notes</th></tr>
+ <tr>
+  <td><code>BSC5_HR</code></td>
+  <td>Harvard Revised Photometry Catalogue (HR) number</td>
+  <td>This also serves as the Bright Star Catalogue ID.</td>
+ </tr><tr>
+  <td><code>BSC5_COLORBV</code>, <code>BSC5_COLOURBV</code></td>
+  <td>B &minus; V color index</td>
+  <td>This is a single float value, not an RGB color. The lower the B &minus; V index value, the bluer the star; the higher the value, the redder the star. To <em>estimate</em> an RGB color, pass the value to <a href="#BSC5_Color">macro <code>BSC5_Color()</code> or <code>BSC5_Colour()</code></a>.</td>
+ </tr><tr>
+  <td><code>BSC5_DEC</code></td>
+  <td>J2000 declination, in degrees</td>
+  <td>This is the star’s celestial “latitude,” calculated from several fields in the BSC5.</td>
+ </tr><tr>
+  <td><code>BSC5_FLAMSTEED</code></td>
+  <td>Flamsteed number</td>
+  <td>This value is parsed from a larger character field in the BSC5.</td>
+ </tr><tr>
+  <td><code>BSC5_HD</code></td>
+  <td>Henry Draper Catalogue (HD) number</td>
+  <td></td>
+ </tr><tr>
+  <td><code>BSC5_MAG</code></td>
+  <td>Visual magnitude</td>
+  <td>This is the star’s visual brightness, as seen from Earth. The higher the magnitude, the dimmer the star appears to us.</td>
+ </tr><tr>
+  <td><code>BSC5_PARALLAX</code></td>
+  <td>Parallax, in arcseconds</td>
+  <td>This is the reciprocal of the star’s distance in parsecs.</td>
+ </tr><tr>
+  <td><code>BSC5_PROPERDEC</code></td>
+  <td>Proper motion in declination, in arcseconds per year</td>
+  <td>This is the star’s change in celestial “latitude” over time.</td>
+ </tr><tr>
+  <td><code>BSC5_PROPERRA</code></td>
+  <td>Proper motion in right ascension, in arcseconds per year</td>
+  <td>This is the star’s change in celestial “longitude” over time.</td>
+ </tr><tr>
+  <td><code>BSC5_RA</code></td>
+  <td>J2000 right ascension, in hours</td>
+  <td>This is the star’s celestial “longitude,” calculated from several fields in the BSC5.</td>
+ </tr><tr>
+  <td><code>BSC5_RADIALV</code></td>
+  <td>Heliocentric radial velocity, in kilometers per second</td>
+  <td>This is negative for approaching stars and positive for receding stars.</td>
+ </tr><tr>
+  <td><code>BSC5_SAO</code></td>
+  <td>Smithsonian Astrophysical Observatory (SAO) number</td>
+  <td></td>
+ </tr><tr>
+  <td><code>BSC5_SUPER</code></td>
+  <td>Bayer multiple star superscript</td>
+  <td>This value is parsed from a larger character field in the BSC5.</td>
+ </tr>
+</table>
+
+<p>For example, to retrieve the visual magnitude of star HR 2491, use:
+
+<pre>BSC5_Data [BSC5_Seek_HR (2491)] [BSC5_MAG]</pre>
+
+<h3>String Data Columns</h3>
+
+<table>
+ <caption>This table lists the columns of string array <code>BSC5_s_Data</code>.</caption>
+ <tr><th>Index Name</th> <th>Field Description</th> <th>Notes</th></tr>
+ <tr>
+  <td><code>BSC5_BAYER</code></td>
+  <td>Bayer Greek letter name</td>
+  <td>Use <a href="#BSC5_Greek_char">macro <code>BSC5_Greek_char()</code></a> to convert the name to a Greek character. (This value is parsed from a larger character field in the BSC5.)</td>
+ </tr><tr>
+  <td><code>BSC5_COMP</code></td>
+  <td>Aitken’s multiple star component(s)</td>
+  <td>A component ID is a single letter. One catalog entry may have two components, in which case the component IDs are concatenated into a single string.
+   <!--p>Note: The Aitken’s Catalog ID is not extracted/included in this version of BrightStar5.-->
+  </td>
+ </tr><tr>
+  <td><code>BSC5_CONST</code></td>
+  <td>Constellation abbreviation</td>
+  <td>This field is populated only if the star has a Bayer or Flamsteed designation. (This value is parsed from a larger character field in the BSC5.)</td>
+ </tr>
+</table>
+
+<p>For example, to retrieve the Bayer Greek letter name of star HR 2491, use:
+
+<pre>BSC5_s_Data [BSC5_Seek_HR (2491)] [BSC5_BAYER]</pre>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros">Macros</h2>
+
+<h3 id="BSC5_Bayer_label">BSC5_Bayer_label (s_Letter, Super, s_Const, s_Comp, s_Font)</h3>
+
+<p>Creates a text object of a star’s <a href="https://en.wikipedia.org/wiki/Bayer_designation">Bayer designation</a>. The front of the object will lie in the <var>x</var>-<var>y</var> plane, and the object will be one unit deep in the <var>z</var> direction. If <code>s_Letter</code> is a Greek letter name, then that letter’s lowercase glyph will be rendered; otherwise the string will be rendered as-is. The Greek letter name test is not case sensitive. A null string <code>s_Letter</code> will cause a parse error. No other validity checks are performed.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>s_Letter</code></td>
+  <td>string</td>
+  <td>The Greek letter name, e.g., <code>"alpha"</code>, or a Latin letter string. The Greek letter name test is not case sensitive.</td>
+ </tr><tr>
+  <td><code>Super</code></td>
+  <td>float</td>
+  <td>The superscript number, or <code>BSC5_NO_DATA</code> for no superscript.</td>
+ </tr><tr>
+  <td><code>s_Const</code></td>
+  <td>string</td>
+  <td>The constellation.</td>
+ </tr><tr>
+  <td><code>s_Comp</code></td>
+  <td>string</td>
+  <td>The multiple star component ID, or the null string for no component ID.</td>
+ </tr><tr>
+  <td><code>s_Font</code></td>
+  <td>string</td>
+  <td>The file name of a Unicode font that includes both the Latin and Greek alphabets.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="BSC5_Bayer_label_by_index">BSC5_Bayer_label_by_index (Index, Const, Comp, s_Font)</h3>
+
+<p>Creates a text object of a star’s <a href="https://en.wikipedia.org/wiki/Bayer_designation">Bayer designation</a>. The front of the object will lie in the <var>x</var>-<var>y</var> plane, and the object will be one unit deep in the <var>z</var> direction. If the star index is invalid or the star has no Greek letter Bayer designation, then a parse error will result.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Index</code></td>
+  <td>float</td>
+  <td>The array row index of the star. The index may be obtained with any of the macros whose names start with “<code>BSC5_Seek_</code>.”</td>
+ </tr><tr>
+  <td><code>Const</code></td>
+  <td>float/Boolean</td>
+  <td>If <code>true</code>, the constellation abbreviation will be included. If <code>false</code>, it will be omitted.</td>
+ </tr><tr>
+  <td><code>Comp</code></td>
+  <td>float/Boolean</td>
+  <td>If <code>true</code>, the multiple star component ID(s), if any, will be included. If <code>false</code>, any such ID will be omitted.</td>
+ </tr><tr>
+  <td><code>s_Font</code></td>
+  <td>string</td>
+  <td>The file name of a Unicode font that includes both the Latin and Greek alphabets.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="BSC5_Color">BSC5_Color (BminusV)
+<br>BSC5_Colour (BminusV)</h3>
+
+<p>These return an RGB <em>estimate</em> of the color of a star based on its B &minus; V index. The color space is assumed to be <a href="https://en.wikipedia.org/wiki/SRGB">sRGB</a>. The B &minus; V value will be clipped to the domain &minus;0.374 through +6.0. The color will be normalized such that the highest primary color value is 1.0.
+
+<p>If the B &minus; V value is <code>BSC5_NO_DATA</code>, then the color white (<code>rgb 1</code>) will be returned.
+
+<p>If you set <code>assumed_gamma</code> to any value other than 1.0, remember to declare <code>BSC5_Gamma</code> with that same value prior to calling either of these macros.
+
+<h4>Argument</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>BminusV</code></td>
+  <td>float</td>
+  <td>The B &minus; V index.</td>
+ </tr>
+</table>
+
+<h4>Example</h4>
+To estimate the color of the star Betelgeuse (Alpha Orionis), you can use:
+<pre>BSC5_Color (BSC5_Data [BSC5_Seek_Bayer ("Alpha", BSC5_NO_DATA, "Ori", "")] [BSC5_COLORBV])</pre>
+
+<h4>Additional Notes</h4>
+
+<p>B &minus; V values greater than about +4.06 result in oranges and reds that are too rich to be displayed by standard computer monitors&mdash;that is, the colors are outside the <a href="https://en.wikipedia.org/wiki/Gamut">gamut</a> of the sRGB color space. For such values, in-gamut approximations will be used.
+
+<p>The color calculation does not include any effects of the Earth’s atmosphere. The actual appearance of a star depends greatly on atmospheric conditions and the star’s altitude above the horizon.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="BSC5_Greek_char">BSC5_Greek_char (s_Name)</h3>
+
+<p>Returns a lowercase Greek letter character, given the name of the letter. The name test is case insensitive. If there is no such Greek letter, the null string is returned. Lowercase final sigma (‘&#962;’) is neither recognized nor returned.
+
+<p>Note: At the time this module is published, POV-Ray does not write Greek letters to text streams or text files.
+
+<h4>Argument</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>s_Name</code></td>
+  <td>string</td>
+  <td>The name of the Greek letter. This argument is not case sensitive.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="BSC5_Seek_Bayer">BSC5_Seek_Bayer (s_Letter, Super, s_Const, s_Comp)</h3>
+
+<p>Returns the array row index of a star by <a href="https://en.wikipedia.org/wiki/Bayer_designation">Bayer designation</a>. If no multiple star component ID is given, then the index of the first entry found is returned. (As the search algorithm is subject to change, the results of ambiguous inputs should not be relied upon.) If the star is not in the BSC5, <code>BSC5_NOT_FOUND</code> is returned.
+
+<p>The BSC5 does not record Latin letter Bayer designations (except occasionally in the variable star ID field), so a search on these always returns <code>BSC5_NOT_FOUND</code>.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>s_Letter</code></td>
+  <td>string</td>
+  <td>The Greek letter name, e.g., <code>"alpha"</code>. This argument is not case sensitive.</td>
+ </tr><tr>
+  <td><code>Super</code></td>
+  <td>float</td>
+  <td>The superscript number, or <code>BSC5_NO_DATA</code> for no superscript.</td>
+ </tr><tr>
+  <td><code>s_Const</code></td>
+  <td>string</td>
+  <td>The three-letter constellation abbreviation. This argument is case sensitive.</td>
+ </tr><tr>
+  <td><code>s_Comp</code></td>
+  <td>string</td>
+  <td>The multiple star component ID, or the null string for no component ID. This argument must be uppercase.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="BSC5_Seek_Draper">BSC5_Seek_Draper (Number)</h3>
+
+<p>Returns the array row index of a star by Draper (HD) number. If the star is not in the BSC5, <code>BSC5_NOT_FOUND</code> is returned.
+
+<h4>Argument</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Number</code></td>
+  <td>float</td>
+  <td>The Draper number.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="BSC5_Seek_Flamsteed">BSC5_Seek_Flamsteed (Number, s_Const, s_Comp)</h3>
+
+<p>Returns the array row index of a star by <a href="https://en.wikipedia.org/wiki/Flamsteed_designation">Flamsteed designation</a>. If no multiple star component ID is given, then the index of the first entry found is returned. (As the search algorithm is subject to change, the results of ambiguous inputs should not be relied upon.) If the star is not in the BSC5, <code>BSC5_NOT_FOUND</code> is returned.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Number</code></td>
+  <td>float</td>
+  <td>The Flamsteed number.</td>
+ </tr><tr>
+  <td><code>s_Const</code></td>
+  <td>string</td>
+  <td>The three-letter constellation abbreviation. This argument is case sensitive.</td>
+ </tr><tr>
+  <td><code>s_Comp</code></td>
+  <td>string</td>
+  <td>The multiple star component ID, or the null string for no component ID. This argument must be uppercase.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="BSC5_Seek_HR">BSC5_Seek_HR (Number)</h3>
+
+<p>Returns the array row index of a star by Harvard Revised Photometry Catalogue (HR) number. The HR number is the primary index of the Bright Star Catalogue. If the catalog number is invalid, <code>BSC5_NOT_FOUND</code> is returned.
+
+<h4>Argument</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Number</code></td>
+  <td>float</td>
+  <td>The HR number.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="BSC5_Seek_SAO">BSC5_Seek_SAO (Number, s_Comp)</h3>
+
+<p>Returns the array row index of a star by Smithsonian Astrophysical Observatory (SAO) number. If no multiple star component ID is given, then the index of the first entry found is returned. (As the search algorithm is subject to change, the results of ambiguous inputs should not be relied upon.) If the star is not in the BSC5, <code>BSC5_NOT_FOUND</code> is returned.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Number</code></td>
+  <td>float</td>
+  <td>The SAO number.</td>
+ </tr><tr>
+  <td><code>s_Comp</code></td>
+  <td>string</td>
+  <td>The multiple star component ID, or the null string for no component ID. This argument must be uppercase.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="BSC5_Update">BSC5_Update()</h3>
+
+<p>Makes certain changes to the BSC5 numeric array:
+<ul>
+ <li>In 2000 July, Delta Scorpii (HR 5953) brightened significantly. Its entry is updated with new magnitude and B &minus; V values.
+ <li>For recurrent nova T Coronae Borealis (HR 5958), the magnitude and B &minus; V fields are replaced with values from the BSC5 supplementary notes.
+</ul>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Functions">Function</h2>
+
+<h3 id="BSC5_fn_Brightness">BSC5_fn_Brightness (x, y)</h3>
+
+<p>Returns a linear brightness value that corresponds to a magnitude. The returned value is relative to the brightness of a star of the magnitude specified by the second argument. For example, <code>BSC5_fn_Brightness (3.5, 5)</code> returns approximately 3.98, meaning that a 3.5 magnitude star is about 3.98 times brighter than a magnitude 5 star.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>x</code></td>
+  <td>float</td>
+  <td>The magnitude of the star in question.</td>
+ </tr><tr>
+  <td><code>y</code></td>
+  <td>float</td>
+  <td>The magnitude that corresponds to a brightness value of 1.0.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other_identifiers">Other Identifiers</h2>
+
+<h3>Reference Identifiers</h3>
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+ <tr>
+  <td><code>BRIGHTSTAR5_VERSION</code></td>
+  <td>float</td>
+  <td>The BrightStar5 version, in case the scene file needs that information.</td>
+  <td>1.0</td>
+ </tr><tr>
+  <td><code>BSC5_N</code></td>
+  <td>float</td>
+  <td>The number of entries in the catalog.</td>
+  <td>9110</td>
+ </tr><tr>
+  <td><code>BSC5_NO_DATA</code></td>
+  <td>float</td>
+  <td>A flag that there is no numeric datum.</td>
+  <td></td>
+ </tr><tr>
+  <td><code>BSC5_NOT_FOUND</code></td>
+  <td>float</td>
+  <td>A flag that the request cannot be fulfilled.</td>
+  <td></td>
+ </tr>
+</table>
+
+<h3>Internal Identifiers</h3>
+
+<p>Any identifiers in <code>brightstar5.inc</code> and <code>brightstar5_data.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About BrightStar5</h2>
+
+<address>Copyright © 2017 Richard Callwood III.
+ <a href="http://creativecommons.org/licenses/LGPL/2.1/">
+  <img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+ </a>
+</address>
+
+<h3 id="Categories">Object Collection Categories</h3>
+
+<ul>
+ <li><strong>Areas of Interest</strong>
+  <ul>
+   <li>Space
+  </ul>
+ <li><strong>Contribution Types</strong>
+  <ul>
+   <li>Objects
+    <ul>
+     <li>Solid (CSG-able)
+    </ul>
+   <li>Pigments
+   <li>Macros
+   <li>Functions
+    <ul>
+     <li>Other
+    </ul>
+  </ul>
+</ul>
+
+<h3 id="Changes">Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>unpublished</td>
+  <td>2012 February 3&nbsp;&ndash;&nbsp;4</td>
+  <td>
+   <ul>
+    <li>Tools are created for retrieving Bayer and Flamsteed designations and certain astrometric data from the 4th edition of the catalog.
+    <li>All data are stored in an array of float, with constellations and Bayer letters encoded as numbers.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>unpublished</td>
+  <td>2015 November 5&nbsp;&ndash;&nbsp;6</td>
+  <td>
+   <ul>
+    <li>Additional data conversion tools and Greek character support are added.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.0</td>
+  <td>2017 February 4</td>
+  <td>The initial Object Collection release:
+   <ul>
+    <li>The software is upgraded to use the 5th edition of the catalog, and renamed accordingly.
+    <li>Tools are added for processing the color and brightness of stars.
+    <li>The Draper, HR, SAO, and multiple star component ID fields are extracted.
+    <li>Separate arrays are used for numeric and string data, eliminating the need for the conversion tools of 2015 November 5.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<h3 id="Future">Future Plans</h3>
+
+<p>Obviously this module does not do a comprehensive data extraction of the BSC5. The direction this module takes in the future will depend, in part, on user feedback.
+
+<h3 id="Acknowledgments">Acknowledgments</h3>
+
+<ul>
+ <li>The data were obtained from Hoffleit, Dorrit and Wayne H. Warren Jr., <cite>The Bright Star Catalogue,</cite> preliminary 5th edition, source <a href="ftp://cdsarc.u-strasbg.fr/cats/V/50/">Centre de Données astronomiques de Strasbourg (FTP)</a>, mirrored at <a href="http://tdc-www.harvard.edu/catalogs/bsc5.html">Harvard University (HTTP)</a>. Used with oral permission.
+ <li>Estimates of star colors were derived from surface temperature correlations determined in the following papers:
+  <ul>
+   <li>For the bluest stars, Reed, B. Cameron (1998), “The Composite Observational-Theoretical HR Diagram,” <a href="http://www.rasc.ca/jrasc-1998-february"><cite>The Journal of the Royal Astronomical Society of Canada,</cite> February 1998, Volume 92, Number 1 [669]</a>, page 36 (h/t <a href="http://www.bogan.ca/astro/stars/star_lum.html">Larry Bogan of Cambridge Station, Nova Scotia</a>).
+   <li>For other stars, <a href="http://arxiv.org/pdf/1201.1809.pdf">Ballesteros, F. J. (2012), “New insights into black bodies,”</a> <a href="http://iopscience.iop.org/issue/0295-5075/97/3"><cite>EPL (Europhysics Letters),</cite> Volume 97, Number 3, February 2012</a>, article 34008.
+  </ul>
+ <li>Star temperature estimates were converted to colors using <a href="http://www.ignorancia.org/en/index.php?page=Lightsys">Lightsys IV</a>.
+</ul>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

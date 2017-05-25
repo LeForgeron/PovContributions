@@ -1,0 +1,6 @@
+CoffeeMug
+coffee mug
+beverage
+office
+cocoa
+tea

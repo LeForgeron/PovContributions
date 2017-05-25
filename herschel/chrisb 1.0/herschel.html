@@ -1,0 +1,113 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%}
+</style>
+<head>
+  <title>POV-Ray Object Collection - Herschel Telescope include file</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>Herschel Telescope include file</h1>
+<hr>
+  <a href="#intro"    >Overview          </a><br>
+  <a href="#changes"  >Change History    </a><br>
+<p>
+  <center>
+  <a href="http://lib.povray.org/searchcollection/download.php?objectName=Herschel&contributorTag=chrisb&version=1.0"
+    onclick="if (navigator.appName=='Microsoft Internet Explorer') this.click();"  
+  >
+    <input type=button value="Download Herschel V1.0">
+  </a>
+  </center>
+  
+</td><td>
+<img src="herschel.jpg" width=640 height=480>
+</td></tr>
+</table>
+
+<hr>
+
+
+
+  <a name='intro'></a>
+  <h1>Overview</h1>
+This include file was created by Chris Walker and is released under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a> to enable you to use, modify and redistribute it for both commercial and non-commercial purposes.  You can help improve the model by submitting enhanced versions back into the collection by registering yourself on the web site.  This download consists of:
+<ul>
+<li>an include file containing the object definition for a Herschel Telescope with a 40ft focal length
+<li>a sample scene file to illustrate the use of the include file
+<li>a copy of this documentation and the image files used in it
+<li>a few other files that you may find handy if you submit a new version to the collection
+</ul>
+<p>
+Although <a href="http://en.wikipedia.org/wiki/William_Herschel">William Herschel</a> made over 300 telescopes, this was his largest and the largest in the World at that time, with a focal length of 40 ft. Other telescopes and many other astronomical features have been named after Herschel in recognition of his achievements. Herschel became famous by discovering the first planet that was not visible to the naked eye (later named Uranus). Having constructed this telescope in Slough, his first night of observation revealed a previously unknown moon of Saturn.
+<p>
+You can add this Herschel Telescope to your scene file by including the "herschel.inc" file. 
+<p>
+<div class=codesample>
+    light_source { <-15,7.5,-15>, rgb 1}
+<br>camera {location -y look_at 0.5*y}
+<br>#include "herschel.inc"        
+</div>
+<p>
+The file returns a single object centred at the origin and standing on the plane Y=0. You can therefore wrap it in an object statement and transform it as required to fit into your scene. For example:
+<p>
+<div class=codesample>
+    light_source { <-15,7.5,-15>, rgb 1}
+<br>camera {location -y look_at 0.5*y}
+<br>object {
+<br>&nbsp;&nbsp;#include "herschel.inc"
+<br>&nbsp;&nbsp;scale 0.5
+<br>&nbsp;&nbsp;rotate <0,30,0> 
+<br>&nbsp;&nbsp;translate <5,0,3>
+<br>}       
+</div>
+<br>
+<img src="herschel_painted.jpg" align=right>
+<p>
+The materials used to construct the telescope are declared at the top of the include file, so you can easily adjust the colours, finishes and normals by changing the following declarations:
+<table>
+  <tr><th>Herschel_RopeMaterial  </th><td>Used for the rope that adjusts the angle of the telescope.</td></tr>
+  <tr><th>Herschel_BlockMaterial </th><td>Used for the blocks through which the rope runs.</td></tr>
+  <tr><th>Herschel_WheelMaterial </th><td>Used for the wheels on which the telescope rotates.</td></tr>
+  <tr><th>Herschel_RungMaterial  </th><td>Used for the rungs of the various ladders.</td></tr>
+  <tr><th>Herschel_LadderMaterial</th><td>Used for the side supports of the various ladders.</td></tr>
+  <tr><th>Herschel_FrameMaterial </th><td>Used for the main wooden frame of the structure.</td></tr>
+  <tr><th>Herschel_CasingMaterial</th><td>Used for the cylindrical casing of the telescope itself.</td></tr>
+  <tr><th>Herschel_BaseMaterial  </th><td>Used for the base upon which the whole structure is mounted.</td></tr>
+<table>
+<br clear=all>
+
+<a name='changes'></a>
+<h2>Change History</h2>
+The initial herschel telescope model was created by Chris Walker who was living in Slough at the time. He made it available for download from Geocities until the web server service closed in October 2009, at which point he kindly gave his permission for it to be redistributed on the POV-Ray Object Collection license (CC-LGPL).
+<p>
+Version 1.0 of the include file was adapted to conform to the naming conventions for the POV-Ray Object Collection by Chris Bartlett in September 2009. All identifiers are now prefixed with 'Herschel_' and all file names start with 'herschel'. The following additional changes were made:
+<ul>
+<li>The material declarations were taken to the top of the include file 
+<li>The content was wrapped in a union statement, so that a single object is returned
+<li>The returned object was centred over the origin to make it easier to orient, move around and resize. 
+</ul>
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+
+</body>
+</html>

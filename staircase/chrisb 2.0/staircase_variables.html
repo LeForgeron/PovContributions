@@ -1,0 +1,993 @@
+
+<link REL="stylesheet" href="sc_doc.css"       type="text/css"></link>
+<link REL="stylesheet" href="sc_docprint.css"  type="text/css" media="print"> </link>
+<link REL="stylesheet" href="sc_docscreen.css" type="text/css" media="screen"></link>
+<script src="sc_doc.js"></script>
+<script> thisSection = 2; </script>
+<script> headerSection(); </script>
+
+
+<p class=printonly>
+<div style="page-break-after:always">
+<table class=toc
+<tr><td width=25%>
+<h4><a href="#Main"    >2.1 &nbsp; Main Control Variables</a></h4>
+</td><td width=25%>
+<h4><a href="#Switches">2.2 &nbsp; Control Switches</a></h4>
+</td><td width=25%>
+<h4><a href="#Objects" >2.3 &nbsp; Object Definitions</a></h4>
+</td><td width=25%>
+<h4><a href="#Textures">2.4 &nbsp; Textures</a></h4>
+</td></tr>
+<tr><td>
+<a class=toc href="#StairCase_PostPositions     ">2.1.1 &nbsp;&nbsp;&nbsp; StairCase_PostPositions     </a><br>
+<a class=toc href="#StairCase_StairWidth        ">2.1.2 &nbsp;&nbsp;&nbsp; StairCase_StairWidth        </a><br>
+<a class=toc href="#StairCase_StairCarpetWidth  ">2.1.3 &nbsp;&nbsp;&nbsp; StairCase_StairCarpetWidth  </a><br>
+<a class=toc href="#StairCase_StairHandedness   ">2.1.4 &nbsp;&nbsp;&nbsp; StairCase_StairHandedness   </a><br>
+<a class=toc href="#StairCase_HandRailHeight    ">2.1.5 &nbsp;&nbsp;&nbsp; StairCase_HandRailHeight    </a><br>
+<a class=toc href="#StairCase_MaxBalusterSpacing">2.1.6 &nbsp;&nbsp;&nbsp; StairCase_MaxBalusterSpacing</a><br>
+<a class=toc href="#StairCase_MaxRiserHeight    ">2.1.7 &nbsp;&nbsp;&nbsp; StairCase_MaxRiserHeight    </a><br>
+<a class=toc href="#StairCase_LandingThreshold  ">2.1.8 &nbsp;&nbsp;&nbsp; StairCase_LandingThreshold* </a><br>
+<a class=toc href="#StairCase_RiserCoverage     ">2.1.9 &nbsp;&nbsp;&nbsp; StairCase_RiserCoverage     </a><br>
+<a class=toc href="#StairCase_MaxInclination    ">2.1.10 &nbsp; StairCase_MaxInclination**             </a><br>
+<a class=toc href="#StairCase_SpiralCentre      ">2.1.11 &nbsp; StairCase_SpiralCentre**               </a><br>     
+<a class=toc href="#StairCase_CentralCoreRadius ">2.1.12 &nbsp; StairCase_CentralCoreRadius**          </a><br>
+</td><td>
+<a class=toc href="#StairCase_StairsOn              ">2.2.1 &nbsp; StairCase_StairsOn              </a><br>
+<a class=toc href="#StairCase_LandingsOn            ">2.2.2 &nbsp; StairCase_LandingsOn*           </a><br>
+<a class=toc href="#StairCase_StairCarpetOn         ">2.2.3 &nbsp; StairCase_StairCarpetOn         </a><br>
+<a class=toc href="#StairCase_MainBanisterOn        ">2.2.4 &nbsp; StairCase_MainBanisterOn        </a><br>
+<a class=toc href="#StairCase_PairedBanisterOn      ">2.2.5 &nbsp; StairCase_PairedBanisterOn      </a><br>
+<a class=toc href="#StairCase_CentralCoreOn         ">2.2.6 &nbsp; StairCase_CentralCoreOn**       </a><br>    
+<a class=toc href="#StairCase_ConstantStairWidthOn  ">2.2.7 &nbsp; StairCase_ConstantStairWidthOn**</a><br>
+<a class=toc href="#StairCase_CompatibilityMode     ">2.2.8 &nbsp; StairCase_CompatibilityMode*    </a><br>
+</td><td>
+<a class=toc href="#StairCase_NewelPost         ">2.3.1 &nbsp; StairCase_NewelPost         </a><br>
+<a class=toc href="#StairCase_Baluster          ">2.3.2 &nbsp; StairCase_Baluster          </a><br>
+<a class=toc href="#StairCase_HandRail          ">2.3.3 &nbsp; StairCase_HandRail          </a><br>
+<a class=toc href="#StairCase_Stringer          ">2.3.4 &nbsp; StairCase_Stringer          </a><br>
+<a class=toc href="#StairCase_Tread             ">2.3.5 &nbsp; StairCase_Tread             </a><br>
+<a class=toc href="#StairCase_Riser             ">2.3.6 &nbsp; StairCase_Riser             </a><br>
+<a class=toc href="#StairCase_StairCarpet       ">2.3.7 &nbsp; StairCase_StairCarpet       </a><br>
+</td><td>
+<a class=toc href="#StairCase_NewelTexture      ">2.4.1 &nbsp; StairCase_NewelTexture         </a><br>
+<a class=toc href="#StairCase_BalusterTexture   ">2.4.2 &nbsp; StairCase_BalusterTexture      </a><br>
+<a class=toc href="#StairCase_StringerTexture   ">2.4.3 &nbsp; StairCase_StringerTexture      </a><br>
+<a class=toc href="#StairCase_RailTexture       ">2.4.4 &nbsp; StairCase_RailTexture          </a><br>
+<a class=toc href="#StairCase_TreadTexture      ">2.4.5 &nbsp; StairCase_TreadTexture         </a><br>
+<a class=toc href="#StairCase_RiserTexture      ">2.4.6 &nbsp; StairCase_RiserTexture         </a><br>
+<a class=toc href="#StairCase_StairCarpetTexture">2.4.7 &nbsp; StairCase_StairCarpetTexture   </a><br>
+<a class=toc href="#StairCase_StairCarpetColour ">2.4.8 &nbsp; StairCase_StairCarpetColour    </a><br>
+<a class=toc href="#StairCase_CentralCoreTexture">2.4.9 &nbsp; StairCase_CentralCoreTexture** </a><br>
+</td></tr>
+</table>
+<table>
+<tr><td align=center><b>*</b></td> <td> - StairCase Macro only</td></tr>
+<tr><td align=center><b>**</b></td><td> - StairCase_Spiral Macro only</td></tr>
+</table>
+</div>
+
+<script> tocFooter(); </script>
+
+
+<h2><a name="Main"></a>Main Control Variables</h2>
+
+<h3><a name="StairCase_PostPositions">2.1.1&nbsp;&nbsp;</a>StairCase_PostPositions      </h3>
+The StairCase_PostPositions array holds a sequence of coordinates defined as 3D vectors. Each coordinate vector defines the position of a newel post and the sequence of positions therefore defines the path that will be followed by one side of the staircase. This is therefore the most important control variable for POV-Sairs as it effectively defines the path of the entire staircase.
+<p>
+The <a href="staircase_macros.html#StairCase">StairCase</a> macro adds newel posts at the positions specified in the StairCase_PostPositions array and optionally adds corresponding newel posts on the opposite side of the staircase. It also optionally adds stairs, landings and banister rails to connect the newel posts together.  
+<p>
+The <a href="staircase_macros.html#SipralStairCase">StairCase_Spiral</a> macro only uses the first two elements of this array. It adds newel posts at those two positions and calculates a spiral that passes through those positions and is centred on a line passing vertically through the point defined by the <a href="#StairCase_SpiralCentre">StairCase_SpiralCentre</a> control variable. This macro also optionally adds stairs, landings and banister rails to connect the newel posts together. 
+<p>
+It is anticipated that, other than for simple testing purposes you will always override the default values assigned to this array.
+This is a standard POV-Ray array and as such can be declared in a number of different ways as detailed in the POV-Ray documentation. Two common ways of declaring this variable are shown below. The first declares the array and assigns its values in a single statement.
+<div class="samplecode">
+  #declare StairCase_PostPositions = array [6] {<-3,0,0>,<-2,0,0>,<-1,-1,0>,<1,-1,0>,<2,0,0>,<3,0,0>};
+</div> 
+<ul>
+  <li><b>array [6]</b> tells POV-Ray that this variable is an array with 6 elements. 
+  <li>6 sets of 3D &lt;x,y,z&gt; coordinates are then specified within the curly brackets and separated by commas.
+  <li>The variable declaration is terminated with a semicolon (';').
+</ul>
+<p>
+The following example declares and dimensions the array identifier in the first statement, then assigns its 6 values in separate statements.
+<div class="samplecode">
+  #declare StairCase_PostPositions = array [6];<br>
+  #declare StairCase_PostPositions[0] = <-3, 0,0>;<br>
+  #declare StairCase_PostPositions[1] = <-2, 0,0>;<br>
+  #declare StairCase_PostPositions[2] = <-1,-1,0>;<br>
+  #declare StairCase_PostPositions[3] = < 1,-1,0>;<br>
+  #declare StairCase_PostPositions[4] = < 2, 0,0>;<br>
+  #declare StairCase_PostPositions[5] = < 3, 0,0>;
+</div> 
+<ul>
+  <li>A 6 element array is declared. 
+  <li>A set of 3D &lt;x,y,z&gt; coordinates is assigned to each array element, starting from element 0 and ending at element 5.
+  <li>Each declaration is terminated with a semicolon (';').
+</ul>
+<b>Note</b> that all of the StairCase_PostPositions array elements needs to be assigned a valid 3D vector, otherwise the <a href="staircase_macros.html#StairCase">StairCase</a> macro will return an error.
+<p>
+Numerous examples illustrating the use of this control variable are included in the <a href="01quickstart.html">quick start</a> section of this documentation.
+<script> endSection(); </script>
+
+<h3><a name="StairCase_StairWidth">2.1.2&nbsp;&nbsp;</a>StairCase_StairWidth         </h3>
+This variable is used to define the width of the risers and treads (the steps of the stair case). If the <a href="#StairCase_StairHandedness">StairCase_StairHandedness</a> control variable is set to '1' or '-1' then the StairCase_StairWidth control variable also defines the centre to centre distance from one banister rail to the opposite banister rail. However, the <a href="#StairCase_StairHandedness">StairCase_StairHandedness</a> can also be set to a non whole number, in which case the risers and treads can protrude beyond the line of the banister rails. By default it is set to '1' (1 metre). To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_StairWidth = 4;<br>
+  StairCase()<br>
+</div>
+This example sets the stair width to 4 units.
+</td><td align=right >
+<a href="staircase_documentimages28.png" target="example"><img src="staircase_documentimages28.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_StairCarpetWidth">2.1.3&nbsp;&nbsp;</a>StairCase_StairCarpetWidth   </h3>
+This variable is used to define the width of the carpet. By default it is set to be the same as the stair width as defined using the <a href="#StairCase_StairWidth">StairCase_StairWidth</a> control variable. Reducing this width leaves an uncarpeted gap at the edges of the stairs. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_StairCarpetWidth = 0.5;<br>
+  StairCase()<br>
+</div>
+This example sets the stair carpet width to 0.5 POV-Ray units. As shown in the image on the right, the stair width (as defined using the <a href="#StairCase_StairWidth">StairCase_StairWidth</a> variable) has defaulted to a value of 1, making the stairs 1 POV-Ray unit wide. The carpet does not therefore cover the whole stair width, leaving bare sections of riser and tread on either side of the carpet. 
+</td><td align=right >
+<a href="staircase_documentimages32.png" target="example"><img src="staircase_documentimages32.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_StairHandedness">2.1.4&nbsp;&nbsp;</a>StairCase_StairHandedness    </h3>
+This variable is used to tell the <a href="staircase_macros.html#StairCase">StairCase</a> macro whether the left hand or the right hand newel post positions have been specified in the <a href="#StairCase_PostPositions">StairCase_PostPositions</a> array. If set to '1' then these newel posts will be on the left of the staircase and if set to '-1' the newel posts will be to the right of the staircase. A non-whole number can be specified to move the posts and the banister rails in from the end of the stairs. By default this value is set to '1'. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_StairHandedness = -1;<br>
+  #declare StairCase_PostPositions = array [3] {<1,0,0>,<1,1,1.25>,<2.25,2,1.25>};<br>
+  StairCase()<br>
+</div>
+<b>Note</b> that it is your responsibility to define newel post positions, a stair width and a stair handedness that provide enough space for stairs to be constructed without overlapping. If you StairCase_StairHandedness were to be assigned a value of '1' with the post positions that were used in the exampel above, then the right turn made by the handrail would cause the start of the second flight of stairs to overlap the end of the first flight of stairs. The StairCase macro will not report this as an error, but the staircase you end up with will look a mess. 
+</td><td align=right>
+<a href="staircase_documentimages29.png" target="example"><img src="staircase_documentimages29.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_HandRailHeight">2.1.5&nbsp;&nbsp;</a>StairCase_HandRailHeight     </h3>
+This variable is used to define the height of the hand rail above the floor level of the newel posts. By default it is set to '0.920' (92cm). To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_HandRailHeight = 0.925;<br>
+  StairCase()<br>
+</div>
+</td><td>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_MaxBalusterSpacing">2.1.6&nbsp;&nbsp;</a>StairCase_MaxBalusterSpacing </h3>
+This variable is used to define the maximum spacing for the balusters. The smallest number of balusters that will span the gap between two Newel Posts without leaving a gap larger than this value will be generated. By default it is set to '0.135' (13.5cm). To override the default setting and specify a maximum you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_MaxBalusterSpacing = 0.008;<br>
+  StairCase()<br>
+</div>
+<b>Note</b> that there is nothing stopping you specifying a very small baluster spacing that will cause the balusters to overlap.
+</td><td>
+<a href="staircase_documentimages24.png" target="example"><img src="staircase_documentimages24.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h3><a name="StairCase_MaxRiserHeight">2.1.7&nbsp;&nbsp;</a>StairCase_MaxRiserHeight     </h3>
+This variable is used to define the maximum height of a riser. The smallest number of risers that will rise the height between two Newel Posts without an individual riser being higher than this value will be generated. By default it is set to '0.190' (19cm). To override the default setting and specify a maximum riser height you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_MaxRiserHeight = 0.10;<br>
+  StairCase()<br>
+</div>
+The example illustrated in the image to the right specifies a very small riser height, creating a flight of stairs that is not particularly practical.<br>
+You can also specify the proportion of the riser that will be included in the staircase, to give an open effect. See  <a href="#StairCase_RiserCoverage">StairCase_RiserCoverage</a>
+</td><td align=right >
+<a href="staircase_documentimages26.png" target="example"><img src="staircase_documentimages26.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_LandingThreshold">2.1.8&nbsp;&nbsp;</a>StairCase_LandingThreshold   </h3>
+This variable is used to define an angle that serves as a threshold above which an extra Newel Post will be added by the <a href="staircase_macros.html#StairCase">StairCase</a> macro when creating a landing. By default it is set to '50' (50 degrees). If successive sections of staircase turn by more than this amount, an extra Newel Post will be added to assist with the turn between flights of stairs. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_LandingThreshold = 30;<br>
+  #declare StairCase_PostPositions = array [3] {<0,0,0>,<0,1,1.25>,<-0.75,2,2.5>};<br>
+  StairCase()<br>
+</div>
+When the post positions create a landing that turns through an angle that exceeds the threshold an extra newel post is added.
+</td><td align=right >
+<a href="staircase_documentimages30.png" target="example"><img src="staircase_documentimages30.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_LandingThreshold = 40;<br>
+  #declare StairCase_PostPositions = array [3] {<0,0,0>,<0,1,1.25>,<-0.75,2,2.5>};<br>
+  StairCase()<br>
+</div>
+When the post positions create a landing that turns through an angle that is less than the threshold the last newel post from one flight of stairs is connected to the first newel post from the next flight.
+</td><td align=right >
+<a href="staircase_documentimages31.png" target="example"><img src="staircase_documentimages31.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_RiserCoverage">2.1.9&nbsp;&nbsp;</a>StairCase_RiserCoverage      </h3>
+This variable is used to define the proportion of the riser that is present. If set to 1 then the whole riser will be present giving a staircase with no open gaps between the treads. A value of 0.5 will fill the upper half of the riser leaving a gap between the base of each riser and the top of the next tread down. By default this value is set to '1'. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_RiserCoverage = 0.5;<br>
+  #declare StairCase_StairCarpetOn = 0;<br>
+  StairCase()<br>
+</div>
+This tells the StairCase Macros to only use half height risers to support the treads, giving an open style of staircase. The rise from one tread to the next is controlled using the <a href="#StairCase_MaxRiserHeight">StairCase_MaxRiserHeight</a> control variable.
+</td><td align=right >
+<a href="staircase_documentimages27.png" target="example"><img src="staircase_documentimages27.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_MaxInclination">2.1.10&nbsp;&nbsp;</a>StairCase_MaxInclination    (StairCase_Spiral Macro only)</h3>
+This variable is used to define the maximum inclination of the outer edge of a spiral staircase. This would typically be set to '3/4' (=0.75) or less so that the spiral staircase does not get too steep. The StairCase_Spiral macro uses this value to work out whether to add extra 360 degree turns to the staircase in order to raise it through the height necessary to join the starting point to the end point as defined using the first two elements of the StairCase_Positions array. The default setting for this variable is '3/4' representing a rise of 3 units for every 4 horizontal units. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. 
+<p>
+The following examples all use the same start and end, x and z positions the height (the y dimension) of the end point is changed for the second and third example:
+<p>
+<table width=100%>
+<tr><td align=center>
+This first example shows a stretch of staircase that comfortably rises 2.35 metres without breaching the default limit for StairCase_MaxInclination of '3/4'. 
+</td><td align=center>
+Increasing the height to 3 metres exceeds a rise of 3 in 4 at the outer edge, so an extra loop is automatically added into the staircase. 
+</td><td align=center>
+Increasing the maximum permitted inclination to '39/40' gives an almost 45 degree inclination around the outer edge, resulting in very steep stairs, but avoiding the extra 360 degree loop in the spiral. 
+</td></tr>
+<tr><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_PostPositions = array [2] {<-2,0,0>,<0,2.35,2>};<br> 
+  StairCase_Spiral ()
+</div>
+<br>
+</td><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_PostPositions = array [2] {<-2,0,0>,<0,3,2>};<br> 
+  StairCase_Spiral ()
+</div>
+<br>
+</td><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_MaxInclination = 39/40;<br>
+  #declare StairCase_PostPositions = array [2] {<-2,0,0>,<0,3,2>};<br> 
+  StairCase_Spiral ()
+</div>
+<br>
+</td></tr>
+<tr><td align=center>
+<img src="staircase_documentimages51.png" width=250>
+</td><td align=center>
+<img src="staircase_documentimages52.png" width=250>
+</td><td align=center>
+<img src="staircase_documentimages53.png" width=250>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_SpiralCentre">2.1.11&nbsp;&nbsp;</a>StairCase_SpiralCentre    (StairCase_Spiral Macro only)</h3>
+This variable is used to define the position of the centre of a spiral staircase. The default setting for this variable is '<0,0,0>' which centres the spiral staircase at the origin. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+Note. As the centre of the spiral will be a vertical line passing through this point the 'y' coordinate is not particularly relevant for the generation of the staircase, but it does affect the starting point for the central pillar (if displayed). This can be handy for bringing the top of the pillar down. For example, here the top is brought down to floor level. The base can easily be trimmed away with a plane if desired.
+<p>
+The following examples both use the same start and end positions, but a different centre:
+<p>
+<table width=100%>
+<tr><td align=center>
+This first example uses the default spiral staircase with a newel post at <-1.5,0,0>, an upper newel post at <1.5,2,0> and is centred at the origin (<0,0,0>). 
+</td><td align=center>
+When the centre point is set to <-0.5,-0.9,0.5> the staircase distends out and around that point. 
+</td></tr>
+<tr><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  StairCase_Spiral ()
+</div>
+<br>
+</td><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_SpiralCentre         = <-0.5,-0.9,0.5>; 
+  StairCase_Spiral ()
+</div>
+<br>
+</td></tr>
+<tr><td align=center>
+<img src="staircase_documentimages54.png" width=250>
+</td><td align=center>
+<img src="staircase_documentimages55.png" width=250>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_CentralCoreRadius">2.1.12&nbsp;&nbsp;</a>StairCase_CentralCoreRadius    (StairCase_Spiral Macro only)</h3>
+This variable is used to define the radius of the central cylindrical core of a spiral staircase. This value is used even if the <a href="#StairCase_CentralCoreOn">StairCase_CentralCoreOn</a> control variable is set to '0'. The default setting for this variable is '0.1' which results in a vertical cylinder with a diameter 0.2 units being added to the spiral staircase. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td align=center>
+This first example uses a spiral staircase with a lower newel post at <-2,0,0>, an upper newel post at <2,2,0> and a central core with the default radius of 0.1. 
+</td><td align=center>
+When the radius is set to 0.5 the staircase wraps itself around a wider central core. 
+</td></tr>
+<tr><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_PostPositions = array [2] {<-2,0,0>,<2,2.5,0>};
+  StairCase_Spiral ()
+</div>
+<br>
+</td><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_PostPositions = array [2] {<-2,0,0>,<2,2.5,0>};
+  StairCase_Spiral ()
+</div>
+<br>
+</td></tr>
+<tr><td align=center>
+<img src="staircase_documentimages56.jpg" width=250>
+</td><td align=center>
+<img src="staircase_documentimages57.png" width=250>
+</td></tr>
+</table>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_CentralCoreRadius = 0.2;<br>
+  StairCase_Spiral()<br>
+</div>
+This tells the StairCase Macros to permit a define a cylindrical core of 0.2 units in radius. 
+</td><td align=right >
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h2><a  name="Switches"></a>Control Switches</h2>
+
+<h3><a name="StairCase_StairsOn">2.2.1&nbsp;&nbsp;</a>StairCase_StairsOn         </h3>
+This variable is used to indicate whether the <a href="staircase_macros.html#StairCase">StairCase</a> macro should define stairs or just the banister rails. By default it is set to '1' to define a complete stair case. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_StairsOn = 0;<br>
+  StairCase()<br>
+</div>
+This example suppresses the generation of stairs as shown in the image on the right. Notice that this also suppresses the generation of landings, which, for the purposes of this setting are considered to be part of the stair assembly.
+</td><td align=right >
+<a href="staircase_documentimages47.png" target="example"><img src="staircase_documentimages47.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h3><a name="StairCase_LandingsOn">2.2.2&nbsp;&nbsp;</a>StairCase_LandingsOn         </h3>
+This variable is used to indicate whether the <a href="staircase_macros.html#StairCase">StairCase</a> macro should define landings to join the various flight of stairs together. By default it is set to '1' to define a complete stair case. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_LandingsOn = 0;<br>
+  StairCase()<br>
+</div>
+This example suppresses the generation of landings as shown in the image on the right.
+</td><td align=right >
+<a href="staircase_documentimages20.png" target="example"><img src="staircase_documentimages20.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h3><a name="StairCase_StairCarpetOn">2.2.3&nbsp;&nbsp;</a>StairCase_StairCarpetOn      </h3>
+This variable is used to indicate whether the <a href="staircase_macros.html#StairCase">StairCase</a> macro should carpet the stairs. By default it is set to '1' to define a complete stair case. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_StairCarpetOn = 0;<br>
+  StairCase()<br>
+</div>
+This example suppresses the stair carpet as shown in the image on the right.
+</td><td align=right >
+<a href="staircase_documentimages21.png" target="example"><img src="staircase_documentimages21.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h3><a name="StairCase_MainBanisterOn">2.2.4&nbsp;&nbsp;</a>StairCase_MainBanisterOn      </h3>
+This variable is used to indicate whether the <a href="staircase_macros.html#StairCase">StairCase</a> macro should include the main banisters. This is the banister whose position is defined by the positions of the Newel Posts specified using the <a href="#StairCase_PostPositions">StairCase_PostPositions</a> array. By default this variable is set to '1' to define a stair case with a banister rail. If set to zero, the Newel Posts whose positions are specified are not included in the generated staircase. This may seem unusual, but can be useful when constructing a staircase against a wall, because it may be easier to specify the positions against the wall than to calculate the positions of the corresponding banisters on the opposite side of the staircase. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_MainBanisterOn = 0;<br>
+  StairCase()<br>
+</div>
+This example suppresses the main banister as shown in the image on the right.<br>
+<b>Note</b> that the banister rail referred to as the main banister rail is dependant upon the handedness of the stairs. In this example the setting for the <a href="#StairCase_StairHandedness">StairCase_StairHandedness</a> variable defaults to '1' which indicates that the stairs are drawn to the right of the specified newel posts as one looks at the first flight of stairs from the starting point.
+</td><td align=right >
+<a href="staircase_documentimages22.png" target="example"><img src="staircase_documentimages22.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h3><a name="StairCase_PairedBanisterOn">2.2.5&nbsp;&nbsp;</a>StairCase_PairedBanisterOn      </h3>
+This variable is used to indicate whether the <a href="staircase_macros.html#StairCase">StairCase</a> macro should include the 'paired' banisters. That is to say the banisters on the opposite side of the staircase to the banisters whose positions are defined by the positions of the Newel Posts specified using the <a href="#StairCase_PostPositions">StairCase_PostPositions</a> array. By default, the StairCase macro uses a value of '1' for this variable, whereas the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro uses a value of '0' for this variable. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_PairedBanisterOn = 0;<br>
+  StairCase()<br>
+</div>
+This example suppresses the paired banister as shown in the image on the right.<br>
+<b>Note</b> that the banister rail referred to as the paired banister rail is dependant upon the handedness of the stairs. In this example the setting for the <a href="#StairCase_StairHandedness">StairCase_StairHandedness</a> variable defaults to '1' which indicates that the stairs are drawn to the right of the specified newel posts as one looks at the first flight of stairs from the starting point. Setting StairCase_PairedBanisterOn to '0' therefore suppresses the banister rail to the right of those stairs.
+</td><td align=right >
+<a href="staircase_documentimages23.png" target="example"><img src="staircase_documentimages23.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h3><a name="StairCase_CentralCoreOn">2.2.6&nbsp;&nbsp;</a>StairCase_CentralCoreOn    (StairCase_Spiral Macro only)</h3>
+This variable is used to define whether a central cylindrical core is added to the spiral staircase. The <a href="#StairCase_CentralCoreRadius">StairCase_CentralCoreRadius</a> control variable is used to set the radius of the core. The default setting for this variable is '1' which results in a vertical cylindrical core being added to the spiral staircase. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro.
+<p>
+<table width=100%>
+<tr><td align=center>
+This first example uses a visible 0.5 unit radius central core. 
+</td><td align=center>
+This second example switches the visible cylindrical core off. 
+</td></tr>
+<tr><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_PostPositions = array [2] {<-2,0,0>,<2,2.5,0>};<br>
+  #declare StairCase_CentralCoreRadius = 0.5;<br>
+  StairCase_Spiral ()  
+</div>
+<br>
+</td><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_CentralCoreOn =0;<br>
+  #declare StairCase_CentralCoreRadius    = 0.5;<br>
+  #declare StairCase_PostPositions = array [2] {<-2,0,0>,<2,2.5,0>};<br>
+  StairCase_Spiral ()  
+</div>
+<br>
+</td></tr>
+<tr><td align=center>
+<img src="staircase_documentimages57.png" width=250>
+</td><td align=center>
+<img src="staircase_documentimages58.png" width=250>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h3><a name="StairCase_ConstantStairWidthOn">2.2.7&nbsp;&nbsp;</a>StairCase_ConstantStairWidthOn    (StairCase_Spiral Macro only)</h3>
+The <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro can create a spiral where the inner edge of the spiral follows the edge of a cylinder of a radius specified using the <a href="#StairCase_CentralCoreRadius ">StairCase_CentralCoreRadius</a> control variable and centred at the point defined usind the <a href="#StairCase_SpiralCentre">StairCase_SpiralCentre</a> control variable, or it can maintain a constant stair width. If the starting point and the ending point are an equal distance from the centre line of the spiral, then there is little evident difference.
+<p>
+The default setting for this variable is '0' which causes the inner edge of the staircase to follow a cylindrical spiral. To override the default setting you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. In the following example the newel posts are very different distances from the centre of the spiral (which defaults to <0,0,0>) so that the effect of this setting becomes more apparent.
+<p>
+<table width=100%>
+<tr><td align=center>
+This first example sets 'StairCase_ConstantStairWidthOn' to '0' (the default). The inner edge of the spiral therefore follows the cylindrical central core which has been given a radius of 0.5 to show this effect more clearly.
+</td><td align=center>
+This second example sets it to '1', indicating that the spiral of the inner edge should remain parallel to the spiral of the outer edge. 
+</td></tr>
+<tr><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_PostPositions = array [2] {<-2,0,0>,<2,2.5,4>};<br>
+  #declare StairCase_CentralCoreRadius    = 0.5;<br>
+  #declare StairCase_ConstantStairWidthOn = 0;<br>
+  StairCase_Spiral ()  
+</div>
+<br>
+</td><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_PostPositions = array [2] {<-2,0,0>,<2,2.5,4>};<br>
+  #declare StairCase_CentralCoreRadius    = 0.5;<br>
+  #declare StairCase_ConstantStairWidthOn = 1;<br>
+  StairCase_Spiral ()  
+</div>
+<br>
+</td></tr>
+<tr><td align=center>
+<img src="staircase_documentimages59.png" width=250>
+</td><td align=center>
+<img src="staircase_documentimages60.png" width=250>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h3><a name="StairCase_CompatibilityMode">2.2.8&nbsp;&nbsp;</a>StairCase_CompatibilityMode    (StairCase Macro only)</h3>
+If this variable is set to '1' the <a href="staircase_macros.html#StairCase">StairCase</a> macro calls the <a href="staircase_macros.html#StairCase_Compatibility">StairCase_Compatibility</a> macro to provide a degree of compatibility with the old 'POV-Stairs' package. The primary difference between the two is that POV-Stairs used variable names with a prefix of 'sc' where this version uses the prefix 'StairCase_'. For any 'current' variable that is not set, where the 'old' variable name is set, this macro copies the value across to the corresponding current variable names. 
+<p>
+<b>Note</b>
+This is not a foolproof technique where you call the 'StairCase' macro more than once in a single scene file because the first call to the macro will initialise all variables, so any settings assigned to old variable names between an initial call to the 'StairCase' macro and a second call to the macro will be ignored. The recommended approach is to go through your scene file and rename variables. This can usually be achieved pretty quickly using the search and replace option provided by most text editors (including the POV-Ray Windows editor).
+<p>
+<script> endSection(); </script>
+
+
+<h2><a  name="Objects"></a>Object Definitions</h2>
+                                                                  
+<h3><a name="StairCase_NewelPost">2.3.1&nbsp;&nbsp;</a>StairCase_NewelPost          </h3>
+<table width=100%>
+<tr><td rowspan=3>
+<a href="staircase_documentimages45.png" target="example"><img src="staircase_documentimages45.png" height=200 alt="Click to see full larger image"></a>
+</td><td>
+This object represents a Newel Post. A pair of Newel Posts are used to support the ends of a length of handrail. The Newel Post is defined as being about 1 POV-Ray unit in height. The edge that will end up pointing towards the start of the flight of stairs needs to be initially defined pointing in the +z direction. The <a href="staircase_macros.html#StairCase">StairCase</a> macro applies a texture based upon the setting of the <a href="#StairCase_NewelTexture">StairCase_NewelTexture</a> variable. It then rotates and translates each Newel Post into position as necessary.
+<p>
+If not set, this object will default to the shape shown on the left which consists of a lathe cut shape. To override the default setting you can declare this object in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. 
+For example:
+</td>
+<td rowspan=3 align=right>
+<a href="staircase_documentimages46.png" target="example"><img src="staircase_documentimages46.png" height=200 alt="Click to see full larger image"></a>
+</td>
+</tr>
+<tr><td>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_NewelPost = intersection {<br>
+&nbsp;&nbsp;    box {<-0.042,-1,-0.042><0.042,1.02,0.042>}<br>
+&nbsp;&nbsp;    plane {<0,1,1>,0 translate 1.05*y}<br>
+&nbsp;&nbsp;    plane {<0,1,1>,0 translate 1.05*y rotate  90*y}<br>
+&nbsp;&nbsp;    plane {<0,1,1>,0 translate 1.05*y rotate 180*y}<br>
+&nbsp;&nbsp;    plane {<0,1,1>,0 translate 1.05*y rotate 270*y}<br>
+  }<br>
+  StairCase()<br>
+</div>
+</td></tr>
+<tr><td>This example defines a simple box shape for the post then bevels off the four top edges by intersecting the post with four appropriately positioned planes.</td></tr>
+</table> 
+   
+<table width=100%>
+<tr><td>
+<a href="staircase_samplenewels.jpg" target="example"><img src="staircase_samplenewels.jpg" height=382 alt="Click to see full larger image"></a><br>
+Box - 
+Bevelled - 
+Chamfer -
+Notched -
+Turned  -
+Fluted  
+</td><td>
+A number of sample newel post shapes are included in the 'StairCase_Samples.inc' include file. The definitions are stored inside the <a href="staircase_macros.html#StairCase_NewelShape">StairCase_NewelShape</a> macro, so to use these shapes you need to include the file and run the macro, assigning the result to the 'StairCase_NewelPost' variable before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro.
+The following example illustrates this:
+<div class="samplecode">
+  #include "StairCase_Samples.inc"<br>
+  #include "staircase.inc"<br>
+  #declare StairCase_NewelPost = StairCase_NewelShape ("Fluted")<br>
+  StairCase()<br>
+</div>
+This example would generate a staircase using the 'Notched' newel post shape shown in the image to the left.
+</td></tr>
+</table>
+   
+<script> endSection(); </script>
+
+<h3><a name="StairCase_Baluster">2.3.2&nbsp;&nbsp;</a>StairCase_Baluster           </h3>
+<table width=100%>
+<tr><td rowspan=3>
+<a href="staircase_documentimages43.png" target="example"><img src="staircase_documentimages43.png" height=200 alt="Click to see full larger image"></a>
+</td><td>
+This object represents a Baluster. A set of Balusters are used to support the handrail between pairs of Newel Posts.  It is defined as being a little over 1 POV-Ray unit in height. The <a href="staircase_macros.html#StairCase">StairCase</a> macro trims the top and bottom to match the setting of the <a href="#StairCase_HandRailHeight">StairCase_HandRailHeight</a> variable. The edge that will end up pointing towards the start of the flight of stairs is defined pointing towards the +z direction. The <a href="staircase_macros.html#StairCase">StairCase</a> macro will apply a texture based upon the setting of the <a href="#StairCase_BalusterTexture">StairCase_BalusterTexture</a> variable. It then rotates and translates each Baluster into position as necessary.
+<p>
+If not set, this object will default to the shape shown on the left which consists of a lathe cut shape. To override the default setting you can declare this object in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. 
+For example:
+</td><td align=right rowspan=3>
+<a href="staircase_documentimages44.png" target="example"><img src="staircase_documentimages44.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+<tr><td>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_Baluster = box {<-0.015,-0.03,-0.015><0.015,1,0.015>};<br>
+  StairCase()<br>
+</div>
+</td></tr>
+<tr><td>
+This gives a simple square section baluster as shown in the image to the right.
+</td></tr>
+</table>
+
+<table width=100%>
+<tr><td>
+<a href="staircase_samplebalusters.jpg" target="example"><img src="staircase_samplebalusters.jpg" height=382 alt="Click to see full larger image"></a><br>
+Fluted   - 
+Turned   -
+Notched  -
+Chamfer  -
+Bevelled -
+Box      
+</td><td>
+A number of sample baluster shapes are included in the 'StairCase_Samples.inc' include file. The definitions are stored inside the <a href="staircase_macros.html#StairCase_BalusterShape">StairCase_BalusterShape</a> macro, so to use these shapes you need to include the file and run the macro, assigning the result to the 'StairCase_Baluster' variable before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro.
+The following example illustrates this:
+<div class="samplecode">
+  #include "StairCase_Samples.inc"<br>
+  #include "staircase.inc"<br>
+  #declare StairCase_Baluster = StairCase_BalusterShape ("Notched")<br>
+  StairCase()<br>
+</div>
+This example would generate a staircase using the 'Notched' baluster shape shown in the image to the left.
+</td></tr>
+</table>
+
+
+<script> endSection(); </script>
+
+<h3><a name="StairCase_HandRail">2.3.3&nbsp;&nbsp;</a>StairCase_HandRail           </h3>
+<table width=100%>
+<tr><td rowspan=3>
+<a href="staircase_documentimages41.png" target="example"><img src="staircase_documentimages41.png" height=200 alt="Click to see full larger image"></a>
+</td><td>
+This object represents the hand rail and is defined as being of a 1 POV-Ray unit in length. The <a href="staircase_macros.html#StairCase">StairCase</a> macro will scale this length as necessary to enable the hand rail to span the distance between two Newel Posts. The hand rail is defined starting at the origin and running out along the +z axis. The <a href="staircase_macros.html#StairCase">StairCase</a> macro will scale this section, apply a unique texture based upon the setting of the <a href="#StairCase_RailTexture">StairCase_RailTexture</a> variable with a degree of randomness designed to give each hand rail a unique texture. It then rotates and translates each hand rail into position as necessary.
+<p>
+If not set, this object will default to the shape shown on the left. To override the default setting you can declare this object in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. 
+For example:
+</td><td align=right rowspan=3>
+<a href="staircase_documentimages42.png" target="example"><img src="staircase_documentimages42.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+<tr><td >
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_HandRail = cylinder {<0,0.015,0><0,0.015,1>,0.03 clipped_by{plane{-y,0}} scale <1,0.6,1>};<br>
+  StairCase()<br>
+</div>
+</td></tr>
+<tr><td>
+This gives a rounded handrail with a flat underside as shown in the image to the right.
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_Stringer">2.3.4&nbsp;&nbsp;</a>StairCase_Stringer           </h3>
+<table width=100%>
+<tr><td rowspan=3>
+<a href="staircase_documentimages33.png" target="example"><img src="staircase_documentimages33.png" height=200 alt="Click to see full larger image"></a>
+</td><td>
+This object represents the side edging of the stairs. The risers and the treads are connected into this component which supports the weight of a flight of stairs. If not set, this object will default to the shape shown on the left which consists of a simple rectangular piece topped with a standard shoerail. To override the default setting you can declare this object in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+</td><td align=right rowspan=3>
+<a href="staircase_documentimages34.png" target="example"><img src="staircase_documentimages34.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+<tr><td>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_Stringer = box {<-0.03,-0.14,-0.08><0.03,0.12,1.08>};<br>
+  StairCase()<br>
+</div>
+</td></tr>
+<tr><td>
+This uses a thicker stringer with no Shoerail, as shown in the image to the right.
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_Tread">2.3.5&nbsp;&nbsp;</a>StairCase_Tread              </h3>
+<table width=100%>
+<tr><td rowspan=3>
+<a href="staircase_documentimages35.png" target="example"><img src="staircase_documentimages35.png" height=200 alt="Click to see full larger image"></a>
+</td><td>
+This object represents the tread and is defined as being of a 1 POV-Ray unit width. The <a href="staircase_macros.html#StairCase">StairCase</a> macro will scale this width to match the setting of the <a href="#StairCase_StairWidth">StairCase_StairWidth</a> variable. The tread is defined at the origin with its top surface at a height of '0' units. The front edge of the tread points towards the +z direction. The back edge is typically defined as being at 1 POV-Ray back in the -z direction. The <a href="staircase_macros.html#StairCase">StairCase</a> macro will trim this so that it stops when it meets the next riser. The <a href="staircase_macros.html#StairCase">StairCase</a> macro will apply a unique texture based upon the setting of the <a href="#StairCase_TreadTexture">StairCase_TreadTexture</a> variable with a degree of randomness designed to give each stair a unique texture. It then rotates and translates each tread into position as necessary.
+<p>
+If not set, this object will default to the shape shown on the left which consists of a rectangular piece fronted with a rounded edge. To override the default setting you can declare this object in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. 
+For example:
+</td><td align=right rowspan=3>
+<a href="staircase_documentimages36.png" target="example"><img src="staircase_documentimages36.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+<tr><td>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_Tread = box {<-0.5,-0.042,-1><0.5,0,0.15>};<br>
+  #declare StairCase_StairCarpetOn = 0;<br>
+  StairCase()<br>
+</div>
+</td></tr>
+<tr><td>
+This replaces the rounded tread with a thick straight edged plank as shown in the image to the right.
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h3><a name="StairCase_Riser">2.3.6&nbsp;&nbsp;</a>StairCase_Riser              </h3>
+<table width=100%>
+<tr><td rowspan=3>
+<a href="staircase_documentimages37.png" target="example"><img src="staircase_documentimages37.png" height=200 alt="Click to see full larger image"></a>
+</td><td>
+This object represents the riser that joins the back edge of one stair to the underside of the next. It is defined as being of a 1 POV-Ray unit in width and nearly 1 POV-Ray unit in height. It's top surface stops just short of y=0 to avoid any problems with coincident surfaces. The <a href="staircase_macros.html#StairCase">StairCase</a> macro will scale the riser width to match the setting of the <a href="#StairCase_StairWidth">StairCase_StairWidth</a> variable and will scale the height to match the riser height which is calculated based upon the setting of the <a href="#StairCase_MaxRiserHeight">StairCase_MaxRiserHeight</a> variable. The riser is defined at the origin with its front surface pointing in the +z direction. The <a href="staircase_macros.html#StairCase">StairCase</a> macro will apply a unique texture based upon the setting of the <a href="#StairCase_RiserTexture">StairCase_RiserTexture</a> variable with a degree of randomness designed to give each stair a unique texture. It then rotates and translates each tread into position as necessary.
+<p>
+If not set, this object will default to the shape shown on the left which consists of a simple rectangular box. To override the default setting you can declare this object in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. 
+For example:
+</td><td align=right rowspan=3>
+<a href="staircase_documentimages38.png" target="example"><img src="staircase_documentimages38.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+<tr><td>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_Riser = difference {<br>
+    box {<-0.5,-1,0.120><0.5,-0.001,0.128>} <br>
+    box {<-0.05,-0.05,0.119><0.05,0.05,0.129> rotate z*45 scale <1,2,1> translate <-0.25,-0.55,0>}<br>
+    box {<-0.05,-0.05,0.119><0.05,0.05,0.129> rotate z*45 scale <1,2,1> translate < 0   ,-0.55,0>}<br>
+    box {<-0.05,-0.05,0.119><0.05,0.05,0.129> rotate z*45 scale <1,2,1> translate < 0.25,-0.55,0>}<br>
+  }<br>
+  #declare StairCase_StairCarpetOn = 0;<br>
+  StairCase()<br>
+</div>
+</td></tr>
+<tr><td>
+This example uses CSG to create a slightly more ornate riser as shown in the image to the right.
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h3><a name="StairCase_StairCarpet">2.3.7&nbsp;&nbsp;</a>StairCase_StairCarpet        </h3>
+<table width=100%>
+<tr><td rowspan=3>
+<a href="staircase_documentimages39.png" target="example"><img src="staircase_documentimages39.png" height=200 alt="Click to see full larger image"></a>
+</td><td>
+This object represents a section of carpet running along the top of a tread and down over a riser. It is defined as being of a 1 POV-Ray unit in width and the <a href="staircase_macros.html#StairCase">StairCase</a> macro scales this width to match the setting of the <a href="#StairCase_StaircarpetWidth">StairCase_StairCarpetWidth</a> variable. The front edge of the carpet segment points towards the +z direction. The back edge is typically defined as being at 1 POV-Ray back in the -z direction. The <a href="staircase_macros.html#StairCase">StairCase</a> macro will trim this so that it stops when it meets the next riser. The <a href="staircase_macros.html#StairCase">StairCase</a> macro will apply a texture based upon the setting of the <a href="#StairCase_StairCarpetTexture">StairCase_StairCarpetTexture</a> variable. It then rotates and translates each stair carpet section into position as necessary.
+<p>
+If not set, this object will default to the shape shown on the left which consists of a curled shape that wraps around the front of a stair. To override the default setting you can declare this object in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. 
+For example:
+</td><td align=right rowspan=3>
+<a href="staircase_documentimages40.png" target="example"><img src="staircase_documentimages40.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+<tr><td>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_StairCarpet = box {<-0.4,0,-0.1><0.4,0.001,0.10>}<br>
+  StairCase()<br>
+</div>
+</td></tr>
+<tr><td>
+This represents a rectangular section of carpet embedded into the tread as shown in the image to the right.
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h2><a  name="Textures"></a>Textures</h2>
+
+<h3><a name="StairCase_NewelTexture">2.4.1&nbsp;&nbsp;</a>StairCase_NewelTexture       </h3>
+This variable is used to define a texture for the Newel Posts. By default it is set to T_Wood1 from the "woods.inc" include file supplied with POV-ray.
+To override the default setting and specify a texture for a Newel Post you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_NewelTexture = texture {pigment {color rgb <1,0,0>}};<br>
+  StairCase()<br>
+</div>
+As can be seen in this image, the texture specified for the Newel Post also serves as the default texture for other components such as the Balusters and the Hand Rail.
+</td><td align=right >
+<a href="staircase_documentimages04.png" target="example"><img src="staircase_documentimages04.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_BalusterTexture">2.4.2&nbsp;&nbsp;</a>StairCase_BalusterTexture    </h3>
+This variable is used to define a texture for the Balusters. By default it is set to be the same as the texture defined for the Newel Posts using <a href="#StairCase_NewelTexture">StairCase_NewelTexture</a>.
+To override the default setting and specify a texture for the Balusters you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_BalusterTexture = texture {pigment {color rgb <0,1,0>}};<br>
+  StairCase()<br>
+</div>
+</td><td align=right >
+<a href="staircase_documentimages06.png" target="example"><img src="staircase_documentimages06.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_StringerTexture">2.4.3&nbsp;&nbsp;</a>StairCase_StringerTexture    </h3>
+This variable is used to define a texture for the Stringers. By default it is set to T_Wood30 from the "woods.inc" include file supplied with POV-ray.
+To override the default setting and specify a texture for the Stringers you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #include "textures.inc"<br>  
+  #declare StairCase_StringerTexture = texture {Cherry_Wood translate <-1,-1,0> translate -y scale <0.1,0.015,0.1>}<br>
+  StairCase()<br>
+</div>
+</td><td align=right >
+<a href="staircase_documentimages08.png" target="example"><img src="staircase_documentimages08.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_RailTexture">2.4.4&nbsp;&nbsp;</a>StairCase_RailTexture        </h3>
+This variable is used to define a texture for the Banister Rails (the hand rails). By default it is set to be the same as the texture defined for the Newel Posts using <a href="#StairCase_NewelTexture">StairCase_NewelTexture</a>.
+To override the default setting and specify a texture for the Banister Rails you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_RailTexture = texture {pigment {color rgb <1,0,1>}};<br>
+  StairCase()<br>
+</div>
+</td><td align=right >
+<a href="staircase_documentimages10.png" target="example"><img src="staircase_documentimages10.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_TreadTexture">2.4.5&nbsp;&nbsp;</a>StairCase_TreadTexture       </h3>
+This variable is used to define a texture for the Treads. By default it is set to be the same as the texture defined for the Newel Posts using <a href="#StairCase_NewelTexture">StairCase_NewelTexture</a>.
+To override the default setting and specify a texture for the Treads you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #include "textures.inc"<br>  
+  #declare StairCase_TreadTexture = texture {Cherry_Wood translate <-1,-1,0> rotate y*90 translate -y scale <0.1,0.1,0.008>}<br>
+  #declare StairCase_StairCarpetOn=0;<br>
+  StairCase()<br>
+</div>
+</td><td align=right >
+<a href="staircase_documentimages12.png" target="example"><img src="staircase_documentimages12.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<h3><a name="StairCase_RiserTexture">2.4.6&nbsp;&nbsp;</a>StairCase_RiserTexture       </h3>
+This variable is used to define a texture for the Risers. By default it is set to T_Wood30 from the "woods.inc" include file supplied with POV-ray.
+To override the default setting and specify a texture for the Risers you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #include "textures.inc"<br>  
+  #declare StairCase_RiserTexture = texture {Sandalwood scale <0.1,0.005,0.1>}<br>
+  #declare StairCase_StairCarpetOn=0;<br>
+  StairCase()<br>
+</div>
+</td><td align=right >
+<a href="staircase_documentimages14.png" target="example"><img src="staircase_documentimages14.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+<h3><a name="StairCase_StairCarpetTexture">2.4.7&nbsp;&nbsp;</a>StairCase_StairCarpetTexture </h3>
+This variable is used to define a texture for the Carpet. By default it is set to have a pigment as defined using the <a href="#StairCase_StairCarpetColour">StairCase_StairCarpetColour </a> control variable and an 'agate' normal scaled to provide a disrupted surface normal.
+To override the default setting and specify a texture for the carpet you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_StairCarpetTexture = texture {pigment {color rgb <1,1,1>}};<br>
+  #declare StairCase_StairCarpetWidth = 0.75;<br>
+  StairCase()<br>
+</div>
+</td><td align=right >
+<a href="staircase_documentimages16.png" target="example"><img src="staircase_documentimages16.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+<script> endSection(); </script>
+ 
+<h3><a name="StairCase_StairCarpetColour">2.4.8&nbsp;&nbsp;</a>StairCase_StairCarpetColour  </h3>
+This variable is used to define a colour for the Carpet. By default it is set to '&lt;1,1,0&gt;' (Yellow). To override the default setting and specify a texture for the Stair Carpet you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase">StairCase</a> or the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td colspan=2>
+<div class="samplecode">
+  #include "staircase.inc"<br>
+  #declare StairCase_StairCarpetColour = <0,1,0>;<br>
+  StairCase()<br>
+</div>
+</td><td align=right >
+<a href="staircase_documentimages18.png" target="example"><img src="staircase_documentimages18.png" height=200 alt="Click to see full larger image"></a>
+</td></tr>
+</table>
+Note. If you specify a setting for the <a href="#StairCase_StairCarpetTexture">StairCase_StairCarpetTexture</a> control variable, then the StairCase_StairCarpetColour control variable is ignored.
+<script> endSection(); </script>
+
+<h3><a name="StairCase_CentralCoreTexture">2.4.9&nbsp;&nbsp;</a>StairCase_CentralCoreTexture </h3>
+This variable is used to define a texture for the cylindrical column at the centre of a spiral staircase. By default it is white with an 'agate' normal scaled to provide a slightly rough surface.
+To override the default setting and specify a texture for the column you can declare this variable in your scene file before calling the <a href="staircase_macros.html#StairCase_Spiral">StairCase_Spiral</a> macro. For example:
+<p>
+<table width=100%>
+<tr><td align=center width=50%>
+This first example uses the default texture for the central core which consists of a white agate (0.1) texture scaled to 0.04.
+</td><td align=center width=50%>
+This second example sets it to a plain purple. 
+</td></tr>
+<tr><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_CentralCoreRadius    = 0.5;<br>
+  StairCase_Spiral ()  
+</div>
+<br>
+</td><td align=center>
+<div class="samplecode" align=left>
+  #include "staircase.inc"<br>
+  #declare StairCase_CentralCoreRadius    = 0.5;<br>
+  #declare&nbsp;StairCase_CentralCoreTexture&nbsp;=&nbsp;texture&nbsp;{<br>
+  &nbsp;&nbsp;pigment {color rgb <1,0,1>}<br>
+  };<br>
+  StairCase_Spiral ()  
+</div>
+<br>
+</td></tr>
+<tr><td align=center>
+<img src="staircase_documentimages61.png" width=250>
+</td><td align=center>
+<img src="staircase_documentimages62.png" width=250>
+</td></tr>
+</table>
+<script> endSection(); </script>
+
+
+<script> tocFooter(); </script>
+<script> footer(); </script>
+    
+    
+    
+    
+    
+    

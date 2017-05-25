@@ -1,0 +1,11 @@
+labels
+label
+barcode
+generator
+macro
+texture
+EAN
+bar
+code
+pigment
+object

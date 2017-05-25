@@ -1,0 +1,49 @@
+
+<h2>Eye.inc</h2>
+<table><tr><td>
+Eye.inc contains a macro that generates a simple eyeball object which is quick to render, but provides control over things like eye colour, pupil size etc.<br>
+This macro uses Constructive Solid Geometry to define an object that can subsequenctly be transformed as required. A sample Pov file is provided to illustrate the macro and it's use.
+<br>
+To use the eye object in your scene file you need to include the Eye.inc file and call the macro. For example:
+<i>
+<p style="background-color:#EEEEEE">&nbsp;
+#include "Eye.inc"
+<br>&nbsp;
+object{Eye() rotate y*10 translate <0.1,0.2,0.3>}
+</i>
+
+</td><td>
+<a href="eye.jpg"><img src="eye_thumbnail.jpg"></a>
+</td><td>
+<b>Iris Control</b><br>
+The characteristics of the iris are controlled using 3 variables:
+<table border=0>
+  <tr>
+    <td width=5></td>
+    <td style="background-color:#EEEEEE"><b>Eye_Colour</b></td>
+    <td style="background-color:#EEEEEE">1=Blue, 2=Brown, 3=Green</td>
+  </tr><tr>
+    <td></td>
+    <td style="background-color:#EEEEEE"><b>Eye_Brightness</b></td>
+    <td style="background-color:#EEEEEE">Normally between 0.5 and 1</td>
+  </tr><tr>
+    <td></td>
+    <td style="background-color:#EEEEEE"><b>Eye_Pupil</b></td>
+    <td style="background-color:#EEEEEE">which controls how dilated or contracted the pupil is (Normally between 0.5 and 1.2)</td>
+  </tr>
+</table>
+<b>Eye Size</b><br>
+You can choose to set the size of the eye using the <b>Eye_Radius</b> variable or you can let it default to 1 and simply scale the resulting object.
+<br>
+<b>Textures</b><br>
+To override the default external texture (the white bit) you can declare a texture called <b>Eye_OuterTexture</b> and, if you need to you can set an internal surface texture by declaring a texture called <b>Eye_InnerTexture</b> (which defaults to red).
+</td></tr></table>
+
+<h2>Eye.pov</h2>
+<table><tr><td>
+Eye.pov is a sample scene file that demonstrates a few of the things that you can do with the Eye() macro.<br>
+It illustrates the three default, base colours that you can use and shows how to adjust the brightness of the pupil, resize the eye and adjust the external and internal textures used to define the eye.
+</td><td>
+<a href="eye_2.jpg"><img src="eye_2_thumbnail.jpg"></a>
+</td><td>
+</td></tr></table>

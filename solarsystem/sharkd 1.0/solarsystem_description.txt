@@ -1,0 +1,12 @@
+This include file will randomly generate a solar system,
+complete with sun, moons, planets and asteroid belts. There are
+options to render a single planet at a time, or render the
+whole system from a bird's-eye view with all orbits drawn and
+planet positions marked and numbered. Another option is to
+generate an orthographic tiled image suitable for splitting
+apart and inserting into a video game as sprites.
+
+Three sample scenes are included to demonstrate the different
+scene-rendering options.
+
+Optionally, use Chris Colefax's "GALAXY.INC" and "Lens.inc".

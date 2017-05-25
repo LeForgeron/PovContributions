@@ -1,0 +1,1 @@
+A pigment for mapping the HSL (Hue, Saturation, Lightness) color model to a unit cube with one corner located on the origin.

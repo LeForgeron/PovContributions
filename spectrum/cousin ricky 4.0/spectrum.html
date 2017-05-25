@@ -1,0 +1,342 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>Spectrum 4.0 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="spectrum.css">
+</head>
+
+<body>
+
+<h1>Spectrum 4.0 User Manual</h1>
+
+<!--h2>Abstract</h2-->
+
+<p>
+<a href="spectrum.png"><img class="demo" src="spectrum_thumbnail.png" title="Larger image" alt="[Demo image]"></a>
+Spectrum is a library module from the
+<a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+<a href="http://lib.povray.org/">Object Collection</a>
+for creating spectrum color maps and pigments.
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded Files</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Namespace">Namespace Compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Data_structures">Data structures</a>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#Spectrum_Lightsys_cm">Spectrum_Lightsys_cm</a>
+   <li><a href="#Spectrum_Lightsys_data">Spectrum_Lightsys_data</a>
+   <li><a href="#Spectrum_Lightsys_p">Spectrum_Lightsys_p</a>
+   <li><a href="#Spectrum_Make_cm">Spectrum_Make_cm</a>
+   <li><a href="#Spectrum_Make_p">Spectrum_Make_p</a>
+   <li><a href="#Spectrum_Normalize">Spectrum_Normalize</a>
+   <li><a href="#Spectrum_Rule_p">Spectrum_Rule_p</a>
+   <li><a href="#Spectrum_Special_p">Spectrum_Special_p</a>
+  </ul>
+ <li><a href="#Other_identifiers">Other identifiers</a>
+ <li><a href="#About">About Spectrum</a>
+</ul>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan="2">Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>spectrum.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>spectrum.inc</code></td>
+  <td>The Spectrum software</td>
+ </tr><tr>
+  <td><code>spectrum.png</code></td>
+  <td>Sample output</td>
+ </tr><tr>
+  <td><code>spectrum.pov</code></td>
+  <td>A demonstration scene file</td>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <th colspan="2">Other Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>spectrum.css</code></td>
+  <td>A file used by the user manual</td>
+ </tr><tr>
+  <td><code>spectrum_description.txt</code></td>
+  <td>A brief description of Spectrum</td>
+ </tr><tr>
+  <td><code>spectrum_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>spectrum_prereqs.txt</code></td>
+  <td>Prerequisites</td>
+ </tr><tr>
+  <td><code>spectrum_thumbnail.png</code></td>
+  <td>An illustration for the user manual</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+  <td rowspan="2">Administrative files</td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a>
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<ul>
+ <li>POV-Ray version 3.5 or later.
+ <li><a href="http://www.ignorancia.org/en/index.php?page=Lightsys">Lightsys 4c</a> (Lightsys IV), available under a separate license.
+  <ul>
+   <li><strong>Do not</strong> save Lightsys to your Object Collection folder, but do make sure that it is in your <a href="http://wiki.povray.org/content/Reference:Scene_Parsing_Options#Library_Paths">library path</a>.
+  </ul>
+</ul>
+
+<h3 id="Namespace">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>spectrum.inc</code> comply fully with the Object Collection naming standards, as <a href="http://news.povray.org/povray.object-collection/message/%3C48ba92e8%241%40news.povray.org%3E/#%3C48ba92e8%241%40news.povray.org%3E">revised August 2008</a> and <a href="http://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The prefix for this module is “<code>Spectrum</code>,” including any uppercase and lowercase variants; to avoid conflicts, do not declare identifiers that start with this prefix plus an underscore.
+
+<p>Spectrum reads one of the Lightsys files and references some of its identifiers. As Lightsys is not part of the Object Collection, there is no guarantee that its identifiers will not conflict with those of compliant Object Collection modules. If necessary, all of the identifiers from that file can be destroyed by macro <code>CIE_ReleaseMemory()</code> after all Lightsys-based spectra are defined.
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include this file once prior to using any of the features:
+<pre>#include "spectrum.inc"</pre>
+<p>Including the file more than once is harmless, though unnecessary.
+
+<p>For best results with the Lightsys-based spectra, set the assumed gamma to 1:
+<pre>global_settings { assumed_gamma 1 }</pre>
+
+<p><a href="#toc">Table of contents</a>
+
+<h2 id="Data_structures">Data Structures</h2>
+
+<dl>
+ <dt><strong>Spectrum data</strong>
+ <dd>A two dimensional array of float. Each element of the first dimension corresponds to a wavelength. The elements of the second dimension are as follows:
+  <dl>
+   <dt>[0] <dd>The wavelength in nanometers.
+   <dt>[1] <dd>The red channel value.
+   <dt>[2] <dd>The green channel value.
+   <dt>[3] <dd>The blue channel value.
+  </dl>
+ <dt><strong>Color maps</strong>
+ <dd>The domain value corresponds to the wavelength in microns.
+ <dt><strong>Pigments</strong>
+ <dd>Gradients in the <var>x</var> direction. The <var>x</var>-coordinate corresponds to the wavelength in microns.
+</dl>
+
+<p><a href="#toc">Table of contents</a>
+
+<h2 id="Macros">Macros</h2>
+
+<p>Several of these macros rely on the color system and gamut mapping settings in Lightsys IV. See <code>readme_cie.txt</code> in the LightsysIV folder for more information. The default color system is appropriate for most users.
+
+<p>What is gamut mapping? Some colors, including pure spectral colors, cannot be represented with three primary colors. Gamut mapping is the art of choosing the best approximation for these colors. Lightsys IV’s default gamut mapping method, though it may be fine for some purposes, is not ideal for depicting spectra.
+
+<h3 id="Spectrum_Lightsys_cm">Spectrum_Lightsys_cm()</h3>
+
+<p>Returns a gamut-mapped color map using Lightsys IV, using the current Lightsys color system and gamut mapping method. The color map is normalized as a whole so that the maximum channel value is 1.0.
+
+<h3 id="Spectrum_Lightsys_data">Spectrum_Lightsys_data()</h3>
+
+<p>Returns gamut-mapped color data from Lightsys IV, using the current Lightsys color system and gamut mapping method. The data are not normalized.
+
+<h3 id="Spectrum_Lightsys_p">Spectrum_Lightsys_p()</h3>
+
+<p>Returns a gamut-mapped pigment using Lightsys IV, using the current Lightsys color system and gamut mapping method. The pigment is normalized as a whole so that the maximum channel value is 1.0.
+
+<h3 id="Spectrum_Make_cm">Spectrum_Make_cm (Data)</h3>
+
+<p>Returns a color map derived from user-supplied spectrum data. The result is not normalized or gamut-mapped.
+
+<h4>Argument</h4>
+<dl class="args">
+ <dt><code>Data</code>: <dd>An array [][4] of spectrum data.
+</dl>
+
+<h3 id="Spectrum_Make_p">Spectrum_Make_p (Data)</h3>
+
+<p>Returns a pigment derived from user-supplied spectrum data. The result is not normalized or gamut-mapped.
+
+<h4>Argument</h4>
+<dl class="args">
+ <dt><code>Data</code>: <dd>An array [][4] of spectrum data.
+</dl>
+
+<h3 id="Spectrum_Normalize">Spectrum_Normalize (Data, Scale)</h3>
+
+<p>Normalizes spectrum data as a whole such that the highest channel value in the array is scaled to 1.0, then scales the data according the the given argument. The array is altered in-place, and not returned.
+
+<h4>Argument</h4>
+<dl class="args">
+ <dt><code>Data</code>: <dd>An array [][4] of spectrum data.
+ <dt><code>Scale</code>:
+ <dd>The amount by which to scale the data after they are normalized.
+</dl>
+
+<h3 id="Spectrum_Rule_p">Spectrum_Rule_p (Fine, c_Ink)</h3>
+
+<p>Returns a ruler-like pigment. The ruler is oriented in the <var>x</var> direction; the ticks are 1 unit apart and centered on integer positions; and the pigment is completely transparent between tick marks.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>Fine</code>: <dd>The width of each tick mark.
+ <dt><code>c_Ink</code>: <dd>The color of the tick marks.
+</dl>
+
+<h3 id="Spectrum_Special_p">Spectrum_Special_p()</h3>
+
+<p>Returns a pigment using Lightsys IV, using the current Lightsys color system. The pigment is gamut-mapped using a combination of methods, and normalized as a whole so that the maximum channel value is 1.0.
+
+<p><strong>Warning!</strong> <code>Spectrum_Special_p()</code> changes the Lightsys gamut mapping method, then restores it after the pigment is defined. In order to restore the gamut mapping method, it references an undocumented variable in the Lightsys IV file <code>CIE.inc</code>. If this ever becomes a problem, the two lines of code in <code>Spectrum_Special_p()</code> that are marked with “<code>//@@[1]</code>” may be deleted, but then the user must remember to manually restore the gamut mapping method with <code>CIE_GamutMapping()</code>. As of January 2014, the Lightsys IV default is <code>CIE_GamutMapping (1)</code>.
+
+<p><a href="#toc">Table of contents</a>
+
+<h2 id="Other_identifiers">Other Identifiers</h2>
+
+<h3>Identifiers Intended as Constants</h3>
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+ <tr>
+  <td><code>SPECTRUM_BLUE</code></td>
+  <td>float</td>
+  <td>The wavelength, in nanometers, of the <a href="http://en.wikipedia.org/wiki/SRGB">sRGB</a> blue primary</td>
+  <td>464.3</td>
+ </tr><tr>
+  <td><code>SPECTRUM_CYAN</code></td>
+  <td>float</td>
+  <td>The wavelength, in nanometers, of the sRGB cyan with equal amounts of green and blue</td>
+  <td>491.5</td>
+ </tr><tr>
+  <td><code>SPECTRUM_GREEN</code></td>
+  <td>float</td>
+  <td>The wavelength, in nanometers, of the sRGB green primary</td>
+  <td>549.1</td>
+ </tr><tr>
+  <td><code>SPECTRUM_RED</code></td>
+  <td>float</td>
+  <td>The wavelength, in nanometers, of the sRGB red primary</td>
+  <td>611.3</td>
+ </tr><tr>
+  <td><code>SPECTRUM_VERSION</code></td>
+  <td>float</td>
+  <td>The Spectrum version, in case the scene file needs that information</td>
+  <td>4.0</td>
+ </tr><tr>
+  <td><code>SPECTRUM_YELLOW</code></td>
+  <td>float</td>
+  <td>The wavelength, in nanometers, of the sRGB yellow with equal amounts of red and green</td>
+  <td>570.5</td>
+ </tr>
+</table>
+
+<h3>Internal Identifiers</h3>
+
+<p>Any identifiers in <code>spectrum.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a>
+
+<h2 id="About">About Spectrum</h2>
+
+<address>Copyright © 2014 Richard Callwood III.
+ <a href="http://creativecommons.org/licenses/LGPL/2.1/">
+  <img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+ </a>
+</address>
+
+<h3>Unreleased Versions</h3>
+
+<p>Due to Fair Use of copyrighted material, I cannot make these versions public. This section is little more than a paper trail.
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>unversioned</td>
+  <td>December 22, 2008</td>
+  <td>
+   <ul>
+    <li>A pigment is created based partially on an <a href="http://mintaka.sdsu.edu/GF/explain/optics/rendering.html">illustration created by Andrew T. Young</a> of San Diego State University. The brightness of the cyan region is adjustable.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>unversioned</td>
+  <td>August 18, 2009</td>
+  <td>
+   <ul>
+    <li>Two of Young’s illustrations are sampled in detail. I make no copyright claim on the derived data.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>2.0</td>
+  <td>October 7, 2012</td>
+  <td>
+   <ul>
+    <li>Local variables are renamed to avoid future problems with POV-Ray’s namespace scope rules. This also brings the module into Object Collection namespace compliance.
+    <li>Identifiers are renamed to clarify the roles of Young’s data.
+    <li>The ability to use arbitrary spectral data is added, and with it, an interface to Lightsys IV.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>2.1</td>
+  <td>October 7, 2012</td>
+  <td>
+   <ul>
+    <li>A macro is added to normalize spectrum data.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>3.0</td>
+  <td>January 4, 2014</td>
+  <td>
+   <ul>
+    <li>A specially gamut-mapped Lightsys pigment is added.
+    <li>An argument is added to adjust the brightness of the yellow in Young’s “brightest” spectrum.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<h3 id="Changes">Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>4.0</td>
+  <td>January 10, 2014</td>
+  <td>
+   <ul>
+    <li>Young’s data are removed, as I do not intend to seek authorization to publish them under the LGPL.
+    <li>Old code, used only by my legacy scenes, is removed.
+    <li>The wavelength unit for spectrum data is changed to nanometers. (Microns were used earlier because that unit is most convenient for color maps; but nanometers are probably better from the user point of view.)
+    <li>The normalization macro is replaced.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+This include file contains a macro to create text characters
+that intersect and form 3D blocks that show different letters
+depending on the face of the cube you're looking at.

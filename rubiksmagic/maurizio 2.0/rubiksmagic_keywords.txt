@@ -1,0 +1,5 @@
+rubiksmagic
+rm
+puzzle
+rubik
+magic

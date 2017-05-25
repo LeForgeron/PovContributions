@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>Caption 1.0 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="caption.css">
+</head>
+
+<body>
+
+<h1>Caption 1.0 User Manual</h1>
+
+<h2>Abstract</h2>
+
+<p>
+<a href="caption.jpg"><img class="demo" src="caption_thumbnail.jpg" title="Larger image" alt="[Demo image]"></a>
+Caption is a library module from the
+<a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+<a href="http://lib.povray.org/">Object Collection</a>
+that creates boxes with imprinted text. With an opaque or partially transparent box, this is useful for quickly annotating busy scenes where text might otherwise be difficult to read.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#Emission">The Emission argument</a>
+   <li><a href="#Caption">Caption()</a>
+   <li><a href="#Caption_Object">Caption_Object()</a>
+  </ul>
+ <li><a href="#Other_identifiers">Other identifiers</a>
+ <li><a href="#About">About Caption</a>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan="2">Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>caption.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>caption.inc</code></td>
+  <td>The Caption software</td>
+ </tr><tr>
+  <td><code>caption.jpg</code></td>
+  <td>Sample output</td>
+ </tr><tr>
+  <td><code>caption.pov</code></td>
+  <td>A demonstration scene file</td>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <th colspan="2">Other Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>caption.css</code></td>
+  <td>A file used by the user manual</td>
+ </tr><tr>
+  <td><code>caption_description.txt</code></td>
+  <td>A brief description of Caption</td>
+ </tr><tr>
+  <td><code>caption_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>caption_prereqs.txt</code></td>
+  <td>Prerequisites (empty file)</td>
+ </tr><tr>
+  <td><code>caption_prism.png</code></td>
+  <td rowspan="2">Illustrations for the user manual</td>
+ </tr><tr>
+  <td><code>caption_thumbnail.jpg</code></td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+  <td rowspan="2">Administrative files</td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<p>Requires POV-Ray version 3.5 or later.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>caption.inc</code> comply with the Object Collection naming standards, as <a href="http://news.povray.org/povray.object-collection/message/%3C48ba92e8%241%40news.povray.org%3E/#%3C48ba92e8%241%40news.povray.org%3E">revised August 2008</a> and <a href="http://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The prefix for this module is “<code>caption</code>,” including any uppercase and lowercase variants; to avoid conflicts, do not declare identifiers that start with this prefix plus an underscore.
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include this file once prior to using any of the macros:
+<pre>#include "caption.inc"</pre>
+<p>Including the file more than once is harmless, though unnecessary.
+
+<p>Note that as of POV-Ray version 3.7, objects positioned with <code>screen.inc</code> do not contribute radiosity to a scene.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros">Macros</h2>
+
+<h3 id="Emission">The Emission Argument</h3>
+
+<p>This argument controls the color of the caption objects independent of the environmental lighting. The effect is slightly different depending on the version of POV-Ray.
+
+<ul>
+ <li><strong>POV-Ray 3.7</strong>
+  <ul>
+   <li>If the <code>Emission</code> argument is negative, the ambient and diffuse finishes are turned off for the object, and the emission finish is set to 1.0.
+   <li>Otherwise, the emission finish on the object is set to the value of the <code>Emission</code> argument, and the ambient and diffuse finishes default.
+  </ul>
+ <li><strong>POV-Ray 3.5 or 3.6</strong>
+  <ul>
+   <li>If the <code>Emission</code> argument is negative, the diffuse finish is turned off for the object, and the ambient finish is set to 1.0.
+   <li>Otherwise, the ambient finish on the object is set to the value of the <code>Emission</code> argument, and the diffuse finish defaults.
+  </ul>
+</ul>
+
+<h3 id="Caption">Caption (s_Text, s_Font, v_Padding, c_Text, c_Background, Emission)</h3>
+
+<p>Returns a box with text printed on its &minus;<var>z</var> face. The &minus;<var>z</var> face will lie in the <var>x</var>-<var>y</var> plane.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>s_Text</code>:
+ <dd>The text string to be imprinted.
+ <dt><code>s_Font</code>:
+ <dd>The font to be used. A null string defaults to Cyrvetic.
+ <dt><code>v_Padding</code>:
+ <dd>A 3D vector. <var>x</var> and <var>y</var> are the padding to apply around the text; <var>z</var> is the depth of the box.
+ <dt><code>c_Object</code>:
+ <dd>The color of the text.
+ <dt><code>c_Background</code>:
+ <dd>The color of the negative space.
+ <dt><code>Emission</code>:
+ <dd>See the <a href="#Emission">description of the <code>Emission</code> argument</a>.
+</dl>
+
+<h3 id="Caption_Object">Caption_Object (Object, v_Padding, c_Object, c_Background, Emission)</h3>
+
+<p>Returns a box with a cross section of an object imprinted on its &minus;<var>z</var> face. The &minus;<var>z</var> face will lie in the <var>x</var>-<var>y</var> plane.
+<img class="demo" src="caption_prism.png" alt="[Example of prismatic form]">
+For predictable results, the object should be prismatic in form; that is, its cross section should not vary for any value of <var>z.</var>
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>Object</code>:
+ <dd>The object to be imprinted.
+ <dt><code>v_Padding</code>:
+ <dd>A 3D vector.  <var>x</var> and <var>y</var> are the padding to apply around the text; <var>z</var> is the depth of the box. The padding is measured around the object’s bounding box.
+ <dt><code>c_Object</code>:
+ <dd>The color of the object to be imprinted.
+ <dt><code>c_Background</code>:
+ <dd>The color of the negative space.
+ <dt><code>Emission</code>:
+ <dd>See the <a href="#Emission">description of the <code>Emission</code> argument</a>.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other_identifiers">Other Identifiers</h2>
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+ <tr>
+  <td><code>CAPTION_VERSION</code></td>
+  <td>float</td>
+  <td>The Caption version, in case the caller needs to know.</td>
+  <td>1.0</td>
+ </tr>
+</table>
+
+<h3>Internal Identifiers</h3>
+
+<p>Any identifiers in <code>caption.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About Caption</h2>
+
+<address>Copyright © 2013 Richard Callwood III.
+ <a href="http://creativecommons.org/licenses/LGPL/2.1/">
+  <img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+ </a>
+</address>
+
+<h3>Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>N/A</td>
+  <td>March 13, 2013</td>
+  <td>
+   <ul>
+    <li>The software is created, based on code I wrote between 2004 and 2006.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.0</td>
+  <td>December 23, 2013</td>
+  <td>
+   <ul>
+    <li>A macro is added for general objects, not just text.
+    <li>The software is adapted for the Object Collection.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

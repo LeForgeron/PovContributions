@@ -1,0 +1,1 @@
+A pigment for mapping the HSV (Hue, Saturation, Value) color model to a unit cube with one corner located on the origin.

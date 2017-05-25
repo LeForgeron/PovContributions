@@ -1,0 +1,79 @@
+
+<link REL="stylesheet" href="sc_doc.css"       type="text/css"></link>
+<link REL="stylesheet" href="sc_docprint.css"  type="text/css" media="print"> </link>
+<link REL="stylesheet" href="sc_docscreen.css" type="text/css" media="screen"></link>
+<script src="sc_doc.js"></script>
+<script> thisSection = 4; </script>
+<script> headerSection(); </script>
+<script> sectionToc(); </script>
+<script> tocFooter(); </script>
+
+
+<h2><a name="license"></a>The StairCase Macros license</h2>
+This copy of the StairCase Macro files is distributed under the CC-LGPL license covering the POV-Ray Object Collection at <a href="http://lib.povray.org">http://lib.povray.org</a>. These files may also be distributed under the terms of the original POV-Stairs files which additionally provides for distribution without acknowledgement needing to be given to the author. 
+<p>
+The StairCase Macros consists primarily of the POV-Ray include file staircase.inc and the POV-Ray example scene files. It also includes the staircase_doc.pov scene file which is used to generate the graphics included in this documentation. All of these files were written with the intention of making them freely available for future re-use in original or modified form. The original author retains copyright over the original work, but grants you a license to re-use the work in original or modified form.
+That license permits you to use the StairCase Macros files for either recreational or commercial purposes, with or without credit being given to the author, provided that such re-use does not in any way prevent anybody else from using or modifying the original work and re-using the original work or a combination of the original work and their own modifications.    
+<p>
+This means that you cannot claim original authorship of these files or the intellectual capital that they contain. Neither can you apply a copyright or conditions that would imply that others are not free to use the original files or the intellectual capital that they contain.
+<p>
+If you wish to retain ownership of changes that you make to the supplied files or of files that you add into the StairCase Macros you should explicitly identify your contribution within the files. You are authorised to use images that are generated using these files and you are not required to give any credit to the original author for the contribution that the StairCase Macros files made to your work, although it is generally polite to do so where practicable.
+<p>
+the StairCase Macros also includes HTML documentation describing the utility and its use. This documentation, the CSS (Cascading Style Sheets) and the JS (Javascript) files have also been written with the intention of making them freely available for future re-use in original or modified form. The original author retains copyright over the original work, but grants you a license to re-use the work in original or modified form. That license permits you to use the StairCase Macros documentation files for recreational or commercial purposes, with or without credit being given to the author, provided that such re-use does not in any way prevent anybody else from using or modifying the original work and re-using the original work or the original work with their own modifications. 
+<script> endSection(); </script>
+
+
+
+<h2><a name="contribute"></a>Contributing files</h2>
+The StairCase Macros distribution is designed to be extendable. It is hoped that others will add definitions for alternative shapes and forms to enable users to generate additional styles of staircase. You can contribute your own files for inclusion into the distribution. To enable your work to be included you will need to assert that you are the genuine author of the contributions that you are making and explicitly agree for your contributions to be distributed under the terms of the POV-Ray Object Collection license (currently the CC-LGPL) and the StairCase Macros license in perpetuity.
+<script> endSection(); </script>
+
+
+<h2><a name="internals"></a>How the StairCase Macros Works</h2>
+The staircase.inc file contains comments that are intended to help you to read the POV-Ray SDL (Scene Description Language). This section of the documentation is intended to provide a higher level view of the function. All of the staircase components described below are optional. Their presence or absence being controlled using the <a href="staircase_variables.html#Switches">Control Switches</a> described in the variables section of this documentation.
+<p>
+When you include the staircase.inc file in your POV-Ray scene file it declares a number of objects, sets a number of variables and defines a couple of macros. The objects are the default components that will be used to create a staircase when you invoke the <a href="staircase_macros.html#StairCase">StairCase macro</a>. When you invoke the <a href="staircase_macros.html#StairCase">StairCase macro</a> it checks for the existence of various object definitions, texture definitions and control settings and sets default values for any variables it does not find. This includes default object definitions for any objects that you have not explicitly defined.
+<p>
+At each of the positions that you specify in the <a href="staircase_variables.html#StairCase_PostPositions">StairCase_PostPositions</a> array, the macro 'logically' positions a newel post. Based upon the newel post positions and the width of the stairs specified in the <a href="staircase_variables.html#StairCase_StairWidth">StairCase_StairWidth</a> variable it then adds stairs and a banister rail on the opposite sides of those stairs.
+<p>
+If more than two newel post positions are specified, the macro will repeat the process, creating the corresponding number of flights of stairs (2 flights for 3 newel posts, 3 flights for 4 newel posts). To fill any gaps between these flights of stairs the macro defines a prism object to represent a landing, calculating a shape based upon the three newel posts that define the ends of the two flights of stairs. If the angle between the two flights of stairs is above the threshold specified in the <a href="staircase_variables.html#StairCase_LandingThreshold">StairCase_LandingThreshold</a> variable then it adds a fourth newel post to help the landing to turn the corner. Additional bannister rails are added around the edge of these landings.
+<script> endSection(); </script>
+
+
+<h2><a name="docutils"></a>Documentation Utilities</h2>
+This HTML documentation uses cascading style sheets and the 'sc_doc.js' file to simplify maintenance. Standard page components are generated using Javascript, including most of the table of contents entries. This enables the table of contents entries to be re-used in the main table of contents and in the table of contents for each section. The cascading style sheets support different formatting for displaying the document in a browser and for printing. For example, the text elements used to link back to the table of contents are suppressed in the printed version.
+<p>
+Updating this documentation is best accomplished using a standard text editor, taking care to respect the standards used. For example, the header level 2 tags are usually included in the table of contents (defined in the 'sc_doc.js' file). The section numbers are generated as the contents of an 'A' tag, therefore the 'A' tag used to give a name to the heading should be empty, because any contents will be overwritten when the page loads and the section number is written into the tag.
+<p>
+The graphics for this document are mostly defined in the 'staircase_documentimages.pov' scene file to facilitate their regeneration. This scene file contains a scene for each image wrapped by an '#if () #end' statement. The following example shows the SDL within that file for generating the image of the default newel post:
+
+<div class="samplecode">
+#if (ImageNumber = 45)<br> 
+  &nbsp;&nbsp;#declare Image = "StairCase_DefaultNewelPost";<br>
+  &nbsp;&nbsp;camera {location <1.45,1.2,-0.1> look_at  <0,0.5,0>}<br>
+  &nbsp;&nbsp;light_source {AreaLight}<br> 
+  <br>
+  &nbsp;&nbsp;#include "staircase.inc"<br>
+  &nbsp;&nbsp;StairCase()<br>
+#end  
+</div>
+<p>
+The 'ImageNumber' variable is declared at the top of the file. If animation options are used, the variable is set automatically based upon the frame number. Otherwise it takes the value specified in the scene file to regenerate a single image. For example:
+<div class="samplecode">
+#if (frame_number=0) #local ImageNumber = 50;  // Set this to the required image number<br>
+#else                #local ImageNumber = frame_number;<br>
+#end 
+</div>
+regenerates image number 50 with the default image type. Specifying the command line option '+fn' instructs POV-Ray to generate a 'PNG' format image file. 
+<p>
+Specifying animation command line options of '+kfi1 +kff63' results in an image being generated for each of the specified 'frames', with the frame number being used as the image number. As well as providing a handy way to regenerate all of the images for the documentation, this also provides a handy test suite when updating the macros. You can specify a very small image size (e.g. 160x120 No AA) and quickly run through and check the macros against a large number of alternative settings. 
+
+
+<script> tocFooter(); </script>
+<script> footer(); </script>
+    
+    
+    
+    
+    
+    

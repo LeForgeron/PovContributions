@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+	<meta name="author" content="TEAM ViRiLiTY">
+	
+	<style type="text/css">
+		span.var{
+			color: #800080;
+		}
+		span.string{
+			color: red;
+		}
+	</style>
+
+	<title>Info</title>
+</head>
+
+<body>
+This include allows you to find points along the surface of any object.<br>
+<br>
+To use it you must include <span class="string">"surface.inc"</span>. This will contains everything needed.<br>
+To trace the object call <span class="var">surface_traceSurface</span>.<br>
+<br>
+This macro can take a long time to parse depending on the resolution the object is traced at and the size of the object.<br>
+<b>surface_traceSurface</b>(traceObj, resolution, fileName, Variation)
+<div style="padding-left:16px;">
+	<u>traceObj:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The object use to find the surface.
+	</div>
+	<u>resolution:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The resolution the object is traced at.<br>
+		This is the number of divisions per 1 unit in the x, y and z axis.
+	</div>
+	<u>fileName:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The results will be saved to this file.<br>
+		The file contains a variable named <span class="var">surface_resolution</span> which contains the resolution the object was traced at.<br>
+		It also has another variable named <span class="var">surface_surfacePoints</span> which is a 2 dimensional array.<br>
+		Each item has the point from the surface of the object and the surface normal.
+	</div>
+	<u>Variation:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The higher this value the more random the points are along the surface.
+	</div>
+</div>
+<br>
+You can then use these points however you want. Two macros have been included to do this.<br>
+The <span class="var">surface_cover</span> and <span class="var">surface_coverHair</span> macros use the previously saved points to cover the object.<br>
+<br>
+The <span class="var">surface_cover</span> covers the object in another object.<br>
+This macro returns a union of all the objects.<br>
+<b>surface_cover</b>(fileName, obj, orientToSurface, sizeToSurface)
+<div style="padding-left:16px;">
+	<u>fileName:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The file where the results of <span class="var">surface_traceSurface</span> are stored.
+	</div>
+	<u>obj:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The object to place along the surface.
+	</div>
+	<u>orientToSurface:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		Either <span class="var">yes</span> or <span class="var">no</span>.<br>
+		If <span class="var">yes</span> the object will be rotated so that it points along the surface normal.
+	</div>
+	<u>sizeToSurface:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		Either <span class="var">yes</span> or <span class="var">no</span>.<br>
+		If <span class="var">yes</span> the object will be scaled so that it fits in alogn the surface.
+	</div>
+</div>
+The <span class="var">surface_coverHair</span> covers the object hair.<br>
+This macro saves a variable to an include file.<br>
+<b>surface_coverHair</b>(fileName, outFile, hairName, hairLength, hairDivisions, Thickness, Variation)
+<div style="padding-left:16px;">
+	<u>fileName:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The file where the results of <span class="var">surface_traceSurface</span> are stored.
+	</div>
+	<u>outFile:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The file where the hair object will be stored.
+		This file is then included into the scene.
+	</div>
+	<u>hairName:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The name of the hair object that will be saved.
+	</div>
+	<u>hairLength:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The length of the hair
+	</div>
+	<u>hairDivisions:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The detail of the hair.
+	</div>
+	<u>Thickness:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		The thickness of the hair
+	</div>
+	<u>Variation:</u><br>
+	<div style="padding-left:8px;margin-bottom:20px;">
+		How random the direction of each hair is.
+	</div>
+</div>
+
+
+</body>
+</html>

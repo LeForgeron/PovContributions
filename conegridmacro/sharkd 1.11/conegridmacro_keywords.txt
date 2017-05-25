@@ -1,0 +1,12 @@
+ConeGridMacro
+ConeGrid
+cone
+grid
+macro
+latitude
+radius
+radii
+longitude
+height
+pigment
+texture

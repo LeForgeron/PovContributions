@@ -1,0 +1,9 @@
+HSVCube
+HSVC
+hsv
+hue
+saturation
+value
+cube
+pigment
+texture

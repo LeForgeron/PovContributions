@@ -1,0 +1,13 @@
+Caption
+annotate
+annotation
+annotations
+captions
+header
+headers
+heading
+headings
+label
+labels
+labeling
+labelling

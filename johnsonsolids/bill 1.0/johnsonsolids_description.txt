@@ -1,0 +1,3 @@
+The 92 Johnson solids, in mesh2 form. Also includes skeletons as a union of spheres and cylinders, plus the raw vertices in an array, and the means to sit the shapes on the x-z plane. They are split into 7 natural categories for convenience.
+
+I strongly recommend referring to wikipedia's page on the Johnson solids to see what you've got!

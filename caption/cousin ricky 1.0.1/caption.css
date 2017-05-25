@@ -1,0 +1,183 @@
+/* caption.css
+ *
+ * Copyright 2013 - 2015 Richard Callwood III.  Some rights reserved.
+ * This file is licensed under the terms of the CC-LGPL.
+ * See http://creativecommons.org/licenses/LGPL/2.1/ for more information.
+ *
+ * Version 1.0.1  2015-May-31
+ */
+a:link    { color:#00c; }
+a:visited { color:#606; }
+a:focus   { background:#ccc; }
+a:hover   { background:#fbd; }
+a:active  { background:red; color:white; }
+
+a:link    img { border:1px solid #00c; }
+a:visited img { border:1px solid #606; }
+a:focus   img { border:1px dotted #c00; }
+a:hover   img { border:1px solid red; }
+a:active  img { border:1px inset red; background:yellow; }
+
+address
+{ margin:0; padding:0; line-height:1.2;
+}
+body
+{ margin:0; padding:0 5%; line-height:1.2;
+  color:black; background:#f0eeea;
+}
+code
+{ font-family:"Courier New", monospace;
+  font-size:100%;
+  letter-spacing:-0.05em;
+}
+dd
+{ margin:0.3em 0em 0.9em 2em;
+  padding:0;
+  line-height:1.2;
+}
+dl
+{ margin:0.6em 0%;
+  padding:0;
+  line-height:1.2;
+}
+div, dt
+{ margin:0; padding:0; line-height:1.2;
+}
+h1
+{ margin:0.3em 15%;
+  padding:0.25em;
+  line-height:1.2;
+  border:solid 3px;
+  border-radius:10px;
+  border-color:#ffe6ec #cc99a6 #cc99a6 #ffe6ec;
+  background:#ffccd9; color:black;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  text-align:center;
+}
+h2
+{ margin:0.6em -3% 0.3em;
+  padding:0.2em 0.6em;
+  line-height:1.2;
+  border:solid 2px;
+  border-color:#eef2ff #aab3cc #aab3cc #eef2ff;
+  background:#dde6ff; color:black;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  text-align:center;
+  clear:both;
+}
+h3
+{ margin:0.9em 0% 0.3em -2%;
+  padding:0;
+  line-height:1.2;
+  font-family:Arial, Helvetica, sans-serif;
+}
+h2+h3, h3+h4
+{ margin-top:0.6em;
+  padding:0;
+}
+h4
+{ margin:0.9em 0% 0.3em -1%;
+  padding:0;
+  line-height:1.2;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#f0eeea; color:#333;
+}
+hr
+{ display:none;
+}
+img
+{ vertical-align:middle;
+  padding:1px;
+  border:1px solid;
+  border-color:#e6cc7f #996600 #996600 #e6cc7f;
+  background:white;
+}
+li
+{ margin:0;
+  padding:0;
+  line-height:1.2;
+}
+ol, ul
+{ margin:0;
+  padding:0 0em 0 2em;
+  line-height:1.2;
+}
+p
+{ margin:0.6em 0 0.9em;
+  padding: 0;
+  line-height:1.2;
+}
+pre
+{ margin:0.3em 0 0.6em 0;
+  padding:0.4em 0.6em;
+  line-height:1.2;
+  border:1px solid;
+  border-color:#ccb #fff #fff #ccb;
+  background:#ffe; color:black;
+  font-family:"Courier New", monospace;
+  font-size:100%;
+  letter-spacing:-0.05em;
+}
+table
+{ line-height:1.2;
+  margin:0.6em 0;
+  padding:0;
+  border:1px solid;
+  border-color:#fff #acaaa6 #acaaa6 #fff;
+  border-collapse:separate;
+  border-spacing:1px;
+}
+td
+{ line-height:1.2;
+  padding:0 0.3em;
+  border:1px solid;
+  border-color:#cbb #fff #fff #cbb;
+  color:black; background:#fee;
+}
+td+td
+{ border-color:#ccb #fff #fff #ccb;
+  color:black; background:#ffe;
+}
+td+td+td
+{ border-color:#bcb #fff #fff #bcb;
+  color:black; background:#efe;
+}
+td+td+td+td
+{ border-color:#b7bbcc #fff #fff #b7bbcc;
+  color:black; background:#eaeeff;
+}
+th
+{ line-height:1.2;
+  padding:0 0.3em;
+  border:1px solid;
+  border-color:#acaaa6 #f0eeea #f0eeea #acaaa6;
+  color:black; background:#dfddd9;
+}
+ul { list-style:square; }
+td ul,
+ul ul { list-style:disc; }
+var { font-family:serif; }
+
+.args
+{ margin:0.3em 0%;
+  padding:0.4em 0.6em 0em;
+  background:#fee; color:black;
+  border:1px solid;
+  border-color:#cbb #fff #fff #cbb;
+}
+.args dt
+{ margin:0;
+  padding:0;
+  width:8.0em;
+  float:left;
+  clear:left;
+}
+.args dd
+{ margin:0em 0em 0.6em 8.0em;
+  padding:0;
+}
+
+.demo
+{ float:right;
+  margin:0px 0px 0.3em 0.3em;
+}

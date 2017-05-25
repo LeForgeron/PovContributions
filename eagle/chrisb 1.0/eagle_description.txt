@@ -1,0 +1,1 @@
+Model of the Eagle Transporter from the TV series Space 1999 by George Leonberger. Includes both the Moray source and a POV-Ray include file with sample scene files.

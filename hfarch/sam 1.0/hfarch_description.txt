@@ -1,0 +1,2 @@
+This include file lets you make brick arches, single arch bricks, pillars or single pillar bricks by way of object macros. The objects it creates are height field-based, meaning you can declare special patterns to change the shape of each brick. There are many ways to manipulate these objects, so if you have an idea in mind for a great brick shape, you can do it.
+Certain speed considerations are taken into account and most options render and parse quickly.

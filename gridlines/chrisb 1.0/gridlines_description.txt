@@ -1,0 +1,1 @@
+A simple texture designed to apply a set of grid lines to a sphere that emulates the lines of latitude and longitude on a globe.

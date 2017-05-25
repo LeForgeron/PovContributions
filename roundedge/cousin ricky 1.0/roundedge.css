@@ -1,0 +1,185 @@
+/* roundedge.css
+ * Copyright 2008 Richard Callwood III.  Some rights reserved.  This style
+ * sheet is licensed under a Creative Commons GNU Lesser General Public License.
+ * See http://creativecommons.org/licenses/LGPL/2.1/ for more information.
+ * Created 14-jul-2008
+ * Updated 04-sep-2008
+ */
+/* need to assign margin, padding and line height
+BLOCKQUOTE 
+DD, DL, DT
+LI, OL, UL
+*/
+a:link    { color:blue; }
+a:visited { color:purple; }
+a:focus   { background:#ccc; }
+a:hover   { background:#fbd; }
+a:active  { background:red; color:white; }
+address
+{ margin:0; padding:0; line-height:1.2;
+}
+body
+{ margin:0; padding:0 6%; line-height:1.2;
+  color:black; background:#eee;
+}
+code
+{ font-family:"Courier New", monospace;
+  font-size:100%;
+  letter-spacing:-0.05em;
+}
+dd, dl, dt, ol, ul
+{ margin-bottom:0;
+  margin-top:0;
+  line-height:1.2;
+}
+div
+{ margin:0;
+  padding:0;
+  line-height:1.2;
+}
+h1
+{ margin:0.3em 20%;
+  padding:0.3em 0.6em;
+  line-height:1.2;
+  border:double black 3px;
+  text-align:center;
+  background:#ffeef2; color:black;
+}
+h2
+{ margin:0.3em -3%;
+  padding:0.2em 0.6em 0.3em;
+  line-height:1.2;
+  text-align:center;
+  color:black; background:#d5dbee;
+  border-top:solid black 1px;
+  clear:both;
+}
+h3
+{ margin:0.9em 0% 0.3em -2%;
+  padding:0.6em 0 0em;
+  line-height:1.2;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+h2+h3
+{ margin-top:0.6em;
+  padding:0;
+}
+h4
+{ margin:0.9em 0% 0.3em -1%;
+  padding:0.6em 0 0em;
+  line-height:1.2;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+hr { display:none; }
+li
+{ margin-bottom:0;
+  margin-top:0;
+  line-height:1.2;
+  list-style:disc;
+}
+p
+{ margin:0.9em 0;
+  padding: 0;
+  line-height:1.2;
+}
+pre
+{ margin:0.3em 0;
+  padding:0.6em 1em;
+  line-height:1.2;
+  font-family:"Courier New", monospace;
+  font-size:100%;
+  letter-spacing:-0.05em;
+  background:#fffff7; color:black;
+  border:inset #fffff3 1px;
+}
+td
+{ vertical-align:top;
+  padding:1px 1em 1px 1px;
+}
+
+/*------------------------------------*/
+
+a:link    img { padding:1px; background:silver; border:1px solid blue; }
+a:visited img { padding:1px; background:silver; border:1px solid purple; }
+a:focus   img { padding:1px; background:silver; border:1px solid red; }
+a:hover   img { padding:1px; background:silver; border:1px solid red; }
+a:active  img { padding:1px; background:yellow; border:1px inset red; }
+
+td li
+{ margin-bottom:0.6em;
+  line-height:1.2;
+  list-style:disc;
+}
+td li li
+{ margin-bottom:0em;
+  line-height:1.2;
+  list-style:circle;
+}
+
+/*------------------------------------*/
+
+.anew { clear:both; }
+
+dl.args
+{ margin:0.3em 20% 0.3em 0%;
+  padding:0.3em 0.6em;
+  border:inset #fff3f6 1px;
+  background:#fff3f6; color:black;
+}
+.args dt
+{ margin:0;
+  padding:0;
+  line-height:1.2;
+  width:4.5em;
+  float:left;
+  clear:left;
+}
+.args dd
+{ margin:0em 0em 0.3em 5em;
+  padding:0;
+  line-height:1.2;
+}
+
+.demo
+{ float:right;
+  margin:0px 0px 0.3em 0.3em;
+  padding:1px;
+  border:1px solid #dbc494;
+  background:#f9e0a8;
+}
+
+.intro { margin-bottom:0; }
+
+table.pc
+{ line-height:1.2;
+  margin:0.6em 0;
+  padding:0;
+  border:1px outset #eef2ff;
+  border-collapse:separate;
+  border-spacing:1px;
+}
+.pc td
+{ line-height:1.2;
+  padding:1px 0.5em;
+  border:1px inset #fff3f6;
+  color:black; background:#fff3f6;
+  vertical-align:top;
+}
+.pc td+td
+{ border:1px inset #fffff3;
+  color:black; background:#fffff7;
+}
+.pc td+td+td
+{ border:1px inset #f3fff3;
+  color:black; background:#f3fff3;
+}
+.pc td+td+td+td
+{ border:1px inset #eff3ff;
+  color:black; background:#f3f6ff;
+}
+.pc th
+{ line-height:1.2;
+  padding:1px 0.5em;
+  border:1px inset #eef2ff;
+  color:black; background:#ddd;
+}

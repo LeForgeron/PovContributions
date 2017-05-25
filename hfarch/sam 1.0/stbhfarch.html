@@ -1,0 +1,548 @@
+<head>
+
+ <title>stbHFarch.inc Documentation</title>
+</head>
+<b>
+<hr>
+<br>
+stbHFarch.inc Help Contents
+<br>
+<br>
+<a href="#1.0">1.0 Introduction</a><br>
+&nbsp;&nbsp;<a href="#1.1">1.1 Description</a><br>
+&nbsp;&nbsp;<a href="#1.2">1.2 How it works</a><br>
+&nbsp;&nbsp;<a href="#1.3">1.3 What it can do</a><br>
+&nbsp;&nbsp;<a href="#1.4">1.4 Contents</a><br>
+
+<a href="#2.0">2.0 Getting Started</a><br>
+&nbsp;&nbsp;<a href="#2.1">2.1 Your first arch</a><br>
+&nbsp;&nbsp;<a href="#2.2">2.2 Changing the brick's shape</a><br>
+&nbsp;&nbsp;<a href="#2.3">2.3 Texturing the arch</a><br>
+&nbsp;&nbsp;<a href="#2.4">2.4 Changing the brick's heightfield resolution</a><br>
+&nbsp;&nbsp;<a href="#2.5">2.5 Making double-sided bricks</a><br>
+<a href="#3.0">3.0 File Reference</a><br>
+&nbsp;&nbsp;<a href="#3.1">3.1 The macros</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.1.1">3.1.1 stbHFarch_brick_arch</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.1.2">3.1.2 stbHFarch_single_brick</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.1.3">3.1.3 stbHFarch_pillar</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.1.4">3.1.4 stbHFarch_single_pillar_brick</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.1.5">3.1.5 stbHFarch_reset_values</a><br>
+&nbsp;&nbsp;<a href="#3.2">3.2 The variables</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.1">3.2.1 Brick shape manipulation</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.1.1">3.2.1.1 stbHFarch_brick_pattern</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.1.2">3.2.1.2 stbHFarch_brick_pattern_offset</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.1.3">3.2.1.3 stbHFarch_brick_pattern_reset</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.1.4">3.2.1.4 stbHFarch_pattern_override</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.1.5">3.2.1.5 stbHFarch_brick_mirror</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.1.6">3.2.1.6 stbHFarch_brick_clipping_depth</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.1.7">3.2.1.7 stbHFarch_clipping_mode</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.1.8">3.2.1.8 stbHFarch_brick_intersection</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.2">3.2.2 Brick texture manipulation</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.2.1">3.2.2.1 stbHFarch_brick_texture</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.2.2">3.2.2.2 stbHFarch_brick_texture_offset</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.3">3.2.3 Heightfield manipuation</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.3.1">3.2.3.1 stbHFarch_brick_res</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2.3.2">3.2.3.2 stbHFarch_brick_smooth</a><br>
+&nbsp;&nbsp;<a href="#4.0">4.0 Speed Considerations</a><br>
+</b>
+<br>
+<hr>
+<br>
+<b><a name="1.0">1.0 Introduction</a></b><br>
+<br>
+Thank you for downloading this include file! It started out rather small, but soon became the full-featured
+include file you see before you.<br>
+<br>
+To contact me about this file, write me at <b>stbenge@hotmail.com</b><br>
+<br>
+<b><a name="1.1">1.1 Description</a></b><br>
+<br>
+This include file lets you make brick arches, single arch bricks, pillars
+or single pillar bricks by way of object macros. The objects it creates are
+heightfield-based, meaning you can declare special patterns to change the shape of each brick.
+Certain speed considerations are taken into account.<br>
+<br>
+<b><a name="1.2">1.2 How it works</a></b><br>
+<br>
+Each brick making up the arch is based on a heightfield which is clipped or
+intersected independently. The pattern for each brick is scaled to the exact
+size needed by the heightfield. This improves efficiency during parsing, resulting
+in lower render times.<br>
+<br>
+<b><a name="1.3">1.3 What it can do</a></b><br>
+<br>
+These macros let you easily create brick arches and brick pillars with a few simple commands.
+By default the bricks are one-sided, for use on walls. By changing some values,
+however, you can make the bricks two-sided for use on free-standing pillars.<br>
+<br>
+<b><a name="1.4">1.4 Contents</a></b><br>
+<br>
+The include file contains:</a></b><br>
+<br> 
+*A brick arch macro<br>
+*A single arch brick macro<br>
+*A brick pillar macro<br>
+*A single pillar brick macro<br>
+*Several variables to manipulate the brick shape, texture and detail<br>
+*A macro to reset the variables<br>
+<br>
+_____________________________<br>
+<br>
+
+<b><a name="2.0">2.0 Getting Started</a></b><br>
+<br>
+Drop the include file into POV-Ray's include directory or the directory where you
+intend to use it. After that just include the file like so:<br>
+<br>
+<b style="color : rgb(255,0,0);">
+#include "stbHFarch.inc"<br>
+</b>
+<br>
+
+<b><a name="2.1">2.1 Your first arch</a></b><br>
+<br>
+Since there are default values for everything, you can simply invoke the arch macro:<br>
+<br>
+<b style="color : rgb(255,0,0);">
+object{ stbHFarch_brick_arch(12, 4, 180, 9, 1)  pigment{rgb 0.5}}<br>
+</b>
+<br>
+The 'stbHFarch_brick_arch' macro takes five arguments. The first represents the
+radius of the arch. The second is the thickness of the arch brick. It is important to
+consider that this value changes the inner radius of the arch, not the outer radius. That
+means by using the values above, the inner radius of the arch would be 8. The third number
+is the arch's range. A value of 180 gives this arch a classic look, while 360 would produce
+a complete circle, perfect for a tunnel entrance. You may use any value less than or equal
+to 360. The fourth number is the number of bricks for a given range. In this example there
+are 9 bricks making up the arch. The fifth parameter defines the arch brick's depth, or bas-relief.<br>
+<br>
+
+<b><a name="2.2">2.2 Changing the brick's shape</a></b><br>
+<br>
+There are actually two ways to do this, and both ways will result in a brick custom-fitted to the arch.<br>
+<br>
+The first way is to change the brick's shape pattern directly, like so:<br>
+<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_pattern =<br>
+&nbsp;pigment_map{<br>
+&nbsp;&nbsp;[0.0  rgb 0.0  ]<br>
+&nbsp;&nbsp;[0.05 rgb 0.75 ]<br>
+&nbsp;&nbsp;[0.1  rgb 0.95 ]<br>
+&nbsp;&nbsp;[0.25 rgb 1.0  ]<br>
+&nbsp;&nbsp;[0.4  rgb 0.95 ]<br>
+&nbsp;}<br>
+</b>
+<br>
+The first entry represents the edge of the brick, and the last entry represents the the edge
+going towards the middle of the brick. So 'rgb 0.0' ensures the edge slopes inward, like
+you would expect a brick to be. You can use any pigment you wish (this includes procedural patterns),
+and the pigment will be rotated with each brick.<br>
+<br>
+Note that when using this method, the contour of the brick will be a fixed distance from the edge.
+In other words, the edges of the brick will be the same thickness no matter what values you pass
+to the arch or single brick macro.<br>
+<br>
+The second way to change the brick's shape pattern is to declare a pattern override, like so:<br>
+<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_pattern_override =<br>
+&nbsp;&nbsp;pigment{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;boxed scallop_wave frequency 4<br>
+&nbsp;&nbsp;}<br>
+</b>
+<br>
+This method is fundamentally different from the first. Instead of relying on a built-in edge
+function, you are explicitly telling the macro to force a pattern to the brick shape. In this
+case, I used the pattern 'boxed' to define the brick's shape. The shape will be warped to fit
+the brick exactly.<br>
+<br>
+
+<b><a name="2.3">2.3 Texturing the arch</a></b><br>
+<br>
+You may add a texture inside the object{} block where the macro invocation resides, but a more
+powerful way is to declare the texture beforehand. This lets you apply incremental texture
+positioning so that each brick appears to have it's own separate texture. Try this:<br>
+<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_texture_offset = <0,0,10>;<br>
+<br>
+#declare stbHFarch_brick_texture =<br>
+&nbsp;&nbsp;texture{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pigment{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;granite scale 7<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+</b>
+<br>
+'stbHFarch_brick_texture_offset' translates the texture for each new brick in the arch.
+The texture is first translated by <0,0,10>*0, next by <0,0,10>*1, next by <0,0,10>*2 and so on.<br>
+<br>
+The texture's size is not relative to the arch, but literal. However, the texture does rotate
+with each brick, so keep that in mind.<br>
+<br>
+
+<b><a name="2.4">2.4 Changing the brick's heightfield resolution</a></b><br>
+<br>
+If you are experiencing long parse times or bad results, you may want to change how detailed
+the heightfield is for the brick. You can do this by declaring new values this way:<br>
+<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_res = <200,200>;<br>
+</b>
+<br>
+The default values are <100,100>.<br>
+<br>
+
+<b><a name="2.5">2.5 Making double-sided bricks</a></b><br>
+<br>
+By default the bricks are one-sided, with the outside facing -z. For your scene you may need
+the bricks to be two-sided. This would be the case if you were modeling an arbor. The simplest
+way to do this is do change the default value:<br>
+<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_mirror = yes;<br>
+</b>
+<br>
+By turning mirroring on, you are telling the macro to make another copy facing in the +z direction.<br>
+<br>
+In some cases, there may be an unwated ridge where the two brick surfaces meet. To avoid this,
+you can have each brick intersected with another, custom-fitted, CSG brick shape. Try doing this:<br>
+<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_intersection = 0.05;<br>
+</b>
+<br>
+By default, this value is 0, meaning no intersection takes place. Positive values scale the
+CSG brick shape down which results in a slightly smaller brick, but edges which are smooth.
+As you might have already guessed, doing this will increase the render time.<br>
+<br>
+You may use this feature for one-sided bricks as well, but they will render more slowly than
+two-sided bricks. I'm not exactly sure why, but it helps to know.<br>
+<br>
+<hr>
+<br>
+
+<b><a name="3.0">3.0 File Reference</a></b><br>
+<br>
+
+<b><a name="3.1">3.1 The macros</a></b><br>
+<br>
+
+<b><a name="3.1.1">3.1.1 stbHFarch_brick_arch(rad, thk, range, div, depth)</a></b><br>
+<br>
+Makes a brick arch starting at <0,0,0>. The resulting object is a union.<br>
+<br>
+rad = The outside radius of the arch<br>
+thk = the thickness of each brick (changes the inner radius)<br>
+range = how much of an arch? 180 degrees? 360? 90? (1-360)<br>
+div = how many bricks for a given range? (1-??)<br>
+depth = the depth of each brick. 'stbHFarch_brick_clipping_depth' will affect this.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+object{<br>
+&nbsp;&nbsp;stbHFarch_brick_arch(12.0, 4.0, 180, 9, 1.0)<br>
+&nbsp;&nbsp;pigment{rgb 1}<br>
+}<br>
+</b>
+<br>
+
+<b><a name="3.1.2">3.1.2 stbHFarch_single_brick(rad, thk, div, depth)</a></b><br>
+<br>
+Makes a single arch brick (not a brick arch). The parameters are similar to 'stbHFarch_brick_arch'.
+The brick is automatically translated in the +y direction for convenience.<br>
+<br>
+rad = the outside radius of the brick<br>
+thk = the thickness of the brick (changes inner radius)<br>
+div = number of brick divisions to complete a circle (needed even though the macro makes a single brick)<br>
+depth = the depth of the brick. 'stbHFarch_brick_clipping_depth' will affect this.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+object{stbHFarch_single_brick(14, 2, 18, 1)  pigment{rgb 1} }<br>
+</b>
+<br>
+
+<b><a name="3.1.3">3.1.3 stbHFarch_pillar(rad, thk, height, div, depth)</a></b><br>
+<br>
+Makes two brick pillars, perfect for putting your brick arch onto. It starts at y=0 and
+extends in the +y direction.<br>
+<br>
+rad = the radius of the pillars (should be the same as the arch radius)<br>
+thk = the thickness of the pillars (changes the inner radius)<br>
+height = the height of the pillars<br>
+div = how many bricks make up each pillar? The height is divided by this value<br>
+depth = the depth of each brick. 'stbHFarch_brick_clipping_depth' will affect this.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+object{stbHFarch_pillar(12.0, 4.0, 8.0, 3, 1.0) pigment{rgb 1}}<br>
+</b>
+<br>
+
+<b><a name="3.1.4">3.1.4 stbHFarch_single_pillar_brick(thk, height, depth)</a></b><br>
+<br>
+Makes a single pillar brick. It starts at y=0 and extends outward. You can #declare it and
+use it for brick walls if you wish.<br>
+<br>
+thk = the thickness, or width of the brick<br>
+height = the height of the brick<br>
+depth = the depth of the brick. 'stbHFarch_brick_clipping_depth' will affect this.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+object{stbHFarch_single_pillar_brick(4,3,1) pigment{rgb 1}}<br>
+</b>
+<br>
+
+<b><a name="3.1.5">3.1.5 stbHFarch_reset_values()</a></b><br>
+<br>
+Resets all the variables used by the include file (see 'The variables', below). Perfect for
+creating new arches or pillars in the same scene file.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+stbHFarch_reset_values()<br>
+</b>
+<br>
+
+<b><a name="3.2">3.2 The variables</a></b><br>
+<br>
+The variable names presented here are long so the include file can adhere to the unique prefix naming
+convention. This is to avoid conflicts with files made by other people.<br>
+<br>
+
+<b><a name="3.2.1">3.2.1 Brick shape manipulation</a></b><br>
+<br>
+Following are several variables to control the shape of the brick for the object macros.<br>
+<br>
+
+<b><a name="3.2.1.1">3.2.1.1 stbHFarch_brick_pattern</a></b><br>
+<br>
+Changes the shape of the brick by redeclaring the pigment map it uses.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_pattern =<br>
+&nbsp;&nbsp;pigment_map{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[0 rgb 0]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[.2 rgb 1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[.4 rgb 1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[.5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onion triangle_wave color_map{[.25 rgb .5][.75 rgb .9]}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+&nbsp;&nbsp;}<br>
+</b>
+<br>
+
+<b><a name="3.2.1.2">3.2.1.2 stbHFarch_brick_pattern_offset</a></b><br>
+<br>    
+If not zero, it translates the pattern along the z-axis for each new brick in the arch or pillar.
+Use in conjuction with your own brick pattern. This feature can result in long parsing times, so use
+it only if you really need to.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_pattern_offset = 1.0;<br>
+</b>
+<br>
+default = 0<br>
+<br>
+
+<b><a name="3.2.1.3">3.2.1.3 stbHFarch_brick_pattern_reset</a></b><br>
+<br>
+This resets the pattern used by the arch or pillar macro. It effectively 'snaps' the pattern to
+3d space, allowing you to create effects like world-oriented lattice between brick edges. It can
+be used with both 'stbHFarch_brick_pattern' and 'stbHFarch_pattern_override'.
+This feature can result in long parsing times, so use it only if you really need to.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_pattern_reset = yes;<br>
+</b>
+<br>
+default = no<br>
+<br>
+
+<b><a name="3.2.1.4">3.2.1.4 stbHFarch_pattern_override</a></b><br>
+<br>
+If used, it overrides 'stbHFarch_brick_pattern', letting you make your own pattern for the brick from scratch.
+Your pattern must lie within <-1,-1,0>,<1,1,0> in 3d space. The pattern will be warped to fit the
+brick shape exactly.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_pattern_override=<br>
+&nbsp;&nbsp;pigment{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;boxed<br>
+&nbsp;&nbsp;}<br>
+</b>
+<br>
+By default this is not declared.<br>
+<br>
+
+<b><a name="3.2.1.5">3.2.1.5 stbHFarch_brick_mirror</a></b><br>
+<br>
+Makes an extra copy of the brick in the +z direction. Use this to make 'complete' bricks.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_mirror = yes;<br>
+</b>
+<br>
+default = no<br>
+<br>
+
+<b><a name="3.2.1.6">3.2.1.6 stbHFarch_brick_clipping_depth</a></b><br>
+<br>
+By default the brick is intersected with a plane facing in the +z direction.
+'stbHFarch_brick_clipping_depth' lets you specify how much clipping is performed on the brick.
+If effectively moves the clipping plane in the -z direction, and then moves the entire brick
+in the +z direction to ensure that it lies at z=0. This is most useful if you have mirroring
+turned on. It will <b>only</b> work with clipping mode 1 (see stbHFarch_clipping_mode below).<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_clipping_depth = 0.125;<br>
+</b>
+<br>
+By default it is set to a small value relative to the brick's depth.<br>
+<br>
+
+<b><a name="3.2.1.7">3.2.1.7 stbHFarch_clipping_mode</a></b><br>
+<br>
+There are four clipping modes available to you:<br>
+0 = no clipping<br>
+1 = clipped by +z facing plane<br>
+2 = clipped by brick shape<br>
+3 = same as 2, but useful if the brick gets black edges<br>
+<br>
+If you want to see the heightfield before it's clipped, use no clipping. You may also
+want to disable clipping if your bricks lie on a -z facing plane (ie. plane{-z,.01}).<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_clipping_mode = 2;<br>
+</b>
+<br>
+default = 1<br>
+<br>
+
+<b><a name="3.2.1.8">3.2.1.8 stbHFarch_brick_intersection</a></b><br>
+<br>
+Intersects the brick with another brick shape.<br>
+<br>
+Positive values scale the intersecting brick shape downwards, thus providing a means to
+separate the bricks from each other and to remove unwanted ridge lines (often produced
+when mirroring is turned on). This feature will increase the render time; I suggest not using it.
+In most cases increasing 'stbHFarch_brick_clipping_depth' will do the job.
+<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_intersection = 0.125;<br>
+</b>
+default = 0 (off)<br>
+<br>
+
+<b><a name="3.2.2">3.2.2 Brick texture manipulation</a></b><br>
+<br>
+Following are two variables to control the texture for the 'stbHFarch_brick_arch' and
+'stbHFarch_pillar' macros.<br>
+<br>
+<b><a name="3.2.2.1">3.2.2.1 stbHFarch_brick_texture</a></b><br>
+<br> 
+With this you can designate a texture to be used with the 'tbHFarch_brick_arch' and
+'stbHFarch_pillar' macros. It will be rotated and/or translated, depending on the macro used.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_texture=<br>
+&nbsp;&nbsp;texture{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pigment{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spherical scale 4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+</b>
+<br>
+By default there is no texture.<br>
+<br>
+ 
+<b><a name="3.2.2.2">3.2.2.2 stbHFarch_brick_texture_offset</a></b><br>
+<br>
+This will incrementally offset 'stbHFarch_brick_texture' by a given vector. Each new brick in
+the arch or pillar will be offset by this amount. Using this allows you to give the impression
+that all the bricks have different textures. Note that if you use this feature with
+'stbHFarch_pillar', the bricks to the left will be offset by an additional 1.5 units in the +z
+direction. This is to remove 'sameness' from the offset brick texture.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_texture_offset = <0,0,1.0>;<br>
+</b>
+<br>
+default = <0,0,0><br>
+<br>
+
+<b><a name="3.2.3">3.2.3 Heightfield manipuation</a></b><br>
+<br>
+Here are some values which let you control two basic heightfield parameters.<br>
+<br>
+
+<b><a name="3.2.3.1">3.2.3.1 stbHFarch_brick_res</a></b><br>
+<br>
+Changes the resolution of the heightfield which makes the bricks. Use this if you are getting
+heightfield 'jaggies'.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_res = <200,200>;<br>
+</b>
+<br>
+default = <100,100>;<br>
+<br>
+
+<b><a name="3.2.3.2">3.2.3.2 stbHFarch_brick_smooth</a></b><br>
+<br>
+Do want the triangles making the heightfield to <b>not</b> be smooth? Use this.<br>
+<br>
+example code:<br>
+<b style="color : rgb(255,0,0);">
+#declare stbHFarch_brick_smooth = no;<br>
+</b>
+<br>
+default = yes<br>
+<br>
+<hr>
+<br>
+
+<b><a name="4.0">4.0 Speed Considerations</a></b><br>
+<br>
+These macros are meant to parse and render quickly. The pattern the heightfield uses to make
+each brick is carefully scaled and translated to fit the heightfield exactly at render time.
+This is to ensure the least amount of heightfield space is wasted. For both the arch and pillar
+macros the heightfield brick is copied and rotated/translated several times. This is to save
+both RAM and parsing time.<br>
+<br>
+There are times, however, when you may experience long parse times. This can be due to a
+number of things. The items in the following list can significantly increase parsing time:<br>
+<br>
+*stbHFarch_brick_pattern_offset<br>
+*stbHFarch_brick_pattern_reset<br>
+*stbHFarch_brick_res<br>
+<br>
+The first two items, if used, will make separate instances of the brick for either the
+'stbHFarch_brick_arch' or 'stbHFarch_pillar' macros. That means each brick making up the object
+will be parsed independently from the rest. So, if you have an arch with five elements which
+previously took 1 second to parse, it would now take 5-10 seconds to parse! Combined with the
+last item, you may see very high parse times (not to mention RAM usage).<br>
+<br>
+You may also consider not using the brick intersection feature. It will only make the render time
+longer. There is almost always a way around having to use it.<br>
+<br>
+Additionally, if you intend to use a brick, arch, or pillar more than once in your scene, you
+may want to #declare it first, and then use it later. That way POV is not having to parse each macro
+individually.
+<br>
+<hr>

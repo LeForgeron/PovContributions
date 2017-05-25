@@ -1,0 +1,1 @@
+A collection of flags mostly of sovereign countries. This include file contains 50 procedural flag textures and a selection of different flag objects, along with a macro to render a texture onto a flag object. The macro also supports the use of image maps as an alternative to the procedural textures. Animation options are supported for the "height_field" flag object.  

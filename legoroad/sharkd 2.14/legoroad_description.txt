@@ -1,0 +1,14 @@
+This include file contains macros that generate LDraw (Lego)
+style roads that can be formed into various shapes. There are
+macros for
+- creating straight roads
+- creating elliptical roads
+- creating spiral roads
+- creating spline-shaped roads
+- creating straight roads that intersect at any angle
+
+Also supported is super-elevation (banking) of the roads. This
+can be enabled and disabled when calling the macro.
+
+There is quite a bit you can do to modify or customize the
+macro, so it doesn't necessarily have to just be used for Lego.

@@ -1,0 +1,43 @@
+/* rc3metal_demo.css
+ *
+ * Copyright 2013 Richard Callwood III.  Some rights reserved.
+ * This file is licensed under the terms of the CC-LGPL.
+ * See http://creativecommons.org/licenses/LGPL/2.1/ for more information.
+ *
+ * Version 1.2 06-sep-2013
+ */
+body { color:black; background:#ddd; }
+a { color:#00c; }
+a:hover { background:#eac; }
+code
+{ font-family:"Courier New", monospace;
+  font-size:100%;
+  letter-spacing:-0.1em;
+}
+h1
+{ margin:0.3em 17%;
+  padding:0.25em 0.6em;
+  line-height:1.2;
+  border:solid 3px;
+  border-radius:10px;
+  -moz-border-radius:10px;
+  border-color:#ffe6ec #cc99a6 #cc99a6 #ffe6ec;
+  background:#ffccd9; color:black;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  text-align:center;
+}
+p { text-align:center; }
+table
+{ margin:0.6em auto;
+  border-collapse:separate;
+  border-spacing:6px;
+}
+td, th
+{ padding:4px;
+  border-width:1px;
+  border-style:solid;
+  border-color:#eee #aaa #aaa #eee;
+}
+td { vertical-align:top; text-align:center; }
+th { color:black; background:#ccc; }
+ul { margin-left:auto; margin-right:auto; }

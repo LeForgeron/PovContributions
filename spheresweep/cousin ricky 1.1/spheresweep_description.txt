@@ -1,0 +1,9 @@
+POV-Ray's sphere_sweep primitive is a useful object, but it is sometimes prone to artifacts and unreliable automatic bounding. This module provides a variety of alternatives that approximate sphere sweeps using blobs or linear segments.
+
+For those who have never had problems with the sphere_sweep, there's an alternate interface to the actual sphere_sweep primitive.
+
+The control points and radii are specified in arrays.
+
+As a bonus, routines for copying subarrays and controlling blob sizes are included.
+
+In version 1.1, B-spline capability is added.

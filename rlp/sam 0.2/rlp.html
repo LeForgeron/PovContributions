@@ -1,0 +1,430 @@
+<p>
+<HEAD>
+<STYLE TYPE="text/css">
+<!--
+.indented
+   {
+   padding-left: 23pt;
+   padding-right: 23pt;
+   }
+-->
+</STYLE>
+</HEAD>
+
+<hr>
+<br>
+Rounded L-Prism (rlp) v0.2<br>
+2010 Samuel T. Benge<br>
+<br>
+<hr>
+<br>
+Contents<br>
+<br>
+&nbsp;&nbsp;1.0 New in this Version<br>
+&nbsp;&nbsp;1.1 Introduction<br>
+&nbsp;&nbsp;1.2 Basic Usage<br>
+&nbsp;&nbsp;1.3 The Macros<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1.3.1 Object Macros<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp(pts, z1, z2, d_rad, offs)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_chamfered(pts, z1, z2, d_rad, bev)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1.3.2 Pointset and Subset Manipulation Macros<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_scale(pts, scl)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_scale_all(pts, scl)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_rotate(pts, rot)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_rotate_all(pts, rot)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_translate(pts, trans)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_translate_all(pts, trans)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_set_radii(pts, rad)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_flatten_all(pts)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_reverse(pts)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_shift(pts, offs)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_shift_all(pts, offs)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1.3.3 Shape Macros<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_square(sz)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_rectangle(sz_xy)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_n_gon(radius, n_pts, rounding)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rlp_star(radius, n_pts, inset, r1, r2)<br>
+&nbsp;&nbsp;1.4 Things You Can Declare<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rlp_bevels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rlp_types<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rlp_enforce_roundness<br>
+&nbsp;&nbsp;1.5 Limitations<br>
+&nbsp;&nbsp;1.6 Troubleshooting<br>
+&nbsp;&nbsp;1.7 Tips<br>
+&nbsp;&nbsp;1.8 Contact<br>
+<br>  
+<hr>
+<br>  
+1.0 New in this Version:<br>
+<br>
+&nbsp;&nbsp;* sharp corners<br>
+&nbsp;&nbsp;* pointset and subset transforms<br>
+&nbsp;&nbsp;* custom beveling and bevel types for individual subsets<br>
+&nbsp;&nbsp;* four subset shape primitives<br>
+&nbsp;&nbsp;* improved autofitting<br>
+&nbsp;&nbsp;* true zero-beveling<br>
+&nbsp;&nbsp;* more accurate<br>
+&nbsp;&nbsp;* faster parsing speed<br>
+<br>
+<hr>
+<br>
+1.1 Introduction<br>
+<br>
+&nbsp;&nbsp;The rlp macros will create beveled, rounded prism objects from a series of user-defined points.
+For each point, a custom radius may be given, causing rounding at that corner. These objects
+can simplify the scene creation process, and may be used for things like machine parts, architecture, fonts, logos and other such items.<br>
+<br>
+&nbsp;&nbsp;They were designed to render faster than their traditional CSG equivalents.<br>
+<br>
+<hr>
+<br>
+1.2 Basic Usage<br>
+<br>
+&nbsp;&nbsp;To make an rlp object, you must specify a series of points which make up a pointset. These
+should be in the following structure:<br>
+<br>
+&nbsp;&nbsp;array[num_subsets]{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subset_1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subset_2,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subset_3,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>...</b><br>
+&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;where each subset is a one-dimensional array in this format:<br>
+<br>
+&nbsp;&nbsp;array[num_points]{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;point_1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;point_2,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;point_3,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>...</b><br>
+&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;in which each point is a 3D vector like so:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;< x, y, rad ><br>
+<br>
+&nbsp;&nbsp;"x" and "y" are the x & y positions for that point, and rad is the corner radius. The radius
+will cause an arc to be fitted to that corner, effectively rounding it out.<br>
+<br>
+&nbsp;&nbsp;A complete pointset would look like this:<br>
+<br>
+&nbsp;&nbsp;array[1]{     // pointset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;array[4]{     // subset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<-1, -1, 0>,  // points<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<-1, 1,  0>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<1,  1,  0>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<1,  -1, 0><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;The above would make a square. Notice that even though there is only one subset, it must wrapped
+in a pointset array.<br>
+<br>
+&nbsp;&nbsp;Each subset can be either a container or a hole. To make a container, write the subset so that
+the points progress in a clockwise fashion. To make a hole, write the subset so that the points
+go counter-clockwise. A hole should reside within the confines of a container. Any number of
+containers and holes may be used, in any order, but there should be at least one container.<br>
+<br>
+&nbsp;&nbsp;You may then invoke one of the object macros with your pointset.<br>
+<br>
+<hr>
+<br>
+1.3 The Macros<br>
+<br>
+<hr>
+<br>
+&nbsp;&nbsp;1.3.1 Object Macros<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rlp(pts, z1, z2, d_rad, offs)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rlp_chamfered(pts, z1, z2, d_rad, bev)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* pts   = a pointset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* z1    = z-offset 1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* z2    = z-offset 2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* d_rad = default corner radius<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* bev   = amount of beveling<br>
+<br>
+&nbsp;&nbsp;The object will be oriented along the z-axis. It will start at z1, ending at z2.<br>
+<br>
+&nbsp;&nbsp;d_rad is the default corner radius. It will be passed along if the third entry of any 3D vector
+equals zero. So, if you give d_rad a value of 1 and use the square pointset described above, you
+will get a circle. Setting this to zero is the only way to allow corners to have a zero radius.<br>
+<br>
+&nbsp;&nbsp;bev is the amount of beveling for the entire object. It will be adjusted so that it never
+exceeds half the distance between z1 and z2. However, it will not adjust itself to the geometry
+you provide in your pointsets, so to keep bad things from happening, keep it low enough to accomodate them.<br>
+<br>
+&nbsp;&nbsp;The rlp_chamfered version uses flat beveling, whereas the basic version creates an object with
+rounded beveling.<br>
+<br>
+&nbsp;&nbsp;The new sharp corners feature will create a sharp corner at any point which has a radius near 0.
+To eliminate sharp inside corners, give that point any radius above 0. For outside points you
+must "work past" the beveling by raising the radius until the corner is no longer sharp. You can
+turn off this feature for outside corners by setting rlp_enforce_roundness to "true."<br>
+<br>
+<hr>
+<br>
+1.3.2 Pointset and Subset Manipulation Macros<br>
+<br> 
+&nbsp;&nbsp;These macros allow you to transform subsets or entire pointsets.<br>
+<br> 
+<br> 
+&nbsp;&nbsp;rlp_scale(pts, scl)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* pts = a point subset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* scl = a 2D vector, x/y scaling<br>
+<br> 
+&nbsp;&nbsp;Scales the points of a given subset. Be aware that non-uniform scaling might not preserve the
+radii in your point subset.<br>
+<br> 
+<br> 
+&nbsp;&nbsp;rlp_scale_all(pts, scl)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* pts = a pointset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* scl = a 2D vector, x/y scaling<br>
+<br> 
+&nbsp;&nbsp;Scales the points of an entire pointset. Be aware that non-uniform scaling might not preserve
+the radii in your pointset.<br>
+<br> 
+<br> 
+&nbsp;&nbsp;rlp_rotate(pts, rot)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* pts = a point subset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* rot = amount of rotation<br>
+<br> 
+&nbsp;&nbsp;Rotates the points of a given subset.<br>
+<br> 
+<br> 
+&nbsp;&nbsp;rlp_rotate_all(pts, rot)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* pts = a pointset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* rot = amount of rotation<br>
+<br> 
+&nbsp;&nbsp;Rotates the points of an entire pointset.<br>
+<br> 
+<br> 
+&nbsp;&nbsp;rlp_translate(pts, trans)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* pts   = a point subset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* trans = a 2D vector, x/y translation<br>
+<br> 
+&nbsp;&nbsp;Translates the points of a given subset.<br>
+<br> 
+<br> 
+&nbsp;&nbsp;rlp_translate_all(pts, trans)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* pts = a pointset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* trans = a 2D vector, x/y translation<br>
+<br>  
+&nbsp;&nbsp;Translates the points for an entire pointset.<br>
+<br> 
+<br> 
+&nbsp;&nbsp;rlp_set_radii(pts, rad)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* pts = a point subset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* rad = new radii<br>
+<br>  
+&nbsp;&nbsp;Applies a uniform radius to all points in a subset.<br>
+<br> 
+<br> 
+&nbsp;&nbsp;rlp_flatten_all(pts)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* pts = a pointset<br>
+<br> 
+&nbsp;&nbsp;Drops the radii for all points in a complete pointset to zero. You can then give the object a
+default radius when you invoke an rlp object macro.<br>
+<br>
+<br>
+&nbsp;&nbsp;rlp_reverse(pts)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* pts = a point subset<br>
+<br> 
+&nbsp;&nbsp;Reverses the order of the points in a subset. It is useful for making holes from subsets that
+were originally containers, or vice-versus.<br>
+<br>
+<br>
+&nbsp;&nbsp;rlp_shift(pts, offs)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* pts = a point subset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* offs = offset amount<br>
+<br> 
+&nbsp;&nbsp;This will "shrink" or "fatten" a point subset. Positive values fatten the points, negative
+values shrink them. You can use this in combination with rlp_reverse to make, for example,
+borders for wooden signs. The point radii will be modified somewhat.<br>
+<br>
+<br>
+&nbsp;&nbsp;rlp_shift_all(pts, offs)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* pts  = a pointset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* offs = offset amount<br>
+<br>
+&nbsp;&nbsp;This will "shrink" or "fatten" an entire pointset. Positive values fatten the points, negative
+values shrink them. The point radii will be modified somewhat.<br>
+<br> 
+<hr>
+<br>
+1.3.3 Shape Macros<br>
+<br>
+&nbsp;&nbsp;Here are some macros to create basic shapes for your subsets.<br>
+<br>
+<br>
+&nbsp;&nbsp;rlp_square(sz)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* sz = size of square, single value<br>
+<br>
+&nbsp;&nbsp;Makes a square.<br>
+<br>
+<br>
+&nbsp;&nbsp;rlp_rectangle(sz)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* sz = size of rectangle, a 2D vector<br>
+<br>
+&nbsp;&nbsp;Makes a rectangle.<br>
+<br>
+<br>
+&nbsp;&nbsp;rlp_n_gon(rad, npts, rounding)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* rad      = radius of polygon<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* npts     = number of points<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* rounding = amount of rounding for each point<br>
+<br>
+&nbsp;&nbsp;It will make a polygonal shape for a subset. You can use it to quickly make tight-fitting
+circles, bolt heads and other similar items. The minimum number of points is three.<br>
+<br>
+<br>
+&nbsp;&nbsp;rlp_star(rad, inset, npts, r1, r2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* rad   = radius of star<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* inset = amount to push the inside corners inward (0 to <1 or int(< 0))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* npts  = number of points<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* r1    = amount of rounding for outside points<br>
+&nbsp;&nbsp;&nbsp;&nbsp;* r2    = amount of rounding for inside points<br>
+<br>
+&nbsp;&nbsp;Makes a star shape. The minimum number of points is three.<br>
+<br>  
+&nbsp;&nbsp;If inset equals 0, then you will get an rlp_n_gon.<br>
+<br>
+&nbsp;&nbsp;If inset is an integer and is less than 0, then the macro will automatically space the inset
+points to make perfect star shapes. For example, if inset equals -1, then it will skip one
+point, -2 and it will skip 2 points and so forth. If you skip too many points for your particular star,
+you will get incorrect results.<br>
+<br> 
+<hr>
+<br>
+1.4 Things You Can Declare<br>
+<br>
+<br>
+&nbsp;&nbsp;rlp_bevels<br>
+<br> 
+&nbsp;&nbsp;You can declare a 1D array called "rlp_bevels" which allows you to specify custom beveling for
+individual subsets. For instance, if your pointset has 3 subsets, you declare it like so:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#declare rlp_bevels = array[3];<br>
+<br>
+&nbsp;&nbsp;To change the beveling for the second subset, you would then do this:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#declare rlp_bevels[1] = 0.1;<br>
+<br>
+&nbsp;&nbsp;It will only change the beveling for #declared entries, so you don't have to write out the
+entire array. The values you declare will be reset before you call another rlp object macro.<br>
+<br>
+<br>
+&nbsp;&nbsp;rlp_types<br>
+<br>
+&nbsp;&nbsp;You can declare a 1D array called "rlp_types" which allows you to specify what style of beveling
+to give individual subsets. Two types are available: rounded (0) and chamfered (1). As an example, if your
+pointset has 4 subsets, you would declare it like this:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#declare rlp_types = array[4];<br>
+<br>
+&nbsp;&nbsp;To change the 3rd subset's beveling type to a chamfered bevel, you would do this:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#declare rlp_types[3] = 1;<br>
+<br>
+&nbsp;&nbsp;It will only change the beveling type for #declared entries, so you don't have to write out the
+entire array. The values you declare will be reset before you call another rlp object macro.<br>
+<br>
+<br>
+&nbsp;&nbsp;rlp_enforce_roundness<br>
+<br> 
+&nbsp;&nbsp;Declare this variable as 'true' to keep outside corners with low radii from becoming sharp. Inside
+corners will still be sharp, and can be rounded out with a default radius when invoking an
+rlp macro.<br>
+<br>
+&nbsp;&nbsp;Example:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#declare rlp_enforce_roundness = true;<br>
+<br> 
+<hr>
+<br>
+1.5 Limitations<br>
+<br>
+&nbsp;&nbsp;Three consecutive points must not lie along the same 2D line. At best, if you do this, the rlp
+object will not be correct. At worst, POV-Ray will abort the render with an error regarding a
+degenerate plane normal. It is always best to use the simplest series of points to make your
+object.<br>
+<br>
+&nbsp;&nbsp;The objects cannot be used with merge, intersection or difference CSG operations. To work
+around it, you can punch holes into them via the hole-creation method described above in conjunction
+with custom beveling via rlp_bevels. You may also clip an rlp object using clipped_by
+statements, which is a good way to join transparent objects or to remove unwanted geometry.<br>
+<br>
+&nbsp;&nbsp;The objects are not fully clipped for transparency. This means that in some cases you will not
+get correct results when using transparency. I may add full support for this in the future, if
+somebody wants it. For now it's best to just use opaque objects, or settings which do not
+cause too much overlap (you'll know it when you see it).<br>
+<br>
+&nbsp;&nbsp;Autofitting is now a permanent feature. This is a mixed bag. On one hand, the autofitting that
+is performed allows for more flexibility and ease of use. On the other hand, a point's radius
+will sometimes be "pushed out" by neighboring points which have higher radii. There's a good
+reason for doing it this way, but I won't go into it right now. I recommend keeping your radii
+at the approximate sizes you need to get the desired result.<br>
+<br>
+&nbsp;&nbsp;Inside corners will behave differently from outside corners when given the same radii. Again,
+there was a good reason for doing it this way, and it has to do with the new sharp corners
+feature.<br>
+<br>
+<hr>
+<br>
+1.6 Troubleshooting<br>
+<br>
+&nbsp;&nbsp;Sometimes when designing an object, you may end up with a complete mess instead of what you
+wanted. There are three main things which can go wrong:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1) Your beveling is too high. Drop it to zero and see if that doesn't fix it. Excessive
+beveling can cause: jumbled geometry; POV-Ray to abort with a series of warnings and an error;
+sharp corners to overextend themselves; an rlp object to sometimes flip itself upside-down;
+degenerate cylinders.<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2) You have written the subset(s) with the wrong rotation. Remember, clockwise for containers,
+anti-clockwise for holes. You may use rlp_reverse to quickly change a subset to the correct
+rotation.<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3) You have points overlapping lines from other points. The base shape is a linear spline, and
+the polygon used to cap the final object uses that same linear spline to make <i>its</i> base
+shape. Polygons with overlapping geometry don't render correctly. An exception to this is
+made for inside corners, where you may in fact get away with a little bit of overlap.<br>
+<br>
+&nbsp;&nbsp;If you still have a screwed-up object, send me the file you are working on; there may be a bug
+in my code.<br>
+<br>
+&nbsp;&nbsp;Also, you may sometimes get "subscript out of range" and similar array errors. These are always
+caused by the wrong type of array being given to the rlp macros. Check your code!<br>
+<br>
+<hr>
+<br>
+1.7 Tips<br>
+<br>
+&nbsp;&nbsp;Sketch out your idea on paper. This way you can easily see how many points you need for a particular
+subset, and it will help you to keep track of your points. You may discover that it
+takes fewer points than you think!<br>
+<br> 
+&nbsp;&nbsp;To visualize your pointset at its basest form, and to see how it makes up a linear spline prism,
+try this: flatten all your points, set the default radius to zero, and remove any beveling.
+This way you can tell if your points overlap lines created from other points.<br>
+<br>
+&nbsp;&nbsp;To seamlessly fit an rlp object to your scene's geometry, use rlp_bevels to give the container
+for the rlp object zero beveling. For instance, if you have a square with an arch-shaped hole
+and you want to fit it into a wall, give the containing square zero beveling.<br>
+<br>
+&nbsp;&nbsp;If you intend to make a new container from a pre-existing hole, create a new rlp object to
+avoid errors.<br>
+<br>
+<hr>
+<br>
+1.8 Contact<br>
+<br>
+&nbsp;&nbsp;Since I don't want to be spammed, you'll have to unscramble the following letters to e-mail me:<br>
+<br>
+<b>esgetnb</b><br>
+4167253<br>
+<br>
+and append: @hotmail.com<br>
+<br>
+Happy Raytracing!<br>
+<br>
+<hr>
+<p>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TiltedTorus 3.0 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="tiltedtorus.css">
+</head>
+
+<body>
+
+<h1>TiltedTorus 3.0 User&nbsp;Manual</h1>
+
+<p class="intro">A library module from the
+ <a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+ <a href="http://lib.povray.org/">Object Collection</a>.
+
+<h2>Abstract</h2>
+
+<p><a href="tiltedtorus.jpg"><img class="demo" src="tiltedtorus_thumbnail.jpg" title="Larger demo image" alt="[Thumbnail which links to a demo image]"></a>
+TiltedTorus defines tori that are scaled in the polar (<var>y</var>) direction, then rotated about their circular axis. A toroid lathe is included for fast renders, and an isosurface function is defined for toroids that can be deformed with other functions or blobbed with other shapes.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview"><b>Overview</b></a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Prerequisites">Prerequisites</a>
+   <li><a href="#Compliance">Namespace Compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Functions_Macros"><b>Functions and Macros</b></a>
+  <ul>
+   <li><a href="#TiltedTorus_fn">TiltedTorus_fn</a>
+   <li><a href="#TiltedTorus_Container_v">TiltedTorus_Container_v</a>
+   <li><a href="#TiltedTorus_Lathed">TiltedTorus_Lathed</a>
+  </ul>
+ <li><a href="#Examples"><b>Examples</b></a>
+ <li><a href="#Other_identifiers"><b>Other identifiers</b></a>
+ <li><a href="#About"><b>About TiltedTorus</b></a>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan="2">Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>tiltedtorus.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>tiltedtorus.inc</code></td>
+  <td>The TiltedTorus software</td>
+ </tr><tr>
+  <td><code>tiltedtorus.jpg</code></td>
+  <td>Sample output</td>
+ </tr><tr>
+  <td><code>tiltedtorus.pov</code></td>
+  <td>A demonstration scene file</td>
+ </tr><tr>
+  <td><code>tiltedtorus_fig</code><var>n</var><code>.jpg</code></td>
+  <td>Illustrations of various parameters, where the italicized <var>n</var> represents a decimal digit (6 images)</td>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <th colspan="2">Other Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>tiltedtorus.css</code></td>
+  <td>A file used by the user manual</td>
+ </tr><tr>
+  <td><code>tiltedtorus_description.txt</code></td>
+  <td>A brief description of TiltedTorus</td>
+ </tr><tr>
+  <td><code>tiltedtorus_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>tiltedtorus_prereqs.txt</code></td>
+  <td>Prerequisites (empty file)</td>
+ </tr><tr>
+  <td><code>tiltedtorus_thumbnail.jpg</code></td>
+  <td>An illustration for the user manual</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+  <td rowspan="2">Administrative files</td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p>Note: The file <code>tiltedtorus_cc-lgpl.png</code> is no longer used.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Prerequisites">Prerequisites</h3>
+
+<p>TiltedTorus requires POV-Ray version 3.5 or later.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>tiltedtorus.inc</code> comply fully with the Object Collection naming standards, as <a href="http://news.povray.org/povray.object-collection/message/%3C48ba92e8%241%40news.povray.org%3E/#%3C48ba92e8%241%40news.povray.org%3E">revised August 2008</a> and <a href="http://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The prefix for this module is “<code>tiltedtorus</code>,” including any uppercase and lowercase variants; to avoid conflicts, do not declare identifiers that start with this prefix plus an underscore.
+
+<p>The standard include files <code>functions.inc</code> and <code>transforms.inc</code> are used by <code>tiltedtorus.inc</code>.
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include this file once prior to using any of the features of TiltedTorus:
+
+<pre>#include "tiltedtorus.inc"</pre>
+
+<p>Including the file more than once is harmless, though unnecessary.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Functions_Macros">Functions and Macros</h2>
+
+<h3 id="TiltedTorus_fn">TiltedTorus_fn (x, y, z, RMajor, rMinor, yScale, Tilt)</h3>
+
+<p>An isosurface function for a “tilted” torus. Consistent with the POV-Ray torus primitive, the toroid is oriented in the <var>x</var>-<var>z</var> plane.
+
+<h4>Arguments</h4>
+<p>Note: In <code>tiltedtorus.inc</code>, the function arguments (other than <code>x</code>, <code>y</code>, and <code>z</code>) are prefixed with “<code>TiltedTorus_P</code><var>n</var><code>_</code>” in order to avoid a POV-Ray namespace scope feature. In this document, these prefixes are omitted for clarity.
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>x</code>, <code>y</code>, <code>z</code></td>
+  <td>float</td>
+  <td>The coordinates of the point to be evaluated.</td>
+ </tr><tr>
+  <td><code>RMajor</code></td>
+  <td>float</td>
+  <td>The major radius of the torus.</td>
+ </tr><tr>
+  <td><code>rMinor</code></td>
+  <td>float</td>
+  <td>The minor radius of the torus.</td>
+ </tr><tr>
+  <td><code>yScale</code></td>
+  <td>float</td>
+  <td>The polar (vertical, or <var>y</var>) scaling factor.</td>
+ </tr><tr>
+  <td><code>Tilt</code></td>
+  <td>float</td>
+  <td>The angle by which to rotate the torus. Positive values rotate the top outwards; negative values rotate the top inwards.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="TiltedTorus_Container_v">TiltedTorus_Container_v (RMajor, rMinor, yScale, Tilt)</h3>
+
+<p>Returns a vector that is the half-dimensions of a box that is sufficient to contain the toroid. It may be used for the isosurface container.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>RMajor</code></td>
+  <td>float</td>
+  <td>The major radius of the torus.</td>
+ </tr><tr>
+  <td><code>rMinor</code></td>
+  <td>float</td>
+  <td>The minor radius of the torus.</td>
+ </tr><tr>
+  <td><code>yScale</code></td>
+  <td>float</td>
+  <td>The polar (vertical, or <var>y</var>) scaling factor.</td>
+ </tr><tr>
+  <td><code>Tilt</code></td>
+  <td>float</td>
+  <td>The angle by which to rotate the torus.</td>
+ </tr>
+</table>
+
+<h4>Example</h4>
+<pre>isosurface
+{ function { TiltedTorus_fn (x, y, z, 4, 1, 2, -45) }
+  contained_by
+  { box
+    { -TiltedTorus_Container_v (4, 1, 2, -45),
+      TiltedTorus_Container_v (4, 1, 2, -45)
+    }
+  }
+}</pre>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="TiltedTorus_Lathed">TiltedTorus_Lathed (RMajor, rMinor, yScale, Tilt, Sturm)</h3>
+
+<p>A “tilted” torus, implemented as a lathe. Consistent with the POV-Ray torus primitive, the toroid is oriented in the <var>x</var>-<var>z</var> plane. This object can take a <var>uv</var>-mapped texture.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>RMajor</code></td>
+  <td>float</td>
+  <td>The major radius of the torus.</td>
+ </tr><tr>
+  <td><code>rMinor</code></td>
+  <td>float</td>
+  <td>The minor radius of the torus.</td>
+ </tr><tr>
+  <td><code>yScale</code></td>
+  <td>float</td>
+  <td>The polar (vertical, or <var>y</var>) scaling factor.</td>
+ </tr><tr>
+  <td><code>Tilt</code></td>
+  <td>float</td>
+  <td>The angle by which to rotate the torus. Positive values rotate the top outwards; negative values rotate the top inwards.</td>
+ </tr><tr>
+  <td><code>Sturm</code></td>
+  <td>float/Boolean</td>
+  <td>If true, then the slower, but more accurate Sturmian root solver will be used. If the object renders with artifacts when <code>false</code> is used for this argument, then use <code>true</code> instead.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Examples">Examples</h2>
+<p>
+<img src="tiltedtorus_fig1.jpg" alt="[Lathe render, yScale = 1, Tilt = 0]">
+<img src="tiltedtorus_fig2.jpg" alt="[Lathe render, yScale = 2, Tilt = 15]">
+<img src="tiltedtorus_fig3.jpg" alt="[Lathe render, yScale = 3, Tilt = -45]">
+<img src="tiltedtorus_fig4.jpg" alt="[Isosurface render, yScale = 2, Tilt = 0]">
+<img src="tiltedtorus_fig5.jpg" alt="[Isosurface render, yScale = 2, Tilt = 45]">
+<img src="tiltedtorus_fig6.jpg" alt="[Isosurface render, yScale = 2, Tilt = -45]">
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other_identifiers">Other Identifiers</h2>
+
+<h3>Reference Identifier</h3>
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+ <tr>
+  <td><code>TILTEDTORUS_VERSION</code></td>
+  <td>float</td>
+  <td>The TiltedTorus version, in case the scene file needs that information.</td>
+  <td>3.0</td>
+ </tr>
+</table>
+
+<h3>Obsolete Identifiers</h3>
+
+<p>The flollowing identifiers were introduced in a previous version of TiltedTorus, but are no longer recommended. They are retained for backwards compatibility.
+<ul>
+ <li>TiltedTorus_Lathe
+ <li>TiltedTorus_Sturm
+</ul>
+
+<h3>Internal Identifiers</h3>
+
+<p>Any identifiers in <code>tiltedtorus.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About TiltedTorus</h2>
+
+<address>Copyright © 2012 &ndash; 2016 Richard Callwood III.
+<a href="http://creativecommons.org/licenses/LGPL/2.1/"><img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License."></a>
+</address>
+
+<p>This shape was <a href="http://news.povray.org/povray.general/thread/%3Cweb.500534b792b607dd47437ba70%40news.povray.org%3E/">requested in povray.general</a>, and I felt up to the challenge.
+
+<h3>Object Collection Categories</h3>
+
+<ul>
+ <li><strong>Areas of Interest</strong>
+  <ul>
+   <li>Abstract forms
+  </ul>
+ <li><strong>Contribution Types</strong>
+  <ul>
+   <li>Objects
+    <ul>
+     <li>Solid (CSG-able)
+    </ul>
+   <li>Macros
+   <li>Functions
+    <ul>
+     <li>Isosurface
+    </ul>
+  </ul>
+</ul>
+
+<h3>Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>1.0</td>
+  <td>2012 July 21</td>
+  <td>
+   <ul>
+    <li>Created.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>2.0</td>
+  <td>2014 October 9</td>
+  <td>
+   <ul>
+    <li>A lathe version is added.
+    <li>The container macro now accommodates polar (<var>y</var>) scaling factors less than one.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>2.0a</td>
+  <td>2014 November 7</td>
+  <td>
+   <ul>
+    <li>Corrections are made to the user manual.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>3.0</td>
+  <td>2016 April 2</td>
+  <td>
+   <ul>
+    <li>A lathe macro is added which uses a Sturm argument rather than a global parameter.
+    <li>The old lathe macro is deprecated.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

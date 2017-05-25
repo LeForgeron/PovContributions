@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SphereSweep 1.2 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="spheresweep.css">
+</head>
+
+<body>
+
+<h1>SphereSweep 1.2 User&nbsp;Manual</h1>
+
+<h2>Abstract</h2>
+
+<p>
+<a href="spheresweep.jpg"><img class="demo" src="spheresweep_thumbnail.jpg" title="Larger demo image" alt="[Thumbnail which links to a larger demo image]"></a>
+SphereSweep is a library module from the
+<a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+<a href="http://lib.povray.org/">Object Collection</a>.
+
+<p>POV-Ray’s <code>sphere_sweep</code> primitive is a useful object, but it is sometimes prone to artifacts and unreliable automatic bounding. This module provides a variety of alternatives that approximate sphere sweeps using blobs or linear segments. In addition, shapes can be based on Bézier, natural, or quadratic splines, which are not available for the <code>sphere_sweep</code> primitive.
+
+<p>An alternate interface to the actual <code>sphere_sweep</code> primitive is also included.
+
+<p>The control points and radii are specified in arrays.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Conventions">User manual conventions</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Macros">Object macros</a>
+  <ul>
+   <li><a href="#Arguments">Macro arguments</a>
+   <li><a href="#SphereSweep_Approx">SphereSweep_Approx</a>
+   <li><a href="#SphereSweep_Blob_field">SphereSweep_Blob_field</a>
+   <li><a href="#SphereSweep_Blob_margin">SphereSweep_Blob_margin</a>
+   <li><a href="#SphereSweep_CSG">SphereSweep_CSG</a>
+   <li><a href="#SphereSweep_Merge">SphereSweep_Merge</a>
+   <li><a href="#SphereSweep_Native">SphereSweep_Native</a>
+   <li><a href="#SphereSweep_Union">SphereSweep_Union</a>
+  </ul>
+ <li><a href="#Utilities">Utilities</a>
+  <ul>
+   <li><a href="#SSwp_Bezier">SSwp_Bezier</a>
+   <li><a href="#SSwp_fn_Blob_strength">SSwp_fn_Blob_strength</a>
+   <li><a href="#SSwp_Subarray">SSwp_Subarray</a>
+  </ul>
+ <li><a href="#Other_identifiers">Other identifiers</a>
+ <li><a href="#Observations">Observations</a>
+ <li><a href="#About">About SphereSweep</a>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan="2">Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>spheresweep.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>spheresweep.inc</code></td>
+  <td>The SphereSweep software</td>
+ </tr><tr>
+  <td><code>spheresweep.jpg</code></td>
+  <td>Sample output</td>
+ </tr><tr>
+  <td><code>spheresweep_bezier.png</code></td>
+  <td rowspan="3">Illustrations for the user manual</td>
+ </tr><tr>
+  <td><code>spheresweep_blob_field.jpg</code></td>
+ </tr><tr>
+  <td><code>spheresweep_blob_margin.jpg</code></td>
+ </tr><tr>
+  <td><code>spheresweep_cockpit.pov</code></td>
+  <td rowspan="3">Demonstration scene description files</td>
+ </tr><tr>
+  <td><code>spheresweep_infinity.pov</code></td>
+ </tr><tr>
+  <td><code>spheresweep_lanes.pov</code></td>
+ </tr><tr>
+  <td><code>spheresweep_wings.png</code></td>
+  <td>An image used by one of the demo scenes</td>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <th colspan="2">Other Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>spheresweep.css</code></td>
+  <td>A file used by the user manual</td>
+ </tr><tr>
+  <td><code>spheresweep_icon_diff.png</code></td>
+  <td rowspan="4">Illustrations for the user manual</td>
+ </tr><tr>
+  <td><code>spheresweep_icon_opaque.png</code></td>
+ </tr><tr>
+  <td><code>spheresweep_icon_transp.png</code></td>
+ </tr><tr>
+  <td><code>spheresweep_thumbnail.jpg</code></td>
+ </tr><tr>
+  <td><code>spheresweep_description.txt</code></td>
+  <td>A brief description of SphereSweep</td>
+ </tr><tr>
+  <td><code>spheresweep_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>spheresweep_prereqs.txt</code></td>
+  <td>Prerequisites (empty file)</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+  <td rowspan="2">Administrative files</td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Conventions">User Manual Conventions</h3>
+
+<p>Capitalization and spacing are significant in this user manual:
+
+<dl>
+ <dt>SphereSweep (mixed case with no spaces)
+ <dd>Refers to this Object Collection module.
+ <dt><code>sphere_sweep</code> (all lowercase, monospace font with an underscore)
+ <dd>Refers to POV-Ray’s built-in <code>sphere_sweep</code> primitive.
+ <dt>sphere sweep (two separate words, all lowercase except for sentence capitalization)
+ <dd>Refers to the general concept of sphere sweeps.
+</dl>
+
+<p>Identifiers and file names are presented as-is, using monospace font.
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<p>SphereSweep requires POV-Ray version 3.5 or later.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>spheresweep.inc</code> comply fully with the Object Collection naming standards, as <a href="http://news.povray.org/povray.object-collection/message/%3C48ba92e8%241%40news.povray.org%3E/#%3C48ba92e8%241%40news.povray.org%3E">revised August 2008</a> and <a href="http://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The prefixes for this module are “<code>sswp</code>” and “<code>spheresweep</code>,” including any uppercase and lowercase variants; to avoid conflicts, do not declare identifiers in your scene description file that start with either of these prefixes plus an underscore.
+
+<p>The standard include file <code>shapes.inc</code> is used by <code>spheresweep.inc</code>.
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include this file once prior to using any of the macros:
+<pre>#include "spheresweep.inc"</pre>
+<p>Including the file more than once is harmless, though unnecessary.
+
+<p>POV-Ray may issue a warning that the experimental feature spline is used. This is normal and expected.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros">Object Macros</h2>
+
+<h3 id="Arguments">Macro Arguments</h3>
+
+<h4 id="Spline_types">Spline Types</h4>
+
+<p>These values may be used as the <code>Type</code> argument:
+<ul>
+ <li><code>SSWP_B_SPLINE</code>
+ <li><code>SSWP_CUBIC_SPLINE</code>
+ <li><code>SSWP_LINEAR_SPLINE</code>
+ <li><code>SSWP_NATURAL_SPLINE</code>
+ <li><code>SSWP_QUADRATIC_SPLINE</code>
+ <li><code>SSWP_BEZIER_SPLINE</code>
+</ul>
+
+<p>The B-splines and Bézier splines are always 3rd order; that is, a curve segment is defined by exactly 4 control points.
+
+<p>Macro <code>SphereSweep_Native()</code> can use only the following spline types:
+<ul>
+ <li><code>SSWP_B_SPLINE</code>
+ <li><code>SSWP_CUBIC_SPLINE</code>
+ <li><code>SSWP_LINEAR_SPLINE</code>
+</ul>
+<p>There are no restrictions for the other object macros.
+
+<h4>Array of Spline Control Points</h4>
+
+<p>The <a href="http://wiki.povray.org/content/Documentation:Tutorial_Section_3#Understanding_The_Concept_of_Splines">POV-Ray Spline Workshop</a> has an introduction to spline control points. Although the Workshop only covers 2-D splines, the concepts extend to 3-D space. (There is one difference between the Workshop and the SphereSweep module: SphereSweep does not require an extra point preceding a quadratic spline. This is because this module uses POV-Ray’s experimental spline feature, which does not require the extra point.) The Workshop does not cover B-splines or natural splines, but these are described briefly in the POV-Ray Reference under <code>sphere_sweep</code> and <code>spline</code>, respectively.
+
+<p>The elements of the array of control points (the <code>v_Points</code> argument) are converted internally to 3-D vectors by the macros. An array of 2-D vectors can therefore be used to define an object whose control points are all in the <var>x</var>-<var>y</var> plane.
+
+<h4>Array of Sphere Radii</h4>
+
+<p>Each value in the array of radii (the <code>Radii</code> argument) corresponds to a spline control point. If this array is shorter than the array of spline control points (<code>v_Points</code>), the last radius will be used for the remainder of the sphere sweep or approximation thereof. This means that you can use an array of one element for a sphere sweep of constant radius. If the <code>Radii</code> array is longer than the array of spline control points, the extra radii are ignored.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="SphereSweep_Approx">SphereSweep_Approx (Type, v_Points, Radii, Res, Tolerance)</h3>
+
+<p>A <code>sphere_sweep</code> object (or union, in the case of disjointed Bézier objects) that uses a linear spline to approximate a sphere sweep of another spline type. Note that for opaque objects that are not in a CSG difference or intersection, <a href="#SphereSweep_Union"><code>SphereSweep_Union()</code></a> renders much faster with the same results (although with a higher object count).
+
+<p>Note: When using the Bézier spline type, if the first sphere of a Bézier segment has a different radius than the last sphere of the previous segment, the segments will be treated as disjoint, even if the respective control points have the same value.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>Type</code>:
+ <dd>The <a href="#Spline_types">spline type</a>
+ <dt><code>v_Points</code>:
+ <dd>An array of spline control points
+ <dt><code>Radii</code>:
+ <dd>An array of sphere radii corresponding to the spline control points
+ <dt><code>Res</code>:
+ <dd>The number of segments between each pair of adjacent spline control points
+ <dt><code>Tolerance</code>:
+ <dd>The depth tolerance, as described in the <a href="http://wiki.povray.org/content/Documentation:Tutorial_Section_3#Sphere_Sweep_Object"><code>sphere_sweep</code> documentation</a>. For the default tolerance, use 0 (zero).
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="SphereSweep_Blob_field">SphereSweep_Blob_field (Type, v_Points, Radii, Res, Field, Use_Sturm)</h3>
+
+<p>An approximation of a sphere sweep using a blob of spheres, with a blob field that varies in proportion to the sphere sweep radii.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>Type</code>:
+ <dd>The <a href="#Spline_types">spline type</a>
+ <dt><code>v_Points</code>:
+ <dd>An array of spline control points
+ <dt><code>Radii</code>:
+ <dd>An array of sphere radii corresponding to the spline control points
+ <dt><code>Res</code>:
+ <dd>The number of sphere components between each pair of adjacent spline control points
+ <dt><code>Field</code>:
+ <dd>The blob field radius, in relation to the sphere radii.
+  <img src="spheresweep_blob_field.jpg" alt="[Illustration of Field argument]" class="illustration">
+  For example, a value of 2 results in a field radius twice the size of each sphere radius.
+ <dt><code>Use_Sturm</code>:
+ <dd>Boolean; whether or not to use the slower, but more accurate Sturmian root solver.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="SphereSweep_Blob_margin">SphereSweep_Blob_margin (Type, v_Points, Radii, Res, Margin, Use_Sturm)</h3>
+
+<p>An approximation of a sphere sweep using a blob of spheres, with a constant blob field margin.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>Type</code>:
+ <dd>The <a href="#Spline_types">spline type</a>
+ <dt><code>v_Points</code>:
+ <dd>An array of spline control points
+ <dt><code>Radii</code>:
+ <dd>An array of sphere radii corresponding to the spline control points
+ <dt><code>Res</code>:
+ <dd>The number of sphere components between each pair of adjacent spline control points
+ <dt><code>Margin</code>:
+ <dd>The blob field beyond the sphere radius.
+  <img src="spheresweep_blob_margin.jpg" alt="[Illustration of Margin argument]" class="illustration">
+  For example, if <code>Margin</code> is 0.5 and a sphere’s radius is 2.0, then the field radius will be 2.5.
+ <dt><code>Use_Sturm</code>:
+ <dd>Boolean; whether or not to use the slower, but more accurate Sturmian root solver.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="SphereSweep_CSG">SphereSweep_CSG (Type, v_Points, Radii, Res, Use_merge)</h3>
+
+<p>An approximation of a sphere sweep using a CSG merge or union of linear segments. Note that for transparent objects, or opaque objects in a CSG merge or difference, <a href="#SphereSweep_Approx"><code>SphereSweep_Approx()</code></a> renders faster with the same results.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>Type</code>:
+ <dd>The <a href="#Spline_types">spline type</a>
+ <dt><code>v_Points</code>:
+ <dd>An array of spline control points
+ <dt><code>Radii</code>:
+ <dd>An array of sphere radii corresponding to the spline control points
+ <dt><code>Res</code>:
+ <dd>The number of segments between each pair of adjacent spline control points
+ <dt><code>Use_merge</code>:
+ <dd>Whether or not to use a CSG merge. In general, pass <code>yes</code> if the object is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="SphereSweep_Merge">SphereSweep_Merge (Type, v_Points, Radii, Res)</h3>
+
+<p>An approximation of a sphere sweep using a CSG merge of linear segments. Although this macro is intended for transparent objects, <a href="#SphereSweep_Approx"><code>SphereSweep_Approx()</code></a> renders these faster with the same results.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>Type</code>:
+ <dd>The <a href="#Spline_types">spline type</a>
+ <dt><code>v_Points</code>:
+ <dd>An array of spline control points
+ <dt><code>Radii</code>:
+ <dd>An array of sphere radii corresponding to the spline control points
+ <dt><code>Res</code>:
+ <dd>The number of segments between each pair of adjacent spline control points
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="SphereSweep_Native">SphereSweep_Native (Type, v_Points, Radii, Tolerance)</h3>
+
+<p>A wrapper for a regular, bona fide <code>sphere_sweep</code> object. If you’re not having any problems with bounding or artifacts, but do have an array of points and an array of sphere radii, you’re all set.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>Type</code>:
+ <dd>The <a href="#Spline_types">spline type</a>. Only those spline types supported natively by POV-Ray’s <code>sphere_sweep</code> primitive can be used (<code>SSWP_B_SPLINE</code>, <code>SSWP_CUBIC_SPLINE</code>, and <code>SSWP_LINEAR_SPLINE</code>).
+ <dt><code>v_Points</code>:
+ <dd>An array of spline control points
+ <dt><code>Radii</code>:
+ <dd>An array of sphere radii corresponding to the spline control points
+ <dt><code>Tolerance</code>:
+ <dd>The depth tolerance, as described in the <a href="http://wiki.povray.org/content/Documentation:Tutorial_Section_3#Sphere_Sweep_Object"><code>sphere_sweep</code> documentation</a>. For the default tolerance, use 0 (zero).
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="SphereSweep_Union">SphereSweep_Union (Type, v_Points, Radii, Res)</h3>
+
+<p>An approximation of a sphere sweep using a CSG union of linear segments. In general, use this for opaque objects. Note that in a CSG merge or difference, <a href="#SphereSweep_Approx"><code>SphereSweep_Approx()</code></a> renders faster with the same results.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>Type</code>:
+ <dd>The <a href="#Spline_types">spline type</a>
+ <dt><code>v_Points</code>:
+ <dd>An array of spline control points
+ <dt><code>Radii</code>:
+ <dd>An array of sphere radii corresponding to the spline control points
+ <dt><code>Res</code>:
+ <dd>The number of segments between each pair of adjacent spline control points
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Utilities">Utility Macros and Function</h2>
+
+<h3 id="SSwp_Bezier">Macro SSwp_Bezier (v_Ctrls, s_File, VDim, Places)</h3>
+
+<p>As a convenience for facilitating continuity between Bézier spline segments, this macro accepts a set of points and vectors, and converts them to an array of Bézier control points. The returned array may be passed directly to a SphereSweep object macro; or its elements may be used to construct a <code>lathe</code> or <code>prism</code> primitive. Optionally, the points may be written to a file.
+
+<p><img src="spheresweep_bezier.png" alt="[Illustration of the set of points and vectors]" class="demo">
+The set of points and vectors is an <var>n</var>&times;3 array, where <var>n</var> is the number of distinct points through which the spline passes.
+For this array, the last point of a Bézier segment and the first point of the next segment are considered to be the same point. Each element [][1] is a point through which the spline passes. Elements [][0] and [][2] are vectors <em>pointing to</em> the previous and next intermediate control points, respectively, in the spline. The spline does not typically pass through the intermediate control points. By making these vectors collinear, while pointing in opposite directions, smooth transitions may be maintained between spline segments.
+
+<p>Elements [0][0] and [<var>n</var> &minus; 1][2] are ignored.
+
+<p>The illustration shows an example of how this array translates to the final set of control points.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>v_Ctrls</code>:
+ <dd>The array of points and vectors. This argument is input only and is not altered.
+ <dt><code>s_File</code>:
+ <dd>The name of a file to which to write the output array. Use <code>"-"</code> (hyphen) to write to the debug stream or <code>""</code> (the null string) for no written output.
+ <dt><code>VDim</code>:
+ <dd>The dimension size of the points to be written to the file
+ <dt><code>Places</code>:
+ <dd>The number of decimal places to be written
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="SSwp_fn_Blob_strength">Function SSwp_fn_Blob_strength (RSurface, RField)</h3>
+
+<p>Returns the field strength that yields a blob component of the desired surface radius. The default blob threshold of 1.0 is assumed.
+
+<p>This function is used internally by macros <code>SphereSweep_Blob_field()</code> and <code>SphereSweep_Blob_margin()</code>, but is too useful not to document. More blob-related functions are available from the Object Collection module <a href="http://lib.povray.org/searchcollection/index2.php?objectName=RoundEdge&amp;contributorTag=Cousin%20Ricky">RoundEdge</a>.
+
+<h4>Arguments</h4>
+<p>Note: In <code>spheresweep.inc</code>, the function arguments are prefixed with “<code>sswp_P</code><var>n</var><code>_</code>” in order to avoid a POV-Ray namespace scope feature. These prefixes are omitted here for clarity.
+<dl class="args">
+ <dt><code>RSurface</code>:
+ <dd>The desired surface radius of the blob component
+ <dt><code>RField</code>:
+ <dd>The field radius of the component
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="SSwp_Subarray">Macro SSwp_Subarray (Array, Start, End)</h3>
+
+<p>Returns a one-dimensional array that is a copy of a subrange of another one-dimensional array.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>Array</code>:
+ <dd>The array to be copied
+ <dt><code>Start</code>:
+ <dd>The index of the first element to be copied
+ <dt><code>End</code>:
+ <dd>The index of the last element to be copied
+</dl>
+
+<ul>
+ <li>If <code>Start</code> or <code>End</code> is out of range, they will be clipped to the size of the array, and a warning will be issued.
+ <li>If <code>End</code> is less than <code>Start</code>, a warning will be issued, and the contents of the returned array will be undefined. Accessing it will probably cause a fatal parse error.
+</ul>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other_identifiers">Other Identifiers</h2>
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+ <tr>
+  <td><code>SPHERESWEEP_VERSION</code></td>
+  <td>float</td>
+  <td>The SphereSweep version, in case the scene file needs that information.</td>
+  <td>1.2</td>
+ </tr>
+</table>
+
+<h3>Internal Identifiers</h3>
+
+<p>Any identifiers in <code>spheresweep.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Observations">Observations</h2>
+
+<h3>Artifacts</h3>
+
+<ul>
+ <li>In POV-Ray 3.6, <code>sphere_sweep</code> objects based on B-splines or cubic splines are prone to artifacts.
+ <li><img alt="" src="spheresweep_icon_diff.png"> In POV-Ray 3.7, opaque <code>sphere_sweep</code> objects based on B-splines or cubic splines may show artifacts when used in a CSG intersection or difference.
+ <li><img alt="" src="spheresweep_icon_transp.png"> In POV-Ray 3.7, transparent <code>sphere_sweep</code> objects based on B-splines or cubic splines may show discs at the end caps.
+ <li>Automatic bounding is unreliable for cubic splines. In POV-Ray 3.6, this leads to unnecessarily slow renders. In POV-Ray 3.7, this may cause inappropriate clipping, and possibly artifacts when a <code>sphere_sweep</code> object is differenced from another object. Manual bounding would be the obvious fix, but there are <a href="http://news.povray.org/povray.binaries.images/message/%3C517e621e%40news.povray.org%3E/#%3C517e621e%40news.povray.org%3E">undocumented circumstances in which manual bounds are lost</a>.
+</ul>
+
+<p>For B-splines and cubic splines, the following alternatives are free of tracing artifacts (although banding artifacts may appear if the value of <code>Res</code> is too low):
+<ul>
+ <li><img alt="" src="spheresweep_icon_opaque.png"> <code>SphereSweep_Union()</code> for opaque objects,
+ <li><img alt="" src="spheresweep_icon_diff.png"> <code>SphereSweep_Approx()</code> for opaque objects in a CSG intersection or difference, and
+ <li><img alt="" src="spheresweep_icon_transp.png"> <code>SphereSweep_Approx()</code> for transparent objects.
+</ul>
+
+<h3>Render Speeds</h3>
+
+<p>These observations are not hard and fast rules. All timing tests were done using POV-Ray 3.7.
+
+<ul>
+ <li><img alt="" src="spheresweep_icon_opaque.png"> An opaque linear <code>SphereSweep_Union()</code> (with <code>Res</code> = 1) is faster than the equivalent opaque <code>sphere_sweep { linear_spline&nbsp;}</code>, unless a CSG intersection or difference is performed.
+ <li><img alt="" src="spheresweep_icon_transp.png"> On the other hand, a transparent <code>sphere_sweep { linear_spline&nbsp;}</code> is faster than the equivalent transparent linear <code>SphereSweep_Merge()</code>.
+ <li><img alt="" src="spheresweep_icon_opaque.png"> An opaque cubic or B-spline <code>SphereSweep_Approx()</code>, with a reasonable value for <code>Res</code>, is slower than the equivalent straightforward <code>sphere_sweep</code>, and less accurate. (The original version of this documentation said that <code>SphereSweep_Approx()</code> is slightly faster, but my old records and new tests both show otherwise.) Sufficiently low values for <code>Res</code> will yield faster renders than the straightforward <code>sphere_sweep</code>, at the risk of revealing the individual segments.
+ <li><img alt="" src="spheresweep_icon_opaque.png"> An opaque cubic or B-spline <code>SphereSweep_Union()</code> is <em>much</em> faster than the equivalent straightforward <code>sphere_sweep</code> or <code>SphereSweep_Approx()</code>, though less accurate than the straightforward <code>sphere_sweep</code>.
+ <li><img alt="" src="spheresweep_icon_diff.png"> Notwithstanding the above, a CSG intersection or difference can greatly slow an opaque <code>SphereSweep_Union()</code>. <code>SphereSweep_Approx()</code> should be used in these cases.
+ <li><img alt="" src="spheresweep_icon_transp.png"> A transparent cubic or B-spline <code>SphereSweep_Approx()</code> is faster than the equivalent straightforward <code>sphere_sweep</code>, though less accurate.
+ <li><img alt="" src="spheresweep_icon_transp.png"> A transparent <code>SphereSweep_Merge()</code>, and the equivalent <code>SphereSweep_CSG()</code> with <code>Use_merge = yes</code>, appear to be slower in most or all cases than the alternatives, and are never more accurate. They may be less prone to artifacts, however; the demo scene <code>spheresweep_lanes.pov</code> illustrates one such scenario. Another rationale for using <code>SphereSweep_Merge()</code> is that the CSG merge operation is not recommended with the <code>sphere_sweep</code> primitive; however, I have not witnessed the problem described in the POV-Ray documentation.
+  <ul>
+   <li>There is one crucial difference between a transparent <code>SphereSweep_Merge()</code> and a transparent <code>SphereSweep_Approx()</code>: when using a Bézier spline with disjointed segments, and one disjointed segment intersects another, <code>SphereSweep_Approx()</code> will render the internal surfaces. If you wish to take advantage of <code>SphereSweep_Approx()</code>’s shorter rendering times in such a scenario, you will need to use a merge of separate <code>SphereSweep_Approx()</code> objects.
+  </ul>
+</ul>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About SphereSweep</h2>
+
+<address>Copyright © 2013, 2015 Richard Callwood III.
+ <a href="http://creativecommons.org/licenses/LGPL/2.1/">
+  <img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+ </a>
+</address>
+
+<h3 id="Categories">Object Collection Categories</h3>
+
+<ul>
+ <li><strong>Areas of Interest</strong>
+  <ul>
+   <li>Abstract forms
+  </ul>
+ <li><strong>Contribution Types</strong>
+  <ul>
+   <li>Objects
+    <ul>
+     <li>Solid (CSG-able)
+    </ul>
+   <li>Macros
+   <li>Functions
+    <ul>
+     <li>Other
+    </ul>
+  </ul>
+</ul>
+
+<h3 id="Changes">Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>1.0</td>
+  <td>2013 July 22</td>
+  <td>
+   <ul>
+    <li>The module is created.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.1</td>
+  <td>2015 August 28</td>
+  <td>
+   <ul>
+    <li>B-spline capability is added for most of the object macros.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.2</td>
+  <td>2015 September 11</td>
+  <td>
+   <ul>
+    <li>Bézier spline capability is added for most of the object macros.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

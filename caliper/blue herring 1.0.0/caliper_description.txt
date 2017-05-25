@@ -1,0 +1,1 @@
+This is a macro to create a caliper (specifically an outside caliper).  The angle of the arms can be set, and the object texture easily overridden or disabled.

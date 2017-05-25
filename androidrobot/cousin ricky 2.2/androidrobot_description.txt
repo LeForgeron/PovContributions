@@ -1,0 +1,1 @@
+A 3-D model of Google's Android(TM) robot.  The limbs and head are pose-able.  In version 2.2, the arms are separated from the body, as in the 2d logo.

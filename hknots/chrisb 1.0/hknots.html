@@ -1,0 +1,258 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%}
+</style>
+<head>
+  <title>POV-Ray Object Collection - Harmonic Knots include file</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>Harmonic Knots include file</h1>
+<hr>
+  <a href="#intro"    >Overview                       </a><br>
+  <a href="#options"  >Available Configuration Options</a><br>
+  <a href="#changes"  >Change History                 </a><br>
+<p>
+  <center>
+  <a href="http://lib.povray.org/searchcollection/download.php?objectName=HKnots&contributorTag=chrisb&version=1.0"
+    onclick="if (navigator.appName=='Microsoft Internet Explorer') this.click();"  
+  >
+    <input type=button value="Download HKnots V1.0">
+  </a>
+  </center>
+<p>
+There is an NNTP newsgroup specifically for the support of this object collection at <a href="http://news.povray.org/povray.object-collection/">http://news.povray.org/povray.object-collection/</a>.   
+  
+</td><td>
+<img src="hknots.jpg" width=640 height=480>
+</td></tr>
+</table>
+
+<hr>
+
+
+
+  <a name='intro'></a>
+  <h1>Overview</h1>
+These Macros were created by David Sharp based upon Aaron K. Trautwein's concepts for the Fourier "harmonic" parameterizations of knots. David has given his permission for them to be released under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a> to enable you to use, modify and redistribute them for both commercial and non-commercial purposes.  You can help improve the macros by submitting enhanced versions back into the collection by registering yourself on the web site.  This download consists of:
+<ul>
+<li>include files containing the Harmonic Knots macros and some utility macros
+<li>an include file containing the sets of Harmonic Knot parameters
+<li>a sample scene file to illustrate the use of the include file
+<li>a copy of this documentation and the image files used in it
+<li>a few other files that you may find handy if you submit a new version to the collection
+</ul>
+<p>
+
+
+
+<p>
+You can add a Knot to your scene file by including the "hknots.inc" file, declaring the 'HKnots_H_Array' 
+and running the 'HKnots' macro with one of the ribbon styles specified as a parameter on the macro call. 
+<p>
+<div class=codesample>
+    light_source { <200, 100, -1200> rgb 1}
+<br>camera {location <0, 0, -400> look_at <0,0,0>}
+<br>#include "hknots.inc" 
+<br>#declare HKnots_H_Array = HKnots_Granny_knot_array
+<br>HKnots("Tracks")       
+</div>
+<p>
+This example returns a single object centred at the origin about 200 POV-Ray units high and about 400 wide. Some of the parameter sets generate knots that are up to 3 times larger than this. 
+<p>
+<p>
+You can wrap the macro call in an object statement and transform it as required to fit into your scene. For example:
+<p>
+<div class=codesample>
+    light_source { <200, 100, -1200> rgb 1}
+<br>camera {location <0, 0, -400> look_at <0,0,0>}
+<br>#include "hknots.inc" 
+<br>#declare HKnots_H_Array = HKnots_seven_1_array
+<br>object {
+<br>&nbsp;&nbsp;HKnots("TriangleRibs")
+<br>&nbsp;&nbsp;scale 0.5
+<br>&nbsp;&nbsp;rotate <0,30,0> 
+<br>&nbsp;&nbsp;translate <35,0,20>
+<br>}       
+</div>
+<p>
+<br><center><a href=#toc>Return to Table of Contents</a></center>
+<hr>
+<p>
+
+  <a name='options'></a>
+  <h1>Available Configuration Options</h1>
+<h3>Ribbon Styles</h3>
+The following ribbon styles can be specified as a parameter on the 'HKnots' macro call:
+<center>
+<table border=1>
+<tr>
+<td><a href="hknots_doc00.jpg" target=BigImage><img src="hknots_doc00.jpg" align=left width=400></a><br><center>"STriangles2" <p></center></td>
+<td><a href="hknots_doc01.jpg" target=BigImage><img src="hknots_doc01.jpg" align=left width=400></a><br><center>"KTriangles"  <p></center></td>
+</tr><tr>                                                                                                     
+<td><a href="hknots_doc02.jpg" target=BigImage><img src="hknots_doc02.jpg" align=left width=400></a><br><center>"CylRibs"     <p></center></td>
+<td><a href="hknots_doc03.jpg" target=BigImage><img src="hknots_doc03.jpg" align=left width=400></a><br><center>"CylArray"    <p></center></td>
+</tr><tr>                                                                                                     
+<td><a href="hknots_doc04.jpg" target=BigImage><img src="hknots_doc04.jpg" align=left width=400></a><br><center>"STriangles"  <p></center></td>
+<td><a href="hknots_doc05.jpg" target=BigImage><img src="hknots_doc05.jpg" align=left width=400></a><br><center>"Tracks"      <p></center></td>
+</tr><tr>                                                                                                     
+<td><a href="hknots_doc07.jpg" target=BigImage><img src="hknots_doc07.jpg" align=left width=400></a><br><center>"TriangleRibs"<p></center></td>
+</tr>
+</table></center>
+<p>
+
+<h3>Predefined Coefficient Settings</h3>
+The following images illustrate the predefined coefficient settings that are available and that can be assigned directly to the 'HKnots_H_Array' identifier. Click on an image to see a larger version.
+<p>
+
+<table border=1>
+<tr>
+<td><a href="hknots_doc10.jpg" target=BigImage><img src="hknots_doc10.jpg" align=left width=200></a><br><center>HKnots_three_1_array    <br>Scale 0.75;<p></center></td>
+<td><a href="hknots_doc11.jpg" target=BigImage><img src="hknots_doc11.jpg" align=left width=200></a><br><center>HKnots_four_1_array     <br>Scale 0.5; <p></center></td>
+<td><a href="hknots_doc12.jpg" target=BigImage><img src="hknots_doc12.jpg" align=left width=200></a><br><center>HKnots_five_1_array     <br>Scale 0.35;<p></center></td>
+<td><a href="hknots_doc13.jpg" target=BigImage><img src="hknots_doc13.jpg" align=left width=200></a><br><center>HKnots_five_2_array     <br>Scale 0.45;<p></center></td>
+</tr><tr>                                                                                                                               
+<td><a href="hknots_doc14.jpg" target=BigImage><img src="hknots_doc14.jpg" align=left width=200></a><br><center>HKnots_six_1_array      <br>Scale 0.5; <p></center></td>
+<td><a href="hknots_doc15.jpg" target=BigImage><img src="hknots_doc15.jpg" align=left width=200></a><br><center>HKnots_six_2_array      <br>Scale 0.5; <p></center></td>
+<td><a href="hknots_doc16.jpg" target=BigImage><img src="hknots_doc16.jpg" align=left width=200></a><br><center>HKnots_six_3_array      <br>Scale 0.5; <p></center></td>
+<td><a href="hknots_doc17.jpg" target=BigImage><img src="hknots_doc17.jpg" align=left width=200></a><br><center>HKnots_Square_knot_array<br>Scale 1;   <p></center></td>
+</tr><tr>                                                                                                                               
+<td><a href="hknots_doc18.jpg" target=BigImage><img src="hknots_doc18.jpg" align=left width=200></a><br><center>HKnots_Granny_knot_array<br>Scale 1;   <p></center></td>
+<td><a href="hknots_doc19.jpg" target=BigImage><img src="hknots_doc19.jpg" align=left width=200></a><br><center>HKnots_seven_1_array    <br>Scale 0.5; <p></center></td>
+<td><a href="hknots_doc20.jpg" target=BigImage><img src="hknots_doc20.jpg" align=left width=200></a><br><center>HKnots_seven_2_array    <br>Scale 0.45;<p></center></td>
+<td><a href="hknots_doc21.jpg" target=BigImage><img src="hknots_doc21.jpg" align=left width=200></a><br><center>HKnots_seven_3_array    <br>Scale 0.45;<p></center></td>
+</tr><tr>                                                                                                                               
+<td><a href="hknots_doc22.jpg" target=BigImage><img src="hknots_doc22.jpg" align=left width=200></a><br><center>HKnots_seven_4_array    <br>Scale 0.75;<p></center></td>
+<td><a href="hknots_doc23.jpg" target=BigImage><img src="hknots_doc23.jpg" align=left width=200></a><br><center>HKnots_seven_5_array    <br>Scale 0.75;<p></center></td>
+<td><a href="hknots_doc24.jpg" target=BigImage><img src="hknots_doc24.jpg" align=left width=200></a><br><center>HKnots_seven_6_array    <br>Scale 0.45;<p></center></td>
+<td><a href="hknots_doc25.jpg" target=BigImage><img src="hknots_doc25.jpg" align=left width=200></a><br><center>HKnots_seven_7_array    <br>Scale 0.55;<p></center></td>
+</tr>
+</table>
+<p>
+Alternatively you can assign parameters of your own directly to the 'HKnots_H_Array' identifier.
+<p>
+
+<h3>Variable Settings</h3>
+<a href="hknots_doc30.jpg" target=BigImage><img src="hknots_doc30.jpg" align=right width=300></a>
+There are a couple of variables that you can set to control the construction of the shape:
+<table border=1>
+<tr>
+<td><b>HKnots_R0</b></td><td>&nbsp;can be used to set the size of the tube, ribbon (or whatever the shape is constructed using)</td><td>Defaults to 15</td>
+</tr><tr>
+<td><b>HKnots_Total_Segs</b></td><td>&nbsp;can be used to set the 'resolution' of the parameterization.</td><td>Defaults to 200</td>
+</tr>
+</table>
+<p>
+<div class=codesample>
+&nbsp;&nbsp;#declare HKnots_R0=35; 
+<br>&nbsp;&nbsp;#declare HKnots_Total_Segs= 900;
+</div>
+<br clear=all>
+<p>
+
+<h3>hknots_arrays.inc</h3>
+The file 'hknots_arrays.inc' contains declarations for the arrays that parameterize Aaron K. Trautwein's formulation of the Fourier 'Harmonic' knots series for prime knots up through 7 (minimal) crossings:
+<ul>
+<li>3_1, 4_1, 5_1, 5_2, 6_1, 6_2, 6_3,
+<li>7_1, 7_2, 7_3, 7_4, 7_5, 7_6, 7_7,
+</ul>
+and
+<ul>
+<li>Granny knot, Square Knot
+</ul>
+The parameterization of each curve (knot) is a Fourier series:
+<p>
+&nbsp;&nbsp;x(t)=a_1x*cos(t)+b1_x*sin(t) + a_2x*cos(2t)+b2_x*sin(2t)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+... +a_nx*cos(nt)+bn_x*sin(nt)
+<br>&nbsp;&nbsp;y(t)=a_1y*cos(t)+b1_y*sin(t) + a_2y*cos(2t)+b2_y*sin(2t)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+... +a_ny*cos(nt) + bn_y*sin(nt)
+<br>&nbsp;&nbsp;z(t)=a_1z*cos(t)+b1_z*sin(t) + a_2z*cos(2t)+b2_z*sin(2t)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+... +a_nz*cos(nt) + bn_z*sin(nt)
+<p>
+The arrays in this file hold the Fourier coeffiecients
+<p>
+&nbsp;&nbsp;a_1x, b_1x, a_2x, b_2x, ..., a_15x, b_15x, 
+<br>&nbsp;&nbsp;a_1y, b_1y, a_2y, b_2y, ..., a_15y, b_15y, 
+<br>&nbsp;&nbsp;a_1z, b_1z, a_2z, b_2z, ..., a_15z, b_15z
+<p>
+as in:
+<p>
+<div class=codesample>
+&nbsp;&nbsp;#declare HKnots_knot_array=array[3][15][2]{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;{{a_1x,b_1x} {a_2x,b_2x} {a_3x,b_3x} ... {a_15x,b_15x}},
+<br>&nbsp;&nbsp;&nbsp;&nbsp;{{a_1y,b_1y} {a_2y,b_2y} {a_3y,b_3y} ... {a_15y,b_15y}},
+<br>&nbsp;&nbsp;&nbsp;&nbsp;{{a_1z,b_1z} {a_2z,b_2z} {a_3z,b_3z} ... {a_15z,b_15z}},
+<br>&nbsp;&nbsp;}
+</div>
+<p>
+<h3>Setting your own coefficients</h3>
+You can use the #declares in the 'hknots_arrays.inc' file to define the knot parameterization, or you can use your own 3D array ([3][15][2]) of Fourier coefficients. Reference: <a href="http://www.math.uiowa.edu/~jsimon/aaron.html">http://www.math.uiowa.edu/~jsimon/aaron.html</a>.
+
+Setting up an array of coefficients for the 'harmonic' Fourier series.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;array[3][15][2]
+<br>&nbsp;&nbsp;'3' for the three components x,y,z
+<br>&nbsp;&nbsp;'15' for terms up to the 15th order, and
+<br>&nbsp;&nbsp;'2' for the cosine and sine coefficients
+<p>
+for example, the trefoil HKnots_knot (3_1) is parametrized by:
+<p>
+&nbsp;&nbsp;x(m) = 41*cos(m) - 18*sin(m) - 83*cos(2*m) - 83*sin(2*m) 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;- 11*cos(3*m) + 27*sin(3*m), 
+<br>&nbsp;&nbsp;y(m) = 36*cos(m) + 27*sin(m) - 113*cos(2*m) + 30*sin(2*m) 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;+ 11*cos(3*m) - 27*sin(3*m), 
+<br>&nbsp;&nbsp;z(m) = 0*cos(m) + 45*sin(m) - 30*cos(2*m) + 113*sin(2*m) 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;- 11*cos(3*m) + 27*sin(3*m) 
+
+
+  The array for this would look like:
+<p>
+<div class=codesample>
+&nbsp;&nbsp;#declare HKnots_three_1_array=array[3][15][2]{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;// The Fourier series coefficients of:
+<br>&nbsp;&nbsp;&nbsp;&nbsp;// cos(m) sin(m)  cos(2m) sin(2m)  cos(3m) sin(3m)  ...
+<br>&nbsp;&nbsp;&nbsp;&nbsp;/* x */{ { 41,   -18  } {-83,    -83   } {-11,     27   } <br>&nbsp;&nbsp;&nbsp;&nbsp;{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}},
+<br>&nbsp;&nbsp;&nbsp;&nbsp;/* y */{ { 36,    27  }  {-113,   30   } { 11,    -27   } <br>&nbsp;&nbsp;&nbsp;&nbsp;{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}},
+<br>&nbsp;&nbsp;&nbsp;&nbsp;/* z */{ {  0,    45  }  {-30,   113   } {-11,     27   } <br>&nbsp;&nbsp;&nbsp;&nbsp;{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}{0,0}}
+<br>&nbsp;&nbsp;} 
+</div>
+<br><center><a href=#toc>Return to Table of Contents</a></center>
+<hr>
+<p>
+
+
+<a name='changes'></a>
+<h2>Change History</h2>
+The Harmonic Knots macros were created by David Sharp. He made them available for download from Geocities until the web server service closed in October 2009, at which point he kindly gave his permission for them to be redistributed on the POV-Ray Object Collection license (CC-LGPL).
+<p>
+Version 1.0 of the include file was adapted to conform to the naming conventions for the POV-Ray Object Collection by Chris Bartlett in October 2009. All identifiers are now prefixed with 'HKnots_' and all file names start with 'hknots'. The following additional changes were made:
+<ul>
+<li>The main macros were split out into an include file and the arrays moved to another file. 
+<li>A separate scene file was added to illustrate the use of the model and a second scene file to generate the images in this document.
+<li>The HKnots macro was added to make it easier to select the desired Ribbon style.
+</ul>
+<p>
+  
+
+<br><center><a href=#toc>Return to Table of Contents</a></center>
+<hr>
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+
+</body>
+</html>

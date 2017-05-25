@@ -1,0 +1,1 @@
+This macro adds a barcode to a scene. The macro uses EAN (European Article Number) encoding to encode the number passed as a parameter. There is a scene file that illustrates how to generate a 3D barcode object and how to use this to generate a barcode pigment on a surface.

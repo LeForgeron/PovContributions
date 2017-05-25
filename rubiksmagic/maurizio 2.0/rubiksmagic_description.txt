@@ -1,0 +1,3 @@
+Rubik's Magic (from Erno Rubik) shape described by a configuration string, tiles can form angles multiple of 90 degress with
+no superposed tiles (e.g.polyominoid final shape).  Version 2.0 adds the possibility of intermediate angles, thus allowing the
+construction of animations

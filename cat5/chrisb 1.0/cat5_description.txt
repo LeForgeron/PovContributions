@@ -1,0 +1,2 @@
+This POV-Ray scene file uses a simple sphere sweep to represent a piece of cable and indents writing down the side of it by using Constructive Solid Geometry to cut a series of text objects out of it.
+This example represents a short piece of CAT5 networking cable, but the same approach can be used for other forms of cable.

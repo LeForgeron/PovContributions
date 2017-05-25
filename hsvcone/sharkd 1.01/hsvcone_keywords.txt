@@ -1,0 +1,9 @@
+HSVCone
+HSVO
+hsv
+hue
+saturation
+value
+cone
+pigment
+texture

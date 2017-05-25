@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>TiltedTorus 1.0 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="tiltedtorus.css">
+</head>
+
+<body>
+
+<h1>TiltedTorus 1.0 User Manual</h1>
+
+<p>A library module from the
+ <a href="http://www.povray.org/">Persistence of Vision Raytracer (POV-Ray)</a>
+ <a href="http://lib.povray.org/">Object Collection</a>.
+
+<h2>Abstract</h2>
+
+<p><a href="tiltedtorus.jpg"><img class="demo" src="tiltedtorus_thumbnail.jpg" title="Larger image" alt="[Demo image]"></a>
+A torus that is scaled in the <var>y</var> direction, then rotated about its circular axis.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview"><b>Overview</b></a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Usage">Usage</a>
+   <li><a href="#Prerequisites">Prerequisites</a>
+   <li><a href="#Compliance">Namespace Compliance</a>
+  </ul>
+ <li><a href="#Functions_Macros"><b>Functions and Macros</b></a>
+  <ul>
+   <li><a href="#TiltedTorus_fn">TiltedTorus_fn</a>
+   <li><a href="#TiltedTorus_Container_v">TiltedTorus_Container_v</a>
+  </ul>
+ <li><a href="#About"><b>About TiltedTorus</b></a>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<table>
+ <tr>
+  <th colspan=2>Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>tiltedtorus.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>tiltedtorus.inc</code></td>
+  <td>The TiltedTorus software</td>
+ </tr><tr>
+  <td><code>tiltedtorus.jpg</code></td>
+  <td>Sample output</td>
+ </tr><tr>
+  <td><code>tiltedtorus.pov</code></td>
+  <td>A demonstration scene file</td>
+ </tr><tr>
+  <td><code>tiltedtorus_fig</code><var>n</var><code>.jpg</code></td>
+  <td>Illustrations of various parameters (6 images)</td>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information that you need to know</td>
+ </tr><tr>
+  <th colspan="2">Other Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>tiltedtorus.css</code></td>
+  <td rowspan="2">Support files for the user manual</td>
+ </tr><tr>
+  <td><code>tiltedtorus_cc-lgpl.png</code></td>
+ </tr><tr>
+  <td><code>tiltedtorus_description.txt</code></td>
+  <td>A brief description of TiltedTorus</td>
+ </tr><tr>
+  <td><code>tiltedtorus_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>tiltedtorus_prereqs.txt</code></td>
+  <td>Prerequisites (empty file)</td>
+ </tr><tr>
+  <td><code>tiltedtorus_thumbnail.jpg</code></td>
+  <td>Sample output</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+  <td rowspan="2">Administrative support files</td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include this file once prior to using any of the features of TiltedTorus:
+
+<pre>#include "tiltedtorus.inc"</pre>
+
+<p>Including the file more than once is harmless, though unnecessary.
+
+<h3 id="Prerequisites">Prerequisites</h3>
+
+<p>Requires POV-Ray version 3.5 or later.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>tiltedtorus.inc</code> comply with the Object Collection revised naming standards. The prefix for this module is “<code>tiltedtorus</code>,” including any uppercase and lowercase variations. The standard include file <code>functions.inc</code> is used.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Functions_Macros">Functions and Macros</h2>
+
+<h3 id="TiltedTorus_fn">TiltedTorus_fn (x, y, z, RMajor, rMinor, yScale, Tilt)</h3>
+
+<p>An isosurface function for a rotated torus. As usual, the toroid is oriented in the <var>x</var>-<var>z</var> plane.
+
+<h4>Arguments</h4>
+<p>Note: In order to avoid a POV-Ray namespace scoping feature, the function arguments (other than <code>x</code>, <code>y</code>, and <code>z</code>) are prefixed with “<code>TiltedTorus_P</code><var>n</var><code>_</code>” in <code>tiltedtorus.inc</code>. In this document, these prefixes are omitted for clarity.
+<dl class="args">
+ <dt><code>RMajor</code>: <dd>The major radius of the torus.
+ <dt><code>rMinor</code>: <dd>The minor radius of the torus.
+ <dt><code>yScale</code>: <dd>The vertical scaling factor.
+ <dt><code>Tilt</code>:
+ <dd>The angle by which to rotate the torus. Positive values rotate the top outwards; negative values rotate the top inwards.
+</dl>
+
+<h4>Examples</h4>
+<p>
+<img src="tiltedtorus_fig1.jpg" alt="[yScale = 1, Tilt = 0]">
+<img src="tiltedtorus_fig2.jpg" alt="[yScale = 2, Tilt = 0]">
+<img src="tiltedtorus_fig3.jpg" alt="[yScale = 3, Tilt = 0]">
+<img src="tiltedtorus_fig4.jpg" alt="[yScale = 2, Tilt = 45]">
+<img src="tiltedtorus_fig5.jpg" alt="[yScale = 2, Tilt = 15]">
+<img src="tiltedtorus_fig6.jpg" alt="[yScale = 2, Tilt = -45]">
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="TiltedTorus_Container_v">TiltedTorus_Container_v (RMajor, rMinor, yScale, Tilt)</h3>
+
+<p>Returns a vector that is the half-dimensions of a box that is sufficient to contain the toroid. It may be used for the isosurface container.
+
+<h4>Arguments</h4>
+<dl class="args">
+ <dt><code>RMajor</code>: <dd>The major radius of the torus.
+ <dt><code>rMinor</code>: <dd>The minor radius of the torus.
+ <dt><code>yScale</code>: <dd>The vertical scaling factor.
+ <dt><code>Tilt</code>:
+ <dd>The angle by which the torus is rotated.
+</dl>
+
+<h4>Example</h4>
+<pre>isosurface
+{ function { TiltedTorus_fn (x, y, z, 4, 1, 2, -45) }
+  contained_by
+  { box
+    { -TiltedTorus_Container_v (x, y, z, 4, 1, 2, -45),
+      TiltedTorus_Container_v (x, y, z, 4, 1, 2, -45)
+    }
+  }
+}</pre>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About TiltedTorus</h2>
+
+<address>Copyright © 2012 Richard Callwood III.
+<a href="http://creativecommons.org/licenses/LGPL/2.1/"><img src="tiltedtorus_cc-lgpl.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License."></a>
+</address>
+
+<p>This shape was <a href="http://news.povray.org/povray.general/thread/%3Cweb.500534b792b607dd47437ba70%40news.povray.org%3E/">requested in povray.general</a>, and I felt up to the challenge.
+
+<h3>Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>1.0</td>
+  <td>July 21, 2012</td>
+  <td>Created.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

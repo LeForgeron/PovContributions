@@ -1,0 +1,5 @@
+Macros for creating metallic textures. They produce results that are more realistic-looking than the metallic textures in the standard include files and, being parameter-driven, are more flexible. The idea is to have a small number of simple tools for creating a large variety of customized textures, rather than having a large number of fixed textures.
+
+Ambient and diffuse levels are automatically adjusted.
+
+In addition, some common metal colors are suggested, and blurred reflection, galvanized metal, and a brushed normal are included.

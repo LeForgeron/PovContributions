@@ -1,0 +1,1183 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%}
+</style>
+<head>
+  <title>POV-Ray Object Collection - Rope macros</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>Rope Macros</h1>
+<hr>
+  <a href="#intro"         >Overview                  </a><br>
+<p>
+  <a href="#styles"        >Rope Styles               </a><br>
+  <a href="#shapes"        >Rope Shapes (knots etc.)  </a><br>
+  <a href="#addingstyles"  >Adding New Styles         </a><br>
+  <a href="#addingshapes"  >Adding New Knots          </a><br>
+<p>
+  <a href="#files"         >Files in this Distribution</a><br>
+  <a href="#redistribution">Redistribution            </a><br>
+  <a href="#macros"        >Macro Reference           </a><br>
+  <a href="#variables"     >Variable Reference        </a><br>
+<p>
+  <a href="#footnotes"     >Footnotes                 </a><br>
+<p>
+  <center>
+  <a href="http://lib.povray.org/searchcollection/download.php?objectName=Rope&contributorTag=chrisb&version=1.0"
+    onclick="if (navigator.appName=='Microsoft Internet Explorer') this.click();"  
+  >
+    <input type=button value="Download Rope V1.0">
+  </a>
+  </center>
+  
+  
+</td><td>
+<img src="rope.jpg" width=640 height=480>
+</td></tr>
+</table>
+
+<hr>
+
+
+
+  <a name='intro'></a>
+  <h1>Overview</h1>
+These macros are released under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a> to enable you to use, modify and redistribute them for both commercial and non-commercial purposes.  You can help improve these macros by submitting enhanced versions back into the collection by registering yourself on the web site.  This download consists of:
+<img src="rope_00.jpg" align=right> 
+<ul>
+<li>an include file containing macros to define the path of the rope and to add different styles of rope to your POV-Ray scene
+<li>a sample scene file to illustrate the use of the macros
+<li>a copy of this documentation and the image files used in it
+<li>a few other files that you may find handy if you submit a new version to the collection
+</ul>
+<p>
+Rope can be quite tricky to model because of the shape of the helixes, the complex paths that you might want those helixes to follow and the complexity of aligning appropriate textures to those forms. It can also be difficult getting the rope to fit in with, and potentially interact with other elements in your scene. This set of macros attempts to address those difficulties, but can't necessarily solve them all. At the end of this section is a list of <a href="#CommonProblems">common problems</a> and advice intended to help you circumvent them. 
+<p>
+In its simplest form you can add a rope to your scene file by including the "Rope.inc" file and simply calling the 'Rope' macro. 
+<p>
+<div class=codesample>
+    light_source { <-15,7.5,-15>, rgb 1}
+<br>camera {location -y look_at 0.5*y}
+<br>#include "Rope.inc"        
+<br>Rope()
+</div>
+<p>
+Normally you will wish to explicitly define the path that your rope is to follow (the default path won't keep you entertained for very long). To specify a path you just need to define a spline called 'Rope_CentreSpline' before calling the <a href="#Rope">'Rope'</a> macro. You can do this by hand if you want (or by using one of a number of spline editing tools compatible with POV_Ray), alternatively you may wish to use the macros described below to simplify this task. The following example illustrates how to define your own spline. You can use any valid spline type, but the 'quadratic_spline' and the  'natural_spline' options usually produce the most realistic results:   
+<p>
+<img src="rope_01.jpg" align=right> 
+<div class=codesample>
+      camera {location  <-0.3, 0.4,-0.3> look_at <0.3,0,0.3>}
+<br>  light_source {<10, 20, -80> color rgb 1}
+<br>  plane {y,-0.018 pigment {rgb <0.5,0,00>} normal {agate scale 0.1}}
+<br>  #include "rope.inc"
+<br>  #declare Rope_CentreSpline = spline {
+<br>&nbsp;&nbsp;    natural_spline   
+<br>&nbsp;&nbsp;    0   , < 0   ,0  , 0   >,
+<br>&nbsp;&nbsp;    0.25, < 0.15,0  , 1.0 >,
+<br>&nbsp;&nbsp;    0.49, < 0.52,0  , 0.54>,
+<br>&nbsp;&nbsp;    0.50, < 0.5 ,0  , 0.5 >,
+<br>&nbsp;&nbsp;    0.51, < 0.54,0  , 0.52>,
+<br>&nbsp;&nbsp;    0.75, < 1.0 ,0  , 0.15>,
+<br>&nbsp;&nbsp;    1   , < 0   ,0  , 0   >,
+<br>  }
+<br>  Rope("Gold Braided")
+</div>
+<p>
+Sophisticated paths can be defined by progressively adding points into an array of coordinates called 'Rope_Array' and then using the <a href="#Rope_ArrayToSpline">'Rope_ArrayToSpline'</a> macro to generate the spline required by the <a href="#Rope">'Rope'</a> macro. Alternatively the <a href="#Rope_ArrayToRope">'Rope_ArrayToRope'</a> macro provides a shorthand for calling these two macros and supports a few extra features that are described below. A set of macros is provided to help build up this array of points, inserting knots, loops and coils etc.  
+<p>
+The following example first adds two coordinates into the path that the rope will follow (the array is automatically initiated by the first macro call). A simple overhand knot is added into the middle of the rope and a further point is added to the far end of the rope before the <a href="#Rope_ArrayToSpline">'Rope_ArrayToSpline'</a> macro is called to generate the 'Rope_Spline' spline. That spline is then used by the <a href="#Rope">'Rope'</a> macro to draw a simple brown rope with a knot in the middle.
+<p>
+<img src="rope_02.jpg" align=right>
+<div class=codesample>
+    camera {location  <0.25, 1, 0.2> look_at <0.25,1,0>}
+<br>light_source {<-70, 200, -80> color rgb 0.8}
+<br>light_source {<-70, 0.2,  80> color rgb 0.8}
+<br>#include "rope.inc"
+<br>
+<br>Rope_AddPoint(< 0  ,1  , 0  >)
+<br>Rope_AddPoint(< 0.2,1  , 0  >)
+<br>Rope_OverhandKnot()
+<br>Rope_AddPoint(< 1,1  , 0  >)
+<br>
+<br>Rope_ArrayToSpline("")
+<br>Rope("Brown")
+</div>
+<br clear=all>
+<p>
+<img src="rope_nofibres.jpg" align=right>
+You can control the settings used to generate the style and dimensions of the rope using a combination of macro parameters and control variables that need to be set before the macros are called. One control variable of particular interest is 'Rope_ShowFibres', which by default is set to '1'. Setting this to '0' can reduce render times by a factor of 10 and, although the quality of the rope is affected, it is still usually good enough for test renders.
+<p>
+<div class=codesample>
+    #declare Rope_ShowFibres      = 0;
+<br>Rope("Left Helix Brown")
+</div>
+<br clear=all>
+<p>
+When creating your scene you will need to use identifiers with the prefix src="rope_" to refer to the identifiers defined in this document, but you should avoid using this prefix for anything else that you add to your scene. By reserving this prefix for the Rope macros it should be possible for you to download any future versions without your identifiers clashing with names used by those future versions of these macros.  
+<p>
+Various examples at varying levels of sophistication are provided in the file 'rope.pov'. You'll see that it adopts this policy; using variable names, texture names etc. that are prefixed with src="rope_" to refer to identifiers that form part of the Rope macros. Identifiers that don't start with the src="rope_" prefix are used for everything else. 
+<p>
+Dimensions are specified in metres. The ScaleConvert macro from the <a href="http://lib.povray.org/">POV-Ray Object Collection</a> can be used to convert between different units of measure.
+<p>
+<h2><a name="CommonProblems">Common Problems</a></h2>
+
+<table border=1>
+  <tr><td>
+<h3>Spline Overruns</h3>
+If you create a spline with widely-spaced points leading into tightly spaced points (e.g. where a long length of rope leads into a knot), the spline may extend beyond the points you've defined creating a spurious loop or a fold that creates an unwanted extra protrusion of rope. When constructing a path using the 'Rope_Array' array you can call the <a href="#Rope_BreakSpline">'Rope_BreakSpline'</a> macro at any time to register a break in the spline. 
+<p>
+The <a href="#Rope_ArrayToRope">'Rope_ArrayToRope'</a> macro looks for such breaks and constructs a rope using multiple splines, potentially of different spline types, that are separated at those points. This solves the overrun problem, but may create a very angular bend. You may be able to smooth these junctions by adding a couple of extra points in line with the long run of rope after the new break point.
+<p>
+Note that the <a href="#Rope_ArrayToSpline">Rope_ArrayToSpline</a> macro ignores these break points and only creates a single spline.
+<p>
+Example 40 in 'rope.pov' illustrates the use of the <a href="#Rope_BreakSpline">'Rope_BreakSpline'</a> macro.
+<p>
+    </td><td></td></tr>
+  <tr><td>
+<h3>Knot Orientation</h3>
+Knots are conventionally oriented based upon the direction of the rope leading into the knot when you call the knot macro. Sometimes this won't be what you want. To change the orientation you can adjust the orientation vectors before calling the knot macro. The macro should then reorient the knot accordingly. Mostly you'll want to change the setting for 'Rope_ArrayAheadVector', but you may also wish to alter 'Rope_ArrayUpVector'. The setting for 'Rope_ArrayAheadVector' takes precedence and the macros adjust 'Rope_ArrayUpVector' to be at right angles to it.
+<p>
+Example 6 in 'rope.pov' illustrates adjusting the setting of 'Rope_ArrayUpVector'. 
+<p> 
+    </td><td><img src="rope_06.jpg" width=160></td></tr>
+  <tr><td>
+<h3>Inherited Characteristics</h3>
+If you add more than one rope to a scene you may find that the default settings from the first rope are inherited by the second rope. For example, If the first rope is braided the default setting for the 'Rope_TwistRatio' variable will be set to 2. If you then wish to create a helical rope the macros will take this setting when you call them the second time, assuming that you've set this value yourself. 
+<p>
+To avoid this sort of problem you can call the <a href="#Rope_Undef">Rope_Undef</a> macro before starting to define the second rope. This clears down all of the variables so that they take their default values when the various Rope macros are next called. For example the 'Rope_TwistRatio' variable will then be set to 3 for the second rope, because that is the default for helical ropes. 
+<p> 
+    </td><td></td></tr>
+</table>
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+  <a name='styles'></a>
+  <h1>Rope Styles</h1>
+The following predefined styles are provided, combining the specifications for the type of rope (left or right handed twist or braided), the colors and the textures to be used. These styles can be specified as a parameter when you call either the <a href="#Rope">'Rope'</a> macro or the <a href="#Rope_ArrayToRope">'Rope_ArrayToRope'</a> macro to generate a length of rope. You can also specify an empty string to tell the <a href="#Rope">'Rope'</a> macro to use the default settings or to use control variable settings that you declare in your scene file before calling the macro.
+<p>
+The top row of images shows rope generated with <a href="#Rope_ShowFibres">'Rope_ShowFibres'</a> set to '1' whereas the lower set shows rope generated with 'Rope_ShowFibres' set to '0'.
+<p>
+<h2>Helical Styles</h2>
+<table align=center>
+<tr align=center>
+<td><img src="rope_131.jpg"></td>
+<td><img src="rope_129.jpg"></td>
+<td><img src="rope_130.jpg"></td>
+<td><img src="rope_125.jpg"></td>
+<td><img src="rope_126.jpg"></td>
+</tr>
+<tr align=center>
+<td><img src="rope_151.jpg"></td>
+<td><img src="rope_149.jpg"></td>
+<td><img src="rope_150.jpg"></td>
+<td><img src="rope_145.jpg"></td>
+<td><img src="rope_146.jpg"></td>
+</tr>
+<tr align=center>
+<td>""(Default)          </td>
+<td>"Brown"              </td>
+<td>"Left Helix Brown"  </td>
+<td>"White"             </td>
+<td>"Cyan"               </td>
+</tr>
+</table>
+
+<h2>Braided Styles</h2>
+<p>
+<table align=center>
+<tr align=center>
+<td><img src="rope_128.jpg"></td>
+<td><img src="rope_120.jpg"></td>
+<td><img src="rope_121.jpg"></td>
+<td><img src="rope_122.jpg"></td>
+<td><img src="rope_123.jpg"></td>
+<td><img src="rope_124.jpg"></td>
+<td><img src="rope_127.jpg"></td>
+</tr>
+<tr align=center>
+<td><img src="rope_148.jpg"></td>
+<td><img src="rope_140.jpg"></td>
+<td><img src="rope_141.jpg"></td>
+<td><img src="rope_142.jpg"></td>
+<td><img src="rope_143.jpg"></td>
+<td><img src="rope_144.jpg"></td>
+<td><img src="rope_147.jpg"></td>
+</tr>
+<tr align=center>
+<td>"Brown Braided"      </td>
+<td>"Gold Braided"       </td>
+<td>"Patchwork"         </td>
+<td>"Soft Yellow Braided"</td>
+<td>"Red Knobbly"       </td>
+<td>"Loose Gold Braid"  </td>
+<td>"Cyan Braided"      </td>
+</tr>
+</table>
+<p>
+You don't have to use one of these predefined styles. There are plenty of options for controlling the style of the rope generated by these macros. You can also easily add new styles (<a href="#addingstyles">see below</a>).
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+  <a name='shapes'></a>
+  <h1>Rope Shapes</h1>
+The following images illustrate the capabilities of some of the macros. A full list of the macros can be found <a href="#macros">below</a>. These macros insert coordinates into the 'Rope_Array' array to form predefined rope shapes. Most of them start at the 'current' position adding a specific form to the path being defined, relative to the last point added. 
+
+<h2>Simple Shapes</h2>
+<table border=1>
+<tr><td>
+  <b><a href="#Rope_AddPoint">Rope_AddPoint</a></b>
+  <br>
+  This macro adds a single point into the array at the coordinate specified as a parameter to the macro call. For example Rope_AddPoint(<0,1,2>).
+  </td><td></td>
+</tr>
+<tr><td>
+  <b><a href="#Rope_SlackSegment">Rope_SlackSegment</a> and <a href="#Rope_Catenary">Rope_Catenary</a></b>
+  <br>
+  These macros both add a loose segment of rope from the current point to the point specified. 
+  <p>
+  The <a href="#Rope_SlackSegment">'Rope_SlackSegment'</a> macro uses a very approximate algorithm to add a segment of roughly a given length. For example Rope_SlackSegment(<0,1,2>,3) extends the rope to coordinate <0,1,2> adding approximately 3 metres of rope to reach that point. 
+  <p>
+  The <a href="#Rope_Catenary">'Rope_Catenary'</a> macro adds a catenary, which is the path that a chain or cable hanging under its own weight follows. Long lengths of rope typically follow such a path quite closely, although for shorter lengths the internal forces passed along the rope often cause the rope to deviate from a catenary shape.      
+  <p>
+  See example 4 in 'rope.pov'. This superimposes results from the <a href="#Rope_SlackSegment">'Rope_SlackSegment'</a> macro (the thin brown rope) and the <a href="#Rope_Catenary">'Rope_Catenary'</a> macro (the thicker blue rope). 
+  </td><td><img src="rope_04.jpg"></td>
+</tr>
+<tr><td>
+  <b><a href="#Rope_FindEdge">Rope_FindEdge</a> and <a href="#Rope_FindEdgeFromCentre ">Rope_FindEdgeFromCentre </a></b>
+  <br>
+  These macros don't add a point into the rope's path, but find and return a point on the edge of an object. The returned coordinates can be passed straight into the <a href="#Rope_AddPoint">'Rope_AddPoint'</a> macro or the <a href="#Rope_SlackSegment">'Rope_SlackSegment'</a> macro to add the point into the path. 
+   <p>
+   The <a href="#Rope_FindEdge">Rope_FindEdge</a> macro finds a point that is in line with the current direction of the rope. The <a href="#Rope_FindEdgeFromCentre ">Rope_FindEdgeFromCentre </a> macro finds a point on the top edge of an object that leads the rope towards the horizontal centre of that object.
+   <p>
+   See example 15 in 'rope.pov'.
+  </td><td><img src="rope_15.jpg"></td>
+</tr>
+<tr><td>
+  <b><a href="#Rope_TrackOver">Rope_TrackOver</a></b>
+  <br>
+  This macro adds a length of rope that runs over the top surface of an object until it reaches the object's far edge. See example 16 in 'rope.pov'.
+  </td><td><img src="rope_16.jpg"></td>
+</tr>
+<tr><td>
+  <b><a href="#Rope_OverhandKnot">Rope_OverhandKnot</a></b>
+  <br>
+  This macro adds a single overhand knot at the current point. See example 2 in 'rope.pov'.
+  </td><td><img src="rope_02.jpg"></td>
+</tr>
+<tr><td>
+  <b><a href="#Rope_FigureOfEight">Rope_FigureOfEight</a></b>
+  <br>
+  This macro adds a figure of eight knot at the current point. See example 3 in 'rope.pov'.
+  </td><td><img src="rope_03.jpg"></td>
+</tr>
+<tr><td>
+  <b><a href="#Rope_CloveHitch">Rope_CloveHitch</a></b>
+  <br>
+  This macro adds a clove hitch at the current point. See example 8 in 'rope.pov'.
+  </td><td><img src="rope_08.jpg"></td>
+</tr>
+<tr><td>
+  <b><a href="#Rope_Spiral">Rope_Spiral</a></b>
+  <br>
+  This macro can add a variety of different types of spiral. The 'coil' example shown here uses two calls to the macro. The first adds a little helix made up using two coils of rope in the middle, spiraling downwards. The second macro call adds the outward spiral (both macro calls use the default amount of randomness). 
+<p>
+The 'helix' example sets <a href="#Rope_UpDispPerCoil">'Rope_UpDispPerCoil'</a> to '0' and <a href="#Rope_RightDispPerCoil">'Rope_RightDispPerCoil'</a> to '-1' to form a helix that coils down and to the left of the starting point by one rope thickness per turn.
+<p>
+  See examples 14 and 17 in 'rope.pov'.
+  </td><td><img src="rope_17.jpg"><br><img src="rope_14.jpg"></td>
+</tr>
+<tr><td>
+  <b><a href="#Rope_Binding">Rope_Binding</a></b>
+  <br>
+  This macro adds a thin cylindrical binding to the ends of a rope. <b>Note</b> that these bindings are separate objects abutted onto the ends of the rope object. They do not form part of the rope object whose path is constructed using the macros which manipulate 'Rope_Array'. It needs to be called after either the <a href="#Rope">'Rope'</a> macro or the <a href="#Rope_ArrayToRope">Rope_ArrayToRope</a> macro and returns a single, separate, CSG (Constructive Solid Geometry) object that aligns with one or both ends of the rope already created. 
+  <p>
+  See example 18 in 'rope.pov'.
+  </td><td><img src="rope_18.jpg"></td>
+</tr>
+</table>
+
+<p>
+The following macros can add multi-part knots or can be used to join two lengths of rope. You would typically call them twice, once with a parameter of '1' to draw the first part of the knot at the current location and a second time with a parameter of '2' to complete the knot. When you call it the second time it adds a length of rope leading from the current position back to where it needs to be to complete the knot and then adds the second part of the knot. 
+<p>
+Most of these macros also allow you to specify a parameter of '0', at which point it will add the complete knot with a fairly arbitrary loop of rope joining the end of the first part to the start of the second part.  
+<p>
+<table border=1>
+<tr><td>
+  <b><a href="#Rope_ReefKnot">Rope_ReefKnot</a></b>
+  <br>
+  This macro adds a reef knot at the current location. See examples 5, 6 and 7 in 'rope.pov'.
+  </td><td><img src="rope_05.jpg"><img src="rope_06.jpg"><img src="rope_07.jpg"></td>
+</tr>
+<tr><td>
+  <b><a href="#Rope_RoundTurnAndTwoHalfHitches">Rope_RoundTurnAndTwoHalfHitches</a></b>
+  <br>
+  This macro adds a round turn and two half hitches at the current location (see examples 9 in 'rope.pov'). If you call this macro in two halves then it only ties the two half hitches and you can do whatever you want in between, as is illustrated by example 12 in 'rope.pov'.
+  </td><td><img src="rope_09.jpg"><img src="rope_12.jpg"></td>
+</tr>
+<tr><td>
+  <b><a href="#Rope_Bowline">Rope_Bowline</a></b>
+  <br>
+  This macro adds a bow line at the current location. See example 10 in 'rope.pov'.
+  </td><td><img src="rope_10.jpg"></td>
+<tr><td>
+  <b><a href="#Rope_DutchBowline">Rope_DutchBowline</a></b>
+  <br>
+  This macro adds a Dutch marine bowline (a cowboy bowline) at the current location. See example 11 in 'rope.pov'.
+  </td><td><img src="rope_11.jpg"></td>
+</tr>
+</table>
+ 
+<p>
+<h2>Sample Scenes</h2>
+<table border=1>
+<tr><td>
+  <b><a name="#Example40">Example 40</a></b>
+  <br>
+  Example 40 in 'rope.pov' adds a simple knot at the start of the rope, then passes a sequence of loose segments of rope between a set of posts to create a simple rope fence. 
+  <p>
+  The path of the rope is built up using the <a href="#Rope_AddPoint">Rope_AddPoint</a> and <a href="#Rope_OverhandKnot">Rope_OverhandKnot</a> macros, then the <a href="#Rope_SlackSegment">Rope_SlackSegment</a> macro is called from within a '#while' loop to join the posts leading away from the camera in the scene on the right. A second loop is used to join the remaining posts. 
+  <p>
+  The <a href="#Rope_BreakSpline">Rope_BreakSpline</a> macro is called after the knot is defined and again at the sharp corner between the two rows of posts to avoid spurious spline shapes. 
+  <p>
+  The <a href="#Rope_ArrayToRope">Rope_ArrayToRope</a> macro is used at the end of this example to add the rope to the scene. It creates a single rope constructed using 3 splines, with one spline for the knot (and the points before it), one for the rope joining the first row of posts and one joining the second row of posts.  
+  </td><td><img src="rope_40.jpg"></td>
+</tr>
+<tr><td>
+  <b><a name="#Example41">Example 41</a></b>
+  <br>
+  Example 41 in 'rope.pov' constructs a simple climbing frame with a rope ladder and a short climbing rope. 
+  <p>
+  The rope ladder is constructed using the <a href="#Rope_AddPoint">Rope_AddPoint</a> and <a href="#Rope_OverhandKnot">Rope_OverhandKnot</a> macros in a '#while' loop. The rungs of the ladder are added into the scene in the same '#while' loop making it straight-forward to keep the rope and the rungs aligned. The top knot is defined using the <a href="#Rope_RoundTurnAndTwoHalfHitches">Rope_RoundTurnAndTwoHalfHitches</a> macro.
+  <p>
+  The rope object is generated using the <a href="#Rope_ArrayToRope">Rope_ArrayToRope</a> macro and is added to the scene twice to form the two sides of the rope ladder. When the ladder is finished the <a href="#Rope_Undef">Rope_Undef</a> macro is called to clear down settings from the first rope definition so that the second rope doesn't accidentally 'inherit' any settings.
+  <p>
+  The knots at the bottom and top of the climbing rope are defined using the <a href="#Rope_ReefKnot">Rope_ReefKnot</a> and <a href="#Rope_Bowline">Rope_Bowline</a> macros.
+  </td><td><img src="rope_41.jpg"></td>
+</tr>
+</table>
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+  <a name='addingstyles'></a>
+  <h1>Adding New Rope Styles</h1>
+
+These macros have been designed to make it easy for you to add new rope styles with just a few lines of code. You will need to understand the POV-Ray SDL (Scene Description Language) and some of the variable settings described in this document (<a href="#variables">see below</a>). 
+<p>
+If you plan to keep your new styles to yourself, you should add a macro called 'StandardStyles' that has a single parameter called 'Style' either into your scene file or into a separate include file. By keeping your definitions separate in this way you'll be able to easily download future versions of the Rope macro files without overwriting your changes. You should avoid adding new identifiers with the 'Rope_' prefix as this prefix is reserved. You can add new identifiers with any other name you choose.
+<p>
+If you intend to incorporate your new styles back into the Object Collection you can add them directly into the <a href="#Rope_StandardStyles">'Rope_StandardStyles'</a> macro at the top of the 'rope.inc' file, <b>taking care not to overwrite them if you download a new copy from the Object Collection before you have submitted your updates</b>. All identifiers (macro names, variables etc.) should start with the prefix 'Rope_' and be followed by a suitably descriptive name. 
+<p>
+Both the 'Rope_StandardStyles' macro and any 'StandardStyles' macro that you define should consist of a single #switch statement with a #case statement for each of the named styles you want to define. You can add as many new styles/case statements as you like. Each case statement contains a mixture of declarations of variables, colors, textures, normal etc. as required to override the default settings used to control the style of a rope. You can copy any of the existing styles as a starting point or start with the default settings, adding declarations as required. The available settings are documented in the <a href="#variables">'Variables'</a> section of this document.
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+  <a name='addingshapes'></a>
+  <h1>Adding New Knots (and Other Shapes)</h1>
+These macros have been designed in a modular way to make it quite straight-forward to add new rope shapes (such as knots). Each shape is constructed by its own short macro in the 'rope.inc' file (usually between 10 and 20 lines of code). You will need to understand POV-Ray SDL and the techniques described here, you'll also need some patience and a decent understanding of how the knot you want to create 'works'. A degree of trial and error is largely unavoidable, so working within a minimalistic scene that is very quick to render is advised while perfecting the new shape.
+<p>
+If you plan to keep your new macro to yourself, you can call it whatever you want so long as it doesn't start 'Rope_'. You can add it into your scene file or into a separate include file, but you should not add it into the 'rope.inc' file. This is so that you'll be able to easily download future versions of the macro Rope files without overwriting your changes. 
+<p>
+If you intend to incorporate your new macro into the <a href="http://lib.povray.org">POV_Ray Object Collection</a> you should call it 'Rope_' followed by the name of your new shape. Any other identifiers that you use in your new macro should also use the same prefix. It's probably best to create a separate include file for your macros, but you should copy them into 'rope.inc' if you want to upload a new version directly onto the POV-Ray Object Collection. 
+<p>
+
+<h2>Basics</h2>
+It's easiest to see what is going on by looking at a simple macro as you read this. The basic principles are the same for all of the rope shape macros, but if you look at some of the more complicated multi-part knots the code can initially look a little overwhelming. If you start with a simple one you'll see that the complex knots only add a few relatively standard chunks of code to handle the separate passes.
+<p> 
+If you look at the <a href="#Rope_OverhandKnot">'Rope_OverhandKnot'</a> macro you'll see that it adds points to the <a href="#Rope_Array">'Rope_Array'</a> array by making a series of calls to the <a href="#Rope_ArrayDisplacement">'Rope_ArrayDisplacement'</a> macro. In general a knot macro finds a new point in space by adding 3D displacements to the current point (the last point that was defined in the 'Rope_Array' array). The first thing the 'Rope_OverhandKnot' macro therefore does is to call the <a href="#Rope_InitializeKnot">Rope_InitializeKnot</a> macro which makes sure that the array exists and has at least one point in it.
+<div class=codesample> 
+    &nbsp;&nbsp; Rope_InitializeKnot(0,1)
+</div>
+<p>
+The <a href="#Rope_InitializeKnot">Rope_InitializeKnot</a> macro takes two parameters which are generally '0' and '1' for simple shapes (see the <a href="#Rope_InitializeKnot">macro description</a> for an explanation of these parameters).
+<p>
+The 3 displacements passed to the <a href="#Rope_ArrayDisplacement">'Rope_ArrayDisplacement'</a> macro are relative to the current orientation of the rope which usually remains constant throughout the process of defining a knot. Often you won't need to change this orientation until the end of your macro when you'll need to incorporate some standard code to set them ready for the next macro to use. The orientation is held in 3 vectors: <a href="#Rope_ArrayAheadVector">'Rope_ArrayAheadVector'</a>, <a href="#Rope_ArrayUpVector">'Rope_ArrayUpVector'</a> and <a href="#Rope_ArrayRightVector">'Rope_ArrayRightVector'</a>, but the 'Rope_ArrayDisplacement' macro takes account of these settings, so you often don't need to do much with them when writing your own knot macros. You just need to be conscious that the parameters you specify are relative to these vectors. These vectors need to be kept at right angles to each other, which is what the last two lines of a typical knot macro do:
+<div class=codesample> 
+    &nbsp;&nbsp; #declare Rope_ArrayAheadVector = Rope_Array[Rope_ArrayIndex]-Rope_Array[Rope_ArrayIndex-1];
+<br>&nbsp;&nbsp; Rope_AdjustVectors()
+</div>
+
+<p>
+Distances specified with the 'Rope_ArrayDisplacement' macro are specified as multiples of the rope thickness. You just specify a number and the macro automatically multiplies the value by the rope thickness (ie 1 = 2xRope_Radius). This enables all of the knots to automatically adjust to different thicknesses of rope. 
+<p>
+The 'Rope_ArrayDisplacement' macro also multiplies distances by the <a href="#Rope_KnotLooseness">'Rope_KnotLooseness'</a> variable, so you define the path through the knot so that the knot is reasonably tight and anyone using the macro can increase or reduce the tightness a bit by adjusting the 'Rope_KnotLooseness' variable (which defaults to 1).
+<p>
+The 'Rope_ArrayDisplacement' macro multiplies the value for the right vector by the <a href="#Rope_KnotHandedness">'Rope_KnotHandedness'</a> variable which can be set to either '1' or '-1' so that anyone using the knot can easily reverse the handedness of the knot. 
+<p>
+A simple knot macro is therefore mostly just a series of calls to the 'Rope_ArrayDisplacement' macro to add new points into the 'Rope_Array' array at the specified displacements from the previous position. 
+A typical call to the 'Rope_ArrayDisplacement' macro may therefore be:
+<p>
+<div class=codesample>
+ &nbsp;&nbsp; Rope_ArrayDisplacement(1.2, 1, 1.1)
+</div>
+which adds a point to the 'Rope_Array' array that is 1.2 rope thicknesses forwards (in the direction of the 'Rope_ArrayAheadVector' vector), 1.0 rope thicknesses up (in the direction of the 'Rope_ArrayUpVector' vector) and 1.1 rope thicknesses to the right (in the direction of the 'Rope_ArrayRightVector' vector), or to the left if the handedness is set to '-1'.
+<p>
+For simple knots the vectors don't need to be changed from the start of the knot to the end of the definition of that knot, so the displacements are simply specified relative to the orientation that was current when the knot macro was called.
+
+<h2>Multi-part knots</h2>
+The <a href="#Rope_Bowline">'Rope_Bowline'</a> macro serves as a good example of a knot macro that is a little more sophisticated. The Bowline is usually used to tie two sections of a single rope together after passing the middle section around something. The knot is therefore most often defined in two passes with the first macro call creating the first part of the knot shape in one section of rope and the second macro call creating the second part of the knot shape in a later second section of the same rope. The parameter on the macro call is used to tell the macro whether it's defining the path for the whole knot ('0'), just the first part ('1') or just the second part ('2'). 
+<p>
+In order to get the two halves of the knot correctly aligned, the first macro call stores away the start position and orientation that the second macro call will need to use to complete the knot. It does this by adding entries into the <a href="#Rope_HalfKnotList">'Rope_HalfKnotList'</a> array. Following this first macro call the rope can be trailed around the scene and, when ready to complete the knot, the macro can be called a second time with a parameter of '2'. The macro can return the rope to the right place and orient the path correctly using the information stored by the first macro call so that the two halves of the knot marry up.
+<p>
+If you look at the 'Rope_Bowline' macro you'll see that the first call to the macro adds a single position and two orientation vectors to the 'Rope_HalfKnotList' array. Generally the orientation vectors will be identical to the orientation you used to define the first part of the knot, so the only tricky bit is in working out the position for the start of the second part of the knot. This is an absolute position in POV-Ray units, so you need to take account of the current rope thickness, orientation and handedness settings. You may find it easiest to just copy the lines of code that do this from the 'Rope_Bowline' macro and then set the numeric values with a certain amount of trial and error (keeping enough coffee to hand).   
+<p>
+On the other hand it's not compulsory to keep the orientation vectors for the second half of the knot identical to those used for the first half of the knot. If there's some other setting that's more convenient you can use that. For example, the 'Rope_ReefKnot' macro reverses 'Rope_ArrayAheadVector' then just adds a mirror image of the first half to create the second half of the knot.
+<p>
+By convention, multi-part knot macros such as the 'Rope_Bowline' macro also support a '0' parameter to specify that the knot should be created in a single pass, in which case the end coming out of the first half of the knot is looped around to the starting point for the second half of the knot.
+<p>
+Knot macros that can build knots in two parts need to increment and decrement the <a href="#Rope_HalfKnotIndex">'Rope_HalfKnotIndex'</a> variable which serves as an index to the 'Rope_HalfKnotList' array. The general assumption that you should make when writing a macro is that the most recently half-tied knot will be the first to be completed, so, by default the macro should use the half-knot list as a sort of LIFO (Last In First Out) stack. But also be aware that this index can optionally be managed from within the scene file, overriding this default behaviour.
+
+<h2>Tips and Tricks</h2>
+<ul>
+<li>When creating a macro to define a new shape, copy a macro that contains similar attributes as a starting point.
+<li>Use a minimalistic test scene for development so you can do lots of quick test renders.
+<li>Set the <a href="#Rope_ShowFibres">'Rope_ShowFibres'</a> variable to '0' during development as your test scene will render a lot quicker.
+<li>The <a href="#Rope_AddPositionMarker">'Rope_AddPositionMarker'</a> macro adds three thin cylinders to the scene aligned to the 3 direction vectors. You can use it to easily display the position of one or more of the points you're adding to the array.
+<li>In your test scene keep the vectors aligned to the POV-Ray x, y and z axes if you can, so that you don't have to do mental rotations to keep track of which direction you need to move in.
+<li>Sometimes you complete your knot and it looks good, but it becomes apparent that the rope leading into the knot (and therefore all of the displacements you've specified) are skewed. There's a little bit of code built into the <a href="#Rope_ArrayDisplacement">'Rope_ArrayDisplacement'</a> macro that will calculate the displacements required to rotate the knot around a given point (usually the start of the knot). It writes the new values you need to correct this problem into the message stream. You can activate this functionality by setting the 'Rope_AxisPosition' variable to the coordinates of the position around which you wish to rotate the knot.
+
+</ul>
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+  <a name='files'></a>
+  <h1>Files</h1>
+You should have received the following files with this distribution. The latest versions are available from <a href="http://lib.povray.org">http://lib.povray.org</a>.
+  <h2>Main Files</h2>
+  <table border=1>
+    <tr><th>Rope.inc  </th><td colspan=2>
+The main include file containing the Rope macros.
+    </td></tr>
+    <tr><th>Rope.pov  </th><td colspan=2>
+A scene file illustrating the use of the Rope macros to generate a range of different examples.
+    </td></tr>
+    <tr><th>Rope.html </th><td colspan=2>
+This document.
+    </td></tr>
+  </table>
+  <h2>Other Files</h2>
+The download delivers a number of other supporting files including an automatically generated readme file and the image files used in this documentation. There are also 3 automatically generated files that you may find useful if you choose to upload a modified version of these macros in the future.
+<p>
+  <h2>Uploading New Files</h2>
+Any files that you upload to the POV-Ray Object Collection as a new version of this submission should be prefixed with the name "rope_" (or "rope."). Files you received that didn't start with that prefix (such as the readme and versioning script) should be ignored. These are automatically generated and shouldn't be uploaded. 
+<p>
+There are 3 automatically generated text files that contain a description, keywords for the search engine and any prerequisites registered against the version you downloaded. Although the file names start with the prefix "rope_", you shouldn't try to upload these files with the rest of the files. You may however edit these files before performing an upload so that you can pull the contents into the relevant text fields on the submission screen. This avoids you having to type in large amounts of text while submitting your new version.
+<p>      
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+  <a name='redistribution'></a>
+  <h1>Redistribution</h1>
+The Rope macros are licensed under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a> which permits (and encourages) reuse and redistribution. You can therefore incorporate these macros along with scene files that use them into a set of files that you distribute to others. 
+<p>
+Most of the files included with the Rope macros are sample images and documentation files. If you don't wish to distribute all of these files you only need to include a copy of the file 'Rope.inc' or a cut-down version of it. 
+<p>
+If you plan to submit your object to the <a href="http://lib.povray.org/">POV-Ray Object Collection at http://lib.povray.org/</a> you will need to rename the files to conform to the naming standards (All files from your submission will need the same unique prefix).
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+  <a name='macros'></a>
+  <h1>Macro Reference</h1>
+The macros contained in the 'Rope.inc' file are described below.<p>
+  <a href="#Rope"                            >Rope macro                            </a><br>
+  <a href="#Rope_AddPoint"                   >Rope_AddPoint macro                   </a><br>
+  <a href="#Rope_AddPositionMarker"          >Rope_AddPositionMarker macro          </a><br>
+  <a href="#Rope_AdjustVectors"              >Rope_AdjustVectors macro              </a><br>
+  <a href="#Rope_ArrayDisplacement"          >Rope_ArrayDisplacement macro          </a><br>
+  <a href="#Rope_ArrayToRope"                >Rope_ArrayToRope macro                </a><br>
+  <a href="#Rope_ArrayToSpline"              >Rope_ArrayToSpline macro              </a><br>
+  <a href="#Rope_Binding"                    >Rope_Binding macro                    </a><br>
+  <a href="#Rope_Bowline"                    >Rope_Bowline macro                    </a><br>
+  <a href="#Rope_BreakSpline"                >Rope_BreakSpline macro                </a><br>
+  <a href="#Rope_Catenary"                   >Rope_Catenary macro                   </a><br>
+  <a href="#Rope_CloveHitch"                 >Rope_CloveHitch macro                 </a><br>
+  <a href="#Rope_Defaults"                   >Rope_Defaults macro                   </a><br>
+  <a href="#Rope_DutchBowline"               >Rope_DutchBowline macro               </a><br>
+  <a href="#Rope_FigureOfEight"              >Rope_FigureOfEight macro              </a><br>
+  <a href="#Rope_FindEdge"                   >Rope_FindEdge macro                   </a><br>
+  <a href="#Rope_FindEdgeFromCentre"         >Rope_FindEdgeFromCentre macro         </a><br>
+  <a href="#Rope_InitializeKnot"             >Rope_InitializeKnot macro             </a><br>
+  <a href="#Rope_Noose"                      >Rope_Noose macro                      </a><br>
+  <a href="#Rope_OverhandKnot"               >Rope_OverhandKnot macro               </a><br>
+  <a href="#Rope_ReefKnot"                   >Rope_ReefKnot macro                   </a><br>
+  <a href="#Rope_RoundTurnAndTwoHalfHitches" >Rope_RoundTurnAndTwoHalfHitches macro </a><br>
+  <a href="#Rope_SlackSegment"               >Rope_SlackSegment macro               </a><br>
+  <a href="#Rope_Spiral"                     >Rope_Spiral macro                     </a><br>
+  <a href="#Rope_StandardStyles"             >Rope_StandardStyles macro             </a><br>
+  <a href="#Rope_TrackOver"                  >Rope_TrackOver macro                  </a><br>
+  <a href="#Rope_Undef"                      >Rope_Undef macro                      </a><br>
+ 
+<p>  
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Rope'></a>Rope macro      </th><tr>
+    <tr><td width=20></td><td>
+The Rope macro adds a length of rope to your scene that follows the path defined by the spline called 'Rope_CentreSpline'. 
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_Style            
+</td><td width=100%>
+indicates the style of rope to generate. You can specify any of the named styles defined in the 'Rope_StandardStyles' macro (e.g. "Gold Braided"), or you can use an empty string ("") to use the default settings along with any settings you have added directly into your scene file. The available styles are illustrated under the heading <a href="#styles">'Rope Styles'</a> above.
+<p>
+You can also easily add your own variants and give them names of your choosing to enable you to readily access styles that you have created from your different scene files. See <a href="#addingstyles">'Adding New Styles'</a> above.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_ArrayToSpline'></a>Rope_ArrayToSpline macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro can be used to help define a spline suitable for use with the Rope macro, based upon a set of coordinates contained within the 'Rope_Array' array. If you wish to simply define your own spline you won't need this macro or the array. On the other hand, if you want to build up a rope shape using the various shape definition macros provided with this distribution you will need this macro, because they each add points to the 'Rope_Array' array rather than manipulating the 'Rope_CentreSpline' spline directly.
+<p>
+You may also find it convenient to use this macro to create a spline for your own purposes. For example to define a sphere sweep to represent a power cable running up onto a desk.  
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_SplineType            
+</td><td width=100%>
+this can be any of the spline types supported by the POV-Ray spline function, but generally works best with the "natural_spline" and "quadratic_spline" types. If an empty string is specified then a "natural_spline" is generated. The available spline types are:
+<ul>
+<li>natural_spline
+<li>quadratic_spline
+<li>cubic_spline
+<li>linear_spline
+</ul>
+</td></tr>
+</table>
+    </td></tr>
+        <tr><th class=macroheaders colspan=2><a name='Rope_ArrayToRope'></a>Rope_ArrayToRope macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro takes an array of points and creates a rope that follows the path defined by those points. In the simplest case it just calls the 'Rope_ArrayToSpline' macro followed by the Rope macro, but it can also handle more complex assemblies where a single rope is constructed using a succession of splines. This helps to resolve a couple of difficulties:
+<ol>
+<li>Firstly it enables the spline type to be changed part way through a single length of rope. For example, when wrapping rope around a square object a "linear_spline" could be convenient. Trailing the rope from there to another point could require a more curved spline type such as a "cubic_spline".
+<li>Secondly it deals with unwanted chunks of rope that sometimes result from the spline functions where the point spacing is uneven. For example, if you add a knot to a 3 metre stretch of rope, you're likely to get widely spaced points leading into the knot that will contain tightly spaced points. Using a single spline can cause the spline to overrun the knot before looping back to start the knot.  
+</ol>
+You can add breaks in the spline and optionally change the spline type by calling the 'Rope_BreakSpline' macro as you are progressively constructing the 'Rope_Array' array. 
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_Style            
+</td><td width=100%>
+indicates the style of rope to generate. You can specify any of the named styles defined in the 'Rope_StandardStyles' macro (e.g. "Gold Braided"), or you can use an empty string ("") to use the default settings along with any settings you have added directly into your scene file. The available styles are illustrated under the heading <a href="#styles">'Rope Styles'</a> above.
+<p>
+You can also easily add your own variants and give them names of your choosing to enable you to readily access styles that you have created from your different scene files. See <a href="#addingstyles">'Adding New Styles'</a> above.
+</td></tr>
+</table>
+    </td></tr>
+            <tr><th class=macroheaders colspan=2><a name='Rope_Binding'></a>Rope_Binding macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds a cylindrical object onto the end of a rope (that needs to have already been generated) to represent the sort of twine binding typically used to stop the ends of the rope from fraying. You can control the construction of the binding by overriding the default settings for the <a href="#Rope_BindingLength">Rope_BindingLength</a>, <a href="#Rope_BindingRadius">Rope_BindingRadius</a> and <a href="#Rope_BindingThreadRadius">Rope_BindingThreadRadius</a> variables.      
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_WhichEnd            
+</td><td width=100%>
+one of the strings "Start", "End" or "Both" to indicate which end or the rope to add this object to.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_BreakSpline'></a>Rope_BreakSpline macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds a marker into the <a href="#Rope_SplineTypeList">'Rope_SplineTypeList'</a> array to tell the <a href="#Rope_ArrayToRope">'Rope_ArrayToRope'</a> macro where to break a spline into multiple sections, each potentially with a different spline type. A "natural_spline" works best in many circumstances and is the default, but other spline types may work better in specific circumstances. For example, when wrapping a rope around a sharp edged object a "linear_spline" may be more appropriate for that segment of the rope.
+<p>
+Introducing a break stops one spline and starts another. This can be used to prevents overruns that sometimes occur where spline points are spaced unevenly, but can result in unnaturally sharp bends in the rope if the starting direction of one spline doesn't line up with the end of the previous spline.
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_SplineType            
+</td><td width=100%>
+is a string value specifying the type of spline to create and can be "linear_spline", "natural_spline", "quadratic_spline", "cubic_spline" or "" to use the default which is the "natural_spline".
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_AddPoint'></a>Rope_AddPoint macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds a coordinate to the 'Rope_Array' array. 
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_Coordinate            
+</td><td width=100%>
+the coordinate of the point to add to the array.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_SlackSegment'></a>Rope_SlackSegment macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds a loose length of rope to the 'Rope_Array' array connecting the current point with a given coordinate. Two points are added to the array. The second point uses the coordinate specified, the first point is somewhere below the straight line between the current point and the specified coordinate, at a height intended to give a drooping length of rope that has approximately the required length.             
+<p>
+If this macro doesn't add the new calculated position exactly where you want it, you can use the debug statement at the end of the macro to display the calculated position into the message stream and subsequently use the 'Rope_AddPoint' instead to add a point that is better positioned for your purposes.
+<p>
+This macro has 2 parameters:
+<table border=1>
+<tr><td>
+   Rope_Coordinate            
+</td><td width=100%>
+the coordinate of the end of this new segment of rope.
+</td></tr>
+<tr><td>
+   Rope_SegmentLength            
+</td><td width=100%>
+the target length of the segment of rope. This macro will attempt to very approximately match this length.
+</td></tr>
+</table>
+    </td></tr>
+        </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_Catenary'></a>Rope_Catenary macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds a loose length of rope to the 'Rope_Array' array connecting the current point with a given coordinate. Twenty one points are added to the array. The end point uses the coordinate specified, the points in between follow the shape of a catenary connecting the two points. 
+A catenary follows the path of a chain or cable hanging under its own weight. Long lengths of rope typically follow such a path, although for shorter lengths the internal forces passed along the rope usually cause the rope to deviate from a catenary shape. 
+<p>
+The shape of a catenary is a function of the horizontal forces applied to the ends of the rope or chain (the horizontal component of the tension) and the weight per unit length of the material from which the rope or chain is produced. The ratio between these two factors is commonly referred to as 'a'. The <a href="#Rope_Catenary_a">Rope_Catenary_a</a> variable can be set before calling the 'Rope_Catenary' macro to control this value, with higher values giving a more taught rope and lower values giving more sag. This value defaults to '1', giving a quite taught rope.
+<p>
+For a description of how this macro works, see <a href="#catenaries">Caternaries</a> below (and the macro itself in 'rope.inc').
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_Coordinate            
+</td><td width=100%>
+the coordinate of the end of this new segment of rope.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_OverhandKnot'></a>Rope_OverhandKnot macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds 8 points to the 'Rope_Array' array that follow the path of a simple knot tied in the rope.
+It has no parameters.
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_FigureOfEight'></a>Rope_FigureOfEight macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds 12 points to the 'Rope_Array' array that follow the path of a figure of eight knot tied in the rope.
+It has no parameters.
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_CloveHitch'></a>Rope_CloveHitch macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds 13 points to the 'Rope_Array' array that follow the path of a clove hitch.
+It has no parameters.
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_Spiral'></a>Rope_Spiral macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds points to the 'Rope_Array' array to follow the path of a spiral of rope. Starting at the current position the spiral moves forward and down around a 'central' point using the orientation vectors <a href="#Rope_ArrayAheadVector">'Rope_ArrayAheadVector'</a>, <a href="#Rope_ArrayUpVector">'Rope_ArrayUpVector'</a> and <a href="#Rope_ArrayRightVector">'Rope_ArrayRightVector'</a> to control the direction of the spiral. These orientation vectors are relative to the 'ahead' direction of the rope at the time the macro is called and usually don't align with the standard x,y and z axes. 
+<p>
+You may need to set 'Rope_ArrayUpVector' before calling the 'Rope_Spiral' macro to orientate the spiral if you find that it is not initially added at the orientation you require. You can use the standard POV-Ray vaxis_rotate function to rotate 'Rope_ArrayUpVector' around 'Rope_ArrayAheadVector' by a desired amount, specified in degrees. 
+<div class="codesample">
+  &nbsp;&nbsp;#declare Rope_ArrayUpVector = vaxis_rotate(Rope_ArrayUpVector,Rope_ArrayAheadVector,30);
+</div> 
+This twists the up vector 30 degrees around the ahead vector.
+<p>
+The central axis of the spiral is determined based on the value of <a href="#Rope_CentreDisplacement">'Rope_CentreDisplacement'</a> which defines a distance in terms of multiples of rope thicknesses that the centre is 'below' the starting position relative to 'Rope_ArrayUpVector'.  The radius of the spiral can be increased or decreased by a specified amount for each complete turn using <a href="#Rope_UpDispPerCoil">'Rope_UpDispPerCoil'</a>, which is specified as multiples of the rope thickness. The rope can also be made to extend to the left or right by a fixed amount per complete turn using <a href="#Rope_RightDispPerCoil">'Rope_RightDispPerCoil'</a>, which is also specified as multiples of the rope thickness. The number of points added is determined by the product of the <a href="#Rope_Coils">'Rope_Coils'</a> variable (default value = 3) and the <a href="#Rope_PointsPerCoil">'Rope_PointsPerCoil'</a> variable (default value = 5.3). The radius of the helix is defined using the <a href="#Rope_PoleRadius">'Rope_PoleRadius'</a> variable (default value = 0.03).
+<p>
+This macro responds to the setting of <a href="#Rope_KnotRandomization">'Rope_KnotRandomization'</a>, which uses the random number stream <a href="#Rope_RandomStream">'Rope_RandomStream'</a> to add an amount of randomisation to the positions of the points that it adds to the path of the rope. The default randomisation is 0.3. You can increase this value or decrease it to '0' to remove randomisation.
+<p>
+This macro has no parameters.
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_Noose'></a>Rope_Noose macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds points to the 'Rope_Array' array that follow the path of a noose tied in the rope. The number of points depends on the number of coils in the rope (14+5*No of coils). This can be done in a single pass or with two passes.
+It has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_KnotHalf            
+</td><td width=100%>
+1 to add the first half, 2 to draw the second half or 0 to draw both halves.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_ReefKnot'></a>Rope_ReefKnot macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds 20 points to the 'Rope_Array' array that follow the path of a reef knot tied in the rope (25 if the two halves are joined). This is usually done in two passes, creating one half of the knot (10 points) with the first macro call and completing it with a second macro call. This is because a reef knot is usually used to tie two sections of rope together.
+It has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_KnotHalf            
+</td><td width=100%>
+1 to add the first half, 2 to draw the second half or 0 to draw both halves.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_RoundTurnAndTwoHalfHitches'></a>Rope_RoundTurnAndTwoHalfHitches macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds points to the 'Rope_Array' array that follow the path of a round turn and two half hitches tied in the rope. This can be done in two passes, creating the first part of the knot (just a straight line) with the first macro call adding 1 point, completing the knot with a second macro call that adds the two hitches, using 13 points generated by the <a href="#Rope_CloveHitch">'Rope_CloveHitch'</a> macro.
+<p>
+This macro only actually adds the round turn part of the knot if the complete knot is generated in a single pass. Otherwise you are free to take the rope wherever you want in the scene between the first half and the second half of the knot. To add your own turns you can call the <a href="#Rope_Spiral">'Rope_Spiral'</a> macro, specifying the number of turns you want to add. If the 'Rope_RoundTurnAndTwoHalfHitches' macro is called with a parameter of '0' the standard round turns are added by setting <a href="#Rope_Coils">'Rope_Coils'</a> to 1.55.   
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_KnotHalf            
+</td><td width=100%>
+1 to add the first half, 2 to draw the second half or 0 to draw both halves.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_Bowline'></a>Rope_Bowline macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds 16 points to the 'Rope_Array' array that follow the path of a bowline tied in the rope (18 if the two halves are joined). This is usually done in two passes, creating the first part of the knot (just a twist in the rope) with the first macro call adding 7 points and completing it with a second macro call that adds the rest of the knot, using 9 points.
+<p>
+This is similar to 'Rope_DutchBowline' (Dutch Marine Bowline or Cowboy Bowline) except that the final loop is reversed.
+<p>
+It has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_KnotHalf            
+</td><td width=100%>
+1 to add the first half, 2 to draw the second half or 0 to draw both halves.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_DutchBowline'></a>Rope_DutchBowline macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro adds 16 points to the 'Rope_Array' array that follow the path of a Dutch Marine Bowline or Cowboy Bowline tied in the rope (18 if the two halves are joined). This is usually done in two passes, creating the first part of the knot (just a twist in the rope) with the first macro call adding 7 points and completing it with a second macro call that adds the rest of the knot, using 9 points.
+<p>
+This is similar to 'Rope_Bowline' except that the final loop is reversed.
+<p>
+It has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_KnotHalf            
+</td><td width=100%>
+1 to add the first half, 2 to draw the second half or 0 to draw both halves.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_FindEdge'></a>Rope_FindEdge macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro is used to find a point on an object that is inline with the current ahead direction so that the rope can be trailed over that edge. This doesn't add the point into the 'Rope_Array' array, it just returns the coordinates.
+It has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_TargetObject            
+</td><td width=100%>
+the object in the path of the 'Rope_ArrayAheadVector' vector.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_FindEdgeFromCentre'></a>Rope_FindEdgeFromCentre macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro is used to find a point on the leading edge of an object that is in the direction of the centre of the object from the current location.
+This doesn't add the point into the 'Rope_Array' array, it just returns the coordinates.
+It has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_TargetObject            
+</td><td width=100%>
+is the object to scan.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_TrackOver'></a>Rope_TrackOver macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro is used to add a series of points to the 'Rope_Array' array, taking the path of the rope over the top of an object in the direction of the ahead vector.
+It has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_TargetObject            
+</td><td width=100%>
+is the object to traverse.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_Undef'></a>Rope_Undef macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro resets key control variables so that they can revert to default values.
+    </td></tr>
+  </table>
+<p>
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+<p>
+  <h2>Utility Macros</h2>
+ 
+<p>
+The following macros are used by the macros listed above. You won't normally need to call any of these macros directly from your scene file, but you may find some of them useful, particularly if you want to add your own macros to generate new knots and other rope shapes.     
+<p>  
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Rope_StandardStyles'></a>Rope_StandardStyles macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro interprets the style specified on the Rope macro call into a set of variable settings to generate a rope that corresponds to the named style. You don't normally need to call this macro directly.
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   Rope_Style            
+</td><td width=100%>
+a string that indicates the style of rope to generate e.g. "Gold Braided". The available styles are illustrated under the heading <a href="#styles">'Rope Styles'</a> above.
+<p>
+You can also easily add your own variants into this macro and give them names of your choosing to enable you to readily access your own styles from different scene files. See <a href="#addingstyles">'Adding New Styles'</a> above.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_Defaults'></a>Rope_Defaults macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro contains the default settings and textures used by the Rope macro when generating a rope. You don't usually need to call this macro because it is called by the <a href="#Rope">'Rope'</a> macro and by the <a href="#Rope_ArrayToRope">'Rope_ArrayToRope'</a> macro as required. To override the defaults set by this macro you can simply set values in your scene file before calling the 'Rope' macro and your settings will take precedence. 
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_InitializeKnot'></a>Rope_InitializeKnot macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro is invoked by macros that add points into the 'Rope_Array' array to perform common functions, such
+as initializing the array and the associated orientation vectors as necessary. It attempts to make the macros fairly resilient and attempts to warn the user if unrecoverable conditions are encountered.
+<p>
+It has 2 parameters:
+<table border=1>
+<tr><td>
+   Rope_KnotHalf            
+</td><td width=100%>
+must be '0', '1' or '2' to indicate which part of the knot is being created. '0' indicates that the whole knot is being generated in a single pass. Many of the simple shapes only ever need a single pass, so routinely set this to '0'.
+</td></tr>
+<tr><td>
+   Rope_StartArray            
+</td><td width=100%>
+must be '0' or '1' to indicate whether or not this macro should add a first point to the array if it doesn't contain any points yet. Most of the macros depend upon there being a current point from which to add points so most of them specify a parameter of '1' to avoid potential errors if no point has previously been defined. The 'Rope_AddPoint' macro is the principal exception to this.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_AdjustVectors'></a>Rope_AdjustVectors macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro is invoked by macros that use the 'Rope_Array' array. It recalculates the 'Rope_ArrayAheadVector' and 'Rope_ArrayUpVector' vectors when one or more coordinates are added into the 'Rope_Array' array. This is usually called at the start of a knot macro (via the 'Rope_InitializeKnot' macro) and at the end of each knot macro.
+<p>
+It has no parameters.
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_ArrayDisplacement'></a>Rope_ArrayDisplacement macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro is invoked by macros that define knots and other rope shapes. It adds a point into the 'Rope_Array' array using displacements specified as parameters to the macro call. These displacements relate to the direction vectors that hold the current orientation of the rope: <a href="#Rope_ArrayAheadVector">'Rope_ArrayAheadVector'</a>, <a href="#Rope_ArrayUpVector">'Rope_ArrayUpVector'</a> and <a href="#Rope_ArrayRightVector">'Rope_ArrayRightVector'</a>.  These displacements are specified as multiple of the rope thickness, so a parameter of '1.7' represents 1.7 x 2 x Rope_Radius POV-Ray units. See <a href="#addingshapes">Adding New Knots</a> for a description of how to use this macro. 
+<p>
+It has 3 parameters.
+<table border=1>
+<tr><td>
+   Rope_AheadDisplacement            
+</td><td width=100%>
+the distance to move in the direction of the 'Rope_ArrayAheadVector' vector.
+</td></tr>
+<tr><td>
+   Rope_UpDisplacement            
+</td><td width=100%>
+the distance to move in the direction of the 'Rope_ArrayUpVector' vector.
+</td></tr>
+<tr><td>
+   Rope_RightDisplacement            
+</td><td width=100%>
+the distance to move in the direction of the 'Rope_ArrayRightVector' vector.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2><a name='Rope_AddPositionMarker'></a>Rope_AddPositionMarker macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro is a utility macro that can be used during development to place a marker at a specified point in the rendered scene. This marker consists of 3 differently coloured cylinders at right angles to one another. This can, for example, be used to show the current position in the 'Rope_Array' array as it is being populated with new coordinates. For example:
+<p>
+<div class=codesample>
+  Rope_AddPositionMarker(Rope_Array[Rope_ArrayIndex])
+</div>
+<p>
+It has 1 parameter.
+<table border=1>
+<tr><td>
+   Rope_Coordinate            
+</td><td width=100%>
+the coordinate of the point at which to draw the marker.
+</td></tr>
+</table>
+    </td></tr>
+
+
+  </table>
+  
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+  <a name='variables'></a>
+  <h1>Variable Reference</h1>
+  <p>
+Don't be put off by the number of variables that you can use to control the Rope macros. They all have default values, so you can start adding ropes to your POV-Ray scene without bothering with any of them if you wish. If you do want greater control though, there are a lot of things you can easily adjust to your needs.
+  <p>
+  <a href="#Rope_Array"                      >Rope_Array                            </a><br>
+  <a href="#Rope_ArrayAheadVector"           >Rope_ArrayAheadVector                 </a><br>
+  <a href="#Rope_ArrayIndex"                 >Rope_ArrayIndex                       </a><br>
+  <a href="#Rope_ArrayRightVector"           >Rope_ArrayRightVector                 </a><br>
+  <a href="#Rope_ArrayUpVector"              >Rope_ArrayUpVector                    </a><br>
+  <a href="#Rope_BindingLength"              >Rope_BindingLength                    </a><br>
+  <a href="#Rope_BindingRadius"              >Rope_BindingRadius                    </a><br>
+  <a href="#Rope_BindingThreadRadius"        >Rope_BindingThreadRadius              </a><br>
+  <a href="#Rope_BraidInset"                 >Rope_BraidInset                       </a><br>
+  <a href="#Rope_Brightness"                 >Rope_Brightness                       </a><br>
+  <a href="#Rope_Catenary_a"                 >Rope_Catenary_a                       </a><br>
+  <a href="#Rope_CentreDisplacement"         >Rope_CentreDisplacement               </a><br>
+  <a href="#Rope_CentreSpline"               >Rope_CentreSpline                     </a><br>
+  <a href="#Rope_Coils"                      >Rope_Coils                            </a><br>
+  <a href="#Rope_CordRadius"                 >Rope_CordRadius                       </a><br>
+  <a href="#Rope_FibreFinish"                >Rope_FibreFinish                      </a><br>
+  <a href="#Rope_FibreFrequency"             >Rope_FibreFrequency                   </a><br>
+  <a href="#Rope_FibrousTexture"             >Rope_FibrousTexture                   </a><br>
+  <a href="#Rope_HalfKnotIndex"              >Rope_HalfKnotIndex                    </a><br>
+  <a href="#Rope_HalfKnotList"               >Rope_HalfKnotList                     </a><br>
+  <a href="#Rope_InnerColor"                 >Rope_InnerColor                       </a><br>
+  <a href="#Rope_KnotHandedness"             >Rope_KnotHandedness                   </a><br>
+  <a href="#Rope_KnotRandomization"          >Rope_KnotRandomization                </a><br>
+  <a href="#Rope_LengthChunks"               >Rope_LengthChunks                     </a><br>
+  <a href="#Rope_OuterColor"                 >Rope_OuterColor                       </a><br>
+  <a href="#Rope_PointsPerCoil"              >Rope_PointsPerCoil                    </a><br>
+  <a href="#Rope_PoleRadius"                 >Rope_PoleRadius                       </a><br>
+  <a href="#Rope_Radius"                     >Rope_Radius                           </a><br>
+  <a href="#Rope_RandomStream"               >Rope_RandomStream                     </a><br>
+  <a href="#Rope_Randomness"                 >Rope_Randomness                       </a><br>
+  <a href="#Rope_RightDispPerCoil"           >Rope_RightDispPerCoil                 </a><br>
+  <a href="#Rope_ShowFibres"                 >Rope_ShowFibres                       </a><br>
+  <a href="#Rope_ShowRopeLength"             >Rope_ShowRopeLength                   </a><br>
+  <a href="#Rope_SplineIncrement"            >Rope_SplineIncrement                  </a><br>
+  <a href="#Rope_SplineTypeList"             >Rope_SplineTypeList                   </a><br>
+  <a href="#Rope_StrandFinish"               >Rope_StrandFinish                     </a><br>
+  <a href="#Rope_StrandTexture"              >Rope_StrandTexture                    </a><br>
+  <a href="#Rope_StrandTextureArray"         >Rope_StrandTextureArray               </a><br>
+  <a href="#Rope_TwistRatio"                 >Rope_TwistRatio                       </a><br>
+  <a href="#Rope_Type"                       >Rope_Type                             </a><br>
+  <a href="#Rope_UpDispPerCoil"              >Rope_UpDispPerCoil                    </a><br>
+<p>  
+<h2>Controlling the Rope macro</h2>
+The following variables can be used to control the <a href="#Rope">'Rope'</a> macro. This macro uses the 'Rope_CentreSpline' spline to add a rope object to your scene file that follows the path of that spline. The section <a href="#PathCreation">following</a> this one covers variables to control a set of macros that help you to construct this spline if you don't want to do it yourself.
+
+  <table border=1>
+    <tr><th>Variable</th><th>Description</th>
+    <tr><th><a name="Rope_Type"></a>Rope_Type          </th><td>
+Text specifying the name of the rope type. Three rope types are currently supported; "Right Helix" to generate a rope with a right-handed twist, "Left Helix" to generate a rope with a left-handed twist, or "Braided" to generate a braided rope. The default is "Right Helix".
+    </td></tr>
+    <tr><th><a name="Rope_Radius"></a>Rope_Radius        </th><td>
+A decimal value defining the radius of the rope (half the thickness). This defaults to 0.018 POV-Ray units if you don't specify a value and is intended to represent a rope that is 36mm thick. 
+    </td></tr>    
+    <tr><th><a name="Rope_CordRadius"></a>Rope_CordRadius        </th><td>
+A decimal value defining the radius of each of the individual strands that go to make up the rope. For the default helical rope this defaults to half the value assigned to 'Rope_Radius'. For braided rope it defaults to one third of the value assigned to 'Rope_Radius'. 
+    </td></tr>    
+    <tr><th><a name="Rope_CentreSpline"></a>Rope_CentreSpline  </th><td>
+A spline defining the path that the rope should follow. The default spline is defined as: 
+<div class=codesample>
+    #declare Rope_CentreSpline = spline {
+<br>&nbsp;&nbsp; natural_spline
+<br>&nbsp;&nbsp; 0.00, <0,1,0>
+<br>&nbsp;&nbsp; 0.25, <0,0.5,0.2>
+<br>&nbsp;&nbsp; 0.50, <0,1,0.5>
+<br>&nbsp;&nbsp; 0.75, <-0.1,1,-0.1>
+<br>&nbsp;&nbsp; 1.00, <0.5,1,-0.1>
+<br>}
+</div>
+which creates a short length of rope that starts one POV-Ray unit up the y axis, looping down to about y=0.5 and then back up close to where it started. 
+<p>
+You can use any valid spline type, but the 'quadratic_spline' and the 'natural_spline' options usually produce the most realistic results. 
+<p>
+As an alternative to defining this spline by hand, you can add points into an array of coordinates called <a href="#Rope_Array">'Rope_Array'</a> and then use the <a href="#Rope_ArrayToSpline">'Rope_ArrayToSpline'</a> macro to generate this spline (or you can call the <a href="#Rope_ArrayToRope">'Rope_ArrayToRope'</a> macro, which generates the spline and then continues to  generate the rope from this spline). The advantage of this approach is that you can use the set of macros that is provided to help you to build up an array of points, inserting knots, loops and coils etc. as you go. 
+    </td></tr>
+    <tr><th><a name="Rope_TwistRatio"></a>Rope_TwistRatio        </th><td>
+A decimal value defining the amount by which strands turn along the length of the rope to create the helical twist. This defaults to '2' for braided rope and to '3' for left and right twisted rope. Values should typically be in this general range, representing the ratio between the rope thickness and the distance along the rope that a strand takes to twist a complete turn around the rope. Decreasing the value generates a tighter twist.
+    </td></tr>    
+    <tr><th><a name="Rope_BraidInset"></a>Rope_BraidInset        </th><td>
+A decimal value defining the amount by which strands of the rope are inset when 'Rope_Type' is set to "Braided". With the "Braided" rope type, strands spiraling clockwise are interwoven with strands spiraling anticlockwise. This setting defines the amount by which the overlaps are embedded into the surface of the rope. The default setting for braided rope is 'Rope_CordRadius' and is otherwise 0. 
+    </td></tr>    
+    <tr><th><a name="Rope_ShowFibres"></a>Rope_ShowFibres        </th><td>
+An integer indicating whether or not the outer layer of fibres should be added to the texture. The default is '1' to indicate that the fibrous texture should be added. You can set this to '0' to suppress the fibrous texture. Note that the technique used to apply this texture more than doubles the render time, so it's advisable to work with this value set to '0' when rendering test scenes and only to set it to '1' for final renders. In fact you should only set this to '1' for ropes that are close enough for this level of detail to make a difference.
+    </td></tr>
+    <tr><th><a name="Rope_FibreFrequency"></a>Rope_FibreFrequency        </th><td>
+A decimal value defining the number of strands added as a texture around the outside of the rope when the 'Rope_ShowFibres' variable is set to '1'. This defaults to 50, representing 50 fibrous strands around the outside of the rope.
+    </td></tr>    
+    <tr><th><a name="Rope_OuterColor"></a>Rope_OuterColor        </th><td>
+A 3D color vector defining the color of the outer extreme of the strands of rope. This defaults to &lt;1,0.95,0.65&gt; to represent a light golden yellow color. Note that this is used to define the default texture assigned to 'Rope_StrandTexture'. If you override the definition of 'Rope_StrandTexture' then your texture definition will take precedence over the value assigned to 'Rope_OuterColor'.
+    </td></tr>
+    <tr><th><a name="Rope_InnerColor"></a>Rope_InnerColor        </th><td>
+A 3D color vector defining the color of the outer extreme of the strands of rope. This defaults to 1.2*&lt;1.0,0.6,0.1&gt; to represent a slightly overloaded brown color. Note that this is used to define the default texture assigned to 'Rope_StrandTexture'. If you override the definition of 'Rope_StrandTexture' then your texture definition will take precedence over the value assigned to 'Rope_InnerColor'.
+    </td></tr>
+    <tr><th><a name="Rope_StrandFinish"></a>Rope_StrandFinish        </th><td>
+A finish statement that is added to individual strands in the default 'Rope_StrandTexture' definition. By default this just contains a 'phong 0' statement, but you can set it to adjust the finish applied to the individual strands of rope. If you override the definition of 'Rope_StrandTexture' then your texture definition will take precedence over the finish settings assigned to 'Rope_StrandFinish'.
+    </td></tr>
+    <tr><th><a name="Rope_FibreFinish"></a>Rope_FibreFinish        </th><td>
+A finish statement that is added to the 'Rope_FibrousTexture' definition. By default this just contains a 'phong 0' statement, but you can set it to adjust the finish applied to the fibrous texture applied around the outside of the rope. If you override the definition of 'Rope_FibrousTexture' then your texture definition will take precedence over the finish settings assigned to 'Rope_FibreFinish'.
+    </td></tr>
+    <tr><th><a name="Rope_StrandTexture"></a>Rope_StrandTexture        </th><td>
+A texture definition for the texture that will be applied to individual strands of the rope. By default this texture uses a gradient pattern that cycles from the color assigned to 'Rope_OuterColor' to the color assigned to 'Rope_InnerColor' and back through the thickness of each strand. The finish assigned to 'Rope_StrandFinish' is incorporated into this texture definition.
+    </td></tr>
+    <tr><th><a name="Rope_StrandTextureArray"></a>Rope_StrandTextureArray        </th><td>
+An array of 6 texture definitions, one for each strand of the rope. This provides an alternative to using 'Rope_StrandTexture' to control the texture of the strands of the rope and enables you to specify a different texture for each strand. If you declare this array you need to declare an array with 6 elements, although not all elements need to be assigned. For helical ropes the first 3 elements are used and for braided ropes all 6 are used. If the element corresponding to a particular strand is not declared, the texture from 'Rope_StrandTexture' is used for that strand. 
+    </td></tr>
+    <tr><th><a name="Rope_FibrousTexture"></a>Rope_FibrousTexture        </th><td>
+A texture definition for the texture that will be applied around the circumference of the rope to represent the individual fibres of each strand of the rope. By default this texture uses a radial pattern that is mostly transparent, but which contains thin vertical lines based upon a darkened version of the color assigned to 'Rope_OuterColor'. The 'Rope_FibreFrequency' variable defines the number of lines drawn around the circumference and therefore controls the apparent thickness of the simulated fibres. The finish assigned to 'Rope_FibreFinish' is incorporated into this texture definition.
+    </td></tr>
+    <tr><th><a name="Rope_Randomness"></a>Rope_Randomness        </th><td>
+A decimal value defining the randomness with which the spheres used to form the shape of the rope are positioned. This defaults to 0 to generate a smooth shape to the underlying strands of rope. Specifying a value between 0 and 1 introduces a small amount of randomness which provides a more wooly/softer form. You can specify values greater than 1 to produce exaggerated distortions to the rope strands. If you get up to values greater than about 10 it becomes possible for spheres to leave the surface of the strand and the rope shape completely disintegrates.
+    </td></tr>    
+    <tr><th><a name="Rope_RandomStream"></a>Rope_RandomStream        </th><td>
+A random number stream used by various Rope macros for the randomisation of positions and textures. By default this is set to 'seed(1)'. You can change this if you find that particular randomisation artifacts are causing you a problem in your scene. 
+    </td></tr>    
+    <tr><th><a name="Rope_SplineIncrement"></a>Rope_SplineIncrement   </th><td>
+A decimal value defining the increment that is used to build the rope from spheres. This defaults to 0.001 POV-Ray units resulting in a small number of artifacts when using a scale of 1 POV-Ray unit = 1 metre and the rope is viewed from a distance of about 0.5 metres. At this scale artifacts are hardly noticeable when the outer fibrous texture is applied. Increasing this value improves performance (as the number of spheres used to define the rope is inversely proportional to this value), but can reduce the quality. Conversely reducing it to 0.0005 reduces artifacts, but doubles the number of spheres used to form a given length of rope.
+    </td></tr> 
+   
+   
+    <tr><th><a name="Rope_LengthChunks"></a>Rope_LengthChunks        </th><td>
+A decimal value (usually an integer) controlling the number of slices used by the Rope macro to calculate the total length of the spline used to define the path of the rope. This defaults to 1000, which is usually sufficient for the level of accuracy required by the macro. If you get problems that may relate to the length calculation you can try increasing this value to see if that helps. Such problems could occur if you create very long segments of rope that incorporate intricate knots and detailed direction changes and may be noticeable if the rope doesn't end exactly where you expect it to.
+    </td></tr>    
+    <tr><th><a name="Rope_Brightness"></a>Rope_Brightness        </th><td>
+        Decimal value used when the standard rope textures are defined to control the overall brightness of the rope texture. The default value of 1 doesn't adjust the colors at all. This can be used to adjust for different lighting levels in your scene. If you use more light then you can reduce this value to avoid getting washed-out colors.
+<p>
+This setting is designed to accommodate the hugely different lighting settings used in POV-Ray scene files. Some people use a lot of light and dim colors. Others use low light levels and bright colors. The default settings and most of the examples use a single, full light source. If your scene uses more light you can reduce this 'Rope_Brightness' value to compensate. If you use less light in your scene you can increase this value. For example, if you use 10 times as much light in your scene file you can set this value to 0.1 to help compensate and reduce color saturation artifacts. 
+    </td></tr>
+    <tr><th><a name="Rope_BindingLength"></a>Rope_BindingLength        </th><td>
+Decimal value used by the <a href="#Rope_Binding">'Rope_Binding'</a> macro to control the length of the binding to be applied to one or both ends of a length of rope. This defaults to Rope_Radius*1.5.
+    </td></tr>    
+    <tr><th><a name="Rope_BindingRadius"></a>Rope_BindingRadius        </th><td>
+        Decimal value used by the <a href="#Rope_Binding">'Rope_Binding'</a> macro to control the radius of the binding at one or both ends of a length of rope. This defaults to Rope_Radius*0.95. This is usually less than the radius of the rope because the binding tightens and compresses the strands.
+    </td></tr>
+    <tr><th><a name="Rope_BindingThreadRadius"></a>Rope_BindingThreadRadius        </th><td>
+        Decimal value used by the <a href="#Rope_Binding">'Rope_Binding'</a> macro to control the radius of the individual threads that go to make up the binding to be applied to one or both ends of a length of rope. This defaults to Rope_Radius/20;.
+    </td></tr>
+    <tr><th><a name="Rope_ShowRopeLength"></a>Rope_ShowRopeLength        </th><td>
+By default the length of each rope is displayed in the message stream. You can switch these messages off by setting this variable to '0', 'false' or 'off' in your scene file, or you can change the default setting in the <a href="#Rope_Defaults">'Rope_Defaults'</a> macro. This defaults to '1' (true).
+    </td></tr>
+    </table> 
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+<p>
+<h2><a name="PathCreation"></a>Creating a path for the rope to follow</h2>
+The following variables can be used to control macros that help you to build a path for a rope to follow. Those macros manipulate the 'Rope_Array' array which can then be transposed into a spline using the 'Rope_ArrayToSpline' macro or the 'Rope_ArrayToRope' macro.
+
+  <table border=1>
+    <tr><th><a name="Rope_Array"></a>Rope_Array   </th><td>
+An array of coordinates that can be constructed using various macros to form useful shapes. Once you've added the required shapes into this array it can be converted into a spline for use with the Rope macro by calling the 'Rope_ArrayToSpline' macro. You can add a coordinate to this array yourself or you can write macros to add sets of points to this array. Otherwise you can simply rely upon the existing macros to maintain this array for you. 
+<p>
+The 'Rope_ArrayIndex' variable is incremented each time a point is added to the array to keep track of how many coordinates have been added. This is done automatically by the knot macros, but you'll need to do it yourself if you add points directly into this array.
+    </td></tr>    
+    <tr><th><a name="Rope_ArrayIndex"></a>Rope_ArrayIndex   </th><td>
+An integer that points to the last position in the 'Rope_Array' array to which a set of coordinates has been added. If you add a point into the 'Rope_Array' yourself then it's up to you to increment this variable, whereas the knot macros do this for you. A value of '-1' shows that no points have yet been added into the 'Rope_Array' array. 
+    </td></tr>    
+    <tr><th><a name="Rope_ArrayAheadVector"></a>Rope_ArrayAheadVector   </th><td>
+A 3D direction vector used by many of the rope macros when they add points into the 'Rope_Array' array. This generally keeps track of the forward/backward direction that the rope is currently following, although most of the macros only update it at the end, using a constant frame of reference while adding a single shape. You may wish to set or adjust this vector before calling a knot macro so that it generates a knot with a different orientation to the default orientation.
+    </td></tr>    
+    <tr><th><a name="Rope_ArrayUpVector"></a>Rope_ArrayUpVector   </th><td>
+A 3D direction vector used by many of the rope macros when they add points into the 'Rope_Array' array. This generally keeps track of the up/down direction that the rope is currently following and is usually adjusted to be perpendicular to the 'Rope_ArrayAheadVector' vector. Most of the macros adjust this variable at the start and/or the end, using a constant frame of reference while adding a single shape. You may wish to set or adjust this vector before calling a knot macro so that it generates a knot with a different orientation to the default orientation.
+    </td></tr>    
+    <tr><th><a name="Rope_ArrayRightVector"></a>Rope_ArrayRightVector   </th><td>
+A 3D direction vector used by many of the rope macros when they add points into the 'Rope_Array' array. This generally keeps track of the left/right direction that the rope is currently following. This is usually automatically calculated to be perpendicular to the 'Rope_ArrayAheadVector' and 'Rope_ArrayUpVector' vectors. In general you should use the 'Rope_KnotHandedness' setting to adjust the handedness of knots rather than manipulating this vector.  
+    </td></tr>    
+    <tr><th><a name="Rope_KnotHandedness"></a>Rope_KnotHandedness   </th><td>
+An integer containing the value '1' or '-1' used with various knot generating macros to control whether the knot being created is left handed or right handed. By default a value of 1 is defined. To create a knot with the opposite handedness set this variable to '-1'.
+    </td></tr>    
+    <tr><th><a name="Rope_HalfKnotList"></a>Rope_HalfKnotList   </th><td>
+A 2D array of values that holds information about half-completed knots. This array is maintained automatically by the knot macros. You won't normally need to worry about this array unless writing new two-part knot macros.
+<p>
+Some knots are constructed in two halves. For example the round turn and two half hitches incorporates a short straight section of rope to which the second part of the knot is tied after the rope has gone off and potentially been wrapped around some other object in the scene. The second dimension of this array stores the position and orientation that the rope needs to return to in order to complete the knot. The 'Rope_HalfKnotIndex' variable is automatically incremented each time an incomplete knot is added into this array and is decremented each time an incomplete knot is completed. 
+    </td></tr>    
+    <tr><th><a name="Rope_HalfKnotIndex"></a>Rope_HalfKnotIndex   </th><td>
+An integer that points to the last position in the 'Rope_HalfKnotList' array to which a set of values has been added. Generally you don't need to worry much about this variable as it is incremented and decremented automatically by the various knot macros. However, the macros assume that knots will be completed in the reverse order to the order in which the first half of each knot is created. If you do need to change the sequence then you can set this variable explicitly in your scene file before calling the two-part knot macros for the second time. 
+    </td></tr>    
+    <tr><th><a name="Rope_Catenary_a"></a>Rope_Catenary_a   </th><td>
+A decimal value used to control the catenary shape generated by the <a href="#Rope_Catenary">Rope_Catenary</a> macro. A catenary follows the path of a chain or cable hanging under its own weight. The shape of a catenary is a function of the horizontal forces applied to the ends of the rope or chain (the tension) and the weight per unit length of the material from which the rope or chain is produced. The ratio between these two factors is here referred to as 'a'. The 'Rope_Catenary_a' variable can be set before calling the 'Rope_Catenary' macro to control this value, with higher values giving a more taught rope and lower values giving more sag. The default setting is '1', which is fairly taught. A setting of 0.5 is very loose.  
+    </td></tr>    
+    <tr><th><a name="Rope_Coils"></a>Rope_Coils   </th><td>
+A decimal value specifying the number of coils for the <a href="#Rope_Spiral">Rope_Spiral</a> macro. Specifying an integer generates complete turns. The default value is 3. The Rope_Spiral macro is used by a couple of other macros and this setting can therefore affect those macros. For example, when the <a href="#Rope_RoundTurnAndTwoHalfHitches">Rope_RoundTurnAndTwoHalfHitches</a> macro is called with a parameter of '0' to tell it to generate a complete knot it sets 'Rope_Coils' to 1.55 before calling the <a href="#Rope_Spiral">Rope_Spiral</a> macro to add coils for the 'round turn' part of the knot. 
+    </td></tr>    
+    <tr><th><a name="Rope_PointsPerCoil"></a>Rope_PointsPerCoil   </th><td>
+A decimal value specifying the number of points that each coil of rope added by the <a href="#Rope_Spiral">Rope_Spiral</a> macro should add into the 'Rope_Array' array. The default is 5.3 points per coil. A non-integer value usually produces better results because there is less visible alignment of the points in the finished object. The 'Rope_Spiral' macro calculates the total number of points for the number of coils required and rounds that total to an integer value. 
+    </td></tr>    
+    <tr><th><a name="Rope_PoleRadius"></a>Rope_PoleRadius   </th><td>
+A decimal value that can be used to specify the initial inner starting radius (in POV-Ray units) of a spiral. This is used by the <a href="#Rope_Spiral">Rope_Spiral</a> macro to calculate a default value for 'Rope_CentreDisplacement' unless 'Rope_CentreDisplacement' is explicitly specified. This is useful when using the <a href="#Rope_Spiral">Rope_Spiral</a> macro with 'Rope_RightDispPerCoil' to generate a helix, in which case it describes the inner radius of a pole that would fit down the middle of the helix. If 'Rope_CentreDisplacement' is set the <a href="#Rope_Spiral">Rope_Spiral</a> macro ignores the value of 'Rope_PoleRadius'.
+    </td></tr>    
+    <tr><th><a name="Rope_CentreDisplacement"></a>Rope_CentreDisplacement   </th><td>
+A decimal value controlling the initial inner radius of the spiral generated by the <a href="#Rope_Spiral">Rope_Spiral</a> macro. This is specified in rope thicknesses and defines the initial number of rope thicknesses below the centre of the rope that the spiral will spiral around. It defaults to 3 rope thicknesses, but the default will take account of 'Rope_PoleRadius' if it has been set.
+    </td></tr>    
+    <tr><th><a name="Rope_UpDispPerCoil"></a>Rope_UpDispPerCoil   </th><td>
+A decimal value controlling the amount by which the <a href="#Rope_Spiral">Rope_Spiral</a> macro spirals inwards or outward as it adds each coil to the rope. This is specified in rope thicknesses and defaults to '1', increasing the spiral radius by one rope thickness per turn. The 'Up' bit of the variable name refers to the displacement direction as it aligns with the direction of the Rope_ArrayUpVector at the start of the spiral. A positive value spirals away from the centre point, generating an outward spiral. A negative value spirals in towards the centre point, generating an inward spiral.
+    </td></tr>    
+    <tr><th><a name="Rope_RightDispPerCoil"></a>Rope_RightDispPerCoil   </th><td>
+A decimal value controlling the amount by which the <a href="#Rope_Spiral">Rope_Spiral</a> macro displaces the rope to the right as it adds a coil to the rope. This is specified in rope thicknesses and defaults to '0'. The 'Right' bit of the variable name refers to the displacement direction as it aligns with the direction of the <a href="#Rope_ArrayRightVector">'Rope_ArrayRightVector'</a> at the start of the spiral. A positive value loops the rope down and to the right (generating a left-handed helix). A negative value loops the rope down and to the left (generating a right-handed helix). 
+    </td></tr>    
+    <tr><th><a name="Rope_SplineTypeList"></a>Rope_SplineTypeList   </th><td>
+An array of text strings containing spline types that is used by the <a href="#Rope_ArrayToRope">Rope_ArrayToRope</a> macro to create a single rope from a series of separate splines. This array is indexed using <a href="#Rope_ArrayIndex">'Rope_ArrayIndex'</a> so that the array elements correspond with the <a href="#Rope_Array">'Rope_Array'</a> array. An element only exists in the 'Rope_SplineTypeList' array if a break is required at the corresponding point in the 'Rope_Array' array. Otherwise the element remains undefined.
+    </td></tr>    
+    <tr><th><a name="Rope_KnotRandomization"></a>Rope_KnotRandomization   </th><td>
+Some of the shape macros support a configurable amount of randomisation (For example the <a href="#Rope_Spiral">'Rope_Spiral'</a> macro) controlled by this setting. The default value is 0.3, which causes the path of the shape to fluctuate a little. You can increase this value to accentuate the variability of the path or reduce this value, potentially down to '0' to remove any randomisation. If you are happy with the amount of randomisation that you see, but there are particular inconvenient randomisation artifacts that you want to get rid of, you may wish to reseed the <a href="#Rope_RandomStream">'Rope_RandomStream'</a> variable. This will give you a different randomisation pattern. 
+    </td></tr>    
+</table> 
+   
+
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+<h1><a name='footnotes'></a>Footnotes</h1>
+
+<h2>Further Reading</h2>
+<h3>Knots</h3>
+A handy index of knots can be found at <a href="http://www.layhands.com/Knots/Knots_KnotsIndex.htm">http://www.layhands.com/Knots/Knots_KnotsIndex.htm</a>.
+<p>
+<h3><a name='catenaries'></a>Catenaries</h3>
+A handy summary of the maths behind catenaries can be found at <a href="http://mysite.du.edu/~jcalvert/math/catenary.htm">http://mysite.du.edu/~jcalvert/math/catenary.htm</a>.
+<p>
+The <a href="#Rope_Catenary">Rope_Catenary</a> macro uses the general catenary formula: &nbsp;&nbsp; <i><b>y=a(cosh(x/a)-1)</b></i> &nbsp;&nbsp; which places the lowest point of the catenary curve at the origin. This formula uses the hyperbolic cosine and the value for <b>'a'</b>, which is a constant for a given catenary. The constant <b>'a'</b> defines the ratio between the horizontal force on the rope and the weight per unit length. 
+<p>
+The algorithm uses trial and error (successive approximation) to fit the catenary to two points A and B that are the same horizontal distance and vertical distance apart as the specified start and end points. Going into the function we don't know where A and B are, but we know that <b>'B.x-A.x'</b> is equal to the horizontal distance between our known start and end points and that <b>'B.y-A.y'</b> is equal to the vertical distance between them. So we can say that: &nbsp;&nbsp; <i><b>B.y-A.y = a(cosh(B.x/a)-1) - a(cosh(A.x/a)-1)</b></i> &nbsp;&nbsp; which simplifies to: &nbsp;&nbsp; <i><b>B.y-A.y = a(cosh(B.x/a) - cosh(A.x/a))</b></i>.
+<p>
+For two values for A.x and B.x that are the required horizontal distance apart we can therefore directly calculate the vertical distance between the corresponding points on the catenary curve. If we start with A.x=0 we get a line that goes right and up from the origin. If the vertical separation is too small we increase A.x and if it's too large we decrease it. By successively increasing and decreasing the value by ever diminishing amounts we can quickly home in on positions that correspond to both the horizontal and vertical separation of the specified start and end points for the length of rope we need to add. This process of trial and error 'fixes' the catenary curve relative to our specified start and end points, so we can plot a sequence of points that follow the curve.
+
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+<h2>Change History</h2>
+Version 1.0 of the Rope macros was created by Chris Bartlett in May 2009 for the POV-Ray Object Collection at <a href="http://lib.povray.org/">http://lib.povray.org/</a>. 
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+
+</body>
+</html>

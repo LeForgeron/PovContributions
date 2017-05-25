@@ -1,0 +1,8 @@
+DoubleConeInvGridMacro
+grid
+pigment
+cone
+double
+double-cone
+inverted
+macro

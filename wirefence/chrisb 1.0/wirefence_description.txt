@@ -1,0 +1,2 @@
+A very simple (but quick to render) wire fence created using just a texture applied to a solid, flat surface.
+The texture is perturbed to give a slightly crumpled look to the fence. Simple fencing posts are also included.

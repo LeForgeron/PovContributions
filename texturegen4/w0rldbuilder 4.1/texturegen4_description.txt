@@ -1,0 +1,1 @@
+An upgraded version of TextureGen uploaded under a slightly different username because I forgot the password to the original account.As I made a mistake uploading the original 4.0 (only the include file was included) I've slightly revised TextureGen and included the POV file too.

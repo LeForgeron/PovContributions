@@ -1,0 +1,1 @@
+David Sharp's macros to generate objects based upon the Fourier "harmonic" parameterizations of knots.

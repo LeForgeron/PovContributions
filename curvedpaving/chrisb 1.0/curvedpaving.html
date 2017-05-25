@@ -1,0 +1,581 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%}
+</style>
+<head>
+  <title>POV-Ray Object Collection - Curved Paving macro</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>Curved Paving Macro</h1>
+<hr>
+<table width=100%>
+  <tr><td>
+  <a href="#intro">Overview</a><br>
+  <a href="#examples">Examples</a><br>
+  <a href="#macros">Macros</a><br>
+  <a href="#variables">Variables</a><br>
+  </td><td>
+  <center>
+  <a href="http://lib.povray.org/searchcollection/download.php?objectName=curvedpaving&contributorTag=chrisb&version=1.0"
+    onclick="if (navigator.appName=='Microsoft Internet Explorer') this.click();"  
+  >
+    <input type=button value="Download Curved Paving V1.0">
+  </a>
+  </center>
+  </td></tr>
+</table>
+</td><td>
+<center>
+<img src="curvedpaving_07.jpg" width=500>
+<br>
+<b>
+Two sections of pavers cut to fit a path (see <a href="#Example07">Example 7</a> below)
+</b>
+</center>
+</td></tr>
+</table>
+
+<hr>
+  <a name='intro'></a>
+  <h1>Overview</h1>
+<TABLE BORDER="0" CELLPADDING="5" CELLSPACING="0" align=right>
+<TR>
+<TD><a href="curvedpaving.jpg"><img src="curvedpaving.jpg" width=380></a>
+<br>
+<center>
+<b>Three adjoining sections of pavers (see <a href="#Example01">Example 1</a> below)</b>
+</center>
+</TD>
+</TR>
+</TABLE>
+These macros enable you to add Curved Paving in the "bogen" (or "segmental arc") pattern to your POV-Ray scenes by invoking the <a href="#macros">curvedpaving</a> macro which is provided in the include file 'curvedpaving.inc'. This generates a POV-Ray CSG object that will readily tesselate (seamlessly interlock with adjacent sets of blocks).
+<p>
+The sample scene file 'curvedpaving.pov' contains plenty of examples showing the use of the various options and settings available with these macros. These examples are described and illustrated <a href="#examples">below</a>.
+<p> 
+The default settings produce a 0.1 unit thick layer of paving stones about 1.4 POV-Ray unit wide, but it's easy to override the defaults with the settings described (see <a href="#variables">Variables</a> below). 
+<p>
+The top surface of the generated object is aligned with the XZ plane (at a height of y=0). The object is centred on the Z axis and heads away from the origin in the +Z direction. From here the generated object can be translated (or rotated) in the normal way. The macros set certain values that can be extremely useful when positioning/aligning sets of blocks, as demonstrated in a number of the examples below.
+<p>
+The "bogen" style of paving became popular in many European cities with the advent of horse-drawn wagons as the regular interlocking structure proved extremely resilient and efficient at distributing heavy loads down into the bedding material. They are however complex and expensive to lay as blocks at the outer reaches of the arc need to be smaller than those at the centre.
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<br clear=all>
+<hr>
+
+
+
+  <a name='examples'></a>
+  <h1>Examples</h1>
+The <b>curvedpaving.pov</b> scene file contains a series of examples demonstrating the use of the 'CurvedPaving' macro. 
+You can render any of these examples simply by setting the 'Example' variable at the top of the scene file.
+These examples are explained and illustrated here:
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example00'></a>Example=0; Default settings</th><tr>
+    <tr><td width=20></td><td>
+  <img src="curvedpaving_00.jpg" align=left>
+Example 0 renders the default slab of paving blocks. 
+<p>
+The default settings produce a layer of paving stones about 1.4 POV-Ray unit wide and 0.08 units thick laying under the XZ plane so that the top surface is at a height of y=0. The slab is centred on the Z axis and heads away from the origin in the +Z direction with the top surface of the centre of the first row of blocks starting at <0,0,1>.
+<div class=codesample>
+&nbsp;camera&nbsp;{orthographic
+<br>&nbsp;&nbsp;&nbsp;location&nbsp;<0,2.8,1.74>
+<br>&nbsp;&nbsp;&nbsp;look_at&nbsp;1.75*z>
+<br>&nbsp;}
+<br>&nbsp;light_source {<-10,20,-5>, rgb 1}   
+<br>&nbsp;#include "curvedpaving.inc"  
+<br>&nbsp;CurvedPaving("")  
+</div>
+<p>
+You can also wrap the macro call in an object statement and perform translations, rotations and scaling on the result. For example:
+<div class=codesample>
+&nbsp;object {CurvedPaving("") 
+<br>&nbsp;&nbsp;&nbsp;scale 0.5
+<br>&nbsp;&nbsp;&nbsp;rotate <3,0,4>
+<br>&nbsp;&nbsp;&nbsp;translate x*1.3
+<br>&nbsp;}  
+</div>
+
+    </td></tr>   
+  </table>
+<p>
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example01'></a>Example=1; Aligning Sections</th><tr>
+    <tr><td width=20></td><td>
+Example 1 renders three copies of the default slab (extended to include 60 rows of blocks) side by side. 
+<div class=codesample>
+&nbsp;&nbsp;#declare CurvedPaving_Rows = 60; 
+<br>&nbsp;&nbsp;#declare Section = CurvedPaving("")
+<br>&nbsp;&nbsp;object {Section}
+<br>&nbsp;&nbsp;object {Section translate  CurvedPaving_CentreToCentre*x}
+<br>&nbsp;&nbsp;object {Section translate -CurvedPaving_CentreToCentre*x}
+</div>
+<p>
+This example illustrates how the variable <a href="#CurvedPaving_CentreToCentre">'CurvedPaving_CentreToCentre'</a> (which is set by the <a href="#CurvedPaving">'CurvedPaving'</a> macro) can be used to translate blocks to the left or right. The sections are designed to fit together when translated in this way. You can also add separate runs of block together end to end by simply translating in Z by the product of the depth of the block and the number of rows of blocks (CurvedPaving_BlockDepth * CurvedPaving_Rows).
+<p>
+If you don't set a <a href="#variables">control variable</a> the 'CurvedPaving' macro sets a default value that you can subsequently access in your scene. This example illustrates this by using the <a href="#CurvedPaving_BlockThickness">'CurvedPaving_BlockThickness'</a> variable to align the top of the foundations with the bottom of the blocks and to make sure that the plane used to define the grass is below the foundations. 
+<p>
+If you change settings between calls to the 'CurvedPaving' macro and you want to use values that are calculated by the macro, then you should keep a copy of those values as illustrated in <a href="#Example06">example 6</a>. That example joins together 3 panels generated using different radii. 
+<p align=center>
+  <a href="curvedpaving.jpg"><img src="curvedpaving.jpg" align=center width=700></a>
+    </td></tr>   
+  </table>
+<p>
+
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example02'></a>Example=2; Color Settings</th><tr>
+    <tr><td width=20></td><td>
+Example 2 renders three sections of blockwork with different color settings (having set the contrast to '0').
+<p>
+<div class=codesample>
+&nbsp;&nbsp; #declare CurvedPaving_Contrast = 0;
+<br>&nbsp;&nbsp; #declare CurvedPaving_Radius     = 0.5;   
+<br>&nbsp;&nbsp; #declare CurvedPaving_MinColor = <0,0,0>;
+<br>&nbsp;&nbsp; #declare CurvedPaving_MaxColor = <1,1,1>;
+<br>&nbsp;&nbsp; object {CurvedPaving("")}
+<br>&nbsp;
+<br>&nbsp;&nbsp; #declare CurvedPaving_MinColor = <0.4,0.4,0.4>;
+<br>&nbsp;&nbsp; #declare CurvedPaving_MaxColor = <0.8,0.8,0.8>;
+<br>&nbsp;&nbsp; object {CurvedPaving("") translate -CurvedPaving_CentreToCentre*x}
+<br>&nbsp;
+<br>&nbsp;&nbsp; #declare CurvedPaving_MinColor = <1.0,0.7,0.6>;
+<br>&nbsp;&nbsp; #declare CurvedPaving_MaxColor = <1.0,0.9,0.7>;
+<br>&nbsp;&nbsp; object {CurvedPaving("") translate  CurvedPaving_CentreToCentre*x}
+</div>
+<p>
+The central block shows the full color range with the minimum color (CurvedPaving_MinColor) specified as <0,0,0> (Black) and the maximum color (CurvedPaving_MaxColor) as <1,1,1> (White). Because the Red, Blue and Green color components are randomised separately and can each vary between 0 and 1 you can get blocks of any color.
+<p>
+The block on the left shows a reduced colour range with the minimum set to <0.4,0.4,0.4> and the maximum to <0.8,0.8,0.8>. This clips off the brighter and darker extremes, but still allows a significant color variation.
+<p>
+The block on the right adds a buff (yellow/red) biase with the minimum set to <1.0,0.7,0.6> and the maximum to <1.0,0.9,0.7>. With these settings you always get a full red channel, the green component can vary from 0.7 to 0.9 and the blue component from 0.6 to 0.7. The result is a yellow/buff color with a limited degree of variation.
+<p align=center> 
+  <a href="curvedpaving_02.jpg"><img src="curvedpaving_02.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example03'></a>Example=3; Contrast Settings</th><tr>
+    <tr><td width=20></td><td>
+Example 3 renders three sections of blockwork with different contrast settings using the default maximum and minimum color settings (CurvedPaving_MinColor=<0.5,0.3,0.3>; CurvedPaving_MaxColor=<0.55,0.35,0.35>;). 
+<p>
+<div class=codesample>
+&nbsp;&nbsp; #declare CurvedPaving_Radius     = 0.5;   
+<br>&nbsp;&nbsp; #declare CurvedPaving_Contrast = 0;
+<br>&nbsp;&nbsp; object {CurvedPaving("")}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp; #declare CurvedPaving_Contrast = 1;
+<br>&nbsp;&nbsp; object {CurvedPaving("") translate -CurvedPaving_CentreToCentre*x}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp; #declare CurvedPaving_Contrast = 0.5;
+<br>&nbsp;&nbsp; object {CurvedPaving("") translate  CurvedPaving_CentreToCentre*x}
+</div>
+<p>
+The central block shows the base color without contrast (CurvedPaving_Contrast=0).
+<p>
+The left hand block shows a contrast setting of '1'. This permits the colors to be darkened from their base colors all the way down to Black.
+<p>
+The right hand block uses a contrast setting of '0.5', permitting the colors to be darkened half way to black (the default setting).
+<p align=center>
+  <a href="curvedpaving_03.jpg"><img src="curvedpaving_03.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example04'></a>Example=4; Finish and Normals</th><tr>
+    <tr><td width=20></td><td>
+Example 4 illustrates the use of the finish and normal settings.
+<p>
+<div class=codesample>
+&nbsp;&nbsp;     object {CurvedPaving("")}
+<br>&nbsp;&nbsp; 
+<br>&nbsp;&nbsp; #declare CurvedPaving_Normal = normal {agate scale <0.001,0.01,0.001>}
+<br>&nbsp;&nbsp; object {CurvedPaving("") translate -CurvedPaving_CentreToCentre*x}
+<br>&nbsp;&nbsp; 
+<br>&nbsp;&nbsp; #declare CurvedPaving_Normal = normal {granite scale 0.1}
+<br>&nbsp;&nbsp; #declare CurvedPaving_Finish = finish {phong 1}
+<br>&nbsp;&nbsp; object {CurvedPaving("") translate  CurvedPaving_CentreToCentre*x}
+</div>
+<p>
+The central block uses the default settings which apply a granite normal scaled by 0.1 and no finish (actually a setting of phong 0). 
+<p>
+The left hand block uses a normal of agate scaled by <0.001,0.01,0.001> to give a fine grainy normal in the X and Z dimensions, with a more pronounced normal in the Y dimension to emphasize the effect (a deeply pitted surface).
+<p>
+The right hand block uses the granite normal with a phong of 1 to make the surface glisten as it might when wet. You could also add reflection in the finish definition, except that in this sample scene, there's no background to reflect.  
+<p align=center>
+  <a href="curvedpaving_04.jpg"><img src="curvedpaving_04.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example05'></a>Example=5; Roundness</th><tr>
+    <tr><td width=20></td><td>
+Example 5 illustrates how the roundness setting (CurvedPaving_BlockRoundness) affects the block shape. 
+<p>
+<div class=codesample>
+&nbsp;&nbsp;     #declare CurvedPaving_Radius     = 0.5;                               
+<br>&nbsp;&nbsp; object {CurvedPaving("")}                                             
+<br>&nbsp;&nbsp;                    
+<br>&nbsp;&nbsp; #declare CurvedPaving_BlockRoundness = 0.8;                           
+<br>&nbsp;&nbsp; object {CurvedPaving("") translate -CurvedPaving_CentreToCentre*x}    
+<br>&nbsp;&nbsp; 
+<br>&nbsp;&nbsp; #declare CurvedPaving_BlockRoundness   = 0;                           
+<br>&nbsp;&nbsp; #declare CurvedPaving_MortarGap = 0.01;                               
+<br>&nbsp;&nbsp; object {CurvedPaving("") translate  CurvedPaving_CentreToCentre*x}     
+</div>
+<p>
+This setting only works with the default Superellipsoid blocks. If you specify "Box" or "Polygon" this setting has no affect. 
+<p>
+The central block uses the default setting which sets roundness to 0.4. 
+<p>
+The left hand block uses a roundness setting of 0.8 to give a more cobbled effect.
+<p>
+The right hand block uses a roundness setting of 0 to give completely square blocks. In this case the mortar gap (<a href="#CurvedPaving_MortarGap">CurvedPaving_MortarGap</a>) is increased to 0.01 to give a 1cm gap.  
+<p align=center>
+  <a href="curvedpaving_05.jpg"><img src="curvedpaving_05.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example06'></a>Example=6; Radius Setting</th><tr>
+    <tr><td width=20></td><td>
+Example 6 provides a slightly more complex example to illustrate how to join sections of blockwork together when the radius of adjacent sections is different. Most real-world examples use a consistent radius for an entire paved area, but not all.
+<p>
+<div class=codesample>
+&nbsp;&nbsp;     #declare CurvedPaving_Radius     = 0.5;               
+<br>&nbsp;&nbsp; #declare CurvedPaving_MortarGap = 0.0008;             
+<br>&nbsp;&nbsp; #declare Paving1 = CurvedPaving("")                
+<br>&nbsp;&nbsp; #local C2C1 = CurvedPaving_CentreToCentre;            
+<br>&nbsp;&nbsp; #local MinZ1 = z*min_extent(Paving1);                 
+<br>&nbsp;&nbsp; object {Paving1 translate -MinZ1}                   
+<br>&nbsp;&nbsp; 
+<br>&nbsp;&nbsp; #declare CurvedPaving_Radius     = 1;                
+<br>&nbsp;&nbsp; #declare CurvedPaving_MortarGap = 0.004;               
+<br>&nbsp;&nbsp; #declare Paving2 = CurvedPaving("")                   
+<br>&nbsp;&nbsp; #local C2C2 = CurvedPaving_CentreToCentre;         
+<br>&nbsp;&nbsp; #local MinZ2 = z*min_extent(Paving2);               
+<br>&nbsp;&nbsp; object {Paving2 translate -x*(C2C1+C2C2)/2-MinZ2}      
+<br>&nbsp;&nbsp; 
+<br>&nbsp;&nbsp; #declare CurvedPaving_Radius     = 2.5;               
+<br>&nbsp;&nbsp; #declare CurvedPaving_MortarGap = 0.006;              
+<br>&nbsp;&nbsp; #declare Paving3 = CurvedPaving("")                
+<br>&nbsp;&nbsp; #local C2C3 = CurvedPaving_CentreToCentre;         
+<br>&nbsp;&nbsp; #local MinZ3 = z*min_extent(Paving3);               
+<br>&nbsp;&nbsp; object {Paving3 translate x*(C2C1+C2C3)/2-MinZ3}     
+</div>
+<p>
+As with <a href="#Example02">example 2</a> you can use the <a href="#CurvedPaving_CentreToCentre">'CurvedPaving_CentreToCentre'</a> variable, which is calculated by the <a href="#CurvedPaving">'CurvedPaving'</a> macro, but this is recalculated with each call to the <a href="#CurvedPaving">'CurvedPaving'</a> macro, so this example keeps a record of the value before calling the macro again. The actual centre to centre distance can then be calculated by taking half the centre to centre distance from one call plus half the centre to centre distance from the other.
+<p>
+Alignment of the 'seams' in the Z direction uses the standard POV-Ray function 'min_extent' to find the minimum extent of each section of blocks. It translates each section in -Z by that amount so that all 3 sections line up on the x-axis. 
+<p align=center>
+  <a href="curvedpaving_06.jpg"><img src="curvedpaving_06.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example07'></a>Example=7; Cutting to Shape</th><tr>
+    <tr><td width=20></td><td>
+Example 7 renders two sections, sliced square using a CSG (Constructive Solid Geometry) intersection operation.
+<p>
+<div class=codesample>
+&nbsp;&nbsp;       #declare CurvedPaving_Rows       = 60;                                      
+<br>&nbsp;&nbsp;   intersection {                                                               
+<br>&nbsp;&nbsp;&nbsp;&nbsp;     union {                                                                  
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       object {CurvedPaving("") translate -x*CurvedPaving_CentreToCentre/2}     
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       object {CurvedPaving("") translate  x*CurvedPaving_CentreToCentre/2}     
+<br>&nbsp;&nbsp;&nbsp;&nbsp;     }                                                                        
+<br>&nbsp;&nbsp;&nbsp;&nbsp;     box {<-0.67,-0.2,1><0.67,0.01,6> texture {CurvedPaving_ThisBlockTexture}}
+<br>&nbsp;&nbsp;   }                                                                          
+</div>
+<p>
+Most of the time when you want to add paving to a scene you want to apply it to an area with a very specific shape. In this example the shape is defined by creating a box that delimits the required section of paving. The POV-Ray 'intersection' operation is used to slice away everything that's outside the box. 
+<p>
+Exactly the same technique can be used with more complex shapes built using CSG operations or with prism objects constructed from a spline. Various free utilities like the Spilin spline editor and the Inkscape SVG editor enable you to draw spline-based shapes and generate POV-Ray prism objects from those splines if you need to create really complex shapes.
+<p>
+Unfortunately, the cutaway_textures keyword doesn't work very well with complex CSG shapes, so in this example the texture <a href="#CurvedPaving_ThisBlockTexture">'CurvedPaving_ThisBlockTexture'</a> is used with the cutting object and is therefore visible on the cut surfaces. This is actually the texture of the last block that was rendered, so it may not look right if you are using a more varied color range, but for most mottled blocks it should be quite a difficult defect to spot. It's obviously only something you need to worry about if the cut surface is visible, which is not always the case. 
+<p>
+In this example the default normal and finish (as defined by the <a href="#CurvedPaving">'CurvedPaving'</a> macro) are used to cut the ends of the otherwise smooth borders to the path and to give a texture to the mortar.
+<p align=center>
+  <a href="curvedpaving_07.jpg"><img src="curvedpaving_07.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example08'></a>Example=8; Alternative Block Objects</th><tr>
+    <tr><td width=20></td><td>
+Example 8 uses basically the same code as example 7 to render a section of footpath, but specifies the two alternative objects currently available for the two sections of pavement. 
+<p>
+<div class=codesample>
+&nbsp;&nbsp;object&nbsp;{CurvedPaving("Polygon")&nbsp;translate&nbsp;-x*CurvedPaving_CentreToCentre/2}                                   
+<br>&nbsp;&nbsp;object&nbsp;{CurvedPaving("Box")&nbsp;translate&nbsp;x*CurvedPaving_CentreToCentre/2}                                        
+</div>
+<p>
+The <a href="#CurvedPaving_Block">'CurvedPaving_Block'</a> macro is designed to make it easy to add new predefined block styles and one of the style options is to change the object from the default superellipsoid to an alternative object, such as a "Box" object or a "Polygon" object. 
+<p>
+The example on the left uses the style parameter on the <a href="#CurvedPaving">'CurvedPaving'</a> macro call to specify the "Polygon" object which creates wedge shaped polygons (with zero thickness). The example on the right uses a "Box" object, which is equivalent to a superellipsoid with no roundness. Both take slightly less time to render, but primarily illustrate the technique by which other shapes can be added.
+<p>
+The available object styles are:
+<ul>
+  <li>"Polygon"   (Left)     
+  <li>"Box"       (Right)   
+  <li>"Superellipsoid" (The default)    
+</ul>
+<p align=center>
+  <a href="curvedpaving_08.jpg"><img src="curvedpaving_08.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example09'></a>Example=9; Colored Block Styles</th><tr>
+    <tr><td width=20></td><td>
+Example 9 illustrates the use of predefined color styles. The 'CurvedPaving_Block' macro is designed to make it easy to add new predefined color and texture styles. <p>
+<div class=codesample>
+&nbsp;&nbsp;      object&nbsp;{CurvedPaving("RedBrick"&nbsp;&nbsp;)&nbsp;translate&nbsp;&nbsp;<-CurvedPaving_CentreToCentre,0,1>} 
+<br>&nbsp;&nbsp;  object&nbsp;{CurvedPaving("BlueBrick"&nbsp;)&nbsp;translate&nbsp;&nbsp;<0,0,1>}                            
+<br>&nbsp;&nbsp;  object&nbsp;{CurvedPaving("GreenBrick")&nbsp;translate&nbsp;&nbsp;<&nbsp;CurvedPaving_CentreToCentre,0,1>} 
+<br>&nbsp;&nbsp;  object&nbsp;{CurvedPaving("PinkBrick"&nbsp;)&nbsp;translate&nbsp;-x*CurvedPaving_CentreToCentre}      
+<br>&nbsp;&nbsp;  object&nbsp;{CurvedPaving("BuffBrick"&nbsp;)&nbsp;}                                    
+<br>&nbsp;&nbsp;  object&nbsp;{CurvedPaving("GreyBrick"&nbsp;)&nbsp;translate&nbsp;&nbsp;x*CurvedPaving_CentreToCentre}      
+</div>
+<p>
+This example renders six different swatches showing the predefined color settings that can be specified using the style parameter on the 'CurvedPaving' macro call.
+<p>
+The available color styles are:
+<ul>
+  <li>"RedBrick"   (Top Left)     
+  <li>"BlueBrick"  (Top Centre)   
+  <li>"GreenBrick" (Top Right)    
+  <li>"PinkBrick"  (Bottom Left)  
+  <li>"BuffBrick"  (Bottom Centre)
+  <li>"GreyBrick"  (Bottom Right)  
+</ul>
+<p align=center>
+  <a href="curvedpaving_09.jpg"><img src="curvedpaving_09.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example10'></a>Example=10; Adjusting for Different Lighting Levels</th><tr>
+    <tr><td width=20></td><td>
+Example 10 illustrates the use of brightness to adjust for alternative lighting levels. Different scene files can use very different lighting levels. The brightness setting allows you to compensate for this.
+<p>
+The image on the left was rendered with the default settings and a single full intensity light source. 
+<p>
+The central image shows bleaching caused by color saturation when ten times as much light is added to the scene.
+<p>
+The image on the right is generated with:
+<div class=codesample>
+&nbsp;&nbsp;  #declare CurvedPaving_Brightness = 0.1;
+<br>&nbsp;&nbsp;  object {CurvedPaving("")}
+</div>
+<p>
+to redress the balance. The <a href="#CurvedPaving_Brightness">'CurvedPaving_Brightness'</a> variable is simply used as a multiplication factor for the color when the macro defines the block texture. It can therefore be used to counteract lighting variations from one scene to another.
+<p align=center>
+  <a href="curvedpaving_10.jpg"><img src="curvedpaving_10.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>   
+
+
+
+  <a name='macros'></a>
+  <h1>Macros</h1>
+The following macros are all contained in the 'curvedpaving.inc' file:
+<p>
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='CurvedPaving'></a>CurvedPaving macro </th><tr>
+    <tr><td width=20></td><td>
+You call the CurvedPaving macro to create a section of paving. This is normally the only macro you need to call. The functionality is controlled through a series of variables, each of which has a default value, so you can generate the default section of paving with the following code:
+<div class=codesample>
+<br>&nbsp;camera {orthographic location <0,2.8,1.74> look_at 1.75*z }
+<br>&nbsp;light_source {<-10,20,-5>, rgb 1}   
+<br>&nbsp;#include "curvedpaving.inc"  
+<br>&nbsp;CurvedPaving("")
+</div>
+
+<p>
+The CurvedPaving_Block macro has 1 parameter:
+<table border=1>
+<tr><td>
+  CurvedPaving_BlockType            
+</td><td width=100%>
+A string that can be used to specify a predefined block type (e.g. specific color settings or the object type to be generated). Pass an empty string into the macro ("") to use default settings or to use settings that you set inline within your code. The following set styles can be specified:
+<ul>
+  <li>"Polygon"        
+  <li>"Box"          
+  <li>"Superellipsoid"     
+  <li>"RedBrick"       
+  <li>"BlueBrick"     
+  <li>"GreenBrick"     
+  <li>"PinkBrick"    
+  <li>"BuffBrick"  
+  <li>"GreyBrick"    
+</ul>
+See <a href="#Example08">example 8</a> and <a href="#Example09">example 9</a> above for illustrations of these style settings. 
+</td></tr>
+</table> 
+    </td></tr>   
+  </table>
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='CurvedPaving_ArcOfBlocks'></a>CurvedPaving_ArcOfBlocks macro </th><tr>
+    <tr><td width=20></td><td>
+The CurvedPaving_ArcOfBlocks macro is used to create an arc of blocks based upon the specified settings. This macro is repeatedly called by the 'CurvedPaving' macro to create a series if adjacent arcs. This macro calls the 'CurvedPaving_Block' macro to draw each block.
+<p>
+You won't normally need to invoke this macro directly. It is called indirectly via the 'CurvedPaving' macro. 
+<p>
+The CurvedPaving_Block macro has 1 parameter:
+<table border=1>
+<tr><td>
+  CurvedPaving_BlockType            
+</td><td width=100%>
+A string that can be used to specify a predefined block type (e.g. specific color settings or the object type to be generated). Pass an empty string into the macro ("") to use default settings. See <a href="#Example08">example 8</a> and <a href="#Example09">example 9</a> above for illustrations of the available style settings.
+</td></tr>
+</table> 
+    </td></tr>   
+  </table>
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='CurvedPaving_Block'></a>CurvedPaving_Block macro </th><tr>
+    <tr><td width=20></td><td>
+The CurvedPaving_Block macro is used to create an individual block based upon the specified settings. This macro is called repeatedly by the 'CurvedPaving_ArcOfBlocks' macro to draw each of the blocks that go to make up an arc.
+<p>
+You won't normally need to invoke this macro directly if you are using the 'CurvedPaving' macro because this macro is called indirectly from that macro. However, you may wish to create a macro of your own that defines a different pattern, in which case you can call this macro to draw the individual blocks. 
+<p>
+The CurvedPaving_Block macro can easily be tailored to add 'predefined' colors or shapes to those supplied. You can do this by adding a new '#case' clause to one of the two '#switch' statements. This usually only involves adding a couple of lines using basic coding elements, such as declarations of colors etc. and subsequently enables you to refer to your new style of block by name whenever you wish to use it in the future. 
+<p>
+The CurvedPaving_Block macro has 5 parameters:
+<table border=1>
+<tr><td>
+  CurvedPaving_TopLeft            
+</td><td width=100%>
+A 3D vector defining the coordinates of the top left corner of the space into which this block needs to fit.
+</td></tr>
+<tr><td>
+  CurvedPaving_TopRight            
+</td><td width=100%>
+A 3D vector defining the coordinates of the top right corner of the space into which this block needs to fit.
+</td></tr>
+<tr><td>
+  CurvedPaving_BottomRight            
+</td><td width=100%>
+A 3D vector defining the coordinates of the bottom right corner of the space into which this block needs to fit.
+</td></tr>
+<tr><td>
+  CurvedPaving_BottomLeft            
+</td><td width=100%>
+A 3D vector defining the coordinates of the bottom left corner of the space into which this block needs to fit.
+</td></tr>
+<tr><td>
+  CurvedPaving_BlockType            
+</td><td width=100%>
+A string that can be used to specify a predefined block type (e.g. specific color settings or the object type to be generated). Pass an empty string into the macro ("") to use default settings. See <a href="#Example08">example 8</a> and <a href="#Example09">example 9</a> above for illustrations of the available style settings.
+</td></tr>
+</table> 
+    </td></tr>   
+  </table>
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='CurvedPaving_Undef'></a>CurvedPaving_Undef macro </th><tr>
+    <tr><td width=20></td><td>
+The CurvedPaving_Undef macro can be used to undefine all of the key control variables between calls to the 'CurvedPaving' macro. This is often not necessary, but can be useful if you have set a lot of control variables for one call and you want to return most of those settings to their default values the next time the 'CurvedPaving' macro is called. This can also be useful if you are using named block types as it avoids you having to work out which variables were set during the first call. By undefining them all between macro calls you can avoid that the settings for one predefined block type interfere with the next.
+<p>
+The CurvedPaving_Undef macro has no parameters:
+    </td></tr>   
+  </table>
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+  <a name='variables'></a>
+  <h1>Control Variables</h1>
+The following variables are used to control the operation of the 'CurvedPaving' macro. Each has a default setting, so you only need to specify settings that you wish to override.
+
+  <table border=1>
+    <tr><th>Variable</th><th>Description</th>
+    <tr><th><a name='CurvedPaving_Radius'>CurvedPaving_Radius</a></th><td>
+Decimal value used by the <a href="#CurvedPaving">CurvedPaving</a> macro to control the radius of the arcs of blocks that make up the section of paving. The default value is 1 POV-Ray unit and is intended to represent a distance of 1 metre. The centre of the first arc of blocks will start this distance along the +Z axis from the origin. 
+    </td></tr>
+    <tr><th><a name='CurvedPaving_BlockDepth'>CurvedPaving_BlockDepth</a></th><td>
+Decimal value used by the <a href="#CurvedPaving">CurvedPaving</a> macro to control the horizontal dimensions of the blocks. This is actually the distance along the +Z axis from one arc of blocks to the next. The default value is 0.1 POV-Ray unit and is intended to represent a distance of 10 centimetres, giving 10 rows of blocks per metre at the centre of the arc. 
+    </td></tr>
+    <tr><th><a name='CurvedPaving_Rows'>CurvedPaving_Rows</a></th><td>
+Integer value used by the <a href="#CurvedPaving">CurvedPaving</a> macro to control the number of rows of blocks to generate. The default value is 20 which give 20 rows/arcs of blocks.
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_MortarGap'>CurvedPaving_MortarGap</a></th><td>
+Decimal value used by the <a href="#CurvedPaving">CurvedPaving</a> macro to control the average space between blocks. The generated blocks are defined to fit into the space calculated using the 'CurvedPaving_BlockDepth' setting with half this gap all around them. The default value is 0.0001 which represents 0.01mm to produce blocks that butt right up against each other. Because the Superellipsoid shape is usually used to generate rounded blocks, the space available for mortar will actually appear to be substantially larger. If you use the "Box" or "Polygon" shapes you should increase this value to about 0.01 to give a 1cm gap because these shapes don't have rounded edges (see <a href="#Example08">example 8</a>). 
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_BlockThickness'>CurvedPaving_BlockThickness</a></th><td>
+Decimal value used by the <a href="#CurvedPaving">CurvedPaving</a> macro to control the thickness of the blocks. The default value is 0.08 which represents 8cm from the top surface to the bottom surface.
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_BlockRoundness'>CurvedPaving_BlockRoundness</a></th><td>
+Decimal value between 0 and 1 used by the <a href="#CurvedPaving">CurvedPaving</a> macro to control the roundness of the blocks. The default value is 0.4 which produces a block with a distinctly rounded edge. A value of 0 gives square edges and 1 makes the blocks spherical.
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_MinColor'>CurvedPaving_MinColor</a></th><td>
+3D RGB color vector used by the <a href="#CurvedPaving">CurvedPaving</a> macro to control the selection of colors. This vector provides the minimum red, green and blue values. The default value is <0.5,0.3,0.3> which makes the minimum color a dark red. Each color element is generated independently, so a minimum of <0,0,0> with a maximum of <1,1,1> will permit any valid color to be selected. See <a href="#Example02">example 2</a> for an illustration of this setting.
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_MaxColor'>CurvedPaving_MaxColor</a></th><td>
+3D RGB color vector used by the <a href="#CurvedPaving">CurvedPaving</a> macro to control the selection of colors. This vector provides the maximum red, green and blue values. The default value is <0.55,0.35,0.35> which makes the maximum color a medium red. Each color element is generated independently, so a minimum of <0,0,0> with a maximum of <1,1,1> will permit any valid color to be selected.See <a href="#Example02">example 2</a> for an illustration of this setting.
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_Contrast'>CurvedPaving_Contrast</a></th><td>
+Decimal value between 0 and 1 used by the <a href="#CurvedPaving">CurvedPaving</a> macro to control the degree by which randomly selected colors can be randomnly darkened. The default value is 0.5 which results in each generated color value being multiplied by a random factor between 1 and 0.5. A setting of 0 results in the colors being within the range specified using CurvedPaving_MinColor and CurvedPaving_MaxColor. A setting of 1 means that randomly selected blocks could be darkened all the way down to black.
+<p>
+Most real blockwork consists of a base color range with some blocks being a darker version of that same limited range. This setting allows that sort of control to be applied. See <a href="#Example03">example 3</a> for an illustration of this setting.
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_Brightness'>CurvedPaving_Brightness</a></th><td>
+Decimal value used by the <a href="#CurvedPaving">CurvedPaving</a> macro to control the overall brightness of the block texture. The default value of 1 doesn't adjust the colors at all. 
+<p>
+This setting is designed to accommodate the hugely different lighting settings used in POV-Ray scene files. Some people use a lot of light and dim colors. Others use low light levels and bright colors. The default settings and most of the examples use a single, full light source. If your scene uses more light you can reduce this value. If you use less light in your scene you can increase this value. See <a href="#Example10">example 10</a>, which uses a light source that is 10 times brighter, setting this value to 0.1 to compensate and avoid color saturation artifacts.
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_Normal'>CurvedPaving_Normal</a></th><td>
+A normal definition used by the <a href="#CurvedPaving">CurvedPaving</a> macro to define a texture for the blocks. The default normal uses a granite normal scaled to 0.1. See <a href="#Example04">example 4</a>, which demonstrates how to override this default by specifying an agate normal for the blocks on the left.
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_Finish'>CurvedPaving_Finish</a></th><td>
+A finish definition used by the <a href="#CurvedPaving">CurvedPaving</a> macro to define a texture for the blocks. The default finish uses a phong setting of 0. See <a href="#Example04">example 4</a>, which demonstrates how to override this default by specifying a phong setting of 1 for the blocks on the right.
+<p>
+Adding phong or reflection to the finish setting can provide a simple way of emulating wet blocks.
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_RandomSeed'>CurvedPaving_RandomSeed</a></th><td>
+A random number seed used internally to control the randomisation sequence. Normally you don't need to alter this value as it is initialised with the first macro call.
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_ThisBlockTexture'>CurvedPaving_ThisBlockTexture</a></th><td>
+A read-only texture setting that returns the last texture definition used to create a block. In fact you can set this texture, but it has no affect on the operation of the macro which will simply overwrite it on each call.
+<p>
+This can be handy when cutting a section of blocks using CSG (Constructive Solid Geometry) operations to apply a credible texture to the cut surface (See <a href="#Example07">example 7</a>) 
+    </td></tr> 
+    <tr><th><a name='CurvedPaving_CentreToCentre'>CurvedPaving_CentreToCentre</a></th><td>
+A read-only variable that returns the distance in X that you need to translate one panel to the left or right to join two equally sized panels seamlessly together. In fact you can set this variable, but it has no affect on the operation of the macro which will simply overwrite it on each call.
+<p>
+To join two panels of different radii, take half the value returned from one macro call and half the value returned by the second. (See <a href="#Example06">example 6</a>) 
+    </td></tr> 
+  </table>
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+</body>
+</html>
+
+

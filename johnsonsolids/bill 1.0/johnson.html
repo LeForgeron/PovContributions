@@ -1,0 +1,74 @@
+<html>
+<body>
+<p align=center>
+<b>Polyhedra macros</b>
+</p>
+
+<p>
+These include files provide a library of mesh-based polyhedra, all following the same name and usage conventions. The original object data was created by George W. Hart (<a href="http://www.georgehart.com/virtual-polyhedra/vp.html">http://www.georgehart.com/virtual-polyhedra/vp.html</a>), and the POV-Ray conversion was by me, Bill Pragnell.
+</p>
+
+<p>
+Each polyhedron is supplied in several forms:<br>
+1) a global array filled with vertex vectors,<br>
+2) a macro which creates a mesh2 polyhedron textured according to polygon,<br>
+3) a macro which creates a mesh2 polyhedron with no texture,<br>
+4) a macro which creates a union of spheres and cylinders at the vertices and edges of the polyhedron.
+</p>
+
+<p>
+Taking the tetrahedron as an example:
+</p>
+
+<p>
+<pre>
+  Platonic_tetrahedron_verts[i]
+  Platonic_tetrahedron_faces(tri_texture, on_plane)
+  Platonic_tetrahedron_faces2(on_plane)
+  Platonic_tetrahedron_edges(v_rad, e_rad, v_tex, e_tex, on_plane)
+</pre>
+</p>
+
+<p>
+Where <i>i</i> is the vertex index, <i>tri_texture</i> is a texture identifier for texturing triangles, <i>v_rad</i> and <i>e_rad</i> are the radii to be used for the vertices and edges respectively, <i>v_tex</i> and <i>e_tex</i> are texture identifiers for texturing vertices and edges respectively, and <i>on_plane</i> is a boolean (yes/no) specifying whether to sit the polyhedron on a suitable face on the x-z plane. For the skeleton polyhedra, it is the spheres/cylinders which sit on the plane, not the face - this means that if you want both faces and edges, you must remember to translate the faces vertically by a distance equal to the edge/vertex radius.
+</p>
+
+<p>
+The prefix denotes the polyhedron group - see the individual include files for a complete list of polyhedra defined in that group. Additionally, for the <i>_faces</i> macros, if the polyhedron is composed of more than one type of polygon, a separate texture identifier is required for each one. For example, a cuboctahedron is defined like this:
+</p>
+
+<p>
+<pre>
+  Archimedean_cuboctahedron_faces(tri_texture, square_texture, on_plane)
+</pre>
+</p>
+
+<p>
+The meshes produced by these macros are all provided with inside_vectors, so should be suitable for use in CSG.
+</p>
+
+<p>
+The polyhedra are not scaled relative to the original data; most of them are approximately 1 unit in radius. Scaling strategies are up to the user; the mesh bounds could be used to fit the shape into a given volume, or adjacent vertex separation could be used to scale the shape according to edge length. I may supply some macros to do this at some point in the future.
+</p>
+
+<p>
+Whilst using these include files, you may find the group's entries on wikipedia to be helpful in identifying a shape prior to use - I found them invaluable during testing! The following are good references:
+</p>
+
+<p>
+<a href="http://en.wikipedia.org/wiki/Platonic_solids">Platonic solids</a><br>
+<a href="http://en.wikipedia.org/wiki/Archimedean_solids">Archimedean solids</a><br>
+<a href="http://en.wikipedia.org/wiki/Catalan_solids">Catalan solids</a><br>
+<a href="http://en.wikipedia.org/wiki/Johnson_solids">Johnson solids</a>
+</p>
+
+<p>
+Have fun!
+</p>
+
+<p>
+Bill Pragnell 2009
+</p>
+
+</body>
+</html>

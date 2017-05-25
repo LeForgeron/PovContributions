@@ -1,0 +1,32 @@
+Flags
+Flag
+Olympic
+UK
+GB
+England
+Ireland
+Scotland
+Wales
+Europe
+Union Jack
+Union Flag
+St George
+St Andrew
+St Patrick
+Canada
+USA
+Australia
+New Zealand
+France
+Belgium
+Italy
+Germany
+Austria
+Luxembourg
+Netherlands
+Hungary
+Armenia
+Peru
+Nigeria
+Japan
+China

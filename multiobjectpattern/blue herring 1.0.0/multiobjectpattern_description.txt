@@ -1,0 +1,1 @@
+These macros are intended to extend the functionality of the internal "object" pattern type of POV-Ray.  They allow the creation of function patterns using multiple objects.  The patterns can be used with mapped pigments, normals, textures, etc.

@@ -1,0 +1,10 @@
+RoundEdge
+RE
+rounded edges
+blob
+isosurface blob
+parabolic torus
+oblong torus
+oblong toroid
+elliptical torus
+elliptical toroid

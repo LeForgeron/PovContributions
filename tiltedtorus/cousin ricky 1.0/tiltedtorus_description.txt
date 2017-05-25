@@ -1,0 +1,1 @@
+A torus that is scaled in the y direction, then rotated about its circular axis.

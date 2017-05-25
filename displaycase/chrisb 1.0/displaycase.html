@@ -1,0 +1,1552 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%}
+</style>
+<head>
+  <title>POV-Ray Object Collection - DisplayCase macros</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>DisplayCase Macros</h1>
+<hr>
+  <a href="#intro"         >Overview                  </a><br>
+<p>
+  <a href="#types"         >Display Case Types        </a><br>
+  <a href="#mounts"        >Display Case Mounts       </a><br>
+  <a href="#objects"       >Supplementary Objects     </a><br>
+  <a href="#addingtypes"   >Adding New Types          </a><br>
+  <a href="#addingmounts"  >Adding New Mounts         </a><br>
+<p>
+  <a href="#files"         >Files in this Distribution</a><br>
+  <a href="#redistribution">Redistribution            </a><br>
+  <a href="#macros"        >Macro Reference           </a><br>
+  <a href="#variables"     >Variable Reference        </a><br>
+<p>
+  <center>
+  <a href="http://lib.povray.org/searchcollection/download.php?objectName=DisplayCase&contributorTag=chrisb&version=1.0"
+    onclick="if (navigator.appName=='Microsoft Internet Explorer') this.click();"  
+  >
+    <input type=button value="Download DisplayCase V1.0">
+  </a>
+  </center>
+<p>
+There is an NNTP newsgroup specifically for the support of this object collection at <a href="http://news.povray.org/povray.object-collection/">http://news.povray.org/povray.object-collection/</a>.   
+  
+</td><td>
+<img src="displaycase.jpg" width=640 height=480>
+</td></tr>
+</table>
+
+<hr>
+
+
+
+  <a name='intro'></a>
+  <h1>Overview</h1>
+These macros are released under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a> to enable you to use, modify and redistribute them for both commercial and non-commercial purposes.  You can help improve these macros if you wish to by submitting enhanced versions back into the collection. To submit content you will need to register yourself on the web site. The registration process is handled automatically and usually only takes a few minutes.
+<p>
+This download consists of:
+<ul>
+<li>an include file containing macros to define the alternative display case shapes and supports and to insert them into your POV-Ray scenes
+<li>a sample scene file to illustrate the use of the macros
+<li>a copy of this documentation and the image files used in it
+<li>a few other files that you may find handy if you submit a new version to the collection
+</ul>
+<p>
+In its simplest form you can add a display case to your scene file by including the file "displaycase.inc" and then calling the <a href="#DisplayCase">'DisplayCase'</a> macro. This macro requires two parameters. Specifying an empty string for each generates the default display case object. 
+<p>
+<div class=codesample>
+&nbsp;&nbsp;#include "displaycase.inc"}
+<br>&nbsp;&nbsp;DisplayCase("","")
+</div>
+<p>
+The default object is a spherical display case with a diameter of 0.6 POV-Ray units. The display case returned by this macro is positioned standing upright at the origin, but you can scale, rotate and translate it by wrapping the macro call in an 'object' statment (see below).
+<p>
+The default glass and metallic materials/textures are quite reflective, so there really has to be something else in the scene to reflect in the surfaces. Otherwise these materials will not look very good at all. If rendered against a flat coloured background they will take on that flat color and won't look bright and shiny. The examples in this document use a wooden floor and a plain yellow wall as a backdrop. The code for this is shown in the following example. Similar backdrops are present in the renderings of the other examples.  
+<p>
+The macros were developed for POV-Ray 3.7 which has different default gamma settings to 3.6. You can optionally use the assumed_gamma setting in 3.6 to adjust for this difference. You may need to tweak this value for your system. A higher assumed_gamma setting results in a darker scene and a lower setting in a lighter scene.
+<p>
+<img src="displaycase_00.jpg" align=right> 
+<div class=codesample>
+&nbsp;&nbsp;#if (version<3.7) global_settings {assumed_gamma 1} #end 
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;camera {location <0.5,0.3,-1> look_at <0,0.3,0>}
+<br>&nbsp;&nbsp;light_source { <-15,7.5,-15>, rgb 1}
+<br>&nbsp;&nbsp;#include "displaycase.inc"              
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;// The floor
+<br>&nbsp;&nbsp;plane { y, 0 DisplayCase_SampleFloorTexture() rotate y*90}
+<br>&nbsp;&nbsp;// The wall
+<br>&nbsp;&nbsp;plane {-z,-1.8 pigment {rgb <1,0.8,0.3>} finish {ambient 0.02}}   
+<br>&nbsp;&nbsp;// Skirting Board
+<br>&nbsp;&nbsp;union {  
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box {<-20,0,1.785><20,0.15,1.8>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder {<-20,0.15,1.795><20,0.15,1.795>,0.01}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;pigment {rgb 1} 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;finish {ambient 0.02}
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;DisplayCase("","")
+</div>
+(See Example 0 in 'displaycase.pov')
+<br clear=all>
+<p>
+<img src="displaycase_01.jpg" align=right>
+Normally you will wish to specify parameters to control the type of display case that the macro creates and you are likely to want to reposition the generated object in your scene. 
+<p>
+The first parameter on the DisplayCase macro call defines the type of display case and should be "Spherical", "Oblong", "Cylindrical" or "Box". The second parameter controls how the display case is mounted and is usually "Pedestal", "Tree", "Wallmount", "RoundPillar" or "RectangularPillar". The second parameter can also be used to generate a couple of 'extra' objects, namely: 
+<ul>
+<li>"BarrierPost", which is a post to which ropes can be attached to create a rope barrier and 
+<li>"RopeHook", which is a little cap with a ring on the end to enable ropes to be attached to posts. 
+</ul>
+<p>
+To perform transformations such as scale, rotate and translate on the generated object you will need to wrap the macro call in an 'object' statement, as illustrated in the next example:
+<p>
+<div class=codesample>
+&nbsp;&nbsp;camera {location <1,1.4,-1> look_at <0,0.95,0>}
+<br>&nbsp;&nbsp;light_source { <-15,7.5,-15>, rgb 1}
+<br>
+<br>&nbsp;&nbsp;#include "displaycase.inc"              
+<br>&nbsp;&nbsp;object {DisplayCase("Spherical","RoundPillar") rotate -y*25 translate <-0.4,0,0.3>}
+</div>
+(See Example 1 in 'displaycase.pov')
+<p>
+The parameters tell the macro to generate a spherical display case on top of a simple round pillar. The object that is generated by the macro can then be rotated and translated into any required position. It can also be scaled to an appropriate size if you are working in units other than 1 metre = 1 POV-Ray unit. Note that you should always scale it <b>before</b> translating it to the required position.
+<br clear=all>
+<p>
+<img src="displaycase_02.jpg" align=right>
+Many attributes can be controlled by setting <a href="#variables">variables</a> before calling the 'DisplayCase' macro. There are settings to allow you to easily adjust the size and shape of a display case. There are also settings enabling you to readily replace the materials used to construct the various component parts. In addition a couple of macros are provided that you can use to set alternative 'canned' default materials.
+<p>
+The following example calls the <a href="#DisplayCase_MarbleMaterial">'DisplayCase_MarbleMaterial'</a> macro which simply sets the <a href="#DisplayCase_DefaultMaterial">'DisplayCase_DefaultMaterial'</a> identifier to create a default material with a Yellow marble-like effect. This example also explicitly specifies a display case height for this Cylindrical display case.
+<p>
+<div class=codesample>
+&nbsp;&nbsp;camera {location <1.5,1.7,-1.4> look_at <0,1.05,0>}
+<br>&nbsp;&nbsp;light_source { <-15,7.5,-15>, rgb 1}
+<br>
+<br>&nbsp;&nbsp;#include "displaycase.inc"              
+<br>&nbsp;&nbsp;DisplayCase_MarbleMaterial ("Yellow")
+<br>&nbsp;&nbsp;#declare DisplayCase_Height = 1.0;
+<br>&nbsp;&nbsp;object {DisplayCase("Cylindrical","RectangularPillar")} 
+</div>
+(See Example 2 in 'displaycase.pov')
+<p>
+The <a href="#variables">variables</a> and <a href="#macros">macros</a> that you can use are described in the reference section of this document at the bottom of this page.  
+<p>
+When creating your scene you will need to use identifiers with the prefix "DisplayCase_" to refer to the identifiers defined within this document, but you should avoid using this prefix for anything else that you add to your scene. By reserving this prefix for the DisplayCase macros it should be possible for you to download any future versions without your identifiers clashing.  
+<p>
+Various examples are provided (including the ones given above) in the file 'displaycase.pov'. To render any of the examples in the 'displaycase.pov' file simply set the 'Example' variable at the top to the number of the example you wish to render.
+<p>
+Dimensions are specified in metres. The ScaleConvert macro from the <a href="http://lib.povray.org/">POV-Ray Object Collection</a> can be used to convert between different units of measure.
+
+<br clear=all>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+  <a name='types'></a>
+  <h1>Display Case Types</h1>
+You can generate a display case by specifying the display case type as the first parameter to the <a href="#DisplayCase">DisplayCase</a> macro call. The generated display case object sits at the origin. The following predefined display case types are provided:
+<p>
+<table align=center>
+  <tr align=center>
+    <th><center>"Spherical"  </center></th>
+    <th><center>"Oblong"     </center></th>
+  </tr>
+  <tr align=center>
+    <td><img src="displaycase_10.jpg"></td>
+    <td><img src="displaycase_11.jpg"></td>
+  </tr>
+  <tr align=center>
+    <td colspan=2><center>(See examples 10 to 13 in 'displaycase.pov') </center></td>
+  </tr>
+  <tr align=center>
+    <td><img src="displaycase_12.jpg"></td>
+    <td><img src="displaycase_13.jpg"></td>
+  </tr>
+  <tr align=center>
+    <th><center>"Cylindrical"</center></th>
+    <th><center>"Box"        </center></th>
+  </tr>
+</table>
+<p>
+These can all be customised by declaring variables before calling the 'DisplayCase' macro, to control the construction of the display case. The following table lists the variables applicable to each display case type.
+<p>
+<table align=center border=1>
+  <tr align=center>
+    <th colspan=2><center>"Spherical"  </center></th>
+    <th colspan=2><center>"Oblong"     </center></th>
+  </tr>
+  <tr align=left>
+    <td>
+      <a href="#DisplayCase_FabricHeight"          >DisplayCase_FabricHeight          </a>&nbsp;<br>
+      <a href="#DisplayCase_GlassThickness"        >DisplayCase_GlassThickness        </a>&nbsp;<br>
+      <a href="#DisplayCase_JointHeight"           >DisplayCase_JointHeight           </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelAngle"            >DisplayCase_LabelAngle            </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelHeight"           >DisplayCase_LabelHeight           </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelPanelHeight"      >DisplayCase_LabelPanelHeight      </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelPigment"          >DisplayCase_LabelPigment          </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelRimDepth"         >DisplayCase_LabelRimDepth         </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelRimWidth"         >DisplayCase_LabelRimWidth         </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelSuppRadius"       >DisplayCase_LabelSuppRadius       </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelWidth"            >DisplayCase_LabelWidth            </a>&nbsp;<br>
+      <a href="#DisplayCase_Radius"                >DisplayCase_Radius                </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportRodHeight"      >DisplayCase_SupportRodHeight      </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportRodRadius"      >DisplayCase_SupportRodRadius      </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_BaseMaterial"          >DisplayCase_BaseMaterial          </a>&nbsp;<br>
+      <a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial       </a>&nbsp;<br>
+      <a href="#DisplayCase_Exhibit"               >DisplayCase_Exhibit               </a>&nbsp;<br>
+      <a href="#DisplayCase_ExhibitSupportMaterial">DisplayCase_ExhibitSupportMaterial</a>&nbsp;<br>
+      <a href="#DisplayCase_FabricMaterial"        >DisplayCase_FabricMaterial        </a>&nbsp;<br>
+      <a href="#DisplayCase_GlassMaterial"         >DisplayCase_GlassMaterial         </a>&nbsp;<br>
+      <a href="#DisplayCase_JointMaterial"         >DisplayCase_JointMaterial         </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelHolderMaterial"   >DisplayCase_LabelHolderMaterial   </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelSupportMaterial"  >DisplayCase_LabelSupportMaterial  </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_FabricHeight"          >DisplayCase_FabricHeight          </a>&nbsp;<br>
+      <a href="#DisplayCase_GlassThickness"        >DisplayCase_GlassThickness        </a>&nbsp;<br>
+      <a href="#DisplayCase_Height"                >DisplayCase_Height                </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelAngle"            >DisplayCase_LabelAngle            </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelHeight"           >DisplayCase_LabelHeight           </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelPanelHeight"      >DisplayCase_LabelPanelHeight      </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelPigment"          >DisplayCase_LabelPigment          </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelRimDepth"         >DisplayCase_LabelRimDepth         </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelRimWidth"         >DisplayCase_LabelRimWidth         </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelSuppRadius"       >DisplayCase_LabelSuppRadius       </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelWidth"            >DisplayCase_LabelWidth            </a>&nbsp;<br>
+      <a href="#DisplayCase_Radius"                >DisplayCase_Radius                </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportRodHeight"      >DisplayCase_SupportRodHeight      </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportRodRadius"      >DisplayCase_SupportRodRadius      </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_BaseMaterial"          >DisplayCase_BaseMaterial          </a>&nbsp;<br>
+      <a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial       </a>&nbsp;<br>
+      <a href="#DisplayCase_Exhibit"               >DisplayCase_Exhibit               </a>&nbsp;<br>
+      <a href="#DisplayCase_ExhibitSupportMaterial">DisplayCase_ExhibitSupportMaterial</a>&nbsp;<br>
+      <a href="#DisplayCase_FabricMaterial"        >DisplayCase_FabricMaterial        </a>&nbsp;<br>
+      <a href="#DisplayCase_GlassMaterial"         >DisplayCase_GlassMaterial         </a>&nbsp;<br>
+      <a href="#DisplayCase_JointMaterial"         >DisplayCase_JointMaterial         </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelHolderMaterial"   >DisplayCase_LabelHolderMaterial   </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelSupportMaterial"  >DisplayCase_LabelSupportMaterial  </a>&nbsp;<br>
+    </td>
+  </tr>
+  <tr align=center><td colspan=4> </td></tr>
+  <tr align=center>
+    <th colspan=2><center>"Cylindrical"</center></th>
+    <th colspan=2><center>"Box"        </center></th>
+  </tr>
+  <tr align=left>
+    <td>
+      <a href="#DisplayCase_CaseLights"            >DisplayCase_CaseLights            </a>&nbsp;<br>
+      <a href="#DisplayCase_FabricHeight"          >DisplayCase_FabricHeight          </a>&nbsp;<br>
+      <a href="#DisplayCase_GlassThickness"        >DisplayCase_GlassThickness        </a>&nbsp;<br>
+      <a href="#DisplayCase_Height"                >DisplayCase_Height                </a>&nbsp;<br>
+      <a href="#DisplayCase_JointHeight"           >DisplayCase_JointHeight           </a>&nbsp;<br>
+      <a href="#DisplayCase_KickPlateHeight"       >DisplayCase_KickPlateHeight       </a>&nbsp;<br>
+      <a href="#DisplayCase_KickPlateInset"        >DisplayCase_KickPlateInset        </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelAngle"            >DisplayCase_LabelAngle            </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelHeight"           >DisplayCase_LabelHeight           </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelPanelHeight"      >DisplayCase_LabelPanelHeight      </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelPigment"          >DisplayCase_LabelPigment          </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelRimDepth"         >DisplayCase_LabelRimDepth         </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelRimWidth"         >DisplayCase_LabelRimWidth         </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelSuppRadius"       >DisplayCase_LabelSuppRadius       </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelWidth"            >DisplayCase_LabelWidth            </a>&nbsp;<br>
+      <a href="#DisplayCase_Radius"                >DisplayCase_Radius                </a>&nbsp;<br>
+      <a href="#DisplayCase_RimThickness"          >DisplayCase_RimThickness          </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportRodHeight"      >DisplayCase_SupportRodHeight      </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportRodRadius"      >DisplayCase_SupportRodRadius      </a>&nbsp;<br>
+      <a href="#DisplayCase_TopCapHeight"          >DisplayCase_TopCapHeight          </a>&nbsp;<br>
+      <a href="#DisplayCase_TopRimHeight"          >DisplayCase_TopRimHeight          </a>&nbsp;<br>
+    </td><td>                                                                          
+      <a href="#DisplayCase_BaseMaterial"          >DisplayCase_BaseMaterial          </a>&nbsp;<br>
+      <a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial       </a>&nbsp;<br>
+      <a href="#DisplayCase_Exhibit"               >DisplayCase_Exhibit               </a>&nbsp;<br>
+      <a href="#DisplayCase_ExhibitSupportMaterial">DisplayCase_ExhibitSupportMaterial</a>&nbsp;<br>
+      <a href="#DisplayCase_FabricMaterial"        >DisplayCase_FabricMaterial        </a>&nbsp;<br>
+      <a href="#DisplayCase_GlassMaterial"         >DisplayCase_GlassMaterial         </a>&nbsp;<br>
+      <a href="#DisplayCase_JointMaterial"         >DisplayCase_JointMaterial         </a>&nbsp;<br>
+      <a href="#DisplayCase_KickPlateMaterial"     >DisplayCase_KickPlateMaterial     </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelHolderMaterial"   >DisplayCase_LabelHolderMaterial   </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelSupportMaterial"  >DisplayCase_LabelSupportMaterial  </a>&nbsp;<br>
+    </td><td>                                                                            
+      <a href="#DisplayCase_CaseLights"            >DisplayCase_CaseLights            </a>&nbsp;<br>
+      <a href="#DisplayCase_Depth"                 >DisplayCase_Depth                 </a>&nbsp;<br>
+      <a href="#DisplayCase_FabricHeight"          >DisplayCase_FabricHeight          </a>&nbsp;<br>
+      <a href="#DisplayCase_FabricShape"           >DisplayCase_FabricShape           </a>&nbsp;<br>
+      <a href="#DisplayCase_GlassThickness"        >DisplayCase_GlassThickness        </a>&nbsp;<br>
+      <a href="#DisplayCase_Height"                >DisplayCase_Height                </a>&nbsp;<br>
+      <a href="#DisplayCase_JointHeight"           >DisplayCase_JointHeight           </a>&nbsp;<br>
+      <a href="#DisplayCase_KickPlateHeight"       >DisplayCase_KickPlateHeight       </a>&nbsp;<br>
+      <a href="#DisplayCase_KickPlateInset"        >DisplayCase_KickPlateInset        </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelAngle"            >DisplayCase_LabelAngle            </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelHeight"           >DisplayCase_LabelHeight           </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelPanelHeight"      >DisplayCase_LabelPanelHeight      </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelPigment"          >DisplayCase_LabelPigment          </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelRimDepth"         >DisplayCase_LabelRimDepth         </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelRimWidth"         >DisplayCase_LabelRimWidth         </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelSuppRadius"       >DisplayCase_LabelSuppRadius       </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelWidth"            >DisplayCase_LabelWidth            </a>&nbsp;<br>
+      <a href="#DisplayCase_RimThickness"          >DisplayCase_RimThickness          </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportRodHeight"      >DisplayCase_SupportRodHeight      </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportRodRadius"      >DisplayCase_SupportRodRadius      </a>&nbsp;<br>
+      <a href="#DisplayCase_TopCapHeight"          >DisplayCase_TopCapHeight          </a>&nbsp;<br>
+      <a href="#DisplayCase_TopRimHeight"          >DisplayCase_TopRimHeight          </a>&nbsp;<br>
+      <a href="#DisplayCase_Width"                 >DisplayCase_Width                 </a>&nbsp;<br>
+    </td><td>                                                                            
+      <a href="#DisplayCase_BaseMaterial"          >DisplayCase_BaseMaterial          </a>&nbsp;<br>
+      <a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial       </a>&nbsp;<br>
+      <a href="#DisplayCase_Exhibit"               >DisplayCase_Exhibit               </a>&nbsp;<br>
+      <a href="#DisplayCase_ExhibitSupportMaterial">DisplayCase_ExhibitSupportMaterial</a>&nbsp;<br>
+      <a href="#DisplayCase_FabricMaterial"        >DisplayCase_FabricMaterial        </a>&nbsp;<br>
+      <a href="#DisplayCase_GlassMaterial"         >DisplayCase_GlassMaterial         </a>&nbsp;<br>
+      <a href="#DisplayCase_JointMaterial"         >DisplayCase_JointMaterial         </a>&nbsp;<br>
+      <a href="#DisplayCase_KickPlateMaterial"     >DisplayCase_KickPlateMaterial     </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelHolderMaterial"   >DisplayCase_LabelHolderMaterial   </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelSupportMaterial"  >DisplayCase_LabelSupportMaterial  </a>&nbsp;<br>
+   </td>
+  </tr>
+</table>
+
+<p>
+The following image illustrates a small selection of the available options:
+<p>
+<center>
+<img src="displaycase_03.jpg">
+<br>
+(See Example 3 in 'displaycase.pov')
+</center>
+
+<br clear=all>
+<p>
+   
+<p>
+You can also add new types of display case. (<a href="#addingtypes">see below</a>).
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+  <a name='mounts'></a>
+  <h1>Display Case Mounts</h1>
+Any of the display cases can optionally be mounted on top of a type of mount by specifying the mount type as the second parameter to the <a href="#DisplayCase">DisplayCase</a> macro call. If an empty string ("") is passed as the second parameter then no mount will be added. When a mount type is added, the display case is moved so that the finished object sits at the origin. The following predefined mount types are provided:
+<p>
+<table align=center>
+  <tr align=center>
+    <th><center>"Pedestal"         </center></th>
+    <th><center>"Wallmount"        </center></th>
+  </tr>
+  <tr align=center>
+    <td><img src="displaycase_20.jpg"></td>
+    <td><img src="displaycase_23.jpg"></td>
+  </tr>
+  <tr align=center>
+    <td colspan=2><center>(See examples 20 to 23 in 'displaycase.pov') </center></td>
+  </tr>
+  <tr align=center>
+    <td><img src="displaycase_21.jpg"></td>
+    <td><img src="displaycase_22.jpg"></td>
+  </tr>
+  <tr align=center>
+    <th><center>"RoundPillar"      </center></th>
+    <th><center>"RectangularPillar"</center></th>
+  </tr>
+  <tr align=center>
+    <th colspan=2><center>"Tree"             </center></th>
+  </tr>
+  <tr align=center>
+    <td colspan=2><img src="displaycase_24.jpg"></td>
+  </tr>
+  <tr align=center>
+    <td colspan=2><center>(See example 24 in 'displaycase.pov') </center></td>
+  </tr>
+</table>
+<p>
+The various mounts can all be customised by declaring variables before calling the 'DisplayCase' macro. The "Tree" type mount supports multiple display cases and there are arrays to allow you to control key aspects of each display case used. Example 24 in 'displaycase.pov' illustrates the use of these arrays. The following table lists the variables applicable to each mount type.
+<p>
+<table align=center border=1>
+  <tr align=center>
+    <th colspan=2><center>"Pedestal"  </center></th>
+    <th colspan=2><center>"Wallmount"     </center></th>
+  </tr>
+  <tr align=left>
+    <td>
+      <a href="#DisplayCase_BaseHeight"            >DisplayCase_BaseHeight            </a>&nbsp;<br>
+      <a href="#DisplayCase_BaseInset"             >DisplayCase_BaseInset             </a>&nbsp;<br>
+      <a href="#DisplayCase_BaseRadius"            >DisplayCase_BaseRadius            </a>&nbsp;<br>
+      <a href="#DisplayCase_PostHeight"            >DisplayCase_PostHeight            </a>&nbsp;<br>
+      <a href="#DisplayCase_PostRadius"            >DisplayCase_PostRadius            </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial       </a>&nbsp;<br>
+      <a href="#DisplayCase_FloorStandMaterial"    >DisplayCase_FloorStandMaterial    </a>&nbsp;<br>
+      <a href="#DisplayCase_PoleMaterial"          >DisplayCase_PoleMaterial          </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_ArmLength"             >DisplayCase_ArmLength             </a>&nbsp;<br>
+      <a href="#DisplayCase_BracketHeight"         >DisplayCase_BracketHeight         </a>&nbsp;<br>
+      <a href="#DisplayCase_CaseHeight"            >DisplayCase_CaseHeight            </a>&nbsp;<br>
+      <a href="#DisplayCase_ElbowRadius"           >DisplayCase_ElbowRadius           </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportArmRadius"      >DisplayCase_SupportArmRadius      </a>&nbsp;<br>
+      <a href="#DisplayCase_WallPlateInset"        >DisplayCase_WallPlateInset        </a>&nbsp;<br>
+      <a href="#DisplayCase_WallPlateRadius"       >DisplayCase_WallPlateRadius       </a>&nbsp;<br>
+      <a href="#DisplayCase_WallPlateThickness"    >DisplayCase_WallPlateThickness    </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial       </a>&nbsp;<br>
+      <a href="#DisplayCase_PoleMaterial"          >DisplayCase_PoleMaterial          </a>&nbsp;<br>
+      <a href="#DisplayCase_WallPlateMaterial"     >DisplayCase_WallPlateMaterial     </a>&nbsp;<br>
+  </td>
+  </tr>
+  <tr align=center><td colspan=4> </td></tr>
+  <tr align=center>
+    <th colspan=2><center>"RoundPillar"</center></th>
+    <th colspan=2><center>"RectangularPillar"        </center></th>
+  </tr>
+  <tr align=left>
+    <td>
+      <a href="#DisplayCase_PillarHeight"          >DisplayCase_PillarHeight          </a>&nbsp;<br>
+      <a href="#DisplayCase_PillarKickPlateHeight" >DisplayCase_PillarKickPlateHeight </a>&nbsp;<br>
+      <a href="#DisplayCase_PillarKickPlateInset"  >DisplayCase_PillarKickPlateInset  </a>&nbsp;<br>
+      <a href="#DisplayCase_PillarRadius"          >DisplayCase_PillarRadius          </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial       </a>&nbsp;<br>
+      <a href="#DisplayCase_KickPlateMaterial"     >DisplayCase_KickPlateMaterial     </a>&nbsp;<br>
+      <a href="#DisplayCase_PillarMaterial"        >DisplayCase_PillarMaterial        </a>&nbsp;<br>
+    </td><td>                                                                            
+      <a href="#DisplayCase_PillarDepth"           >DisplayCase_PillarDepth           </a>&nbsp;<br>
+      <a href="#DisplayCase_PillarHeight"          >DisplayCase_PillarHeight          </a>&nbsp;<br>
+      <a href="#DisplayCase_PillarKickPlateHeight" >DisplayCase_PillarKickPlateHeight </a>&nbsp;<br>
+      <a href="#DisplayCase_PillarKickPlateInset"  >DisplayCase_PillarKickPlateInset  </a>&nbsp;<br>
+      <a href="#DisplayCase_PillarWidth"           >DisplayCase_PillarWidth           </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial       </a>&nbsp;<br>
+      <a href="#DisplayCase_KickPlateMaterial"     >DisplayCase_KickPlateMaterial     </a>&nbsp;<br>
+      <a href="#DisplayCase_PillarMaterial"        >DisplayCase_PillarMaterial        </a>&nbsp;<br>
+    </td>
+  </tr>
+  <tr align=center><td colspan=4> </td></tr>
+  <tr align=center>
+    <th colspan=4><center>"Tree"</center></th>
+  </tr>
+  <tr align=left>
+    <td>
+      <a href="#DisplayCase_JointHeights"          >DisplayCase_JointHeights          </a>&nbsp;<br>
+      <a href="#DisplayCase_BaseHeight"            >DisplayCase_BaseHeight            </a>&nbsp;<br>
+      <a href="#DisplayCase_BaseInset"             >DisplayCase_BaseInset             </a>&nbsp;<br>
+      <a href="#DisplayCase_BaseRadius"            >DisplayCase_BaseRadius            </a>&nbsp;<br>
+      <a href="#DisplayCase_ElbowRadius"           >DisplayCase_ElbowRadius           </a>&nbsp;<br>
+    </td><td>                                                                          
+      <a href="#DisplayCase_Exhibits"              >DisplayCase_Exhibits              </a>&nbsp;<br>
+      <a href="#DisplayCase_LabelPigments"         >DisplayCase_LabelPigments         </a>&nbsp;<br>
+      <a href="#DisplayCase_Quantity"              >DisplayCase_Quantity              </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportArmDepth"       >DisplayCase_SupportArmDepth       </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportArmRadius"      >DisplayCase_SupportArmRadius      </a>&nbsp;<br>
+    </td><td>                                                                            
+      <a href="#DisplayCase_SupportArmReach"       >DisplayCase_SupportArmReach       </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportRadius"         >DisplayCase_SupportRadius         </a>&nbsp;<br>
+      <a href="#DisplayCase_SupportRodHeights"     >DisplayCase_SupportRodHeights     </a>&nbsp;<br>
+      <a href="#DisplayCase_Types"                 >DisplayCase_Types                 </a>&nbsp;<br>
+      <a href="#DisplayCase_YRotations"            >DisplayCase_YRotations            </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial       </a>&nbsp;<br>
+      <a href="#DisplayCase_FloorStandMaterial"    >DisplayCase_FloorStandMaterial    </a>&nbsp;<br>
+      <a href="#DisplayCase_PoleMaterial"          >DisplayCase_PoleMaterial          </a>&nbsp;<br>
+    </td>
+  </tr>
+</table>
+
+<p>
+You can also add new types of mount. (<a href="#addingmounts">see below</a>).
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+  <a name='objects'></a>
+  <h1>Supplementary Objects</h1>
+<p>
+<img src="displaycase_04.jpg" align=right>
+In addition to being used to specify a mount type, the second parameter on the DisplayCase macro can also be used to add a couple of extra objects that you may find useful when creating a scene that incorporates the display cases. The two extra objects currently supported are "BarrierPost" and "RopeHook". These can be used in combination with the Rope macros to create a rope barrier. The <a href='http://lib.povray.org/collection/rope/chrisb%201.0/rope.html' target=Rope>Rope macros</a> can be downloaded from the <a href='http://lib.povray.org/' target=OC>POV-Ray Object Collection</a>.
+<p>
+The image on the right shows a barrier formed using 4 "BarrierPost" objects, connected by 3 ropes. Each rope has a cap on each end which is generated using the "RopeHook" object. Five more posts have been randomly positioned inside the barrier just to illustrate how the posts look when constructed using some of the other available 'canned' materials. 
+<p>
+The image below shows a closeup of the "RopeHook" objects at one of the corners of the barrier. You can add a post to your scene file using the following syntax:
+<p>
+<div class=codesample>
+&nbsp;&nbsp;object {DisplayCase("","BarrierPost") translate <1,0,1>} 
+</div>
+<p>
+Similarly you can add a hook to the end of a rope using the following syntax: 
+<p>
+<div class=codesample>
+&nbsp;&nbsp;object {DisplayCase("","RopeHook") translate <0.441,0.85,0.05>} 
+</div>
+<p>
+The rope hook is centred so that you can rotate it as required to orient it and then translate it directly to the start point or end point of your rope object.
+<p>
+Examples 4 and 5 in the 'displaycase.pov' file are used to generate these two images and can be examined to understand the detail of how a rope barrier is constructed.
+<p>
+<img src="displaycase_05.jpg" align=left>
+<br clear=right>
+&nbsp;(See Examples 4 and 5 in 'displaycase.pov')
+<br clear=all>
+
+<p>
+These objects can be customised by declaring variables before calling the 'DisplayCase' macro. 
+The following table lists the variables applicable to these objects.
+<p>
+<table align=center border=1>
+  <tr align=center>
+    <th colspan=2><center>"BarrierPost"  </center></th>
+    <th colspan=2><center>"RopeHook"     </center></th>
+  </tr>
+  <tr align=left>
+    <td>
+      <a href="#DisplayCase_BaseHeight"            >DisplayCase_BaseHeight            </a>&nbsp;<br>
+      <a href="#DisplayCase_BaseInset"             >DisplayCase_BaseInset             </a>&nbsp;<br>
+      <a href="#DisplayCase_BaseRadius"            >DisplayCase_BaseRadius            </a>&nbsp;<br>
+      <a href="#DisplayCase_PostHeight"            >DisplayCase_PostHeight            </a>&nbsp;<br>
+      <a href="#DisplayCase_PostRadius"            >DisplayCase_PostRadius            </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial       </a>&nbsp;<br>
+      <a href="#DisplayCase_FloorStandMaterial"    >DisplayCase_FloorStandMaterial    </a>&nbsp;<br>
+      <a href="#DisplayCase_PoleMaterial"          >DisplayCase_PoleMaterial          </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_CupLength"             >DisplayCase_CupLength             </a>&nbsp;<br>
+      <a href="#DisplayCase_CupRadius"             >DisplayCase_CupRadius             </a>&nbsp;<br>
+      <a href="#DisplayCase_EdgeRadius"            >DisplayCase_EdgeRadius            </a>&nbsp;<br>
+      <a href="#DisplayCase_RingRadius"            >DisplayCase_RingRadius            </a>&nbsp;<br>
+      <a href="#DisplayCase_RingThickness"         >DisplayCase_RingThickness         </a>&nbsp;<br>
+    </td><td>
+      <a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial       </a>&nbsp;<br>
+      <a href="#DisplayCase_RopeHookMaterial"      >DisplayCase_RopeHookMaterial      </a>&nbsp;<br>
+    </td>
+  </tr>
+</table>
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+  <a name='addingtypes'></a>
+  <h1>Adding New Display Case Types</h1>
+
+To add new display case types you will need to be familiar with the POV-Ray SDL (Scene Description Language) and some of the variable settings described in this document (<a href="#variables">see below</a>). 
+<p>
+Each type of display case is created by a macro, so to create a new type you can copy a macro for the type that is closest to the one you wish to create and rename it to give it a suitable name. The 'DisplayCase_Spherical' macro is one of the easiest to understand if you're new to this sort of thing. Once you've done this you'll need to add a case statement into the 'DisplayCase_MakeCase' macro to interpret the name you choose for your type of display case and to call the macro you just created.
+<p>
+You don't necessarily need to make your macro compatible with the other macros, but, if you do you can easily add it to any of the mounts defined and you can most readily insert exhibits and select alternative materials to construct your display case.
+<p>
+Each macro returns a single union of objects. These macros follow the convention that the main assembly is done with the bottom surface of the inside of the display case centred at the origin <0,0,0>. Then, at the end of the union definition, the entire display case, exhibit, lights and all, is translated upwards so that the bottom of the base of the case sits at the origin when the object is complete.
+<p>
+The 'DisplayCase_Exhibit' identifier is used to pass in the exhibit object. The macro usually adds this object (if defined), centering it over the origin at a height determined by the length of the rod intended to support the exhibit (<a href="#DisplayCase_SupportRodHeight">DisplayCase_SupportRodHeight</a>).
+<p>
+You can define new variables as you need to within your macro, but using the same variable names as other macros (where appropriate) improves compatibility with existing macros.
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+  <a name='addingmounts'></a>
+  <h1>Adding New Mounts</h1>
+To add new display case mounts you will need to be familiar with the POV-Ray SDL (Scene Description Language) and some of the variable settings described in this document (<a href="#variables">see below</a>). 
+<p>
+Each display case mount is created by a macro, so to create a new type you can copy a macro for the mount that is closest to the one you wish to create and rename it to give it a suitable name. The 'DisplayCase_RoundPillar' macro is one of the easiest to understand if you're new to this sort of thing. Once you've done this you'll need to add a case statement into the 'DisplayCase' macro to interpret the name you choose for your display case mount and to call the macro you just created.
+<p>
+You don't necessarily need to make your macro compatible with the other macros, but, if you do you can easily add any of the predefined types of display case to it.
+<p>
+The macro returns a single union of objects. While building this object it is conventional to work at the origin with the centre of the fixing point at <0,0,0>. For example, floor-standing mounts are defined with the centre of the base at floor-level at <0,0,0>. Wall-mounted brackets are defined with the centre of the mounting plate where it would align with the wall at <0,0,0>, as if the wall is at the X-Y plane with the object mounted on the -Z side of it. 
+<p>
+At the end of the union definition you should add the display case by calling the 'DisplayCase_MakeCase' macro, specifying the 'DisplayCase_Type' variable as the parameter. Translate the resulting object to the correct position on the mounting structure that you have defined.
+<p>
+You can define variables as you need to, but using the same variable names as other macros (where appropriate) improves compatibility with other display case macros.
+<p>
+Notice that you can also use this approach for adding other objects that you might find useful. For example, the 'BarrierPost' mount type invokes the 'DisplayCase_BarrierPost' macro, which returns a floor-standing post that can be used to construct a rope barrier and consequently does not incorporate a display case.
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+  <a name='files'></a>
+  <h1>Files</h1>
+You should have received the following files with this distribution. The latest versions are available from <a href="http://lib.povray.org">http://lib.povray.org</a>.
+  <h2>Main Files</h2>
+  <table border=1>
+    <tr><th>displaycase.inc  </th><td colspan=2>
+The main include file containing the DisplayCase macros.
+    </td></tr>
+    <tr><th>displaycase.pov  </th><td colspan=2>
+A scene file illustrating the use of the DisplayCase macros to generate a range of different examples.
+    </td></tr>
+    <tr><th>displaycase.html </th><td colspan=2>
+This document.
+    </td></tr>
+  </table>
+  <h2>Other Files</h2>
+The download delivers a number of other supporting files including an automatically generated readme file and the image files used in this documentation. There are also 3 automatically generated files that you may find useful if you choose to upload a modified version of these macros in the future.
+<p>
+  <h2>Uploading New Files</h2>
+Any files that you upload to the POV-Ray Object Collection as a new version of this submission should be prefixed with the name "displaycase_" (or "displaycase."). Files you received that didn't start with that prefix (such as the readme and versioning script) should be ignored. These are automatically generated and shouldn't be uploaded. 
+<p>
+There are 3 automatically generated text files that contain a description, keywords for the search engine and any prerequisites registered against the version you downloaded. Although the file names start with the prefix "displaycase_", you shouldn't try to upload these files with the rest of the files. You may however edit these files before performing an upload so that you can pull the contents into the relevant text fields on the submission screen. This avoids you having to type in large amounts of text while submitting your new version.
+<p>      
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+  <a name='redistribution'></a>
+  <h1>Redistribution</h1>
+The DisplayCase macros are licensed under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a> which permits (and encourages) reuse and redistribution. You can therefore incorporate these macros along with scene files that use them into a set of files that you distribute to others. 
+<p>
+Most of the files included with the DisplayCase macros are sample images and documentation files. If you don't wish to distribute all of these files you only need to include a copy of the file 'DisplayCase.inc' or a cut-down version of it. 
+<p>
+If you plan to submit your object to the <a href="http://lib.povray.org/">POV-Ray Object Collection at http://lib.povray.org/</a> you will need to rename the files to conform to the naming standards (All files from your submission will need the same unique prefix).
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+  <a name='macros'></a>
+  <h1>Macro Reference</h1>
+The DisplayCase macros are all contained in the 'DisplayCase.inc' file. The ones you are most likely to need are described in the first table below.
+<p>
+<table border=0 width=100%>
+  <tr><td width=30%>
+    <a href="#DisplayCase"                            >DisplayCase macro                      </a><br>
+    <a href="#DisplayCase_Undef"                      >DisplayCase_Undef macro                </a><br>
+  </td><td width=30%>
+    <a href="#DisplayCase_MarbleMaterial"             >DisplayCase_MarbleMaterial macro       </a><br>
+    <a href="#DisplayCase_WoodMaterial"               >DisplayCase_WoodMaterial macro         </a><br>
+  </td><td width=30%>
+    <a href="#DisplayCase_SampleExhibit"              >DisplayCase_SampleExhibit              </a><br>
+    <a href="#DisplayCase_SampleFloorTexture"         >DisplayCase_SampleFloorTexture macro   </a><br>
+  </td></tr>
+  </table>
+<p>
+Other macros are used internally and may be of interest if you wish to modify the internal behaviour of the main macro. They are documented in the second table <a href="#InternalMacros"> below</a> (for completeness).
+<p> 
+You can call the 'DisplayCase' macro from within your scene file one or more times to add as many display cases as you want. If you wish to reset settings between calls you may call the 'DisplayCase_Undef' macro. This reverts almost everything to how it was before you or the macros started setting things. This may be handy if you adjusted some settings for the first display case or if the DisplayCase macro set some defaults that you wish to revert to their undefined state before adding a second display case to your scene.  
+<p>
+The 'DisplayCase_MarbleMaterial' and 'DisplayCase_WoodMaterial' macros pick up alternative material settings and assign that material to the <a href="#DisplayCase_DefaultMaterial">'DisplayCase_DefaultMaterial'</a> identifier. When the 'DisplayCase' macro is called, this material is used as the default wherever a specific material has not been declared. Note that, if you change the setting of <a href="#DisplayCase_DefaultMaterial">'DisplayCase_DefaultMaterial'</a> (either by hand or by using one of the default material macros) after having already called the 'DisplayCase' macro, you should call the 'DisplayCase_Undef' macro beforehand, otherwise the various materials will retain the values already assigned to them by the earlier call to the 'DisplayCase' macro.
+<p>
+
+  <table border=1>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase'></a>DisplayCase macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase macro serves as a sort of switch-board, interpreting the parameters that you have specified and calling the internal macros required to build the display case and the supporting components. The first half of this macro checks that various configuration variables have been set correctly and assigning default values as required. The second half calls internal macros to construct the required display case, returning a single POV-Ray object consisting of a union of all of the components required. 
+<p>
+The object returned by this macro is aligned with the origin <0,0,0>. You can wrap the macro call in an 'object' statement so that you can scale, rotate and translate the generated object as required. You should usually scale and rotate the object before translating it into position. See the introductory examples <a href="#intro">above</a>.
+<p>
+This macro has 2 parameters:
+<table border=1>
+<tr><td>
+   DisplayCase_Type            
+</td><td width=100%>
+A string containing the name of a type of display case, or an empty string ("") for the default display case. The standard available display case types are "Spherical", "Oblong", "Cylindrical" and "Box".
+<p>
+For instructions on how to add your own variants and give them names of your choosing see <a href="#addingtypes">'Adding New Types'</a> above.
+</td></tr>
+<tr><td>
+   DisplayCase_Mount            
+</td><td width=100%>
+A string containing the name of a the type of mount that you want your display case mounted on top of, or an empty string ("") for no mount. The standard available display case mounts are "Pedestal", "Tree", "WallMount", "RoundPillar" and "RectangularPillar". 
+<p>
+This parameter can also be used to generate a couple of other utilitarian objects, "BarrierPost" and "RopeHook". These can be used if you wish to construct a rope barrier of the kind you might typically find in an exhibition or presentation space.
+</td></tr>
+</table>
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_MarbleMaterial'></a>DisplayCase_MarbleMaterial macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_MarbleMaterial macro declares the <a href="#DisplayCase_DefaultMaterial">'DisplayCase_DefaultMaterial'</a> variable and assigns a marble material to it that can be used to override the default gold material used to construct the display cases.
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   DisplayCase_MarbleColor            
+</td><td width=100%>
+A string containing the name of one of the marble colors supported by this macro, or an empty string ("") for the default color. The available colors are "White", "Red", "Green" "Blue" and "Yellow". An empty string or an unrecognised string results in a Black material with White marbling.
+</td></tr>
+</table>
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_SampleExhibit'></a>DisplayCase_SampleExhibit macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_SampleExhibit macro returns a sample object that can be used as an exhibit for testing and demo purposes.           <p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   DisplayCase_ExhibitName            
+</td><td width=100%>
+A string containing the name of one of the exhibits supported by this macro, or an empty string ("") for the default exhibit. The supplied exhibits are currently just simple spheres with differently colored textures and can be selected using the parameters "White", "Flame", "Red", "Green", "Blue", "Yellow" and "Violet". An empty string or an unrecognised string results in a largely transparent sphere with White marbling.
+</td></tr>
+</table>
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_SampleFloorTexture'></a>DisplayCase_SampleFloorTexture macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_SampleFloorTexture macro returns a simple wood panel texture used in most of the examples in the 'displaycase.pov' file to represent a wooden floor.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_WoodMaterial'></a>DisplayCase_WoodMaterial macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_WoodMaterial macro declares the <a href="#DisplayCase_DefaultMaterial">'DisplayCase_DefaultMaterial'</a> variable and assigns a wood material to it that can be used to override the default gold material used to construct display cases.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_Undef'></a>DisplayCase_Undef macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_Undef macro undefines identifiers that may previously have been defined by the DisplayCase macro or by you to control it. Of particular interest are identifiers that are declared with a global context by the DisplayCase macros. Most default values within the macros are assigned using the '#local' statement, so don't persist once the macro ends. Notable exceptions are:
+<ul>
+<li>The various material definitions which, if not defined when the DisplayCase macro is called will be assigned the value from the 'DisplayCase_DefaultMaterial' identifier. 
+<li>The various arrays used with the "Tree" display case mount type which need to be declared globally to function correctly. 
+</ul>
+This macro is handy to enable you to reset these values to enable a new default material to be assigned or to enable a second "Tree" mount to be added to a scene without 'inheriting' settings from the previous 'DisplayCase' macro call. 
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+  </table>
+<br>&nbsp;
+<p align=center><a href=#toc>Return to Table of Contents</a>
+
+
+
+<a name='InternalMacros'></a>
+<hr size=12px style="background-color:#FF0000">
+<p>
+<center>
+<b>You won't normally need to call any of the following macros directly from your scene file.</b> 
+<p>
+They are usually only called internally by other macros in the set. They are documented here for completeness and to assist anyone wishing to extend the capabilities of this set of macros.  
+</center>
+<hr size=12px style="background-color:#FF0000">
+<p>
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_ArrayMessage'></a>DisplayCase_ArrayMessage macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_ArrayMessage macro adds an information message into the message stream if an array is found to have an innapropriate number of elements.
+<p>
+This macro has 2 parameters:
+<table border=1>
+<tr><td>
+   DisplayCase_OffendingArray            
+</td><td width=100%>
+A string containing the name of the offending array.
+</td></tr>
+<tr><td>
+   DisplayCase_OffendingArraySize            
+</td><td width=100%>
+A positive integer value showing the size of the offending array.
+</td></tr>
+</table>
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_BarrierPost'></a>DisplayCase_BarrierPost macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_BarrierPost macro adds a simple post that you can use to construct a rope barrier within your scene file. This consists of a cylindrical shaft set into a rounded base with two rings attached to the top of the shaft so that a rope can be attached. The dimensions of the post are controlled using variable settings. This macro is automatically invoked when you specify "BarrierPost" as the second parameter on the call to the 'DisplayCase' macro.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_Box'></a>DisplayCase_Box macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_Box macro returns a box shaped display case. This macro is automatically invoked when you specify "Box" as the first parameter on the call to the 'DisplayCase' macro.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_Cylindrical'></a>DisplayCase_Cylindrical macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_Cylindrical macro returns a cylindrical display case. This macro is automatically invoked when you specify "Cylindrical" as the first parameter on the call to the 'DisplayCase' macro.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_DefaultMaterials'></a>DisplayCase_DefaultMaterials macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_DefaultMaterials macro assigns default material settings for use when constructing display cases, mounts and accoutrements. This macro is automatically invoked when you call the 'DisplayCase' macro.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_FloorStand'></a>DisplayCase_FloorStand macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_FloorStand macro creates a floor stand. This macro is automatically invoked when you specify "Pedestal", "BarrierPost" or "Tree" as the second parameter on the call to the 'DisplayCase' macro.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_Label'></a>DisplayCase_Label macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_Label macro returns a label describing an exhibit. This label is normally inserted into the display case to describe the contents. This macro is automatically invoked whenever you generate a display case.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_MakeCase'></a>DisplayCase_MakeCase macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_MakeCase macro returns a display case definition to the macro that called it. The default display case is "Spherical". This macro is automatically invoked whenever you generate a display case.
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   DisplayCase_Type            
+</td><td width=100%>
+A string containing the name of a type of display case, or an empty string ("") for the default display case. The standard available display case types are "Spherical", "Oblong", "Cylindrical" and "Box".
+<p>
+For instructions on how to add your own variants and give them names of your choosing see <a href="#addingtypes">'Adding New Types'</a> above.
+</td></tr>
+</table>
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_Oblong'></a>DisplayCase_Oblong macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_Oblong macro returns an oblong cylindrical display case. This macro is automatically invoked when you specify "Oblong" as the first parameter on the call to the 'DisplayCase' macro.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_Pedestal'></a>DisplayCase_Pedestal macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_Pedestal macro returns an object intended to represent a floor-standing base supporting a display case. This macro is automatically invoked when you specify "Pedestal" as the second parameter on the call to the 'DisplayCase' macro. 
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   DisplayCase_Type            
+</td><td width=100%>
+A string containing the name of a type of display case, or an empty string ("") for the default display case. The standard available display case types are "Spherical", "Oblong", "Cylindrical" and "Box".
+<p>
+For instructions on how to add your own variants and give them names of your choosing see <a href="#addingtypes">'Adding New Types'</a> above.
+</td></tr>
+</table>
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_RectangularPillar'></a>DisplayCase_RectangularPillar macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_RectangularPillar macro returns an object to represent a rectangular pillar supporting a display case.  This macro is automatically invoked when you specify "RectangularPillar" as the second parameter on the call to the 'DisplayCase' macro.
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   DisplayCase_Type            
+</td><td width=100%>
+A string containing the name of a type of display case, or an empty string ("") for the default display case. The standard available display case types are "Spherical", "Oblong", "Cylindrical" and "Box".
+<p>
+For instructions on how to add your own variants and give them names of your choosing see <a href="#addingtypes">'Adding New Types'</a> above.
+</td></tr>
+</table>
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_RopeHook'></a>DisplayCase_RopeHook macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_RopeHook macro returns an object to represent a connecting cup to connect the end of a rope to a barrier post. This macro is automatically invoked when you specify "RopeHook" as the second parameter on the call to the 'DisplayCase' macro.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_RoundPillar'></a>DisplayCase_RoundPillar macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_RoundPillar macro returns an object to represent a round pillar supporting a display case. This macro is automatically invoked when you specify "RoundPillar" as the second parameter on the call to the 'DisplayCase' macro.
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   DisplayCase_Type            
+</td><td width=100%>
+A string containing the name of a type of display case, or an empty string ("") for the default display case. The standard available display case types are "Spherical", "Oblong", "Cylindrical" and "Box".
+<p>
+For instructions on how to add your own variants and give them names of your choosing see <a href="#addingtypes">'Adding New Types'</a> above.
+</td></tr>
+</table>
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_Spherical'></a>DisplayCase_Spherical macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_Spherical macro returns a spherical display case. This macro is automatically invoked when you specify "Spherical" as the first parameter on the call to the 'DisplayCase' macro.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_SupportArm'></a>DisplayCase_SupportArm macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_SupportArm macro returns a horizontal support arm to hold a display case. This arm turns up at the end to join onto the base of the display case. This macro is automatically invoked when you specify "Tree" or "WallMount" as the second parameter on the call to the 'DisplayCase' macro.  
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_Tree'></a>DisplayCase_Tree macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_Tree macro can generate quite a range of variants incorporating multiple display cases assembled around a floor-standing pedestal in s sort of 'tree' structure. The configuration of the tree structure and of the individual display cases can be controlled using a set of arrays. This macro is automatically invoked when you specify "Tree" as the second parameter on the call to the 'DisplayCase' macro. By default this macro generates a single central oblong display case on a central pole, surrounded by 3 spherical display cases mounted on top of supporting arms.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_WallMount'></a>DisplayCase_WallMount macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_WallMount macro returns an object to represent a wall-mounted pole supporting a display case. This macro is automatically invoked when you specify "WallMount" as the second parameter on the call to the 'DisplayCase' macro.
+<p>
+This macro has 1 parameter:
+<table border=1>
+<tr><td>
+   DisplayCase_Type            
+</td><td width=100%>
+A string containing the name of a type of display case, or an empty string ("") for the default display case. The standard available display case types are "Spherical", "Oblong", "Cylindrical" and "Box".
+<p>
+For instructions on how to add your own variants and give them names of your choosing see <a href="#addingtypes">'Adding New Types'</a> above.
+</td></tr>
+</table>
+    </td></tr>
+
+    <tr><th class=macroheaders colspan=2><a name='DisplayCase_WallPlate'></a>DisplayCase_WallPlate macro </th><tr>
+    <tr><td width=20></td><td>
+The DisplayCase_WallPlate macro returns an object to represent a fixing plate for bolting a supporting arm to the wall. This macro is automatically invoked when you specify "WallMount" as the second parameter on the call to the 'DisplayCase' macro.
+<p>
+This macro has 0 parameters:
+    </td></tr>
+
+
+
+  </table>
+<p>
+  
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+  <a name='variables'></a>
+  <h1>Variable Reference</h1>
+  <p>
+Don't be put off by the number of variables shown here. They all have default values, so you can start adding display cases to your POV-Ray scene without bothering with any of them if you wish. If you do want greater control though, there are lots of things you can easily adjust to meet your needs.
+  <p>
+To set one of these values you simply #declare it before calling the DisplayCase macro.
+  <p>
+<table width=100%>
+<tr><td width=30%>
+<a href="#DisplayCase_ArmLength"             >DisplayCase_ArmLength              </a><br>         
+<a href="#DisplayCase_BaseHeight"            >DisplayCase_BaseHeight             </a><br>         
+<a href="#DisplayCase_BaseInset"             >DisplayCase_BaseInset              </a><br>         
+<a href="#DisplayCase_BaseMaterial"          >DisplayCase_BaseMaterial           </a><br>         
+<a href="#DisplayCase_BaseRadius"            >DisplayCase_BaseRadius             </a><br>         
+<a href="#DisplayCase_BracketHeight"         >DisplayCase_BracketHeight          </a><br>         
+<a href="#DisplayCase_CaseHeight"            >DisplayCase_CaseHeight             </a><br>         
+<a href="#DisplayCase_CaseLights"            >DisplayCase_CaseLights             </a><br>         
+<a href="#DisplayCase_CupLength"             >DisplayCase_CupLength              </a><br>         
+<a href="#DisplayCase_CupRadius"             >DisplayCase_CupRadius              </a><br>         
+<a href="#DisplayCase_DefaultMaterial"       >DisplayCase_DefaultMaterial        </a><br>         
+<a href="#DisplayCase_Depth"                 >DisplayCase_Depth                  </a><br>         
+<a href="#DisplayCase_EdgeRadius"            >DisplayCase_EdgeRadius             </a><br>         
+<a href="#DisplayCase_ElbowRadius"           >DisplayCase_ElbowRadius            </a><br>         
+<a href="#DisplayCase_Exhibit"               >DisplayCase_Exhibit                </a><br>         
+<a href="#DisplayCase_ExhibitSupportMaterial">DisplayCase_ExhibitSupportMaterial </a><br>         
+<a href="#DisplayCase_Exhibits"              >DisplayCase_Exhibits               </a><br>         
+<a href="#DisplayCase_FabricHeight"          >DisplayCase_FabricHeight           </a><br>         
+<a href="#DisplayCase_FabricMaterial"        >DisplayCase_FabricMaterial         </a><br>         
+<a href="#DisplayCase_FabricShape"           >DisplayCase_FabricShape            </a><br>         
+<a href="#DisplayCase_FloorStandMaterial"    >DisplayCase_FloorStandMaterial     </a><br>         
+<a href="#DisplayCase_GlassMaterial"         >DisplayCase_GlassMaterial          </a><br>         
+<a href="#DisplayCase_GlassThickness"        >DisplayCase_GlassThickness         </a><br>         
+<a href="#DisplayCase_Height"                >DisplayCase_Height                 </a><br>         
+<a href="#DisplayCase_JointHeight"           >DisplayCase_JointHeight            </a><br>         
+</td><td>
+<a href="#DisplayCase_JointHeights"          >DisplayCase_JointHeights           </a><br>         
+<a href="#DisplayCase_JointMaterial"         >DisplayCase_JointMaterial          </a><br>         
+<a href="#DisplayCase_KickPlateHeight"       >DisplayCase_KickPlateHeight        </a><br>         
+<a href="#DisplayCase_KickPlateInset"        >DisplayCase_KickPlateInset         </a><br>         
+<a href="#DisplayCase_KickPlateMaterial"     >DisplayCase_KickPlateMaterial      </a><br>         
+<a href="#DisplayCase_LabelAngle"            >DisplayCase_LabelAngle             </a><br>         
+<a href="#DisplayCase_LabelHeight"           >DisplayCase_LabelHeight            </a><br>         
+<a href="#DisplayCase_LabelHolderMaterial"   >DisplayCase_LabelHolderMaterial    </a><br>         
+<a href="#DisplayCase_LabelPanelHeight"      >DisplayCase_LabelPanelHeight       </a><br>         
+<a href="#DisplayCase_LabelPigment"          >DisplayCase_LabelPigment           </a><br>         
+<a href="#DisplayCase_LabelPigments"         >DisplayCase_LabelPigments          </a><br>         
+<a href="#DisplayCase_LabelRimDepth"         >DisplayCase_LabelRimDepth          </a><br>         
+<a href="#DisplayCase_LabelRimWidth"         >DisplayCase_LabelRimWidth          </a><br>         
+<a href="#DisplayCase_LabelSuppRadius"       >DisplayCase_LabelSuppRadius        </a><br>         
+<a href="#DisplayCase_LabelSupportMaterial"  >DisplayCase_LabelSupportMaterial   </a><br>         
+<a href="#DisplayCase_LabelWidth"            >DisplayCase_LabelWidth             </a><br>         
+<a href="#DisplayCase_PillarDepth"           >DisplayCase_PillarDepth            </a><br>         
+<a href="#DisplayCase_PillarHeight"          >DisplayCase_PillarHeight           </a><br>         
+<a href="#DisplayCase_PillarKickPlateHeight" >DisplayCase_PillarKickPlateHeight  </a><br>         
+<a href="#DisplayCase_PillarKickPlateInset"  >DisplayCase_PillarKickPlateInset   </a><br>         
+<a href="#DisplayCase_PillarMaterial"        >DisplayCase_PillarMaterial         </a><br>         
+<a href="#DisplayCase_PillarRadius"          >DisplayCase_PillarRadius           </a><br>         
+<a href="#DisplayCase_PillarWidth"           >DisplayCase_PillarWidth            </a><br>         
+<a href="#DisplayCase_PoleMaterial"          >DisplayCase_PoleMaterial           </a><br>         
+<a href="#DisplayCase_PostHeight"            >DisplayCase_PostHeight             </a><br>         
+</td><td>
+<a href="#DisplayCase_PostRadius"            >DisplayCase_PostRadius             </a><br>         
+<a href="#DisplayCase_Quantity"              >DisplayCase_Quantity               </a><br>         
+<a href="#DisplayCase_Radius"                >DisplayCase_Radius                 </a><br>         
+<a href="#DisplayCase_RimThickness"          >DisplayCase_RimThickness           </a><br>         
+<a href="#DisplayCase_RingRadius"            >DisplayCase_RingRadius             </a><br>         
+<a href="#DisplayCase_RingThickness"         >DisplayCase_RingThickness          </a><br>         
+<a href="#DisplayCase_RopeHookMaterial"      >DisplayCase_RopeHookMaterial       </a><br>         
+<a href="#DisplayCase_SupportArmDepth"       >DisplayCase_SupportArmDepth        </a><br>         
+<a href="#DisplayCase_SupportArmRadius"      >DisplayCase_SupportArmRadius       </a><br>         
+<a href="#DisplayCase_SupportArmReach"       >DisplayCase_SupportArmReach        </a><br>         
+<a href="#DisplayCase_SupportArmTop"         >DisplayCase_SupportArmTop          </a><br>         
+<a href="#DisplayCase_SupportRadius"         >DisplayCase_SupportRadius          </a><br>         
+<a href="#DisplayCase_SupportRodHeight"      >DisplayCase_SupportRodHeight       </a><br>         
+<a href="#DisplayCase_SupportRodHeights"     >DisplayCase_SupportRodHeights      </a><br>         
+<a href="#DisplayCase_SupportRodRadius"      >DisplayCase_SupportRodRadius       </a><br>         
+<a href="#DisplayCase_TopCapHeight"          >DisplayCase_TopCapHeight           </a><br>         
+<a href="#DisplayCase_TopRimHeight"          >DisplayCase_TopRimHeight           </a><br>         
+<a href="#DisplayCase_Types"                 >DisplayCase_Types                  </a><br>         
+<a href="#DisplayCase_WallPlateInset"        >DisplayCase_WallPlateInset         </a><br>         
+<a href="#DisplayCase_WallPlateMaterial"     >DisplayCase_WallPlateMaterial      </a><br>         
+<a href="#DisplayCase_WallPlateRadius"       >DisplayCase_WallPlateRadius        </a><br>         
+<a href="#DisplayCase_WallPlateThickness"    >DisplayCase_WallPlateThickness     </a><br>         
+<a href="#DisplayCase_Width"                 >DisplayCase_Width                  </a><br>         
+<a href="#DisplayCase_YRotations"            >DisplayCase_YRotations             </a><br>    
+</td></tr>
+</table>
+<p>  
+
+
+
+
+  <table border=1>
+
+    <tr><th>DisplayCase_ArmLength</th><td>
+    <a name="DisplayCase_ArmLength"></a> 
+This decimal value is used where the mount-type specified on the DisplayCase macro is "WallMount" to control the horizontal length of the pole that joins the bottom of the display case to the wall. The distance is measured from the centre of the base of the display case to the surface of the wall. This variable defaults to 0.35 POV-Ray units and is intended to represent a distance of 35cm. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_BaseHeight</th><td>
+    <a name="DisplayCase_BaseHeight"></a>
+This decimal value is used to control the height of the base of the "BarrierPost" object and for the floor-standing base of the "Pedestal" and "Tree" objects. This defaults to 0.08 POV-Ray units for the "BarrierPost" object, 0.12 POV-Ray units for the "Pedestal" object and 0.24 for the "Tree" object, which is intended to represent 8cm, 12cm and 24cm respectively.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_BaseInset</th><td>
+    <a name="DisplayCase_BaseInset"></a>
+This decimal value is used to control the radius of the inset curve around the rim of the base of the object when the "BarrierPost", "Pedestal" and "Tree" objects are created.  This defaults to 0.06 POV-Ray units for the "BarrierPost" object, 0.09 POV-Ray units for the "Pedestal" object and 0.18 for the "Tree" object, which is intended to represent 6cm, 9cm and 18cm respectively.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_BaseMaterial</th><td>
+    <a name="DisplayCase_BaseMaterial"></a>
+This material identifier is used to control the material from which the outside of the base of the display case is constructed. This defaults to a slightly yellow pigment with a highly reflective finish intended to represent a golden metallic surface.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_BaseRadius</th><td>
+    <a name="DisplayCase_BaseRadius"></a>
+This decimal value is used to control the radius of the base of the floor-stand used to generate the "BarrierPost", "Pedestal" and "Tree" objects. This defaults to 0.12 POV-Ray units for the "BarrierPost" object, 0.18 POV-Ray units for the "Pedestal" object and 30cm for the "Tree object", which is intended to represent 12cm, 18cm and 30cm respectively.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_BracketHeight</th><td>
+    <a name="DisplayCase_BracketHeight"></a>
+This decimal value is used to control the height at which the centre of the wall bracket will end up when the "WallMount" mount type is used. This defaults to 0 POV-Ray units, which places the centre of the back of the wall bracket at the origin. This value is not usually changed as it is simpler to move the object once it's been generated. If you do change it, make sure that the value of 'DisplayCase_CaseHeight' is sufficiently larger than the value for 'DisplayCase_BracketHeight' to accomodate the supporting arm that joins the display case to the wall bracket.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_CaseHeight</th><td>
+    <a name="DisplayCase_CaseHeight"></a>
+This decimal value is used to control the height that the centre of the bottom of the display case will end up at when the "WallMount" mount type is used. This defaults to 0.2 POV-Ray units, which is intended to represent a height of 20cm. Make sure that this value is sufficient to accomodate the supporting arm that joins the display case to the wall bracket.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_CaseLights</th><td>
+    <a name="DisplayCase_CaseLights"></a>
+This decimal value is used to control the intensity of the lights within the "Box" and "Cylindrical" objects. With these types of display case, lights are incorporated into the top covers, shining down onto the contents. This value is typically between 0 and 1 and defaults to 1. A value of 0 prevents lights from being added to the display case.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_CupLength</th><td>
+    <a name="DisplayCase_CupLength"></a>
+This decimal value is used to control the length of the end-cap incorporated into the "RopeHook" object when it is generated. The end-cap on the "RopeHook" object forms a cup shape which is intended to cover the end of a rope. This defaults to twice the cup radius as controlled using the 'DisplayCase_CupRadius' setting.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_CupRadius</th><td>
+    <a name="DisplayCase_CupRadius"></a>
+This decimal value is used to control the radius of the end-cap incorporated into the "RopeHook" object when it is generated. The end-cap on the "RopeHook" object forms a cup shape which is intended to cover the end of a rope. This defaults to 0.03 POV-Ray units, which is intended to represent a radius of 3cm.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_DefaultMaterial</th><td>
+    <a name="DisplayCase_DefaultMaterial"></a>
+This material identifier is used to control the default material. If you override this setting before calling the DisplayCase macro for the first time then various other materials that have not yet been set will be set using this material by that macro. If not set, this material setting itself defaults to a slightly yellow pigment with a highly reflective finish intended to represent a golden metallic surface.
+<p>
+Once a call to the DisplayCase macro has been made and it's set the various materials they will remain set for subsequent macro calls, so setting this value between macro calls has little effect unless you first #undef the other materials that you want it to affect. You can undef all materials (and all other identifiers) by calling the <a href="#DisplayCase_Undef">'DisplayCase_Undef'</a> macro.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_Depth</th><td>
+    <a name="DisplayCase_Depth"></a>
+This decimal value is used to control the depth dimension of a "Box" type display case (you can set the width, depth and height). This defaults to 0.5 POV-Ray units, which is intended to represent a depth of 50cm.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_EdgeRadius</th><td>
+    <a name="DisplayCase_EdgeRadius"></a>
+This decimal value is used to control the radius of the end-rim of the end-cap incorporated into the "RopeHook" object when it is generated. The end-cap on the "RopeHook" object forms a cup shape which is intended to cover the end of a rope. The end-rim of the end-cap provides a rounded end to the cup. A very small value results in a squared-off end, whereas a value approaching the value assigned to 'DisplayCase_CupRadius' will result in a dome-shaped end. This defaults to 0.75 times the value of 'DisplayCase_CupRadius' giving the "RopeHook" object a quite well-rounded end-cap.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_ElbowRadius</th><td>
+    <a name="DisplayCase_ElbowRadius"></a>
+This decimal value is used to control the radius of the bend on the arm that's used to support the display case when the "WallMount" and "Tree" types of mount are used. This defaults to 0.1 POV-Ray units, which is intended to represent a radius of 10cm.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_Exhibit</th><td>
+    <a name="DisplayCase_Exhibit"></a>
+This object identifier is used to specify an object (complete with texture) for display inside a display case. If this object identifier is not defined the display case will be left empty. For testing purposes you can set this identifier using the <a href="#DisplayCase_SampleExhibit">'DisplayCase_SampleExhibit'</a> macro to generate the simple sphere with a marble texture of a given color that is used in many of the examples in this document.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_ExhibitSupportMaterial</th><td>
+    <a name="DisplayCase_ExhibitSupportMaterial"></a>
+This material identifier is used to specify the material from which the cylindrical support that holds up the exhibit in the middle of the display case is to be made. This defaults to a slightly yellow pigment with a highly reflective finish intended to represent a golden metallic surface.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_Exhibits</th><td>
+    <a name="DisplayCase_Exhibits"></a>
+This array of objects is used to define objects for display inside the set of display cases created when the "Tree" mount is used. This type of mount builds a tree supporting multiple display cases and you can specify a different exhibit object fcr each display case. The [0] element of the array is used for the display case that is positioned on top of the central post with the remaining array elements being used sequentially for the display cases that encircle the central column. If a particular array element is not defined, the corresponding display case will be left empty.
+<p>
+Note that the number of elements in the DisplayCase_Exhibits array (ie the size of the array) should always be equal to the number of display cases you wish to be built into the "Tree" object, otherwise errors may be generated.
+<p>
+For example:
+<p>
+<div class="codesample">
+&nbsp;&nbsp;#include "displaycase.inc"
+<br>&nbsp;&nbsp;#declare DisplayCase_Exhibits = array [5];
+<br>&nbsp;&nbsp;#declare DisplayCase_Exhibits [4] = sphere{0,0.1 pigment {rgb 1}};
+<br>&nbsp;&nbsp;DisplayCase("","Tree")
+</div>
+<p>
+This generates a tree object with 5 display cases adding a White sphere into the last display case, but leaving the rest empty.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_FabricHeight</th><td>
+    <a name="DisplayCase_FabricHeight"></a>
+This decimal value is used to control the height of the fabric used to cover the inside of the base of a display case. This 'fabric' object is simply a section of a torus with a bumpy texture intended to give the impression of being a loose cloth cover. This height defines how far up into the case the highest part of this object extends. This value defaults to 0.016 POV-Ray units, which is intended to represent a height of 16 millimetres.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_FabricMaterial</th><td>
+    <a name="DisplayCase_FabricMaterial"></a>
+This material identifier is used for the fabric that covers the inside of the base of a display case. This 'fabric' object is simply a section of a torus. This material defaults to a slightly bumpy purple texture intended to give the impression of being a loose cloth cover.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_FabricShape</th><td>
+    <a name="DisplayCase_FabricShape"></a>
+This string is used to control the outline shape of the object used to simulate a fabric that lines the inside of the base of a "Box" type display case. This 'fabric' object is simply a section of a torus with a bumpy texture intended to give the impression of being a loose cloth cover, but it can be trimmed to fit the box exactly using the "Rectangular" setting or can be shaped using the "Eliptical" setting. The default is "Rectangular". 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_FloorStandMaterial</th><td>
+    <a name="DisplayCase_FloorStandMaterial"></a>
+This material identifier is used to control the material from which the floor stand is made when a mount type of "Pedestal" or "Tree" is specified, or when a "BarrierPost" is specified. This defaults to a slightly yellow pigment with a highly reflective finish intended to represent a golden metallic surface.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_GlassMaterial</th><td>
+    <a name="DisplayCase_GlassMaterial"></a>
+This material identifier is used for the glass surfaces of the display cases. This defaults to a highly reflective transparent material with a glass-like index of refraction (IOR).
+    </td></tr>
+
+
+    <tr><th>DisplayCase_GlassThickness</th><td>
+    <a name="DisplayCase_GlassThickness"></a>
+This decimal value is used to control the thickness of the glass used to construct the display cases. This value defaults to 0.008 POV-Ray units, which is intended to represent a thickness of 8 millimetres.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_Height</th><td>
+    <a name="DisplayCase_Height"></a>
+This decimal value is used to specify the height of a display case when using the "Box", "Cylindrical" and "Oblong" display case types. This value defaults to 1.1 POV-Ray units for "Oblong" display cases and to 1.0 POV-Ray unit for "Box" and "Cylindrical" display cases. This is intended to represent a height in metres.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_JointHeight</th><td>
+    <a name="DisplayCase_JointHeight"></a>
+This decimal value can be used with the "Spherical", "Box" and "Cylindrical" display cases to control the height of the joint between the opaque base of the display case and the glass part of the display case. 
+<p>
+The height of the joint on the "Oblong" display case is fixed and equals the radius setting. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_JointHeights</th><td>
+    <a name="DisplayCase_JointHeights"></a>
+This array of decimal values can optionally be used with the "Tree" mount to control the heights of the bases of individual display cases. This type of mount builds a tree supporting multiple display cases and you can specify a different base joint height for each display case. The [0] element of the array is used for the display case that is positioned on top of the central post with the remaining array elements being used sequentially for the display cases that encircle the central column.
+<p>
+If you declare this array, the array size should be equal to the number of display cases you want to add into the tree object. If this array is not set the 'DisplayCase_JointHeight' variable will be used to determine the height of the base of each unit.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_JointMaterial</th><td>
+    <a name="DisplayCase_JointMaterial"></a>
+This material identifier is used to control the material from which the rim around the base of a display case is made. This rim is around the top surface of the base of the display case and forms the surface upon which the glass rests. This defaults to a matt-black material.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_KickPlateHeight</th><td>
+    <a name="DisplayCase_KickPlateHeight"></a>
+This decimal value is used to optionally specify the height of a kick-plate at the base of a "Box" or "Cylindrical" type of display case. The bases of both of these two display case types can readily be extended to the floor enabling them to be uses as free-standing display cases. They support this variable to enable an inset kickplate to be added at floor level. This value defaults to 0 POV-Ray units resulting in no kick-plate being created. If you specify a value of 0.12 POV-Ray units an inset kick-plate will be added. This value is intended to represent a height in metres.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_KickPlateInset</th><td>
+    <a name="DisplayCase_KickPlateInset"></a>
+This decimal value is used to optionally specify the inset to be used for a kick-plate at the base of a "Box" or "Cylindrical" type of display case. The bases of both of these two display case types can readily be extended to the floor enabling them to be uses as free-standing display cases. They support this variable to enable an inset kickplate to be added at floor level. This value defaults to 0.01 POV-Ray units intended to represent an inset of 1cm, if a kickplate is present. A kickplate will only be present if a non-zero value is specified for 'DisplayCase_KickPlateHeight'. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_KickPlateMaterial</th><td>
+    <a name="DisplayCase_KickPlateMaterial"></a>
+This material identifier is used to control the material from which a kick-plate is made if present when a "Box" or "Cylindrical" type of display case is generated. A kick-plate can be added to these two types of display case by specifying a non-zero value for the 'DisplayCase_KickPlateHeight' variable. This defaults to a matt-black surface material.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_LabelAngle</th><td>
+    <a name="DisplayCase_LabelAngle"></a>
+This decimal value is used to specify the angle in degrees at which the label panel within a display case is set. This value defaults to 45, representing 45 degrees.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_LabelHeight</th><td>
+    <a name="DisplayCase_LabelHeight"></a>
+This decimal value is used to specify the height of the label that is displayed on the label panel inside a display case. This value defaults to 0.054, representing a label height of 54 millimetres.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_LabelHolderMaterial</th><td>
+    <a name="DisplayCase_LabelHolderMaterial"></a>
+This material identifier is used to control the material from which the label holder within a display case is made. This defaults to a slightly yellow pigment with a highly reflective finish intended to represent a golden metallic surface.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_LabelPanelHeight</th><td>
+    <a name="DisplayCase_LabelPanelHeight"></a>
+This decimal value is used to specify the height of the centre of the label holder above the base of the display case. It therefore defines the length of the small cylindrical rod used to support the label panel. This value defaults to 0.08, representing a height of 8 centimetres.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_LabelPigment</th><td>
+    <a name="DisplayCase_LabelPigment"></a>
+This pigment identifier is used to control the pigment from which the label that is added into a display case to describe the exhibit is formed. You can use any form of pigment, but it is easiest to use an image file. The default pigment is defined using a GIF format image file consisting of a plain White background with a few lines of text on it.
+<p>
+<div class="codesample">
+&nbsp;&nbsp;#declare DisplayCase_LabelPigment = pigment {image_map {gif "displaycase_defaultlabel.gif"}}
+</div>   
+<p>
+This pigment needs to be positioned so that the part intended to appear on the label occupies a unit square on the X-Y plane from <0,0> to <1,1> (the default position for an image_map). The pigment needs to cross the plane Z=0 in the Z-direction. The DisplayCase macro automatically scales, orients and moves this pigment to fit the front face of the label object, based upon the current label settings. 
+<p>
+The pigment should not start exactly at the plane Z=0, or the results become unpredictable. It's best therefore not to use the 'once' keyword on your image_map specification because this causes the pigment to start exactly at Z=0. If instead of using an image_map you use a text object to create an object pigment, you'll need to translate it slightly in the -z direction because the default text position makes the front-face of the text object start exactly at Z=0.  
+    </td></tr>
+
+
+    <tr><th>DisplayCase_LabelPigments</th><td>
+    <a name="DisplayCase_LabelPigments"></a>
+This array of pigments can optionally be declared when using the "Tree" parameter of the DisplayCase macro call to create multiple display cases. This enables you to specify a different pigment or image for each label. If an array element is not defined the default label will be used for that display case. 
+<p>
+See the description of 'DisplayCase_LabelPigment' for more details on specifying such pigments.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_LabelRimDepth</th><td>
+    <a name="DisplayCase_LabelRimDepth"></a>
+This decimal value is used to specify the depth of the rim around the edge of the label holder. The surface of the label is inset into the label holder by this amount. This value defaults to 0.005, representing a depth of 5 millimetres.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_LabelRimWidth</th><td>
+    <a name="DisplayCase_LabelRimWidth"></a>
+This decimal value is used to specify the width of the rim around the edge of the label holder. This value defaults to 0.008, representing a width of 8 millimetres.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_LabelSuppRadius</th><td>
+    <a name="DisplayCase_LabelSuppRadius"></a>
+This decimal value is used to specify the radius of the cylindrical rod that supports the label holder. This value defaults to 0.003, representing a radius of 3 millimetres.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_LabelSupportMaterial</th><td>
+    <a name="DisplayCase_LabelSupportMaterial"></a>
+This material identifier is used to control the material used to construct the little cylindrical support that holds up the label holder. This defaults to a slightly yellow pigment with a highly reflective finish intended to represent a golden metallic surface.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_LabelWidth</th><td>
+    <a name="DisplayCase_LabelWidth"></a>
+This decimal value is used to specify the width of the label that is on the panel inside a display case. This value defaults to 0.084, representing a label width of 84 millimetres.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_PillarDepth</th><td>
+    <a name="DisplayCase_PillarDepth"></a>
+This decimal value is used to specify the depth of a column of rectangular section generated when a mount type of "RectangularPillar" is specified on the DisplayCase macro call (you can specify the width, depth and height of such a pillar). This value takes its default value from the size of the display case, if specified. Otherwise it defaults to 0.3 POV-Ray units, representing a pillar depth of 30cm.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_PillarHeight</th><td>
+    <a name="DisplayCase_PillarHeight"></a>
+This decimal value is used to specify the height of a pillar generated when a mount type of "RectangularPillar" or "RoundPillar" is specified on the DisplayCase macro call. This value defaults to 0.9 POV-Ray units, representing a pillar height of 0.9 metres. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_PillarKickPlateHeight</th><td>
+    <a name="DisplayCase_PillarKickPlateHeight"></a>
+This decimal value is used to control the height of a kick-plate at the base of a pillar generated when a mount type of "RectangularPillar" or "RoundPillar" is specified on the DisplayCase macro call. This value defaults to 0.12 POV-Ray units, representing a kick-plate height of 12cm. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_PillarKickPlateInset</th><td>
+    <a name="DisplayCase_PillarKickPlateInset"></a>
+This decimal value is used to control the amount by which a kick-plate is inset at the base of a pillar generated when a mount type of "RectangularPillar" or "RoundPillar" is specified on the DisplayCase macro call. This value defaults to 0.01 POV-Ray units, representing a kick-plate inset of 1cm. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_PillarMaterial</th><td>
+    <a name="DisplayCase_PillarMaterial"></a>
+This material identifier is used to control the material used to construct the pillar when a mount type of "RectangularPillar" or "RoundPillar" is specified on the DisplayCase macro call. This defaults to a slightly yellow pigment with a highly reflective finish intended to represent a golden metallic surface.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_PillarRadius</th><td>
+    <a name="DisplayCase_PillarRadius"></a>
+This decimal value is used to specify the radius of a column of circular section generated when a mount type of "RoundPillar" is specified on the DisplayCase macro call. This value takes its default value from the size of the display case, if specified. Otherwise it defaults to 0.25 POV-Ray units, representing a pillar radius of 25cm.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_PillarWidth</th><td>
+    <a name="DisplayCase_PillarWidth"></a>
+This decimal value is used to specify the width of a column of rectangular section generated when a mount type of "RectangularPillar" is specified on the DisplayCase macro call. This value takes its default value from the size of the display case, if specified. Otherwise it defaults to 0.3 POV-Ray units, representing a pillar width of 30cm.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_PoleMaterial</th><td>
+    <a name="DisplayCase_PoleMaterial"></a>
+This material identifier is used to control the material from which the support poles are constructed when a mount type of "WallMount", "Tree" or "BarrierPost" is specified on the DisplayCase macro call. This defaults to a slightly yellow pigment with a highly reflective finish intended to represent a golden metallic surface.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_PostHeight</th><td>
+    <a name="DisplayCase_PostHeight"></a>
+This decimal value is used to specify the height of the support pole generated when a mount type of "Pedestal" or "BarrierPost" is specified on the DisplayCase macro call. This value defaults to 1 POV-Ray unit, representing a pillar height of 1 metre. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_PostRadius</th><td>
+    <a name="DisplayCase_PostRadius"></a>
+This decimal value is used to specify the radius of the support pole generated when a mount type of "Pedestal" or "BarrierPost" is specified on the DisplayCase macro call. This value defaults to 0.03 POV-Ray units, representing a pillar radius of 3cm. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_Quantity</th><td>
+    <a name="DisplayCase_Quantity"></a>
+This positive, non-zero, integer value is used to explicitly specify the number of display cases to incorporate into the object generated by specifying a mount type of "Tree" on the DisplayCase macro call. If not explicitly specified the macro will use the size of the smallest of any of the arrays used to control the construction of the various display cases, as the quantity. If none of the arrays are declared, this value will default to 4, which produces one centrally mounted display case surrounded by three further display cases.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_Radius</th><td>
+    <a name="DisplayCase_Radius"></a>
+This decimal value is used to specify the radius of the display case generated when a display case type of "Cylindrical", "Oblong" and "Spherical" is specified on the DisplayCase macro call. This value defaults to 0.3 POV-Ray units for "Spherical" display cases and 0.25 POV-Ray units for "Cylindrical" and "Oblong" display cases, representing a radius of 30cm and 25cm respectively. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_RimThickness</th><td>
+    <a name="DisplayCase_RimThickness"></a>
+This decimal value is used to specify the thickness of the rim of the lid on top of the display case generated when a display case type of "Box" or "Cylindrical" is specified on the DisplayCase macro call. This value defaults to 0.0001 POV-Ray units, representing a very thin veneer of about one tenth of a millimetre. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_RingRadius</th><td>
+    <a name="DisplayCase_RingRadius"></a>
+This decimal value is used to specify the major radius of the torus/ring added to the end of the object generated when the "RopeHook" object is specified on the DisplayCase macro call. The default value is calculated so that the outer extremes of the ring are the same size as the cup used to cap the end of the rope.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_RingThickness</th><td>
+    <a name="DisplayCase_RingThickness"></a>
+This decimal value is used to specify the minor radius of the torus/ring added to the end of the object generated when the "RopeHook" object is specified on the DisplayCase macro call. The default value is calculated so that the outer extremes of the ring are the same size as the cup used to cap the end of the rope.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_RopeHookMaterial</th><td>
+    <a name="DisplayCase_RopeHookMaterial"></a>
+This material identifier is used to control the material from which the rope hook is constructed when the "RopeHook" object is specified on the DisplayCase macro call. This defaults to a slightly yellow pigment with a highly reflective finish intended to represent a golden metallic surface.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_SupportArmDepth</th><td>
+    <a name="DisplayCase_SupportArmDepth"></a>
+This decimal value is used to specify the total vertical dimension for the bent pole used to support display cases when a mount type of "Tree" is specified on the DisplayCase macro call. This value defaults to 0.19 POV-Ray unit, representing a depth of 19cm. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_SupportArmRadius</th><td>
+    <a name="DisplayCase_SupportArmRadius"></a>
+This decimal value is used to specify the radius of the pipe used to support display cases when a mount type of "Tree" or "WallMount" is specified on the DisplayCase macro call. This value defaults to 0.04 POV-Ray unit, representing a radius of 4cm. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_SupportArmReach</th><td>
+    <a name="DisplayCase_SupportArmReach"></a>
+This decimal value is used to specify the reach of the bent pipe used to support display cases when a mount type of "Tree" or "WallMount" is specified on the DisplayCase macro call. The support consists of a horizontal pipe leading away from a supporting wall or post, a curved elbow and a vertical pipe onto which the display case is mounted. This distance is the horizontal distance from the centre of the vertical pipe to the far end of the horizontal pipe. This value defaults to 0.45 POV-Ray unit, representing a reach of 45cm. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_SupportRadius</th><td>
+    <a name="DisplayCase_SupportRadius"></a>
+This decimal value is used to specify the radius of the pole used as a central support when a mount type of "Tree" is specified on the DisplayCase macro call. This value defaults to 0.04 POV-Ray unit, representing a radius of 4cm. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_SupportRodHeight</th><td>
+    <a name="DisplayCase_SupportRodHeight"></a>
+This decimal value is used to specify the height of the small rod positioned within a display case to support an exhibit. By default this value is calculated to position the exhibit at a height which is appropriate for the dimensions and shape of the display case. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_SupportRodHeights</th><td>
+    <a name="DisplayCase_SupportRodHeights"></a>
+This array of decimal values can optionally be used to specify the heights of the rods positioned within the display cases to support exhibits when a mount type of "Tree" is specified on the DisplayCase macro call. This type of mount builds a tree supporting multiple display cases and you can specify a different rod height for each display case. 
+<p>
+The [0] element of the array is used for the display case that is positioned on top of the central post with the remaining array elements being used sequentially for the display cases that encircle the central column. 
+<p>
+If you declare this array, the array size should be equal to the number of display cases you want to add into the tree object. You only need to assign values to the specific elements that correspond to display cases where you wish to override the default value. 
+<p>
+By default this value is calculated to position the exhibit at a height which is dependant upon the dimensions and shape of the display case. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_SupportRodRadius</th><td>
+    <a name="DisplayCase_SupportRodRadius"></a>
+This decimal value is used to specify the radius of the small rod positioned within a display case to support an exhibit. This value defaults to 0.02 POV-Ray unit, representing a radius of 2cm. 
+    </td></tr>
+
+
+    <tr><th>DisplayCase_TopCapHeight</th><td>
+    <a name="DisplayCase_TopCapHeight"></a>
+This decimal value is used to specify the height of the cap that forms part of the lid on top of the display case generated when a display case type of "Box" or "Cylindrical" is specified on the DisplayCase macro call. This part of the lid is the curved part that extends up beyond the top of the glass, covering the top of the case. Specifying a height of '0' suppresses the top cap completely. This value defaults to one twenty fourth of the height of the case.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_TopRimHeight</th><td>
+    <a name="DisplayCase_TopRimHeight"></a>
+This decimal value is used to specify the height of the rim that forms the part of the lid that reaches down over the top edges of the display case when a display case type of "Box" or "Cylindrical" is specified on the DisplayCase macro call. Specifying a height of '0' suppresses the rim completely. This value defaults to one twelth of the height of the case.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_Types</th><td>
+    <a name="DisplayCase_Types"></a>
+This array of text strings is optionally used to specify the types of display case to be incorporated into the object generated when the "Tree" mount is used. This type of mount builds a tree supporting multiple display cases and you can specify a different display case type for each display case. The [0] element of the array is used for the display case that is positioned on top of the central post with the remaining array elements being used sequentially for the display cases that encircle the central column. If a particular array element is not defined, the default type will be used.
+<p>
+Note that the number of elements in the DisplayCase_Types array (ie the size of the array) should always be equal to the number of display cases you wish to be built into the "Tree" object, otherwise errors may be generated.
+<p>
+For example:
+<p>
+<div class="codesample">
+    &nbsp;&nbsp;#include "displaycase.inc"
+<br>&nbsp;&nbsp;#declare DisplayCase_Types = array [5];
+<br>&nbsp;&nbsp;#declare DisplayCase_Types [4] = "Cylindrical";
+<br>&nbsp;&nbsp;DisplayCase("","Tree")
+</div>
+<p>
+This generates a tree object with 5 display cases making the last display case ([4]) into a cylindrical display case. The other display cases will be of the default type. By default the central display case will be of the "Cylindrical" type and the others will be "Spherical".
+    </td></tr>
+
+
+    <tr><th>DisplayCase_WallPlateInset</th><td>
+    <a name="DisplayCase_WallPlateInset"></a>
+This decimal value is used to control the radius of the inset curve around the rim of the wall plate generated when the "WallMounted" mount type is specified on the DisplayCase macro call.  This defaults to 0.04 POV-Ray units which is intended to represent a 4cm inset.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_WallPlateMaterial</th><td>
+    <a name="DisplayCase_WallPlateMaterial"></a>
+This material identifier is used to control the material used to construct the wall plate that is generated when a mount type of "WallMount" is specified on the DisplayCase macro call. This defaults to a slightly yellow pigment with a highly reflective finish intended to represent a golden metallic surface.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_WallPlateRadius</th><td>
+    <a name="DisplayCase_WallPlateRadius"></a>
+This decimal value is used to control the radius of the wall plate generated when the "WallMounted" mount type is specified on the DisplayCase macro call.  This defaults to 0.12 POV-Ray units which is intended to represent a 12cm inset.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_WallPlateThickness</th><td>
+    <a name="DisplayCase_WallPlateThickness"></a>
+This decimal value is used to control the thickness of the wall plate generated when the "WallMount" mount type is specified on the DisplayCase macro call.  This defaults to 0.025 POV-Ray units which is intended to represent a thickness of 25 millimetres.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_Width</th><td>
+    <a name="DisplayCase_Width"></a>
+This decimal value is used to control the width of a "Box" type display case. This defaults to 0.5 POV-Ray units, which is intended to represent a width of 50cm.
+    </td></tr>
+
+
+    <tr><th>DisplayCase_YRotations</th><td>
+    <a name="DisplayCase_YRotations"></a>
+This array of decimal values can optionally be used to specify Y-Axis rotations (in degrees) for the display cases created when a mount type of "Tree" is specified on the DisplayCase macro call. This type of mount builds a tree supporting multiple display cases and you can specify a different rotation fcr each display case. 
+<p>
+The [0] element of the array is used for the display case that is positioned on top of the central post and the rotation is made about its centre. The remaining array elements are used sequentially for the display cases that encircle the central column and are used to rotate the cases and the corresponding support arms by the specified amount around the central column. 
+<p>
+If you declare this array, the array size should be equal to the number of display cases you want to add into the tree object. You only need to assign values to the specific elements that correspond to display cases where you wish to override the default value. 
+<p>
+By default the central display case is not rotated and the remaining values are calculated to evenly space the display cases around the central column. 
+    </td></tr>
+
+
+
+    </table> 
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+<h2>Change History</h2>
+Version 1.0 of the DisplayCase macros was created by Chris Bartlett in September 2009 for the POV-Ray Object Collection at <a href="http://lib.povray.org/">http://lib.povray.org/</a>. 
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+<p>
+&nbsp;
+
+</body>
+</html>

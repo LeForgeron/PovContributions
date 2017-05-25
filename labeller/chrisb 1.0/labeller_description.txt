@@ -1,0 +1,2 @@
+Ever wondered how to add a label to a bottle, tin can, biscuit box or other wierd shaped container in POV-Ray?
+Here's the answer; A set of macros and include files to do most of the hard work. The macros generate a label object and map the required texture to it. The include files provide pre-defined labels and a design mode so you can make your own.

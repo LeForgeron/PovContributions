@@ -1,0 +1,1765 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator"
+        content=
+        "HTML Tidy for Linux/x86 (vers 1 September 2005), see www.w3.org" />
+  <meta http-equiv="content-type"
+        content="text/html; charset=us-ascii" />
+
+  <title>TrainFaces</title>
+  <meta name="generator"
+        content=
+        "StarOffice/OpenOffice.org XSLT (http://xml.openoffice.org/sx2ml)" />
+  <meta name="author"
+        content="Matthew Goulet" />
+  <meta name="created"
+        content="2008-07-18T11:24:32" />
+  <meta name="changedby"
+        content="Matthew Goulet" />
+  <meta name="changed"
+        content="2008-07-22T14:05:49" />
+  <meta name="subject"
+        content="TrainFaces Documentation" />
+<style type="text/css"
+       xml:space="preserve">
+/*<![CDATA[*/
+    @page { size: 8.5inch 11inch; margin-top: 0.7874inch; margin-bottom: 0.7874inch; margin-left: 0.7874inch; margin-right: 0.7874inch }
+    table { border-collapse:collapse; border-spacing:0; empty-cells:show }
+    td, th { vertical-align:top; }
+    h1, h2, h3, h4, h5, h6 { clear:both }
+    ol, ul { padding:0; }
+    * { margin:0; }
+    *.fr1 { font-size:12pt; float:right; vertical-align:top; background-color:transparent; margin-left:0.2in; margin-right:0.2in; padding:0in; border-style:none; }
+    *.fr2 { font-size:12pt; vertical-align:middle; text-align:center; background-color:transparent; margin-left:0.1in; margin-right:0.1in; margin-top:0.1in; margin-bottom:0.1in; padding:0in; border-style:none; }
+    *.Frame { font-size:12pt; vertical-align:middle; }
+    *.Graphics { font-size:12pt; vertical-align:top; background-color:transparent; }
+    *.Caption { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; margin-top:0.0835in; margin-bottom:0.0835in; font-style:italic; }
+    *.Example { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; margin-top:0.0835in; margin-bottom:0.0835in; font-style:italic; }
+    *.Framecontents { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; margin-left:0.4in; margin-right:0.2in; margin-top:0.0402in; margin-bottom:0.0402in; text-align:justify ! important; text-indent:0inch; }
+    *.Header { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; text-align:center ! important; }
+    *.Heading { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:14pt; margin-top:0.1665in; margin-bottom:0.0835in; }
+    *.Heading1 { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:115%; margin-top:0.1665in; margin-bottom:0.0835in; margin-left:0.1in; margin-right:0in; text-indent:0inch; font-weight:bold; }
+    *.Heading10 { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:75%; margin-top:0.1665in; margin-bottom:0.0835in; font-weight:bold; }
+    *.Heading2 { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; margin-top:0.1665in; margin-bottom:0.0835in; margin-left:0.2in; margin-right:0in; text-indent:0inch; font-weight:bold; }
+    *.Heading3 { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:10.5pt; margin-top:0.1665in; margin-bottom:0.0835in; margin-left:0.3in; margin-right:0in; text-indent:0inch; font-weight:bold; }
+    *.Index { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; }
+    *.Introduction { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; margin-left:0.1in; margin-right:0.1in; margin-top:0.0402in; margin-bottom:0.0402in; text-align:justify ! important; text-indent:0inch; }
+    *.List { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; margin-left:0.4in; margin-right:0.2in; margin-top:0.0402in; margin-bottom:0.0402in; text-align:justify ! important; text-indent:0inch; }
+    *.ListContents { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; margin-left:0.3937in; margin-right:0in; text-indent:0inch; }
+    *.OptionInfo { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:10.5pt; margin-left:0.2in; margin-right:3in; margin-top:0in; margin-bottom:0in; text-align:justify ! important; text-indent:0inch; }
+    *.OptionList0 { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:10.5pt; text-align:justify ! important; margin-left:0.2in; margin-right:0in; text-indent:0inch; }
+    *.OptionList1 { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:10.5pt; text-align:justify ! important; margin-left:0.2in; margin-right:0in; text-indent:0inch; }
+    *.P1 { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:10.5pt; text-align:justify ! important; }
+    *.P2 { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:10.5pt; text-align:justify ! important; }
+    *.P3 { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:10.5pt; text-align:center ! important; font-weight:bold; }
+    *.P4 { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; text-align:center ! important; }
+    *.P5 { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; margin-left:0in; margin-right:0.2in; margin-top:0.0402in; margin-bottom:0.0402in; text-align:justify ! important; text-indent:0inch; }
+    *.SourceCode { font-family:'Courier New',monospace,monospace,monospace,monospace; font-size:12pt; margin-left:0.55in; margin-right:0in; margin-top:0in; margin-bottom:0in; text-align:justify ! important; text-indent:0inch; line-height:100%; font-weight:bold; }
+    *.Standard { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; }
+    *.Subtitle { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:10pt; margin-top:0.1665in; margin-bottom:0.0835in; text-align:center ! important; font-style:italic; font-weight:bold; }
+    *.Table { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; margin-top:0.0835in; margin-bottom:0.0835in; font-style:italic; }
+    *.TableContents { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:10.5pt; text-align:justify ! important; }
+    *.TableHeading { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:10.5pt; text-align:center ! important; font-weight:bold; }
+    *.Textbody { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; margin-left:0.4in; margin-right:0.2in; margin-top:0.0402in; margin-bottom:0.0402in; text-align:justify ! important; text-indent:0inch; }
+    *.Textbodyindent { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:12pt; margin-left:0.1965in; margin-right:0in; margin-top:0.0402in; margin-bottom:0.0402in; text-align:justify ! important; text-indent:0inch; }
+    *.Title { font-family:'Bitstream Vera Serif',serif,serif,serif,serif; font-size:18pt; margin-top:0.1665in; margin-bottom:0.0835in; text-align:center ! important; font-weight:bold; }
+    *.Sect1 { }
+    *.Cheek_Options { width:9.2236in; margin-left:0.1944in; margin-right:0.291in; float:none; }
+    *.Chin_Options { width:9.2236in; margin-left:0.1944in; margin-right:0.291in; float:none; }
+    *.Eyebrow_Options { width:9.2236in; margin-left:0.1944in; margin-right:0.291in; float:none; }
+    *.Eyes_Options { width:9.2229in; margin-left:0.291in; }
+    *.General_Options_Table { width:9.2229in; margin-left:0.2111in; }
+    *.Isosurface_Options { width:9.2236in; margin-left:0.1944in; margin-right:0.291in; float:none; }
+    *.Mouth_Options { width:9.2236in; margin-left:0.1944in; margin-right:0.291in; float:none; }
+    *.Nose_Options { width:9.2236in; margin-left:0.1944in; margin-right:0.291in; float:none; }
+    *.Cheek_OptionsA1 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:0.0133cm; border-top-style:solid; border-top-color:#000000; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Cheek_OptionsA2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Cheek_OptionsE1 { padding:0.0382in; border-width:0.0133cm; border-style:solid; border-color:#000000; }
+    *.Cheek_OptionsE2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-width:0.0133cm; border-right-style:solid; border-right-color:#000000; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Chin_OptionsA1 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:0.0133cm; border-top-style:solid; border-top-color:#000000; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Chin_OptionsA2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Chin_OptionsE1 { padding:0.0382in; border-width:0.0133cm; border-style:solid; border-color:#000000; }
+    *.Chin_OptionsE2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-width:0.0133cm; border-right-style:solid; border-right-color:#000000; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Eyebrow_OptionsA1 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:0.0133cm; border-top-style:solid; border-top-color:#000000; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Eyebrow_OptionsA2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Eyebrow_OptionsE1 { padding:0.0382in; border-width:0.0133cm; border-style:solid; border-color:#000000; }
+    *.Eyebrow_OptionsE2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-width:0.0133cm; border-right-style:solid; border-right-color:#000000; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Eyes_OptionsA1 { background-color:transparent; padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:0.0133cm; border-top-style:solid; border-top-color:#000000; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Eyes_OptionsA2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Eyes_OptionsB1 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:0.0133cm; border-top-style:solid; border-top-color:#000000; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Eyes_OptionsE1 { padding:0.0382in; border-width:0.0133cm; border-style:solid; border-color:#000000; }
+    *.Eyes_OptionsE2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-width:0.0133cm; border-right-style:solid; border-right-color:#000000; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.General_Options_TableA1 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:0.0133cm; border-top-style:solid; border-top-color:#000000; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.General_Options_TableA2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.General_Options_TableC1 { background-color:transparent; padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:0.0133cm; border-top-style:solid; border-top-color:#000000; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.General_Options_TableC2 { background-color:transparent; padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.General_Options_TableE1 { padding:0.0382in; border-width:0.0133cm; border-style:solid; border-color:#000000; }
+    *.General_Options_TableE2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-width:0.0133cm; border-right-style:solid; border-right-color:#000000; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Isosurface_OptionsA1 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:0.0133cm; border-top-style:solid; border-top-color:#000000; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Isosurface_OptionsA2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Isosurface_OptionsD1 { padding:0.0382in; border-width:0.0133cm; border-style:solid; border-color:#000000; }
+    *.Isosurface_OptionsD2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-width:0.0133cm; border-right-style:solid; border-right-color:#000000; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Mouth_OptionsA1 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:0.0133cm; border-top-style:solid; border-top-color:#000000; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Mouth_OptionsA2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Mouth_OptionsE1 { padding:0.0382in; border-width:0.0133cm; border-style:solid; border-color:#000000; }
+    *.Mouth_OptionsE2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-width:0.0133cm; border-right-style:solid; border-right-color:#000000; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Nose_OptionsA1 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:0.0133cm; border-top-style:solid; border-top-color:#000000; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Nose_OptionsA2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Nose_OptionsC1 { background-color:transparent; padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:0.0133cm; border-top-style:solid; border-top-color:#000000; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Nose_OptionsE1 { padding:0.0382in; border-width:0.0133cm; border-style:solid; border-color:#000000; }
+    *.Nose_OptionsE2 { padding:0.0382in; border-left-width:0.0133cm; border-left-style:solid; border-left-color:#000000; border-right-width:0.0133cm; border-right-style:solid; border-right-color:#000000; border-top-style:none; border-bottom-width:0.0133cm; border-bottom-style:solid; border-bottom-color:#000000; }
+    *.Cheek_OptionsA { width:1.4556in; }
+    *.Cheek_OptionsB { width:0.7799in; }
+    *.Cheek_OptionsC { width:1.5076in; }
+    *.Cheek_OptionsD { width:4.5125in; }
+    *.Cheek_OptionsE { width:0.9688in; }
+    *.Chin_OptionsA { width:1.4556in; }
+    *.Chin_OptionsB { width:0.7799in; }
+    *.Chin_OptionsC { width:1.5076in; }
+    *.Chin_OptionsD { width:4.5125in; }
+    *.Chin_OptionsE { width:0.9688in; }
+    *.Eyebrow_OptionsA { width:1.4479in; }
+    *.Eyebrow_OptionsB { width:0.791in; }
+    *.Eyebrow_OptionsC { width:1.4896in; }
+    *.Eyebrow_OptionsD { width:4.5208in; }
+    *.Eyebrow_OptionsE { width:0.9743in; }
+    *.Eyes_OptionsA { width:1.2493in; }
+    *.Eyes_OptionsB { width:0.8639in; }
+    *.Eyes_OptionsC { width:1.5736in; }
+    *.Eyes_OptionsD { width:4.5514in; }
+    *.Eyes_OptionsE { width:0.9854in; }
+    *.General_Options_TableA { width:1.4361in; }
+    *.General_Options_TableB { width:0.666in; }
+    *.General_Options_TableC { width:1.4694in; }
+    *.General_Options_TableD { width:4.6757in; }
+    *.General_Options_TableE { width:0.9757in; }
+    *.Isosurface_OptionsA { width:1.2153in; }
+    *.Isosurface_OptionsB { width:0.8736in; }
+    *.Isosurface_OptionsC { width:2.3382in; }
+    *.Isosurface_OptionsD { width:4.7965in; }
+    *.Mouth_OptionsA { width:1.4375in; }
+    *.Mouth_OptionsB { width:0.7389in; }
+    *.Mouth_OptionsC { width:1.6042in; }
+    *.Mouth_OptionsD { width:4.4618in; }
+    *.Mouth_OptionsE { width:0.9819in; }
+    *.Nose_OptionsA { width:1.4368in; }
+    *.Nose_OptionsB { width:0.7389in; }
+    *.Nose_OptionsC { width:1.3972in; }
+    *.Nose_OptionsD { width:4.6688in; }
+    *.Nose_OptionsE { width:0.9819in; }
+    *.Captioncharacters { }
+    *.Email { font-family:'Lucida Console',monospace,monospace,monospace,monospace; font-weight:bold; font-style:normal; font-weight:bold; }
+    *.EndnoteSymbol { }
+    *.FootnoteSymbol { }
+    *.Internetlink { color:#000080; background-color:transparent; text-decoration:underline; }
+    *.NumberingSymbols { }
+    *.OptionLabel { font-weight:bold; }
+    *.SourceText { font-family:'Courier New',monospace,monospace,monospace,monospace; }
+    *.T1 { }
+    *.VisitedInternetLink { color:#000080; text-decoration:underline; }
+/*]]>*/
+</style>
+<style type="text/css"
+       xml:space="preserve">
+/*<![CDATA[*/
+ td.c36 {text-align:left;width:4.7965in;}
+ td.c35 {text-align:left;width:2.3382in;}
+ td.c34 {text-align:left;width:0.8736in;}
+ td.c33 {text-align:left;width:1.2153in;}
+ td.c32 {text-align:left;width:0.9688in;}
+ td.c31 {text-align:left;width:4.5125in;}
+ td.c30 {text-align:left;width:1.5076in;}
+ td.c29 {text-align:left;width:0.7799in;}
+ td.c28 {text-align:left;width:1.4556in;}
+ td.c27 {text-align:left;width:0.9743in;}
+ td.c26 {text-align:left;width:4.5208in;}
+ td.c25 {text-align:left;width:1.4896in;}
+ td.c24 {text-align:left;width:0.791in;}
+ td.c23 {text-align:left;width:1.4479in;}
+ td.c22 {text-align:left;width:4.4618in;}
+ td.c21 {text-align:left;width:1.6042in;}
+ td.c20 {text-align:left;width:1.4375in;}
+ td.c19 {text-align:left;width:0.9819in;}
+ td.c18 {text-align:left;width:4.6688in;}
+ td.c17 {text-align:left;width:1.3972in;}
+ td.c16 {text-align:left;width:0.7389in;}
+ td.c15 {text-align:left;width:1.4368in;}
+ td.c14 {text-align:left;width:0.9854in;}
+ td.c13 {text-align:left;width:4.5514in;}
+ td.c12 {text-align:left;width:1.5736in;}
+ td.c11 {text-align:left;width:0.8639in;}
+ td.c10 {text-align:left;width:1.2493in;}
+ div.c9 {text-align:left}
+ ol.c8 {margin-left:1.25cm;list-style-type:decimal;}
+ li.c7 {margin-left:0.5cm;}
+ p.c6 {margin-left:0.25cm;}
+ td.c5 {text-align:left;width:0.9757in;}
+ td.c4 {text-align:left;width:4.6757in;}
+ td.c3 {text-align:left;width:1.4694in;}
+ td.c2 {text-align:left;width:0.666in;}
+ td.c1 {text-align:left;width:1.4361in;}
+/*]]>*/
+</style>
+</head>
+
+<body dir="ltr">
+  <p class="Title">TrainFaces&nbsp;</p>
+
+  <p class="Subtitle">Version 1.0.0&nbsp;</p>
+
+  <p class="Introduction"><a href="trainfaces.png"><img width=
+  "160"
+       height="120"
+       alt="TrainFaces Demo Image Thumbnail"
+       src="trainfaces_thumbnail.png"
+       class="fr1" /></a>The TrainFaces include file was
+       originally designed to create <a href=
+       "http://en.wikipedia.org/wiki/Thomas_the_tank_engine"><span class="Internetlink">
+  Thomas the Tank Engine</span></a> style faces, hence its name.
+  &nbsp;However, it should be flexible enough at this point to be
+  used for other purposes as well. &nbsp;It can generate face
+  objects, allowing the position, size, shape, and texture, of
+  the eyes, nose, mouth, eyebrows, cheeks, and chin to be
+  customized. &nbsp;Additionally there is the capability of
+  saving the face to a mesh for fast rendering.</p>
+
+  <p class="Introduction">Please feel free to contact me with any
+  comments, questions, or issues, at <span class=
+  "Email"><span class="T1">povray at bherring dot cotse dot
+  net</span></span>.</p>
+
+  <h1 class="Heading1"><a name="Basic_Usage"
+     id="Basic_Usage"></a>&nbsp;&nbsp;Basic Usage</h1>
+
+  <p class="Textbody">Simply include the
+  &ldquo;trainfaces.inc&rdquo; file in your scene:&nbsp;</p>
+
+  <p class="SourceCode">#include
+  &ldquo;trainfaces.inc&rdquo;&nbsp;</p>
+
+  <p class="Textbody">Then, after setting any desired options,
+  call the TF_Face macro, which will return an object:&nbsp;</p>
+
+  <p class="SourceCode">#declare Face = TF_Face();&nbsp;</p>
+
+  <p class="Textbody">or&nbsp;</p>
+
+  <p class="SourceCode">object {&nbsp;</p>
+
+  <p class="SourceCode">&nbsp; TF_Face()</p>
+
+  <p class="SourceCode">&nbsp; // transformations go here</p>
+
+  <p class="SourceCode">}&nbsp;</p>
+
+  <p class="SourceCode">&nbsp;</p>
+
+  <h1 class="Heading1"><a name="Options"
+     id="Options"></a>&nbsp;&nbsp;Options</h1>
+
+  <p class="Textbody">There are a number of options that control
+  the shape of the face, placement of facial features, texturing,
+  and object generation. &nbsp;All options are set by declaring
+  variables before calling the TF_Face macro. &nbsp;For
+  example:</p>
+
+  <p class="SourceCode">#declare TF_Some_Option = 42;&nbsp;</p>
+
+  <h2 class="Heading2"><a name="Default_Options"
+     id="Default_Options"></a>&nbsp;&nbsp;Default Options</h2>
+
+  <p class="Textbody">All options have default values, and they
+  are automatically set to these values when the trainfaces.inc
+  file is first included. &nbsp;The default values for all
+  variables are listed below with their descriptions.</p>
+
+  <h3 class="Heading3"><a name="TF_Set_Default"
+     id="TF_Set_Default"></a>TF_Set_Default</h3>
+
+  <p class="Textbody">The macro TF_Set_Default will reset all
+  variable options to their default values. &nbsp;It is useful to
+  call before setting any options to ensure consistency. &nbsp;It
+  is used simply:</p>
+
+  <h3 class="Heading3"><a name="TF_Set_Default_28_29"
+     id="TF_Set_Default_28_29"></a>TF_Set_Default()</h3>
+
+  <h2 class="Heading2"><a name="General_Structure"
+     id="General_Structure"></a>&nbsp;&nbsp;General
+     Structure</h2>
+
+  <p class="Textbody">&nbsp;</p>
+
+  <div class="c9">
+    <table border="0"
+           cellspacing="0"
+           cellpadding="0"
+           width="95%"
+           class="General_Options_Table">
+      <colgroup>
+        <col width="159" />
+        <col width="74" />
+        <col width="163" />
+        <col width="519" />
+        <col width="108" />
+      </colgroup>
+
+      <tr>
+        <td class="General_Options_TableA1 c1">
+          <p class="TableHeading">Name&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA1 c2">
+          <p class="TableHeading">Type&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableC1 c3">
+          <p class="TableHeading">Default&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA1 c4">
+          <p class="TableHeading">Use&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableE1 c5">
+          <p class="TableHeading">&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="General_Options_TableA2 c1">
+          <p class="P1">TF_Shape&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c2">
+          <p class="P1">Integer&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableC2 c3">
+          <p class="P1">1&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c4">
+          <p class="TableContents">Defines the overall shape of
+          the face. Currently there are two shapes
+          defined.&nbsp;</p>
+
+          <ol class="c8">
+            <li class="OptionList1 c7">
+              <p class="OptionList1 c6">Rounded
+              Circular&nbsp;</p>
+            </li>
+
+            <li class="OptionList1 c7">
+              <p class="OptionList1 c6">Rounded square&nbsp;</p>
+            </li>
+          </ol>
+        </td>
+
+        <td class="General_Options_TableE2 c5">
+          <p class="P1"><a href="tf_example_01.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="General_Options_TableA2 c1">
+          <p class="P1">TF_Show_Eyes&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c2">
+          <p class="P1">Boolean&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c3">
+          <p class="P1">On&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c4">
+          <p class="P1">Enables/disables creation of eyes and eye
+          sockets. &nbsp;If disabled, eye related options have no
+          effect.</p>
+        </td>
+
+        <td rowspan="6"
+            class="General_Options_TableE2 c5">
+          <p class="P1"><a href="tf_example_02.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="General_Options_TableA2 c1">
+          <p class="P1">TF_Show_Nose&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c2">
+          <p class="P1">Boolean&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c3">
+          <p class="P1">On&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c4">
+          <p class="P1">Enables/disables creation of a nose.
+          &nbsp;If disabled, nose related options have no
+          effect.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="General_Options_TableA2 c1">
+          <p class="P1">TF_Show_Mouth&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c2">
+          <p class="P1">Boolean&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c3">
+          <p class="P1">On&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c4">
+          <p class="P1">Enables/disables creation of a mouth.
+          &nbsp;If disabled, mouth related options have no
+          effect.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="General_Options_TableA2 c1">
+          <p class="P1">TF_Show_Cheeks&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c2">
+          <p class="P1">Boolean&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c3">
+          <p class="P1">On&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c4">
+          <p class="P1">Enables/disables creation of cheeks.
+          &nbsp;If disabled, cheek related options have no
+          effect. &nbsp;An exception to this is that
+          TF_Cheek_Rosy still functions, and TF_Cheek_Scale will
+          affect the size of the coloring.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="General_Options_TableA2 c1">
+          <p class="P1">TF_Show_Brows&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c2">
+          <p class="P1">Boolean&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c3">
+          <p class="P1">On&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c4">
+          <p class="P1">Enables/disables creation of eyebrows.
+          &nbsp;If disabled, brow related options have no effect.
+          &nbsp;Additionally TF_Brow_Style must be a value other
+          than zero if eyebrows are to be visible.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="General_Options_TableA2 c1">
+          <p class="P1">TF_Show_Chin&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c2">
+          <p class="P1">Boolean&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c3">
+          <p class="P1">On&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c4">
+          <p class="P1">Enables/disables creation of a chin.
+          &nbsp;If disabled, chin related options have no
+          effect.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="General_Options_TableA2 c1">
+          <p class="P1">TF_Face_T&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c2">
+          <p class="P1">Texture&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c3">
+          <p class="P1">TF_Default_Face_T&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c4">
+          <p class="P1">The texture to be applied to the
+          face.&nbsp;</p>
+        </td>
+
+        <td rowspan="2"
+            class="General_Options_TableE2 c5">
+          <p class="P1"><a href="tf_example_03.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="General_Options_TableA2 c1">
+          <p class="P1">TF_Face_I&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c2">
+          <p class="P1">Interior&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c3">
+          <p class="P1">TF_Default_Face_I&nbsp;</p>
+        </td>
+
+        <td class="General_Options_TableA2 c4">
+          <p class="P1">The interior to be applied to the
+          face.&nbsp;</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <p class="Textbody">&nbsp;</p>
+
+  <h2 class="Heading2"><a name="Eyes"
+     id="Eyes"></a>&nbsp;&nbsp;Eyes</h2>
+
+  <div class="c9">
+    <table border="0"
+           cellspacing="0"
+           cellpadding="0"
+           width="95%"
+           class="Eyes_Options">
+      <colgroup>
+        <col width="139" />
+        <col width="96" />
+        <col width="175" />
+        <col width="505" />
+        <col width="109" />
+      </colgroup>
+
+      <tr>
+        <td class="Eyes_OptionsA1 c10">
+          <p class="TableHeading">Name&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsB1 c11">
+          <p class="TableHeading">Type&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsB1 c12">
+          <p class="TableHeading">Default&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsB1 c13">
+          <p class="TableHeading">Use&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsE1 c14">
+          <p class="TableHeading">&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyes_OptionsA2 c10">
+          <p class="TableContents">TF_Eye_Style&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c11">
+          <p class="TableContents">Integer&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c12">
+          <p class="TableContents">1&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c13">
+          <p class="TableContents">Defines the style of the
+          eye/pupil. &nbsp;Currently the following styles are
+          defined:</p>
+
+          <ol class="c8">
+            <li class="OptionList1 c7">
+              <p class="OptionList1 c6">Elliptical eye and
+              pupils&nbsp;</p>
+            </li>
+
+            <li class="OptionList1 c7">
+              <p class="OptionList1 c6">Elliptical eye and
+              pupils, with stylized pupil highlight&nbsp;</p>
+            </li>
+          </ol>
+        </td>
+
+        <td class="Eyes_OptionsE2 c14">
+          <p class="TableContents"><a href=
+          "tf_example_04.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyes_OptionsA2 c10">
+          <p class="TableContents">TF_Eye_Scale&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c11">
+          <p class="TableContents">2D vector&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c12">
+          <p class="TableContents">&lt;1, 1&gt;&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c13">
+          <p class="TableContents">Defines scaling of the
+          eyes/eye sockets in the x and y directions. &nbsp;The
+          pupils are not affected by this option, see
+          TF_Pupil_Scale.</p>
+        </td>
+
+        <td class="Eyes_OptionsE2 c14">
+          <p class="TableContents"><a href=
+          "tf_example_05.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyes_OptionsA2 c10">
+          <p class="TableContents">TF_Pupil_Scale&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c11">
+          <p class="TableContents">2D vector&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c12">
+          <p class="TableContents">&lt;1, 1&gt;&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c13">
+          <p class="TableContents">Defines scaling of the pupils
+          only, in the x and y directions.&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsE2 c14">
+          <p class="TableContents"><a href=
+          "tf_example_06.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyes_OptionsA2 c10">
+          <p class="TableContents">TF_Eye_Place&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c11">
+          <p class="TableContents">2D vector&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c12">
+          <p class="TableContents">&lt;0, 0&gt;&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c13">
+          <p class="TableContents">Defines an adjustment to the
+          placement of the eyes in the x and y directions. A
+          negative x value will move both eyes closer together,
+          while a positive x value will move them further
+          apart.&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsE2 c14">
+          <p class="TableContents"><a href=
+          "tf_example_07.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyes_OptionsA2 c10">
+          <p class="TableContents">TF_Look_At&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c11">
+          <p class="TableContents">3D vector&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c12">
+          <p class="TableContents">-z&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c13">
+          <p class="TableContents">The vector defines the
+          direction both eyes will point in. &nbsp;The center of
+          each eye is assumed to be at the origin for the
+          purposes of interpreting this value. Reasonable values
+          should be consistent with the fact that a face is
+          initially created faced in the z direction.</p>
+        </td>
+
+        <td class="Eyes_OptionsE2 c14">
+          <p class="TableContents"><a href=
+          "tf_example_08.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyes_OptionsA2 c10">
+          <p class="TableContents">TF_Eye_T&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c11">
+          <p class="TableContents">Texture&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c12">
+          <p class="TableContents">TF_Default_Eye_T&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c13">
+          <p class="TableContents">Defines the texture to be
+          applied to the eye (except for the pupil.)&nbsp;</p>
+        </td>
+
+        <td rowspan="3"
+            class="Eyes_OptionsE2 c14">
+          <p class="TableContents"><a href=
+          "tf_example_09.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyes_OptionsA2 c10">
+          <p class="TableContents">TF_Pupil_T&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c11">
+          <p class="TableContents">Texture&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c12">
+          <p class="TableContents">TF_Default_Pupil_T&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c13">
+          <p class="TableContents">Defines the texture to be
+          applied to the pupils of each eye.&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyes_OptionsA2 c10">
+          <p class="TableContents">TF_Eye_I&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c11">
+          <p class="TableContents">Interior&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c12">
+          <p class="TableContents">TF_Default_Eye_I&nbsp;</p>
+        </td>
+
+        <td class="Eyes_OptionsA2 c13">
+          <p class="TableContents">Defines the interior that will
+          be applied to each eye object.&nbsp;</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <p class="Textbody">&nbsp;</p>
+
+  <h2 class="Heading2"><a name="Nose"
+     id="Nose"></a>&nbsp;&nbsp;Nose</h2>
+
+  <div class="c9">
+    <table border="0"
+           cellspacing="0"
+           cellpadding="0"
+           class="Nose_Options">
+      <colgroup>
+        <col width="159" />
+        <col width="82" />
+        <col width="155" />
+        <col width="518" />
+        <col width="109" />
+      </colgroup>
+
+      <tr>
+        <td class="Nose_OptionsA1 c15">
+          <p class="TableHeading">Name&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA1 c16">
+          <p class="TableHeading">Type&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsC1 c17">
+          <p class="TableHeading">Default&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA1 c18">
+          <p class="TableHeading">Use&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsE1 c19">
+          <p class="TableHeading">&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Nose_OptionsA2 c15">
+          <p class="TableContents">TF_Nose_Place&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c16">
+          <p class="TableContents">Float&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c17">
+          <p class="TableContents">0&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c18">
+          <p class="TableContents">Adjusts the placement of the
+          nose. &nbsp;Negative values place it lower on the face,
+          while positive values place it higher.</p>
+        </td>
+
+        <td class="Nose_OptionsE2 c19">
+          <p class="TableContents"><a href=
+          "tf_example_10.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Nose_OptionsA2 c15">
+          <p class="TableContents">TF_Nose_Tilt&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c16">
+          <p class="TableContents">Float&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c17">
+          <p class="TableContents">0&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c18">
+          <p class="TableContents">Defines the angle at which the
+          nose protrudes from the face. &nbsp;Negative values
+          tilt upwards, positive downwards.</p>
+        </td>
+
+        <td class="Nose_OptionsE2 c19">
+          <p class="TableContents"><a href=
+          "tf_example_11.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Nose_OptionsA2 c15">
+          <p class="TableContents">TF_Nose_Length&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c16">
+          <p class="TableContents">Float&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c17">
+          <p class="TableContents">0.3&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c18">
+          <p class="TableContents">Sets the approximate length of
+          the nose from base to tip.&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsE2 c19">
+          <p class="TableContents"><a href=
+          "tf_example_12.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Nose_OptionsA2 c15">
+          <p class="TableContents">TF_Nose_Size&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c16">
+          <p class="TableContents">2D vector&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c17">
+          <p class="TableContents">&lt;0.15, 0.1&gt;&nbsp;</p>
+        </td>
+
+        <td class="Nose_OptionsA2 c18">
+          <p class="TableContents">The nose is roughly cone
+          shaped. &nbsp;The u and v elements of this vector
+          specify the radius of the cone at the base and tip,
+          respectively. &nbsp;Generally, u should be less than or
+          equal to v.</p>
+        </td>
+
+        <td class="Nose_OptionsE2 c19">
+          <p class="TableContents"><a href=
+          "tf_example_13.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <h2 class="Heading2"><a name="Mouth"
+     id="Mouth"></a>&nbsp;&nbsp;Mouth</h2>
+
+  <p class="Textbody">&nbsp;</p>
+
+  <div class="c9">
+    <table border="0"
+           cellspacing="0"
+           cellpadding="0"
+           class="Mouth_Options">
+      <colgroup>
+        <col width="160" />
+        <col width="82" />
+        <col width="178" />
+        <col width="495" />
+        <col width="109" />
+      </colgroup>
+
+      <tr>
+        <td class="Mouth_OptionsA1 c20">
+          <p class="TableHeading">Name&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA1 c16">
+          <p class="TableHeading">Type&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA1 c21">
+          <p class="TableHeading">Default&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA1 c22">
+          <p class="TableHeading">Use&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsE1 c19">
+          <p class="TableHeading">&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Mouth_OptionsA2 c20">
+          <p class="TableContents">TF_Mouth_Shape&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c16">
+          <p class="TableContents">3D vector&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c21">
+          <p class="TableContents">&lt;0.6, 0.05,
+          0.1&gt;&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c22">
+          <p class="TableContents">The x component defines the
+          horizontal width of the mouth, from left to right
+          corner. &nbsp;The y and z values define the vertical
+          offset from the baseline of the mouth of the top and
+          bottom lips. &nbsp;The smaller of y and z is assumed to
+          be the top lip, with the larger being the bottom.
+          &nbsp;If y and z are both positive, the mouth is
+          smiling; both negative, frowning; one positive and one
+          negative gives a rounded mouth.</p>
+        </td>
+
+        <td class="Mouth_OptionsE2 c19">
+          <p class="TableContents"><a href=
+          "tf_example_14.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Mouth_OptionsA2 c20">
+          <p class="TableContents">TF_Mouth_Scale&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c16">
+          <p class="TableContents">2D vector&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c21">
+          <p class="TableContents">&lt;1, 1&gt;&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c22">
+          <p class="TableContents">Defines scaling of the mouth
+          in the x and y directions.&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsE2 c19">
+          <p class="TableContents"><a href=
+          "tf_example_15.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Mouth_OptionsA2 c20">
+          <p class="TableContents">TF_Mouth_Place&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c16">
+          <p class="TableContents">2D vector&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c21">
+          <p class="TableContents">&lt;0, 0&gt;&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c22">
+          <p class="TableContents">Offsets the location of the
+          mouth in the x and y directions.&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsE2 c19">
+          <p class="TableContents"><a href=
+          "tf_example_16.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Mouth_OptionsA2 c20">
+          <p class="TableContents">TF_Mouth_M&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c16">
+          <p class="TableContents">Material&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c21">
+          <p class="TableContents">TF_Default_Mouth_M&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsA2 c22">
+          <p class="TableContents">Defines the material applied
+          to the inside of the mouth.&nbsp;</p>
+        </td>
+
+        <td class="Mouth_OptionsE2 c19">
+          <p class="TableContents"><a href=
+          "tf_example_17.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <h2 class="Heading2"><a name="Eyebrows"
+     id="Eyebrows"></a>&nbsp;&nbsp;Eyebrows</h2>
+
+  <div class="c9">
+    <table border="0"
+           cellspacing="0"
+           cellpadding="0"
+           class="Eyebrow_Options">
+      <colgroup>
+        <col width="161" />
+        <col width="88" />
+        <col width="165" />
+        <col width="502" />
+        <col width="108" />
+      </colgroup>
+
+      <tr>
+        <td class="Eyebrow_OptionsA1 c23">
+          <p class="TableHeading">Name&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA1 c24">
+          <p class="TableHeading">Type&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA1 c25">
+          <p class="TableHeading">Default&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA1 c26">
+          <p class="TableHeading">Use&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsE1 c27">
+          <p class="TableHeading">&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyebrow_OptionsA2 c23">
+          <p class="TableContents">TF_Brow_Style&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c24">
+          <p class="TableContents">Integer&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c25">
+          <p class="TableContents">0&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c26">
+          <p class="TableContents">Sets what kind of eyebrows are
+          created. &nbsp;Currently the following styles are
+          defined:</p>
+
+          <ol class="c8">
+            <li class="OptionList0 c7">
+              <p class="OptionList0 c6">No eyebrows&nbsp;</p>
+            </li>
+
+            <li class="OptionList0 c7">
+              <p class="OptionList0 c6">Angular, "caret
+              shaped"&nbsp;</p>
+            </li>
+
+            <li class="OptionList0 c7">
+              <p class="OptionList0 c6">Curved and
+              tapered&nbsp;</p>
+            </li>
+
+            <li class="OptionList0 c7">
+              <p class="OptionList0 c6">Horizontal bars&nbsp;</p>
+            </li>
+
+            <li class="OptionList0 c7">
+              <p class="OptionList0 c6">Arcs&nbsp;</p>
+            </li>
+          </ol>
+        </td>
+
+        <td class="Eyebrow_OptionsE2 c27">
+          <p class="TableContents"><a href=
+          "tf_example_18.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyebrow_OptionsA2 c23">
+          <p class="TableContents">TF_Brow_Scale&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c24">
+          <p class="TableContents">2D vector&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c25">
+          <p class="TableContents">&lt;1, 1&gt;&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c26">
+          <p class="TableContents">Sets the scaling of each
+          eyebrow in the x and y directions.&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsE2 c27">
+          <p class="TableContents"><a href=
+          "tf_example_19.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyebrow_OptionsA2 c23">
+          <p class="TableContents">TF_Brow_Place&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c24">
+          <p class="TableContents">2D vector&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c25">
+          <p class="TableContents">&lt;0, 0&gt;&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c26">
+          <p class="TableContents">Offsets the eyebrows location
+          in the x and y directions. &nbsp;Negative x values will
+          move the brows closer together, positive values move
+          them farther apart.</p>
+        </td>
+
+        <td class="Eyebrow_OptionsE2 c27">
+          <p class="TableContents"><a href=
+          "tf_example_20.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyebrow_OptionsA2 c23">
+          <p class="TableContents">TF_Brow_Tilt&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c24">
+          <p class="TableContents">Float&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c25">
+          <p class="TableContents">0&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c26">
+          <p class="TableContents">Rotates each brow around the z
+          axis by this angle.&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsE2 c27">
+          <p class="TableContents"><a href=
+          "tf_example_21.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Eyebrow_OptionsA2 c23">
+          <p class="TableContents">TF_Brow_T&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c24">
+          <p class="TableContents">Texture&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c25">
+          <p class="TableContents">TF_Default_Brow_T&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsA2 c26">
+          <p class="TableContents">Sets the texture to be applied
+          to the eyebrows.&nbsp;</p>
+        </td>
+
+        <td class="Eyebrow_OptionsE2 c27">
+          <p class="TableContents"><a href=
+          "tf_example_22.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <p class="Textbody">&nbsp;</p>
+
+  <h2 class="Heading2"><a name="Cheeks"
+     id="Cheeks"></a>&nbsp;&nbsp;Cheeks</h2>
+
+  <div class="c9">
+    <table border="0"
+           cellspacing="0"
+           cellpadding="0"
+           class="Cheek_Options">
+      <colgroup>
+        <col width="162" />
+        <col width="87" />
+        <col width="167" />
+        <col width="501" />
+        <col width="108" />
+      </colgroup>
+
+      <tr>
+        <td class="Cheek_OptionsA1 c28">
+          <p class="P3">Name&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA1 c29">
+          <p class="P3">Type&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA1 c30">
+          <p class="P3">Default&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA1 c31">
+          <p class="P3">Use&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsE1 c32">
+          <p class="P3">&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Cheek_OptionsA2 c28">
+          <p class="P2">TF_Cheek_Scale&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c29">
+          <p class="P2">3D vector&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c30">
+          <p class="P2">&lt;1, 1, 1&gt;&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c31">
+          <p class="P2">Sets the scaling of the cheeks and the
+          areas of color if TF_Cheek_Rosy is enabled.&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsE2 c32">
+          <p class="P2"><a href="tf_example_24.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Cheek_OptionsA2 c28">
+          <p class="P2">TF_Cheek_Place&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c29">
+          <p class="P2">2D vector&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c30">
+          <p class="P2">&lt;0, 0&gt;&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c31">
+          <p class="P2">Offset to be applied to the cheek
+          location in the x and y directions. &nbsp;Negative x
+          values will move the cheeks closer together, positive
+          values further apart.</p>
+        </td>
+
+        <td class="Cheek_OptionsE2 c32">
+          <p class="P2"><a href="tf_example_25.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Cheek_OptionsA2 c28">
+          <p class="P2">TF_Cheek_Rosy&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c29">
+          <p class="P2">Boolean&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c30">
+          <p class="P2">Off&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c31">
+          <p class="P2">Enables/disables round patches of color
+          on the cheeks. &nbsp;Note this option still works if
+          cheeks are disabled.</p>
+        </td>
+
+        <td rowspan="2"
+            class="Cheek_OptionsE2 c32">
+          <p class="P2"><a href="tf_example_23.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Cheek_OptionsA2 c28">
+          <p class="P2">TF_Rosy_T&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c29">
+          <p class="P2">Texture&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c30">
+          <p class="P2">TF_Default_Rosy_T&nbsp;</p>
+        </td>
+
+        <td class="Cheek_OptionsA2 c31">
+          <p class="P2">Sets the texture to use for the
+          coloration when TF_Cheek_Rosy is enabled.&nbsp;</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <h2 class="Heading2"><a name="Chin"
+     id="Chin"></a>&nbsp;&nbsp;Chin</h2>
+
+  <p class="Textbody">&nbsp;</p>
+
+  <div class="c9">
+    <table border="0"
+           cellspacing="0"
+           cellpadding="0"
+           class="Chin_Options">
+      <colgroup>
+        <col width="162" />
+        <col width="87" />
+        <col width="167" />
+        <col width="501" />
+        <col width="108" />
+      </colgroup>
+
+      <tr>
+        <td class="Chin_OptionsA1 c28">
+          <p class="P3">Name&nbsp;</p>
+        </td>
+
+        <td class="Chin_OptionsA1 c29">
+          <p class="P3">Type&nbsp;</p>
+        </td>
+
+        <td class="Chin_OptionsA1 c30">
+          <p class="P3">Default&nbsp;</p>
+        </td>
+
+        <td class="Chin_OptionsA1 c31">
+          <p class="P3">Use&nbsp;</p>
+        </td>
+
+        <td class="Chin_OptionsE1 c32">
+          <p class="P3">&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Chin_OptionsA2 c28">
+          <p class="P2">TF_Chin_Scale&nbsp;</p>
+        </td>
+
+        <td class="Chin_OptionsA2 c29">
+          <p class="P2">3D vector&nbsp;</p>
+        </td>
+
+        <td class="Chin_OptionsA2 c30">
+          <p class="P2">&lt;1, 1, 1&gt;&nbsp;</p>
+        </td>
+
+        <td class="Chin_OptionsA2 c31">
+          <p class="P2">Sets the scaling of the chin in the x, y,
+          and z directions.&nbsp;</p>
+        </td>
+
+        <td class="Chin_OptionsE2 c32">
+          <p class="P2"><a href="tf_example_26.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Chin_OptionsA2 c28">
+          <p class="P2">TF_Chin_Place&nbsp;</p>
+        </td>
+
+        <td class="Chin_OptionsA2 c29">
+          <p class="P2">2D vector&nbsp;</p>
+        </td>
+
+        <td class="Chin_OptionsA2 c30">
+          <p class="P2">&lt;0, 0&gt;&nbsp;</p>
+        </td>
+
+        <td class="Chin_OptionsA2 c31">
+          <p class="P2">Adjusts the location of the chin in the x
+          and y directions. &nbsp;By default the chin is centered
+          horizontally on the face. &nbsp;A positive x offset
+          creates a cleft, widening the chin.</p>
+        </td>
+
+        <td class="Chin_OptionsE2 c32">
+          <p class="P2"><a href="tf_example_27.html"><span class=
+          "Internetlink">Example</span></a></p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <h2 class="Heading2"><a name="Isosurface_Options"
+     id="Isosurface_Options"></a>&nbsp;&nbsp;Isosurface
+     Options</h2>
+
+  <div class="c9">
+    <table border="0"
+           cellspacing="0"
+           cellpadding="0"
+           class="Isosurface_Options">
+      <colgroup>
+        <col width="135" />
+        <col width="97" />
+        <col width="260" />
+        <col width="532" />
+      </colgroup>
+
+      <tr>
+        <td class="Isosurface_OptionsA1 c33">
+          <p class="TableHeading">Name&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA1 c34">
+          <p class="TableHeading">Type&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA1 c35">
+          <p class="TableHeading">Default&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsD1 c36">
+          <p class="TableHeading">Use&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Isosurface_OptionsA2 c33">
+          <p class="TableContents">TF_File&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c34">
+          <p class="TableContents">String&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c35">
+          <p class="TableContents">Empty string&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsD2 c36">
+          <p class="TableContents">By default the shape of a face
+          is created using an isosurface. &nbsp;If TF_File is
+          given a non-empty value, it will be considered a file
+          name containing a mesh object defining the face.
+          &nbsp;If the file name given does not exist, a mesh
+          approximation of the face isosurface will be generated
+          and stored in the file. &nbsp;This feature is only
+          available if an Isosurface Approximation include file
+          is available, not included in this package. &nbsp;This
+          will be discussed further below. &nbsp;If the file does
+          exists, it will be included as the face instead of
+          generating the isosurface. The approximation macro is
+          not necessary to load an existing mesh file.</p>
+
+          <p class="TableContents">&nbsp;</p>
+
+          <p class="TableContents">If a mesh file is loaded for
+          the face, the shape is fixed and options that change
+          the shape will not function. &nbsp;The following
+          options can still be changed and will work correctly:
+          &nbsp;TF_Show_Brows, TF_Eye_Style, TF_Pupil_Scale,
+          TF_Look_At, TF_Eye_T, TF_Pupil_T, TF_Eye_I, TF_Mouth_M,
+          TF_Brow_Style, TF_Brow_Scale, TF_Brow_Place,
+          TF_Brow_Tilt, TF_Brow_T, TF_Cheek_Rosy, TF_Cheek_Scale
+          (rosy only), TF_Cheek_Place (rosy only), TF_Rosy_T,
+          TF_Face_T, TF_Face_I.</p>
+
+          <p class="TableContents">&nbsp;</p>
+
+          <p class="TableContents">The following options should
+          be set to the same values as when the mesh was created:
+          TF_Show_Eyes, TF_Eye_Scale, TF_Eye_Place.&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Isosurface_OptionsA2 c33">
+          <p class="TableContents">TF_Name&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c34">
+          <p class="TableContents">String&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c35">
+          <p class="TableContents">Empty string&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsD2 c36">
+          <p class="TableContents">When creating and/or loading a
+          mesh file, if TF_Name is non-empty its value will be
+          interpreted as a variable containing the mesh object.
+          &nbsp;If the variable is undefined the mesh will be
+          created and/or loaded and assigned to the variable.
+          &nbsp;If the variable is defined it will be used as the
+          mesh object and any creation/loading will be skipped.
+          This option should be used any time the same mesh file
+          is used more than once in a scene, as it can
+          dramatically reduce both parse time and memory
+          usage.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Isosurface_OptionsA2 c33">
+          <p class="TableContents">TF_Iso_Inc&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c34">
+          <p class="TableContents">String&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c35">
+          <p class="TableContents">
+          "isosurface_KL_JF_TOK_JF.inc"&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsD2 c36">
+          <p class="TableContents">Defines the include file name
+          for the Isosurface Approximation include file.
+          &nbsp;The latest version as of this writing was written
+          by Kevin Loney, Jaap Frank, and Tor Olav Kristensen,
+          and is available <a href=
+          "http://news.povray.org/47cc76fd@news.povray.org"><span class="Internetlink">
+          here</span></a>. Some information about its use is
+          available <a href=
+          "http://www.econym.demon.co.uk/isotut/approx.htm"><span class="Internetlink">
+          here</span></a>.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Isosurface_OptionsA2 c33">
+          <p class="TableContents">TF_Iso_Min&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c34">
+          <p class="TableContents">3D vector&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c35">
+          <p class="TableContents">Undefined
+          (automatic)&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsD2 c36">
+          <p class="TableContents">Defines the minimum corner of
+          the container box for the face isosurface. &nbsp;If
+          undefined it will be calculated automatically.
+          &nbsp;Generally this should not be changed, but if the
+          face appears clipped it might be useful.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Isosurface_OptionsA2 c33">
+          <p class="TableContents">TF_Iso_Max&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c34">
+          <p class="TableContents">3D vector&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c35">
+          <p class="TableContents">&lt;1.1, 1.1,
+          0.25&gt;&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsD2 c36">
+          <p class="TableContents">Defines the maximum corner of
+          the isosurface container. &nbsp;Generally it doesn't
+          need to be changed, but it clipping is seen then it
+          might be useful.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Isosurface_OptionsA2 c33">
+          <p class="TableContents">TF_Iso_Segs&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c34">
+          <p class="TableContents">3D vector&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c35">
+          <p class="TableContents">&lt;100, 100,
+          100&gt;&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsD2 c36">
+          <p class="TableContents">Defines the resolution of the
+          mesh approximation. &nbsp;The higher the values the
+          more accurate the result, but parse time will increase.
+          &nbsp;If holes appear in the mesh, try increasing this
+          value.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Isosurface_OptionsA2 c33">
+          <p class="TableContents">TF_Iso_Depth&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c34">
+          <p class="TableContents">Integer&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsA2 c35">
+          <p class="TableContents">0&nbsp;</p>
+        </td>
+
+        <td class="Isosurface_OptionsD2 c36">
+          <p class="TableContents">If greater than zero, the
+          approximation will perform the given number of
+          subdivision steps on the mesh. &nbsp;This will not
+          close holes, but it will make the mesh smoother. The
+          fairly high setting required for TF_Iso_Segs usually
+          makes this unnecessary.</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="Sect1">
+    <p class="P4"><!-- Creative Commons License --><a href=
+    "http://creativecommons.org/licenses/LGPL/2.1/"><img width=
+    "88"
+         height="62"
+         alt="CC-GNU LGPL"
+         src=
+         "http://creativecommons.org/images/public/cc-LGPL-a.png"
+         class="fr2" /></a></p>
+
+    <p class="P4">This software is licensed under the <a href=
+    "http://creativecommons.org/licenses/LGPL/2.1/">CC-GNU
+    LGPL</a><!-- /Creative Commons License -->
+    <!-- <rdf:RDF xmlns="http://web.resource.org/cc/"    xmlns:dc="http://purl.org/dc/elements/1.1/"    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><Work rdf:about="">   <license rdf:resource="http://creativecommons.org/licenses/LGPL/2.1/" />   <dc:type rdf:resource="http://purl.org/dc/dcmitype/Software" /></Work><License rdf:about="http://creativecommons.org/licenses/LGPL/2.1/"><permits rdf:resource="http://web.resource.org/cc/Reproduction" />   <permits rdf:resource="http://web.resource.org/cc/Distribution" />   <requires rdf:resource="http://web.resource.org/cc/Notice" />   <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks" />   <requires rdf:resource="http://web.resource.org/cc/ShareAlike" />   <requires rdf:resource="http://web.resource.org/cc/SourceCode" /></License></rdf:RDF> --></p>
+  </div>
+
+  <p class="P5">&nbsp;</p>
+</body>
+</html>

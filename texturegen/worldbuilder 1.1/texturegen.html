@@ -1,0 +1,146 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%}
+</style>
+<head>
+  <title>POV-Ray Object Collection - TextureGen scene file</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>TextureGen scene file</h1>
+<hr>
+  <a href="#intro"    >Overview          </a><br>
+  <a href="#pov"      >Using Images with POV</a><br>
+  <a href="#changes"  >Change History    </a><br>
+<p>
+  <center>
+  <a href="http://lib.povray.org/searchcollection/download.php?objectName=TextureGen&contributorTag=worldbuilder&version=1.1"
+    onclick="if (navigator.appName=='Microsoft Internet Explorer') this.click();"  
+  >
+    <input type=button value="Download TextureGen V1.1">
+  </a>
+  </center>
+  
+</td><td>
+<img src="texturegen.jpg" width=640 height=480>
+</td></tr>
+</table>
+
+<hr>
+
+
+
+  <a name='intro'></a>
+  <h1>Overview</h1>
+This scene file can be used to generate images suitable for use as planet maps for Celestia or Anim8or. The same images can be used as height fields in POV-Ray to generate planets or asteroids.
+<p>
+The scene file generates the planet map image by placing a spherical camera at the centre of a sphere with a texture applied to it and with an ambient finish so that no light is needed in the scene. You can effectively randomise the pattern, by moving the camera and sphere to a different part of the pattern. This is controlled by adjusting the 'RandomSeed' variable which is defined as a 3D location vector. 
+<p>
+The 'LevelOfDetail' variable can be adjusted to regulate the size of the details visible:
+<ul>
+<li>0.25 and 0.5 Good for asteroid models                                    
+<li>0.75 - 1.5   Nice general height map for planets                         
+<li>2 and up     Good detailed map for planets, should be combined with      
+general map with soft light blend mode in Photoshop                      
+</ul>
+<p>
+To add more detail to the planet map use layers and flatten image, then      
+decrease contrast and add another level of detail                        
+There comes a point when you can't add any more detail, when the next    
+level of detail turns continents into immense clusters of islands. For   
+me, using levels 1-8 is good enough. Add level 32, however, and it       
+becomes useless (unless you are trying to make a planet of islands) and  
+you have to go to the Edit menu and click that Undo command.             
+<p>
+The 'TerrainType' variable specifies what type of noise to use when generating the map. 
+<p>
+You can use any pattern, even non-random ones, but I recommend bozo and  
+wrinkles. Agate, granite and crackle also give good results. Heck, even  
+leopard and ripples look good with the right amount of Complexity!       
+<p>
+The 'NoiseType' variable tells POV-Ray what version of the noise to use: 1 creates      
+plateaus at the highest points, 2 is the old noise generator fixed (no   
+plateaus) and 3 is Perlin noise.                                         
+<p>
+Use POV-Ray command line options to control the resolution of the generated texture file. The following settings create maps of a width and height suitable for Celestia or Anim8or                 
+<ul>
+<li>-w1024 -h512 
+<li>-w2048 -h1024
+<li>-w4096 -h2048
+</ul>
+<p>
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+<p>
+&nbsp;
+<p>
+
+
+
+<a name='pov'></a>
+<h2>Using generated Images Maps with POV-Ray</h2>
+<a href="texturegen_pov.jpg" target="Detail"><img src="texturegen_pov.jpg" width=512 height=384 align=right></a>
+You can use these image maps in a number of ways to generate planets or asteroids in POV-Ray. The following scene file illustrates a simple way of generating a spherical Isosurface where the terrain is uplifted based on the tone of the image map.
+A standard sphere is added to provide a sort of water level:
+<p> 
+<div class=codesample>
+&nbsp;&nbsp;camera {location <0, 0, -5> look_at   <0.0, 0.0,  0.0>}
+<br>&nbsp;&nbsp;light_source{<10000,10000,-10000> color rgb 1}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#include "functions.inc"
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare MyPigmentFunction = function{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;pigment{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image_map{jpeg "texturegen.jpg"  map_type 1 interpolate 2}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare ProfileHeight=0.05; 
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;isosurface {
+<br>&nbsp;&nbsp;&nbsp;&nbsp;function{f_sphere(x,y,z, 1) - ProfileHeight*(1-MyPigmentFunction(x,y,z).gray)}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;contained_by{sphere{0,1.1}}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;max_gradient 4 // Adjust as required to get rid of any black spots
+<br>&nbsp;&nbsp;&nbsp;&nbsp;pigment {rgb 0.5*<0.5,1,0.5>}
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;sphere {0,1.015 pigment {rgb <0.9,1.5,1.5>}}
+</div>
+
+
+
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+<p>
+&nbsp;
+<p>
+
+
+
+<a name='changes'></a>
+<h2>Change History</h2>
+V1.0 Date: October 2, 2009 Auth: worldbuilder  
+<br>V1.1 Date: November 8, 2009 Auth: worldbuilder                                                      
+
+<p>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+<p>
+&nbsp;
+<p>
+
+
+</body>
+</html>

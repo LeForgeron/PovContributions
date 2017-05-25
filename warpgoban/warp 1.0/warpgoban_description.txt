@@ -1,0 +1,1 @@
+This include file can be used to easily create a go board from a kifu-like definition (an array of strings with an X for a black stone and an O for a white stone). All the individual objects are usable separately as well.

@@ -1,0 +1,371 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%}
+</style>
+<head>
+  <title>POV-Ray Object Collection - os_envelope macro</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>Office Supplies<br>Envelope Macro</h1>
+<hr>
+  <a href="#intro">Overview</a><br>
+  <a href="#macros">Macros</a><br>
+  <a href="#variables">Variables</a><br>
+  <a href="#files">Files</a><br>
+  <a href="#examples">Examples</a><br>
+  
+  
+</td><td>
+<img src="os_envelope.jpg" width=320>
+</td></tr>
+</table>
+
+<hr>
+  <a name='intro'></a>
+  <h1>Overview</h1>
+The 'os_envelope.inc' include file contains the <a href="#macros">OS_Envelope</a> macro which creates an envelope object based upon the settings of a range of <a href="#variables">control variables</a>. 
+A number of other <a href="#macros">macros</a> and <a href="#files">files</a> are provided, some of which are used internally by the OS_Envelope macro and some of which deliver additional features. 
+Some <a href="#examples">examples</a> are provided <a href="#examples">below</a>. The file 'os_envelope.pov' illustrates 
+the use of this macro and the supporting files. Dimensions are specified in metres. The ScaleConvert macro from the <a href="http://lib.povray.org/">POV-Ray Object Collection</a> can be used to convert between different units of measure.  
+<p>
+The OS_Envelope macro was created by Chris Bartlett in January 2008 as part of the 'Office Supplies' theme assembled by Ben Chambers for the <a href="http://lib.povray.org/">POV-Ray Object Collection at http://lib.povray.org/</a> and is licensed under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a>. 
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+  <a name='macros'></a>
+  <h1>Macros</h1>
+  
+  <table border=1>
+    <tr><th class=macroheaders colspan=2> OS_Envelope ()                                                    </th><tr>
+    <tr><td width=20></td><td>
+The OS_Envelope macro is used to generate an envelope object based upon settings defined using <a href="#variables">control variables</a>.
+All of the control variables have defaults, so you can generate the default envelope object by just including the file and calling the macro:
+<div class=codesample>
+    light_source { <-10,5,-1>, rgb 2}
+<br>camera {location <0,0.25,-0.2> look_at 0}
+<br>#include "os_envelope.inc"        
+<br>OS_Envelope() 
+</div>
+You can apply standard POV-Ray transformations by wrapping the call in an object statement:
+<div class=codesample>
+    object{OS_Envelope() rotate <20,0,10> translate <-0.02,-0.01,0>}
+</div>
+You can assign the object to an identifier and use it as you would use any other declared object:
+<div class=codesample>
+    #declare MyEnvelope = OS_Envelope()
+<br>object{MyEnvelope rotate <20,0,10> translate <-0.02,-0.01,0>}
+</div>
+    </td></tr>   
+    <tr><th class=macroheaders colspan=2> OS_EnvelopeSize (SizeCode)                                        </th><tr>
+    <tr><td width=20></td><td>
+The OS_EnvelopeSize macro sets the dimensions of an envelope based on ISO 269 (plus some North American sizes). You need to call this macro before calling the OS_Envelope macro. The OS_EnvelopeSize macro sets the variables OS_EnvelopeWidth and OS_EnvelopeDepth. For example:
+<div class=codesample>
+    OS_EnvelopeSize("DL")
+<br>object{OS_Envelope() rotate <20,0,10> translate <-0.02,-0.01,0>}
+</div>
+sets OS_EnvelopeWidth to 0.220 and OS_EnvelopeDepth to 0.110 to generate an envelope corresponding to the "DL" size in the ISO 269 standard (dimensions in metres). This sized envelope takes an A4 sheet of paper folded in three. 
+    </td></tr>   
+    <tr><th class=macroheaders colspan=2> OS_EnvelopeUndef()                                                </th><tr>
+    <tr><td width=20></td><td>
+When you call the OS_Envelope macro it will assign default values to any of its control variable that are not already set, but will not alter values that you have explicitly assigned or that were initialised on a previous macro call. When making a series of calls to create a series of different envelopes in your scene file it can be convenient to re-initialising all of the control variables so that you don't inherit settings from the previous macro call.
+<p>
+The OS_EnvelopeUndef macro undefs each of the control variables used by the OS_Envelope macro so that 
+they are re-initialised to their default values the next time the OS_Envelope macro is called.
+    </td></tr>   
+    <tr><th class=macroheaders colspan=2> OS_RoundCorneredBox(Width, Depth, Thickness, Roundness)           </th><tr>
+    <tr><td width=20></td><td>
+The OS_RoundCorneredBox macro is called by the OS_Envelope macro to create a label shape. It uses CSG to cut rounded corners away from a thin box. The <b>Width</b>, <b>Depth</b> and <b>Thickness</b> parameters define the x, z and y dimensions of the box. The <b>Roundness</b> parameter specifies the radius of the rounded corners.
+<p>
+The OS_Envelope macro passes the 
+OS_EnvelopeLabelWidth,                        
+OS_EnvelopeLabelDepth,                        
+OS_EnvelopeLabelThickness
+and                        
+OS_EnvelopeLabelRounding 
+settings into this macro.
+    </td></tr>   
+    <tr><th class=macroheaders colspan=2> OS_StampShape(Width, Depth, Thickness, HoleSize, Border, Texture) </th><tr>
+    <tr><td width=20></td><td>
+The OS_StampShape macro is called by the OS_Envelope macro to create a stamp shape. It uses CSG to cut a series of holes around the perimeter of a thin box to simulate serrations. The <b>Width</b>, <b>Depth</b> and <b>Thickness</b> parameters define the x, z and y dimensions of the box. The <b>HoleSize</b> parameter defines the radius of the holes used to cut the serrations. The <b>Border</b> parameter defines the width of the white border around the edge of the stamp. The <b>Texture</b> parameter specifies the texture to be applied to the part of the stamp within that border.
+<p>
+The OS_Envelope macro passes the 
+OS_EnvelopeStampWidth,     
+OS_EnvelopeStampDepth,     
+OS_EnvelopeStampThickness, 
+OS_EnvelopeStampHoleSize,  
+OS_EnvelopeStampBorderSize
+and
+OS_EnvelopeStampTexture
+settings into this macro.
+<p>
+This macro can also be called on its own to just generate a stamp, or through the OS_StampSheet macro to generate a sheet of stamps.
+    </td></tr>
+    <tr><th class=macroheaders colspan=2> OS_StampSheet(Horizontal, Vertical, Width, Depth, Thickness, HoleSize, Border, Texture) </th><tr>
+    <tr><td width=20></td><td>
+The OS_StampSheet macro can be called to create a sheet of stamps. The <b>Horizontal</b> parameter is used to specify the number of stamps in the 'X' dimension. The <b>Vertical</b> parameter is used to specify the number of stamps in the 'Z' dimension. It calls the OS_StampShape to create a grid of stamps passing through the <b>Width</b>, <b>Depth</b>, <b>Thickness</b>, <b>HoleSize</b>, <b>Border</b> and <b>Texture</b> parameters.
+<p>
+You can optionally use the 'OS_StampBookArray' array to eliminate specific stamps from the grid, the 'OS_StampBookInnerTexture' setting to specify a texture for the surface of the sheet on which the stamps are stuck and the  'OS_StampBookOuterTexture' setting to specify a texture for the outer surface of the sheet.
+    </td></tr>
+  </table> 
+  
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+  <a name='variables'></a>
+  <h1>Control Variables</h1>
+  <table border=1>
+    <tr><th> OS_EnvelopeStyle;          </th><td>
+Set to "business" for a more formal style, or "social" for the style of envelope typically used for cards and private letters.
+<br>
+This setting identifies the file containing the envelope definition. The "business" setting uses the file "os_envelope_business.inc" to define the fold pattern for the main body of the envelope , the "social" setting uses the file "os_envelope_social.inc". You can add your own files using the same naming convention to add a different fold pattern. If you specify a setting for this variable and the corresponding file does not exist, the macro will use the "os_envelope_business.inc" file.
+    </td></tr>
+    <tr><th> OS_EnvelopeWidth           </th><td>
+The width of the envelope in metres (the 'X' dimension). e.g. #declare OS_EnvelopeWidth = 0.225; will generate an envelope 22.5cm wide. The OS_EnvelopeSize macro can be used to set the width and depth to using ISO 269 and certain North American standard codes.
+    </td></tr>
+    <tr><th> OS_EnvelopeDepth           </th><td>
+The depth of the envelope in metres (the 'Z' dimension). e.g. #declare OS_EnvelopeDepth = 0.125; will generate an envelope 12.5cm tall.  The OS_EnvelopeSize macro can be used to set the width and depth to using ISO 269 and certain North American standard codes.      
+    </td></tr>
+    <tr><th> OS_EnvelopeThickness       </th><td>
+The thickness of the envelope in metres (the 'Y' dimension). e.g. #declare OS_EnvelopeThickness = 0.0005; will generate an envelope 0.5mm thick.         
+    </td></tr>
+    <tr><th> OS_EnvelopeLabelWidth      </th><td>
+If an address label is to be added to the envelope, the OS_EnvelopeLabelWidth variable can be used to specify the width of the label in metres (the 'X' dimension) e.g. #declare OS_EnvelopeLabelWidth = 0.08; will generate a label 8cm wide.  
+    </td></tr>
+    <tr><th> OS_EnvelopeLabelDepth      </th><td>
+If an address label is to be added to the envelope, the OS_EnvelopeLabelDepth variable can be used to specify the depth of the label in metres (the 'Z' dimension) e.g. #declare OS_EnvelopeLabelDepth = 0.06; will generate a label 6cm high.  
+    </td></tr>
+    <tr><th> OS_EnvelopeLabelThickness  </th><td>
+If an address label is to be added to the envelope, the OS_EnvelopeLabelThickness variable can be used to specify the thickness of the label in metres (the 'Y' dimension) e.g. #declare OS_EnvelopeLabelThickness = 0.0005; will generate a label 0.5mm thick.  
+    </td></tr>
+    <tr><th> OS_EnvelopeLabelRounding   </th><td>
+If an address label is to be added to the envelope, the OS_EnvelopeLabelRounding variable can be used to specify the radius of curvature of the corners of the label in metres e.g. #declare OS_EnvelopeLabelRounding = 0.005; will generate a label with rounded corners of radius 5mm.  
+    </td></tr>
+    <tr><th> OS_EnvelopeLabelLeftEdge   </th><td>
+If an address label is to be added to the envelope, the OS_EnvelopeLabelLeftEdge variable can be used to specify the distance between the left hand edge of the envelope and the left hand edge of the label in metres e.g. #declare OS_EnvelopeLabelLeftEdge = 0.05; will position the label 5cm in from the left hand side of the envelope.
+    </td></tr>
+    <tr><th> OS_EnvelopeLabelBottomEdge   </th><td>
+If an address label is to be added to the envelope, the OS_EnvelopeLabelBottomEdge variable can be used to specify the distance between the bottom edge of the envelope and the bottom edge of the label in metres e.g. #declare OS_EnvelopeLabelBottomEdge = 0.05; will position the label 5cm up from the lowest edge of the envelope.
+    </td></tr>
+    <tr><th> OS_EnvelopeWindowWidth     </th><td>
+If a window is to be cut into  the envelope, the OS_EnvelopeWindowWidth variable can be used to specify the width of the window in metres (the 'X' dimension) e.g. #declare OS_EnvelopeWindowWidth = 0.08; will generate a window 8cm wide.  
+    </td></tr>
+    <tr><th> OS_EnvelopeWindowDepth     </th><td>
+If a window is to be cut into  the envelope, the OS_EnvelopeWindowDepth variable can be used to specify the depth of the window in metres (the 'Z' dimension) e.g. #declare OS_EnvelopeWindowDepth = 0.06; will generate a window 6cm high.  
+    </td></tr>
+    <tr><th> OS_EnvelopeWindowRounding  </th><td>
+If a window is to be cut into  the envelope, the OS_EnvelopeWindowRounding variable can be used to specify the radius of curvature of the corners of the window in metres e.g. #declare OS_EnvelopeWindowRounding = 0.004; will generate a window with rounded corners of radius 4mm.
+    </td></tr>
+    <tr><th> OS_EnvelopeWindowLeftEdge   </th><td>
+If a window is to be cut into  the envelope, the OS_EnvelopeWindowLeftEdge variable can be used to specify the distance between the left hand edge of the envelope and the left hand edge of the window in metres e.g. #declare OS_EnvelopeWindowLeftEdge = 0.05; will position the window 5cm in from the left hand side of the envelope.
+    </td></tr>
+    <tr><th> OS_EnvelopeWindowBottomEdge   </th><td>
+If a window is to be cut into  the envelope, the OS_EnvelopeWindowBottomEdge variable can be used to specify the distance between the bottom edge of the envelope and the bottom edge of the window in metres e.g. #declare OS_EnvelopeWindowBottomEdge = 0.05; will position the window 5cm up from the lowest edge of the envelope.
+    </td></tr>
+    <tr><th> OS_EnvelopeStampWidth      </th><td>
+If a stamp is to be added to the envelope, the OS_EnvelopeStampWidth variable can be used to specify the width of the stamp in metres (the 'X' dimension) e.g. #declare OS_EnvelopeStampWidth = 0.02; will generate a stamp 2cm wide.  
+    </td></tr>
+    <tr><th> OS_EnvelopeStampDepth      </th><td>
+If a stamp is to be added to the envelope, the OS_EnvelopeStampDepth variable can be used to specify the depth of the stamp in metres (the 'Z' dimension) e.g. #declare OS_EnvelopeStampDepth = 0.023; will generate a stamp 23mm high.  
+    </td></tr>
+    <tr><th> OS_EnvelopeStampThickness  </th><td>
+If a stamp is to be added to the envelope, the OS_EnvelopeStampThickness variable can be used to specify the thickness of the stamp in metres (the 'Y' dimension) e.g. #declare OS_EnvelopeStampThickness = 0.0002; will generate a stamp 0.2mm thick.
+    </td></tr>
+    <tr><th> OS_EnvelopeStampHoleSize   </th><td>
+If a stamp is to be added to the envelope, the OS_EnvelopeStampHoleSize variable can be used to specify the radius in metres of the holes cut around the edge to emulate the serrations found on many stamps. e.g. #declare OS_EnvelopeStampHoleSize = 0.0005; will generate a stamp with holes of radius 0.5mm.  
+    </td></tr>
+    <tr><th> OS_EnvelopeStampBorderSize </th><td>
+If a stamp is to be added to the envelope, the OS_EnvelopeStampBorderSize variable can be used to specify the width in metres of the white border around the stamp e.g. #declare OS_EnvelopeStampBorderSize = 0.002; will generate a stamp with a 2mm white border around the design of the stamp as specified using OS_EnvelopeStampTexture.  
+    </td></tr>
+    <tr><th> OS_EnvelopeStampInsetRight   </th><td>
+If a stamp is to be added to the envelope, the OS_EnvelopeStampInsetRight variable can be used to specify the distance the stamp is inset from the right hand edge of the envelope in metres e.g. #declare OS_EnvelopeStampInsetRight = 0.005; will position the stamp 5mm in from the right hand edge of the envelope.
+    </td></tr>
+    <tr><th> OS_EnvelopeStampInsetTop   </th><td>
+If a stamp is to be added to the envelope, the OS_EnvelopeStampInsetTop variable can be used to specify the distance the stamp is inset from the top of the envelope in metres e.g. #declare OS_EnvelopeStampInsetTop = 0.012; will position the stamp 12mm down from the top edge of the envelope.
+    </td></tr>
+    <tr><th> OS_EnvelopeFlapLocation    </th><td>
+When 'OS_EnvelopeStyle' is set to "business" the location of the flap can be set to "Top" or "Right". The top edge is the one furthest in the 'Z' dimension, the right edge is the furthest in the 'X' dimension. When 'OS_EnvelopeStyle' is set to "social" the flap is always positioned along the top edge.
+    </td></tr>
+    <tr><th> OS_EnvelopeFlapLength      </th><td>
+The length of the flap on the envelope.
+    </td></tr>
+    <tr><th> OS_EnvelopeFlapAngle       </th><td>
+The angle of the flap indicates how open it is (in degrees), with 0 being closed, 180 being fully open and 360 being bent right back over the front of the envelope.
+    </td></tr>
+    <tr><th> OS_EnvelopeFlapChamferAngle</th><td>
+The sides of the flap are chamfered. The OS_EnvelopeFlapChamferAngle variable defines the angle in degrees of the chamfer, with 0 being no chamfer.
+    </td></tr>
+    <tr><th> OS_EnvelopeStampOn         </th><td>
+Set to 1 to add a postage stamp to the top right hand corner of the envelope.
+<br>
+Set to 0 to supress the postage stamp.
+    </td></tr>
+    <tr><th> OS_EnvelopeWindowOn        </th><td>
+Set to 1 to cut a hole into the envelope and add an address window.
+<br>
+Set to 0 to not cut an address window.
+<br>
+If set to 1 the address text defined using the OS_EnvelopeAddress array will be printed inside this window.
+    </td></tr>
+    <tr><th> OS_EnvelopeLabelOn         </th><td>
+Set to 1 to add an address label onto the envelope.
+<br>
+Set to 0 to not add an address label.
+<br>
+If set to 1 the address text defined using the OS_EnvelopeAddress array will be printed on this label.
+    </td></tr>
+    <tr><th> OS_EnvelopeAddressOn       </th><td>
+Set to 1 to add an address to the envelope.
+<br>
+Set to 0 to not add an address.
+<br>
+If set to 1 the address text defined using the OS_EnvelopeAddress array will be printed either on the envelope, on the address label or in the address window, depending upon the settings of OS_EnvelopeWindowOn and OS_EnvelopeLabelOn.
+    </td></tr>
+    <tr><th> OS_EnvelopeAddress         </th><td>
+An array containing strings of text to be used as the lines of the address. The default setting for this array describes the origin of the os_envelope.inc file. You can specify as many array elements as you wish and of any length. For example:
+<div class=codesample>
+    #declare OS_EnvelopeAddress = array[4] {   
+<br>&nbsp;&nbsp;"Mr Arthur Dent",
+<br>&nbsp;&nbsp;"Earth",
+<br>&nbsp;&nbsp;"Outer Spiral Arm",
+<br>&nbsp;&nbsp;"Milky Way"
+<br>}
+</div>
+The text you provide will be scaled to fit into the available space which depends upon the settings of the OS_EnvelopeWindowOn and OS_EnvelopeLabelOn variables and of the variables defining the dimensions of the envelope, the label or the address window. 
+    </td></tr>
+    <tr><th> OS_EnvelopeTexture         </th><td>
+You can define a texture for the envelope yourself, set it to a predefined texture or allow it to use the default settings (a plain brown envelope). Various textures are defined in the file 'os_envelopetextures.inc' which is automatically included when you include the 'os_envelope.inc' file.
+    </td></tr>
+    <tr><th> OS_EnvelopeLabelTexture    </th><td>
+If an address label is to be added to the envelope, you can define a texture for the label yourself, set it to a predefined texture or allow it to use the default setting (yellow).
+    </td></tr>
+    <tr><th> OS_EnvelopeWindowTexture   </th><td>
+If an address window is to cut into the envelope, a thin layer is added to emulate the paper or plastic material of the window. You can define this texture, set it to a predefined texture or allow it to use the default setting. It is usual for this texture to be mostly transparent.
+    </td></tr>
+    <tr><th> OS_EnvelopeContentTexture  </th><td>
+If an address window is to cut into the envelope, a thin layer is added to emulate the contents behind the window. You can define this texture, set it to a predefined texture or allow it to use the default setting. The default texture uses a plain white pigment.
+    </td></tr>
+    <tr><th> OS_EnvelopeStampTexture    </th><td>
+If a stamp is to be added to the envelope, the OS_EnvelopeStampTexture variable can be used to specify the design of the stamp. This defaults to the POV-Ray logo. The stamp texture starts at the origin and extends in the 'X' and 'Z' dimensions. You will need to scale and rotate the texture definition to fit into the space available on the stamp (the stamp size minus twice the border size). Note. This usually means scaling it down quite small.
+<p>
+You can use an image map or any other texture definition. The default POV-Ray logo uses an object pattern that combines a prism from the standard logo.inc with a couple of text objects. The following example uses an image map:
+<div class=codesample>
+    #declare OS_EnvelopeStampWidth       = 0.02;   
+<br>#declare OS_EnvelopeStampDepth       = 0.023;
+<br>#declare OS_EnvelopeStampBorderSize  = 0.0015;
+<br>
+<br>#declare OS_EnvelopeStampTexture = texture {
+<br>&nbsp;&nbsp;pigment {
+<br>&nbsp;&nbsp;&nbsp;&nbsp;image_map {sys "os_envelope.bmp"}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;rotate x*90
+<br>&nbsp;&nbsp;&nbsp;&nbsp;scale <(OS_EnvelopeStampWidth-2*OS_EnvelopeStampBorderSize),1,(OS_EnvelopeStampDepth-2*OS_EnvelopeStampBorderSize)>
+<br>&nbsp;&nbsp;}
+<br>}
+</div>
+    </td></tr>
+    <tr><th> OS_StampBookArray    </th><td>
+The OS_StampBookArray array can optionally be used in conjunction with the OS_StampSheet macro to eliminate specific stamps from the grid of stamps on the sheet. The dimensions of this array should correspond to the Horizontal and Vertical parameters on any subsequent OS_StampSheet macro call. The following example eliminates the top left stamp from a 3x2 sheet of stamps.
+<div class=codesample>
+     // Add in a sheet of stamps 
+<br> #declare OS_StampBookArray = array [3][2];  
+<br> // Remove 1 stamp from the top left hand corner
+<br> #declare OS_StampBookArray[0][1] = 0;
+<br> object {OS_StampSheet(3, 2, OS_EnvelopeStampWidth, OS_EnvelopeStampDepth, OS_EnvelopeStampThickness, OS_EnvelopeStampHoleSize, OS_EnvelopeStampBorderSize, OS_EnvelopeStampTexture)
+<br> &nbsp;&nbsp;rotate y*20 
+<br> &nbsp;&nbsp;translate <0.1,OS_EnvelopeThickness*1.1,0.016>
+<br> }
+</div>
+    </td></tr>
+    <tr><th> OS_StampBookInnerTexture    </th><td>
+The OS_StampBookInnerTexture setting can optionally be used in conjunction with the OS_StampSheet macro to specify a texture for the surface of the sheet on which the stamps are stuck. This defaults to a yellowy brown colour.
+    </td></tr>
+    <tr><th> OS_StampBookOuterTexture    </th><td>
+The OS_StampBookOuterTexture setting can optionally be used in conjunction with the OS_StampSheet macro to specify a texture for the outer or bottom surface of the sheet on which the stamps are stuck. This defaults to white.
+    </td></tr>
+  </table>
+
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+  <a name='files'></a>
+  <h1>Files</h1>
+You should have received the following files with this distribution. The latest versions are available from <a href="http://lib.povray.org">http://lib.povray.org</a>.
+  <h2>Main Files</h2>
+  <table border=1>
+    <tr><th>os_envelope.inc  </th><td>
+This is the main include file for the Envelope object and incorporates the main OS_Envelope macro along the other <a href="#macros">macros</a> listed above.
+    </td></tr>
+    <tr><th>os_envelope.pov  </th><td>
+This is a sample scene file illustrating the use of the macro.
+    </td></tr>
+    <tr><th>os_envelope.html </th><td>
+This document.
+    </td></tr>
+    <tr><th>os_envelope_birthday.inc </th><td>
+This file contains the full set of control variables and provides an example of how to set them to create an envelope for a birthday card.
+If you want to create your own envelope you can copy this file, set the variables to suit your needs and include your file in your scene file before calling the OS_Envelope macro.
+    </td></tr>
+  </table>
+
+  <h2>Supporting Files</h2>
+  <table border=1>
+    <tr><th>os_envelopetextures.inc  </th><td>
+A set of appropriate textures. This include file is included automatically by 'os_envelope.inc', so you can assign any textures from this file to the texture variables before calling the 'OS_Envelope' macro.
+    </td></tr>
+    <tr><th>os_envelope_business.inc </th><td>
+The design of the main body of the envelope (ie. the pattern of folds on the back and the shape of the flap) is externalised to make it easy to add new designs. If the 'OS_EnvelopeStyle' variable is set to "business" then this file is used.
+    </td></tr>
+    <tr><th>os_envelope_social.inc   </th><td>
+The design of the main body of the envelope (ie. the pattern of folds on the back and the shape of the flap) is externalised to make it easy to add new designs. If the 'OS_EnvelopeStyle' variable is set to "social" then this file is used.
+    </td></tr>
+  </table>
+  <p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+  <a name='examples'></a>
+  <h1>Examples</h1>
+<table border=1>
+<tr><td>
+All of the control variables have defaults, so you can generate the default envelope object by just including the file and calling the macro:
+<div class=codesample>
+    light_source { <-10,5,-1>, rgb 2}
+<br>camera {location <0,0.25,-0.2> look_at 0}
+<br>#include "os_envelope.inc"        
+<br>OS_Envelope() 
+</div>
+</td><td rowspan=2 align=center>
+<img src="os_envelopedefault.jpg">
+</td></tr>
+<tr><td>
+You can apply standard POV-Ray transformations by wrapping the call in an object statement:
+<div class=codesample>
+    object{OS_Envelope() rotate <20,0,10> translate <-0.02,-0.01,0>}
+</div>
+</td></tr>
+<tr><td colspan=2>
+Further examples can be found in the <b>os_envelope.pov</b> scene file which generates a scene containing a variety of different envelopes as shown in the illustration below. The scene file contains a brief description of settings used to generate each envelope. The numbers in the figure below correspond to the Envelope numbers in the comments within the scene file.
+<p align=center>
+<img src="os_envelopenumbered.jpg">
+</td></tr>
+</table>
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>   
+</body>
+</html>

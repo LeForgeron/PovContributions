@@ -1,0 +1,1865 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%}
+</style>
+<head>
+  <title>POV-Ray Object Collection - Block Wall macros</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>Block Wall Macros</h1>
+<hr>
+<table width=100%>
+  <tr><td>
+  <a href="#Intro">Overview</a><br>
+  <a href="#Examples">Examples</a><br>
+  <a href="#Macros">Macros</a><br>
+  <a href="#Variables">Variables</a><br>
+  </td><td>
+  <center>
+  <a href="http://lib.povray.org/searchcollection/download.php?objectName=blockwall&contributorTag=chrisb&version=1.1.1"
+    onclick="if (navigator.appName=='Microsoft Internet Explorer') this.click();"  
+  >
+    <input type=button value="Download Block Wall V1.1.1">
+  </a>
+  </center>
+  </td></tr>
+</table>
+</td><td>
+<center>
+<a href="blockwall.jpg"><img src="blockwall.jpg" width=450></a>
+<br>
+<b>A simple scene (see <a href="#Example07">Example 7</a> below)</b>
+</center>
+</td></tr>
+</table>
+
+<hr>
+  <a name='Intro'></a>
+  <h1>Overview</h1>
+<TABLE BORDER="0" CELLPADDING="5" CELLSPACING="0" align=right>
+<TR>
+<TD><a href="blockwall_21.jpg"><img src="blockwall_21.jpg" width=380></a>
+<br>
+<center>
+<b>A spiral staircase (see <a href="#Example21">Example 21</a> below)</b>
+</center>
+</TD>
+</TR>
+</TABLE>
+These macros enable you to add a wall to a POV-Ray scene with just a few lines of SDL (Scene Description Language).  By invoking one of the <a href="#Macros">Blockwall</a> macros from the include file 'blockwall.inc' you can generate POV-Ray wall objects composed of individual blocks that can be cut using CSG operations. The main macros provide different ways of specifying the shape of a wall. These then call a macro that generates a randomised blockwork pattern and a macro to build individual blocks that fit into the spaces available in the pattern. There are also a couple of handy utility macros, such as a macro that drops a spline onto a surface so that you can build a curved country wall that follows the lay of the land.
+<p>
+The sample scene file 'blockwall.pov' contains plenty of examples showing the use of the various options and settings available with these macros. These examples are described and illustrated <a href="#Examples">below</a>. There are lots of optional settings that you can use to control the operation of the macros but it's likely that you'll only ever need a few of them, so it's easiest to cut and paste an example that's close to what you want to do and then use the <a href="#Variables">Variables</a> section of this page to swot up on just the specific settings that you need.
+<p>
+The position and alignment of the generated object depends on which macro you use to generate it, but the default settings generally create a wall with it's bottom left corner at the origin using a scale of 1 POV-Ray unit to represent 1 metre. The <a href="http://lib.povray.org/searchcollection/index2.php?objectName=scaleconvert&contributorTag=Charles%20C">ScaleConvert</a> macro on the object collection can be used to convert between different units. Some of the macros set values that can be useful to you after calling the macro when positioning/aligning things with the wall segments, as demonstrated in a number of the examples below.
+<p>
+The randomised blockwork pattern is controlled through a number of variables that allow you to define the proportion of large to small blocks, the maximum size of blocks and the relationship between the number of short, wide blocks and tall ones. Various standard block types and colors are incorporated and can be specified by name. Alternatively you can specify color limits and contrast settings to suit your own needs.  
+<p>
+You can suggest changes to these macros or provide other feedback on the Object Collection newsgroup at <a href="http://news.povray.org/groups/povray.object-collection">http://news.povray.org/groups/povray.object-collection</a> or (for registered users) using the feedback option available from the Object Collection Search page. The Object Collection is covered by an open license (CC-LGPL), encouraging reuse, modification and redistribution.  If you make changes that you wish to contribute back to the collection you can register on the <a href="http://lib.povray.org/searchcollection/index2.php">Object Collection website</a> and then upload a new version through the contributions page (self registration usually takes just a few minutes).  
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<br clear=all>
+<hr>
+
+
+  <a name='Examples'></a>
+  <h1>Examples</h1>
+The <b>blockwall.pov</b> scene file contains a series of examples demonstrating the use of the various Blockwall macros. 
+You can render any of these examples simply by setting the 'Example' variable at the top of the scene file.
+You can also use POV-Ray command-line animation options to generate a sequence of example images by setting the 'Example' variable to 'frame_number'. With command-line options +KFI0 +KFF23 you can therefore regenerate all of the examples in one go, which provides a useful means of regression testing changes if you ever need to change the macros.
+<p>
+Each of the examples is explained and illustrated here. The code snippets illustrate the use of the various Blockwall macros, but doesn't always show additional props used in the image. You can see the full source, including props and full texture definitions in the 'blockwall.pov' scene file.
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example00'></a>Example=0; Default settings</th><tr>
+    <tr><td width=20></td><td>
+  <img src="blockwall_00.jpg" align=left>
+Example 0 illustrates the <a href="#Blockwall">Blockwall</a> macro using the default settings to generate a simple square slab of walling. 
+<p>
+The default settings for the Blockwall macro produce a section of wall 0.1 units thick and 1 unit square. The section sits on the XZ plane with the bottom left corner at the origin. You can alter the defaults by setting control variables before calling the Blockwall macro to adjust the height, width and thickness dimensions along with the color and other texture settings (see <a href="#Variables">Variables</a>).
+<div class=codesample>
+&nbsp;camera&nbsp;{orthographic
+<br>&nbsp;&nbsp;&nbsp;location&nbsp;0.5-1.2*z
+<br>&nbsp;&nbsp;&nbsp;look_at&nbsp;0.5
+<br>&nbsp;}
+<br>&nbsp;light_source {<-10,20,-50>, rgb 1}   
+<br>&nbsp;#include "blockwall.inc"  
+<br>&nbsp;Blockwall("")  
+</div>
+<p>
+You can also wrap the macro call in an object statement and perform translations, rotations and scaling on the result. For example:
+<div class=codesample>
+&nbsp;object {Blockwall("") 
+<br>&nbsp;&nbsp;&nbsp;scale 0.5
+<br>&nbsp;&nbsp;&nbsp;rotate <3,0,4>
+<br>&nbsp;&nbsp;&nbsp;translate x*1.3
+<br>&nbsp;}  
+</div>
+
+    </td></tr>   
+  </table>
+<p>
+
+
+
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example01'></a>Example=1;  Three copies with wrapping to interleave the ends.</th><tr>
+    <tr><td width=20></td><td>
+      The panels from Example 0 can be tiled, but the seams between adjacent panels would be readily apparent.
+<p>
+      Example 1 uses the Blockwall_Wrap setting to tell the <a href="#Blockwall">Blockwall</a> macro to wrap some blocks around from the left hand side of a panel to the right hand side of the panel so that adjacent copies of the same blockwork segment can be joined together without generating vertical joints that run from the bottom to the top of the wall. This example shows 4 identical panels, one in the default position and the others displaced on either side. In this example a default value for the <a href="#Blockwall_WallLength">Blockwall_WallLength</a> variable is set by the Blockwall macro because none has been specified prior to the macro call. You can use variables such as this after the macro has been run to generated the wall. In this example we use it to position wall segments.
+<p>
+This example passes a parameter into the macro to use one of the standard block styles "BuffBrick". This  to select non-default color settings for the blocks.
+<p>
+The macro doesn't add Mortar to the blockwork, but you can readily add some using a simple POV-Ray primitive (in this case a box) at a depth of your choosing. This example uses the same normal and finish settings that were used to generate the blockwork (the defaults set by the macro) to texture the mortar. As with the Blockwall_WallLength variable, the default normal and finish identifiers are also set by the Blockwall macro because neither was specified prior to the macro call.
+<p>
+      <div class=codesample>
+&nbsp;&nbsp;#declare&nbsp;Blockwall_Wrap&nbsp;=&nbsp;1;
+<br>&nbsp;&nbsp;#declare&nbsp;Section&nbsp;=&nbsp;Blockwall("BuffBrick")
+<br>&nbsp;&nbsp;//&nbsp;Show&nbsp;3&nbsp;copies&nbsp;of&nbsp;the&nbsp;same&nbsp;section&nbsp;side&nbsp;by&nbsp;side
+<br>&nbsp;&nbsp;object&nbsp;{Section&nbsp;translate&nbsp;&nbsp;-Blockwall_WallLength*x}
+<br>&nbsp;&nbsp;object&nbsp;{Section}
+<br>&nbsp;&nbsp;object&nbsp;{Section&nbsp;translate&nbsp;&nbsp;&nbsp;Blockwall_WallLength*x}
+<br>&nbsp;&nbsp;object&nbsp;{Section&nbsp;translate&nbsp;2*Blockwall_WallLength*x}
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;some&nbsp;mortar
+<br>&nbsp;&nbsp;box&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<-0.994,0,0.006><3,0.994,0.074>&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;texture&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pigment&nbsp;{rgb&nbsp;<1,0.6,0.4>*0.6}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;{Blockwall_Normal&nbsp;scale&nbsp;0.3}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;finish&nbsp;{Blockwall_Finish}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;}
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_01.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example02'></a>Example=2;  Using Blockwall_Fill to create a wall.</th><tr>
+    <tr><td width=20></td><td>
+      Example 2 uses the <a href="#Blockwall_Fill">Blockwall_Fill</a> macro to define a box filled with blockwork. At times this can be more convenient than specifying the height, width and depth of the wall for the Blockwall macro using control variables.
+      <p>
+      This example illustrates the use of a superellipsoid to add mortar, removing the overspill of mortar that can be seen on the nearest corner in the image generated from Example 2. The superellipsoid is generated straddling the origin, so needs a bit more transformation to correctly scale it and move it to align with the centre of the wall.      
+      <p>
+      <div class=codesample>
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_Fill(<0,0,0>,<0.3,1,10>,"GreyBrick")}
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;some&nbsp;mortar
+<br>&nbsp;&nbsp;superellipsoid&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<0.1,0.05>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;rotate&nbsp;x*90
+<br>&nbsp;&nbsp;&nbsp;&nbsp;scale&nbsp;0.5
+<br>&nbsp;&nbsp;&nbsp;&nbsp;translate&nbsp;0.5
+<br>&nbsp;&nbsp;&nbsp;&nbsp;scale&nbsp;<0.3,1,10>-0.0160
+<br>&nbsp;&nbsp;&nbsp;&nbsp;translate&nbsp;0.008
+<br>&nbsp;&nbsp;&nbsp;&nbsp;texture&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pigment&nbsp;{rgb&nbsp;0.68}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;{Blockwall_Normal&nbsp;scale&nbsp;0.3}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;finish&nbsp;{Blockwall_Finish}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;}
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_02.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example03'></a>Example=3;  Following a spline (a hump-back bridge).</th><tr>
+    <tr><td width=20></td><td>
+      Example 3 illustrates the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro using its default settings. This macro generates a wall that follows a spline assigned to the control variable <a href="#Blockwall_Spline">Blockwall_Spline</a>. This example calls the macro without explicitly setting the spline, so it uses the default setting which generates a short section of wall with a little hump in the middle. This default spline stretches out along the +Z axis. 
+<p>
+Calling the macro a second time uses the same spline, but generates a different randomised pattern of blockwork. This is because the first call initialises a randomisation seed and subsequent calls just continue to call off random numbers from the same random number stream.
+      <p>
+      <div class=codesample>
+&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("")}
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;a&nbsp;second&nbsp;wall&nbsp;following&nbsp;the&nbsp;same&nbsp;spline&nbsp;and&nbsp;translate&nbsp;it&nbsp;to&nbsp;the&nbsp;left.&nbsp;&nbsp;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("")&nbsp;translate&nbsp;x*1.8}&nbsp;
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_03.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example04'></a>Example=4;  Dropping a spline onto an object</th><tr>
+    <tr><td width=20></td><td>
+      Example 4 shows how the <a href="#Blockwall_DropSplineToSurface">Blockwall_DropSplineToSurface</a> macro can be used in conjunction with the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro. The Blockwall_DropSplineToSurface macro drops the spline assigned to the <a href="#Blockwall_Spline">Blockwall_Spline</a> variable onto an arbitrary object that has been assigned to the <a href="#Blockwall_Target">Blockwall_Target</a> identifier. In this instance a torus is used as the target object, so the Blockwall_DropSplineToSurface macro adjusts the spline so that it can subsequently be used to draw a wall that sits neatly on the surface of that torus.
+      <p>
+The "RoughStone" block style specified as a parameter generates randomised stone shapes. The <a href="#Blockwall_ClipBlock">Blockwall_ClipBlock</a> setting tells the macro to trim the edges of each block to give a smoothed appearance to the dressed surfaces of the wall.
+      <p>
+      <div class=codesample>
+&nbsp;&nbsp;#declare&nbsp;Blockwall_ClipBlock&nbsp;&nbsp;=&nbsp;1;&nbsp;&nbsp;
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Define&nbsp;a&nbsp;surface&nbsp;to&nbsp;drop&nbsp;a&nbsp;spline&nbsp;onto.
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Target&nbsp;=&nbsp;torus&nbsp;{8,12&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;translate&nbsp;-y*12&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;scale&nbsp;<1,0.4,1>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;translate&nbsp;<3,0,6>
+<br>&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;spline&nbsp;above&nbsp;the&nbsp;target&nbsp;surface.
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Spline&nbsp;=&nbsp;spline&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cubic_spline
+<br>&nbsp;&nbsp;&nbsp;&nbsp;-.25,&nbsp;<&nbsp;0&nbsp;&nbsp;,1,-1>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;0.00,&nbsp;<&nbsp;0&nbsp;&nbsp;,1,&nbsp;0>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;0.20,&nbsp;<&nbsp;1&nbsp;&nbsp;,1,&nbsp;5>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;0.40,&nbsp;<&nbsp;2&nbsp;&nbsp;,1,10>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;0.60,&nbsp;<&nbsp;1&nbsp;&nbsp;,1,15>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;0.80,&nbsp;<&nbsp;0&nbsp;&nbsp;,1,20>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;1.00,&nbsp;<&nbsp;1&nbsp;&nbsp;,1,25>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;1.25,&nbsp;<&nbsp;2&nbsp;&nbsp;,1,30>
+<br>&nbsp;&nbsp;}&nbsp;
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Drop&nbsp;the&nbsp;spline&nbsp;onto&nbsp;the&nbsp;surface
+<br>&nbsp;&nbsp;Blockwall_DropSplineToSurface()&nbsp;&nbsp;
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Call&nbsp;the&nbsp;macro&nbsp;to&nbsp;generate&nbsp;a&nbsp;wall&nbsp;that&nbsp;follows&nbsp;the&nbsp;new&nbsp;spline
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("RoughStone")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_04.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example05'></a>Example=5;  Following an array of corner points.</th><tr>
+    <tr><td width=20></td><td>
+      Example 5 uses the <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro which draws a sequence of straight wall segments based upon corner points defined in the <a href="#Blockwall_CornerArray">Blockwall_CornerArray</a> array. The default points define a 1 metre cube with its bottom left corner at the origin.
+      <p>
+      This macro adjusts the corners so that the blocks are interwoven and don't overrun. This macro works best with wall segments that meet at right angles. It still works with non-perpendicular wall segments, but you may get some artifacts at the joints (see <a href="#Example08">Example 8</a>). If the first and last corner points are the same, the macro generates a closed shape and the blocks on the final corner are also interwoven. Otherwise it switches wrapping off for the ends so you get neat start and end sections. 
+      <div class=codesample>
+&nbsp;&nbsp;//&nbsp;Call&nbsp;the&nbsp;macro&nbsp;to&nbsp;fill&nbsp;a&nbsp;box&nbsp;with&nbsp;a&nbsp;stone&nbsp;wall
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowArray("GreenBrick")}&nbsp;&nbsp;
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_05.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example06'></a>Example=6;  Creating a shell with holes in it.</th><tr>
+    <tr><td width=20></td><td>
+      Example 6 uses the <a href="#Blockwall_Shell">Blockwall_Shell</a> macro to create a rectangular shell, filling the perimeter of the box with walls. This example declares the <a href="#Blockwall_Holes">Blockwall_Holes</a> object before calling the Blockwall_Shell macro. This object is used by the macro to cut each individual block, giving the cut surfaces the correct texture. Alternatively you could use CSG to poke door and window holes into that shell once it's been generated, but this doesn't give you the blockwork texture on the cut surfaces and is often considerably slower.
+      <p>
+      <div class=codesample>
+&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;CSG&nbsp;object&nbsp;that&nbsp;defines&nbsp;where&nbsp;the&nbsp;holes&nbsp;in&nbsp;the&nbsp;wall&nbsp;go
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Holes&nbsp;=&nbsp;union&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<0,0.1,-0.01><1,1.9,0.11>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Front&nbsp;Door
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<1.2,1.2,-0.01><1.6,1.9,0.11>}&nbsp;//&nbsp;Side&nbsp;Window
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-3.5,1,-0.01><-1.5,1.9,0.11>}&nbsp;//&nbsp;Front&nbsp;Window
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<0,0.1,9.8><1,1.9,10.01>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Back&nbsp;Door
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-4.01,1,1><-3.9,1.9,3>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Window&nbsp;1&nbsp;in&nbsp;Left&nbsp;Side&nbsp;Wall
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-4.01,1,6><-3.9,1.9,8>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Window&nbsp;2&nbsp;in&nbsp;Left&nbsp;Side&nbsp;Wall
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<&nbsp;4.01,1,1><&nbsp;3.9,1.9,3>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Window&nbsp;1&nbsp;in&nbsp;Right&nbsp;Side&nbsp;Wall
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<&nbsp;4.01,1,6><&nbsp;3.9,1.9,8>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Window&nbsp;2&nbsp;in&nbsp;Right&nbsp;Side&nbsp;Wall
+<br>&nbsp;&nbsp;}
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Call&nbsp;the&nbsp;macro&nbsp;to&nbsp;fill&nbsp;a&nbsp;box&nbsp;with&nbsp;the&nbsp;outline&nbsp;of&nbsp;a&nbsp;stone&nbsp;wall
+<br>&nbsp;&nbsp;#declare&nbsp;OuterShell&nbsp;=&nbsp;object&nbsp;{Blockwall_Shell(<-4,0,0>,<4,2.4,10>,"ColorBrick")}&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Mortar&nbsp;=&nbsp;difference&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-3.994,0.001,0.006>,<3.994,2.394,9.994>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-3.924,0,0.076>,<3.924,2.4,9.924>}
+<br>&nbsp;&nbsp;}
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Draw&nbsp;the&nbsp;Block&nbsp;Wall&nbsp;
+<br>&nbsp;&nbsp;object&nbsp;{OuterShell}
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;Mortar
+<br>&nbsp;&nbsp;difference&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;object&nbsp;{Mortar}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;object&nbsp;{Blockwall_Holes}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;texture&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pigment&nbsp;{rgb&nbsp;0.68}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;{Blockwall_Normal&nbsp;scale&nbsp;0.3}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;finish&nbsp;{Blockwall_Finish}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;}
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_06.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example07'></a>Example=7;  A more complete scene (a walkers refuge under construction)</th><tr>
+    <tr><td width=20></td><td>
+      Example 7 provides a more complete sample scene showing a walkers refuge under construction out in the countryside. It uses the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro to generate a country wall and calls the <a href="#Blockwall_Shell">Blockwall_Shell</a> twice, once for the main shell of the building and a second time to generate a chimney. 
+      <p>
+      This example also demonstrates the use of the <a href="#Blockwall_DropSplineToSurface">Blockwall_DropSplineToSurface</a> macro which drops the spline declared as <a href="#Blockwall_Spline">Blockwall_Spline</a> onto the surface of the target object declared as <a href="#Blockwall_Target">Blockwall_Target</a>. The results are written back into the Blockwall_Spline identifier and subsequently used by the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro to generate a country wall that follows the contours of the surface of the target object. 
+      <p>
+      This example declares the <a href="#Blockwall_Holes">Blockwall_Holes</a> object before calling the <a href="#Blockwall_Shell">Blockwall_Shell</a> macro to generate the main shell of the building. This object is used by the macro to cut each individual block, giving the cut surfaces the correct texture. Alternatively you could use CSG to poke door and window holes into the shell once it's been generated, but this doesn't give you the blockwork texture on the cut surfaces and is often considerably slower. The #undef directive is used to undeclare the Blockwall_Holes identifier before calling the Blockwall_Shell macro a second time to generate a chimney so that the top of chimney is not cut off at the roofline. 
+      <p>
+      <div class=codesample>
+&nbsp;&nbsp;//&nbsp;Define&nbsp;a&nbsp;surface&nbsp;to&nbsp;drop&nbsp;a&nbsp;spline&nbsp;onto.
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Target&nbsp;=&nbsp;torus&nbsp;{8,12&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;translate&nbsp;-y*12&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;scale&nbsp;<1,0.4,1>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;translate&nbsp;<3,0,6>
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;a&nbsp;grassy&nbsp;surface&nbsp;using&nbsp;a&nbsp;textured&nbsp;copy&nbsp;of&nbsp;the&nbsp;target&nbsp;object
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_Target&nbsp;texture&nbsp;{GrassTexture}}
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;spline&nbsp;some&nbsp;distance&nbsp;above&nbsp;the&nbsp;target&nbsp;surface.
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Spline&nbsp;=&nbsp;spline&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cubic_spline
+<br>&nbsp;&nbsp;&nbsp;&nbsp;-.25,&nbsp;<0,&nbsp;1,&nbsp;-1>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;0.00,&nbsp;<0,&nbsp;1,&nbsp;&nbsp;0>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;0.20,&nbsp;<1,&nbsp;1,&nbsp;&nbsp;5>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;0.40,&nbsp;<2,&nbsp;1,&nbsp;10>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;0.60,&nbsp;<1,&nbsp;1,&nbsp;15>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;0.80,&nbsp;<0,&nbsp;1,&nbsp;20>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;1.00,&nbsp;<1,&nbsp;1,&nbsp;25>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;1.25,&nbsp;<2,&nbsp;1,&nbsp;30>
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Drop&nbsp;the&nbsp;spline&nbsp;onto&nbsp;the&nbsp;surface
+<br>&nbsp;&nbsp;Blockwall_DropSplineToSurface()&nbsp;&nbsp;
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Call&nbsp;the&nbsp;macro&nbsp;to&nbsp;generate&nbsp;a&nbsp;wall&nbsp;that&nbsp;follows&nbsp;the&nbsp;new&nbsp;spline
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_ClipBlock&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;0.03;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_BlockThickness&nbsp;&nbsp;=&nbsp;0.35;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_HBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_VBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxHU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;10;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxVU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("BuffStone")}&nbsp;&nbsp;
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Now&nbsp;for&nbsp;the&nbsp;refuge&nbsp;itself
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;0.1;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_HBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2.5;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_VBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxHU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxVU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_BlockThickness&nbsp;&nbsp;=&nbsp;0.15;
+<br>&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;CSG&nbsp;object&nbsp;that&nbsp;defines&nbsp;where&nbsp;the&nbsp;holes&nbsp;in&nbsp;the&nbsp;wall&nbsp;go
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Holes&nbsp;=&nbsp;union&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Roofline
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{0,<3,2,4.2>&nbsp;rotate&nbsp;z*35&nbsp;translate&nbsp;<-4+Blockwall_BlockThickness,1.78,0.9>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{0,<3,2,4.2>&nbsp;rotate&nbsp;z*35&nbsp;scale&nbsp;<-1,1,1>&nbsp;translate&nbsp;<-1-Blockwall_BlockThickness,1.78,0.9>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Level&nbsp;off&nbsp;tops&nbsp;of&nbsp;walls
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{0,<Blockwall_BlockThickness+0.01,1,4.2>&nbsp;translate&nbsp;<-1-Blockwall_BlockThickness,1.78,0.9>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{0,<Blockwall_BlockThickness+0.01,1,4.2>&nbsp;scale&nbsp;<-1,1,1>&nbsp;&nbsp;translate&nbsp;<-4+Blockwall_BlockThickness,1.78,0.9>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Doorway
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{0,<0.9,1.8,Blockwall_BlockThickness+0.1>&nbsp;translate&nbsp;<-3,0&nbsp;&nbsp;,0.95>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Lintel
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{0,<1.2,0.2,Blockwall_BlockThickness+0.1>&nbsp;translate&nbsp;<-3.1&nbsp;,1.8,0.95>&nbsp;}
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;//&nbsp;Call&nbsp;a&nbsp;macro&nbsp;to&nbsp;fill&nbsp;a&nbsp;box&nbsp;with&nbsp;the&nbsp;outline&nbsp;of&nbsp;a&nbsp;building&nbsp;then&nbsp;use&nbsp;CSG&nbsp;to&nbsp;cut&nbsp;away&nbsp;the&nbsp;bits&nbsp;we&nbsp;don't&nbsp;want.
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_Shell(<-4,0,1><-1,3,5>,"ColorBrick")}
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;a&nbsp;chimney.
+<br>&nbsp;&nbsp;//&nbsp;We&nbsp;need&nbsp;to&nbsp;#undef&nbsp;the&nbsp;Blockwall_Holes&nbsp;object&nbsp;first&nbsp;or&nbsp;we'll&nbsp;slice&nbsp;bits&nbsp;off&nbsp;the&nbsp;chimney&nbsp;at&nbsp;the&nbsp;roofline.
+<br>&nbsp;&nbsp;#undef&nbsp;Blockwall_Holes
+<br>&nbsp;&nbsp;Blockwall_Shell(<-4,0,4.5><-3,2.8,5.1>,"ColorBrick")
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;Mortar
+<br>&nbsp;&nbsp;difference&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-3.994,0,1.006>,<-1.006,3,4.994>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-3.926,-0.01,1.074>,<-1.074,3.01,4.926>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Roofline
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{0,<3,2,4.2>&nbsp;rotate&nbsp;z*35&nbsp;translate&nbsp;<-4+Blockwall_BlockThickness,1.75,0.9>&nbsp;}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{0,<3,2,4.2>&nbsp;rotate&nbsp;z*35&nbsp;scale&nbsp;<-1,1,1>&nbsp;translate&nbsp;<-1-Blockwall_BlockThickness,1.75,0.9>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Level&nbsp;off&nbsp;tops&nbsp;of&nbsp;walls
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{0,<Blockwall_BlockThickness+0.01,1,4.2>&nbsp;translate&nbsp;<-1-Blockwall_BlockThickness,1.8,0.9>&nbsp;texture&nbsp;{Blockwall_ThisBlockTexture}}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{0,<Blockwall_BlockThickness+0.01,1,4.2>&nbsp;scale&nbsp;<-1,1,1>&nbsp;&nbsp;translate&nbsp;<-4+Blockwall_BlockThickness,1.8,0.9>&nbsp;texture&nbsp;{Blockwall_ThisBlockTexture}}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Doorway
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{0,<0.9,1.8,Blockwall_BlockThickness+0.1>&nbsp;translate&nbsp;<-3,0,0.95>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;texture&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pigment&nbsp;{rgb&nbsp;0.68}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;{Blockwall_Normal&nbsp;scale&nbsp;0.3}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;finish&nbsp;{Blockwall_Finish}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;}
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example08'></a>Example=8;  A sequence of walls demonstrating the Blockwall_FollowArray macro with non-perpendicular corners</th><tr>
+    <tr><td width=20></td><td>
+    As was mentioned under <a href="#Example05">Example 5</a> above, the <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro works best with wall segments that meet at right angles. Nevertheless, it does also support non-perpendicular corners. You may however get a few unwanted artifacts at, or near the corners. If you get artifacts that are particularly troublesome you may wish to try different settings for the <a href="#Blockwall_SizeSeed">Blockwall_SizeSeed</a> seed stream to see if you can get a better randomised pattern for your purposes.  
+      <p>
+      Example 8 shows a sequence of wall segments that could be used to represent garden planters to demonstrate the Blockwall_FollowArray macro with an array of arbitrary corner points that generate non-perpendicular corners. The tower in the centre illustrates how the array elements can be defined procedurally. The paving illustrates how you can adjust the horizontal and vertical bias and maximum block sizes. The horizontal and vertical settings usually differ for walling, whereas for paving it can be more realistic to make the horizontal and vertical settings the same.
+      <p>
+      <div class=codesample>
+&nbsp;&nbsp;//&nbsp;Create&nbsp;some&nbsp;fairly&nbsp;randomly&nbsp;shaped&nbsp;planters.
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_WallHeight&nbsp;=&nbsp;0.5;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;0.04;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_HBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0.5;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_VBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxHU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxVU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_BlockThickness&nbsp;&nbsp;=&nbsp;0.30;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Finish&nbsp;=&nbsp;finish&nbsp;{ambient&nbsp;0.01};
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_CornerArray&nbsp;=&nbsp;array&nbsp;[10]&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<0.5&nbsp;&nbsp;,1.2>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<0.8&nbsp;&nbsp;,1.5>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<1.28&nbsp;,1.28>,&nbsp;&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<1.5&nbsp;&nbsp;,0.8>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<1.2&nbsp;&nbsp;,0.5>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<2.2&nbsp;&nbsp;,0.5>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<2.2&nbsp;&nbsp;,1.5>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<1.5&nbsp;&nbsp;,2.2>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<0.5&nbsp;&nbsp;,2.2>,&nbsp;&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<0.5&nbsp;&nbsp;,1.2>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;}&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_BlockThickness&nbsp;=&nbsp;0.1;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowArray("GreenBrick")}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowArray("GreenBrick")&nbsp;rotate&nbsp;y*90}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowArray("GreenBrick")&nbsp;rotate&nbsp;y*180}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowArray("GreenBrick")&nbsp;rotate&nbsp;y*270}&nbsp;&nbsp;
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;the&nbsp;central&nbsp;feature&nbsp;(maybe&nbsp;a&nbsp;little&nbsp;tower&nbsp;or&nbsp;something).
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_WallHeight&nbsp;=&nbsp;1.4;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_CornerArray&nbsp;=&nbsp;array[9];
+<br>&nbsp;&nbsp;#local&nbsp;I&nbsp;=&nbsp;0;
+<br>&nbsp;&nbsp;#while&nbsp;(I<8)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;#declare&nbsp;Blockwall_CornerArray[I]=<vrotate(0.6*x,y*I*360/8).x,vrotate(0.6*x,y*I*360/8).z>;&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;#local&nbsp;I&nbsp;=&nbsp;I&nbsp;+&nbsp;1;
+<br>&nbsp;&nbsp;#end
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_CornerArray[8]=Blockwall_CornerArray[0];
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_ClipBlock&nbsp;=&nbsp;1;
+<br>&nbsp;&nbsp;Blockwall_FollowArray("PinkBrick")
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Paving.&nbsp;To&nbsp;use&nbsp;as&nbsp;paving,&nbsp;we&nbsp;can&nbsp;use&nbsp;a&nbsp;matching&nbsp;horizontal&nbsp;and&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;vertical&nbsp;bias&nbsp;for&nbsp;the&nbsp;pattern&nbsp;and&nbsp;rotate&nbsp;the&nbsp;'wall'&nbsp;to&nbsp;be&nbsp;horizontal.&nbsp;
+<br>&nbsp;&nbsp;Blockwall_Undef()
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_WallLength&nbsp;=&nbsp;4.5;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_WallHeight&nbsp;=&nbsp;Blockwall_WallLength;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;0.05;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_HBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_VBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxHU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxVU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Finish&nbsp;=&nbsp;finish&nbsp;{ambient&nbsp;0.01};
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall("")
+<br>&nbsp;&nbsp;&nbsp;&nbsp;rotate&nbsp;x*90
+<br>&nbsp;&nbsp;&nbsp;&nbsp;translate&nbsp;<-Blockwall_WallLength/2,0,-Blockwall_WallHeight/2>
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;some&nbsp;grass
+<br>&nbsp;&nbsp;plane&nbsp;{y,-0.01&nbsp;texture&nbsp;{GrassTexture}}
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_08.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example09'></a>Example=9;  A rough stone wall.</th><tr>
+    <tr><td width=20></td><td>
+      Example 9 generates a rough stone wall that illustrates the use of various matrix settings that can be used to control the block distribution and relative size of blocks in the randomised blockwork pattern.
+      <p>
+      The <a href="#Blockwall_MatrixSpacing">Blockwall_MatrixSpacing</a> variable is set to 0.02, which represents a size of 2cm. This is the size of the smallest possible block, but the <a href="#Blockwall_MaxHU">Blockwall_MaxHU</a>, which controls the maximum number of horizontal units that a block can have, is set quite high and the <a href="#Blockwall_HBias">Blockwall_HBias</a> variable is assigned a small value, so an above average number of wide blocks will be generated. The maximum height of a block is set to half the width (<a href="#Blockwall_MaxVU">Blockwall_MaxVU</a>) and the vertical bias is higher (<a href="#Blockwall_VBias">Blockwall_VBias</a>), generating a lot more short blocks than tall blocks. The surfaces of the blocks are clipped by setting <a href="#Blockwall_ClipBlock">Blockwall_ClipBlock</a> to 1. Otherwise, with these sort of values, the blocks would protrude quite some distance out from the surface, giving quite a messy looking wall.   
+      <p>   
+      <div class=codesample>
+&nbsp;&nbsp;#declare&nbsp;Blockwall_MinColor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<0.98,0.65,0.25>;&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxColor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<1.0&nbsp;,0.7&nbsp;,0.3>;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Contrast&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0.6;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_ClipBlock&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;0.02;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_HBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0.3;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_VBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxHU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;10;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxVU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Finish&nbsp;=&nbsp;finish&nbsp;{phong&nbsp;0&nbsp;ambient&nbsp;0}
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Normal&nbsp;=&nbsp;normal&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;average
+<br>&nbsp;&nbsp;&nbsp;&nbsp;normal_map&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0.5&nbsp;&nbsp;granite&nbsp;1&nbsp;scale&nbsp;0.25]
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0.5&nbsp;&nbsp;agate&nbsp;&nbsp;&nbsp;1&nbsp;scale&nbsp;0.05]
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1.0&nbsp;&nbsp;marble&nbsp;&nbsp;1&nbsp;rotate&nbsp;z*90&nbsp;turbulence&nbsp;0.5&nbsp;scale&nbsp;<0.3,0.1,0.5>]
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Call&nbsp;the&nbsp;macro&nbsp;to&nbsp;generate&nbsp;a&nbsp;wall&nbsp;from&nbsp;a&nbsp;spline.
+<br>&nbsp;&nbsp;//&nbsp;The&nbsp;default&nbsp;spline&nbsp;will&nbsp;produce&nbsp;a&nbsp;straight&nbsp;wall&nbsp;with&nbsp;a&nbsp;hump.
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("BuffStone")}
+<br>&nbsp;//&nbsp;Add&nbsp;some&nbsp;grass
+<br>&nbsp;&nbsp;plane&nbsp;{y,0&nbsp;texture&nbsp;{GrassTexture}}
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_09.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+ 
+
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example10'></a>Example=10;  A testbed</th><tr>
+    <tr><td width=20></td><td>
+      Example 10 is really more of a testbed than an example. It can be used for developing new styles of block. It contains a couple of camera settings and various optional boxes for aligning blocks.  
+    </td></tr>
+  </table>
+  <p>
+
+
+
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example12'></a>Example=12; Color Settings</th><tr>
+    <tr><td width=20></td><td>
+Example 12 renders three sections of blockwork with different color settings (having set the contrast to '0').
+<p>
+<div class=codesample>
+&nbsp;&nbsp; #declare Blockwall_Contrast = 0;
+<br>&nbsp;&nbsp; #declare Blockwall_Radius     = 0.5;   
+<br>&nbsp;&nbsp; #declare Blockwall_MinColor = <0,0,0>;
+<br>&nbsp;&nbsp; #declare Blockwall_MaxColor = <1,1,1>;
+<br>&nbsp;&nbsp; object {Blockwall("")}
+<br>&nbsp;
+<br>&nbsp;&nbsp; #declare Blockwall_MinColor = <0.4,0.4,0.4>;
+<br>&nbsp;&nbsp; #declare Blockwall_MaxColor = <0.8,0.8,0.8>;
+<br>&nbsp;&nbsp; object {Blockwall("") translate -Blockwall_CentreToCentre*x}
+<br>&nbsp;
+<br>&nbsp;&nbsp; #declare Blockwall_MinColor = <1.0,0.7,0.6>;
+<br>&nbsp;&nbsp; #declare Blockwall_MaxColor = <1.0,0.9,0.7>;
+<br>&nbsp;&nbsp; object {Blockwall("") translate  Blockwall_CentreToCentre*x}
+</div>
+<p>
+The central block shows the full color range with the minimum color (Blockwall_MinColor) specified as <0,0,0> (Black) and the maximum color (Blockwall_MaxColor) as <1,1,1> (White). Because the Red, Blue and Green color components are randomised separately and can each vary between 0 and 1 you can get blocks of any color.
+<p>
+The block on the left shows a reduced colour range with the minimum set to <0.4,0.4,0.4> and the maximum to <0.8,0.8,0.8>. This clips off the brighter and darker extremes, but still allows a significant color variation.
+<p>
+The block on the right adds a buff (yellow/red) biase with the minimum set to <1.0,0.7,0.6> and the maximum to <1.0,0.9,0.7>. With these settings you always get a full red channel, the green component can vary from 0.7 to 0.9 and the blue component from 0.6 to 0.7. The result is a yellow/buff color with a limited degree of variation.
+<p align=center> 
+  <a href="blockwall_12.jpg"><img src="blockwall_12.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example13'></a>Example=13; Contrast Settings</th><tr>
+    <tr><td width=20></td><td>
+Example 13 renders three sections of blockwork with different contrast settings using the default maximum and minimum color settings (Blockwall_MinColor=<0.5,0.3,0.3>; Blockwall_MaxColor=<0.55,0.35,0.35>;). 
+<p>
+<div class=codesample>
+&nbsp;&nbsp; #declare Blockwall_Radius     = 0.5;   
+<br>&nbsp;&nbsp; #declare Blockwall_Contrast = 0;
+<br>&nbsp;&nbsp; object {Blockwall("")}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp; #declare Blockwall_Contrast = 1;
+<br>&nbsp;&nbsp; object {Blockwall("") translate -Blockwall_CentreToCentre*x}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp; #declare Blockwall_Contrast = 0.5;
+<br>&nbsp;&nbsp; object {Blockwall("") translate  Blockwall_CentreToCentre*x}
+</div>
+<p>
+The central block shows the base color without contrast (Blockwall_Contrast=0).
+<p>
+The left hand block shows a contrast setting of '1'. This permits the colors to be darkened from their base colors all the way down to Black.
+<p>
+The right hand block uses a contrast setting of '0.5', permitting the colors to be darkened half way to black (the default setting).
+<p align=center>
+  <a href="blockwall_13.jpg"><img src="blockwall_13.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example14'></a>Example=14; Finish and Normals</th><tr>
+    <tr><td width=20></td><td>
+Example 14 illustrates the use of the finish and normal settings.
+<p>
+<div class=codesample>
+&nbsp;&nbsp;     object {Blockwall("")}
+<br>&nbsp;&nbsp; 
+<br>&nbsp;&nbsp; #declare Blockwall_Normal = normal {agate scale <0.001,0.01,0.001>}
+<br>&nbsp;&nbsp; object {Blockwall("") translate -Blockwall_CentreToCentre*x}
+<br>&nbsp;&nbsp; 
+<br>&nbsp;&nbsp; #declare Blockwall_Normal = normal {granite scale 0.1}
+<br>&nbsp;&nbsp; #declare Blockwall_Finish = finish {phong 1}
+<br>&nbsp;&nbsp; object {Blockwall("") translate  Blockwall_CentreToCentre*x}
+</div>
+<p>
+The central block uses the default settings which apply a granite normal scaled by 0.1 and no finish (actually a setting of phong 0). 
+<p>
+The left hand block uses a normal of agate scaled by <0.001,0.01,0.001> to give a fine grainy normal in the X and Z dimensions, with a more pronounced normal in the Y dimension to emphasize the effect (a deeply pitted surface).
+<p>
+The right hand block uses the granite normal with a phong of 1 to make the surface glisten as it might when wet. You could also add reflection in the finish definition, except that in this sample scene, there's no background to reflect.  
+<p align=center>
+  <a href="blockwall_14.jpg"><img src="blockwall_14.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example15'></a>Example=15;  Three sections with different mortar gaps</th><tr>
+    <tr><td width=20></td><td>
+      Example 15 shows the affect of changing the mortar gap. The central section shows the default mortar gap. The section on the left shows a slightly increased mortar gap. The section on the right shows a more pronounced mortar gap.
+      <p> 
+      <div class=codesample>
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall("")}
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MortarGap&nbsp;=&nbsp;0.02;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall("")&nbsp;translate&nbsp;-Blockwall_CentreToCentre*x}
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MortarGap&nbsp;=&nbsp;0.04;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall("")&nbsp;translate&nbsp;&nbsp;Blockwall_CentreToCentre*x}
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_15.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example16'></a>Example=16;  A demonstration of the Blockwall_BlockThicknessDecrement variable.</th><tr>
+    <tr><td width=20></td><td>
+      Example 16 shows how the <a href="#Blockwall_BlockThicknessDecrement">Blockwall_BlockThicknessDecrement</a> variable can be used to decrease the thickness of the blocks towards the top of the wall.
+      <p>
+      Four examples are shown, with the default settings on the left and a fairly exaggerated decrement on the right. The outer examples use the <a href="#Blockwall">Blockwall</a> macro while the inner ones use the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro. You are more likely to need a smaller decrement to produce a more subtle effect. Note that this does not alter the width of the blocks, which is usually ok, but which results in overlaps of interwoven blockwork with sharp corners as can be generated using the <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro.
+      <div class=codesample>
+&nbsp;&nbsp;camera&nbsp;{location&nbsp;<0.8,1.25,-2.2>&nbsp;look_at&nbsp;0.5*y&nbsp;}
+<br>&nbsp;&nbsp;light_source&nbsp;{<0,20,-10>,&nbsp;rgb&nbsp;1}
+<br>
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_BlockThickness&nbsp;=&nbsp;0.5;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall("GreenBrick")&nbsp;rotate&nbsp;-y*90&nbsp;translate&nbsp;-0.8*x}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("GreenBrick")&nbsp;translate&nbsp;-0.1*x}
+<br>
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_BlockThicknessDecrement&nbsp;=&nbsp;0.035;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("GreenBrick")&nbsp;translate&nbsp;0.6*x}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall("GreenBrick")&nbsp;rotate&nbsp;-y*90&nbsp;translate&nbsp;1.3*x}
+<br>
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_16.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+
+
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example17'></a>Example=17; Colored Block Styles</th><tr>
+    <tr><td width=20></td><td>
+Example 17 illustrates the use of predefined block styles. The block styles are defined using POV-Ray Superellipsoid objects to provide regular blocks with rounded corners. Surface normals are added to the texture definition to make the blocks look a bit rough. The following predefined colors are defined. The 'Blockwall_Block' macro is organised so as to try to make it easy for you to add new predefined color and texture styles if you wish. <p>
+<div class=codesample>
+&nbsp;&nbsp;      object&nbsp;{Blockwall("RedBrick"&nbsp;&nbsp;)&nbsp;translate&nbsp;&nbsp;<-Blockwall_CentreToCentre,0,1>} 
+<br>&nbsp;&nbsp;  object&nbsp;{Blockwall("BlueBrick"&nbsp;)&nbsp;translate&nbsp;&nbsp;<0,0,1>}                            
+<br>&nbsp;&nbsp;  object&nbsp;{Blockwall("GreenBrick")&nbsp;translate&nbsp;&nbsp;<&nbsp;Blockwall_CentreToCentre,0,1>} 
+<br>&nbsp;&nbsp;  object&nbsp;{Blockwall("PinkBrick"&nbsp;)&nbsp;translate&nbsp;-x*Blockwall_CentreToCentre}      
+<br>&nbsp;&nbsp;  object&nbsp;{Blockwall("BuffBrick"&nbsp;)&nbsp;}                                    
+<br>&nbsp;&nbsp;  object&nbsp;{Blockwall("GreyBrick"&nbsp;)&nbsp;translate&nbsp;&nbsp;x*Blockwall_CentreToCentre}      
+</div>
+<p>
+This example renders six different swatches showing 6 of the predefined color settings that can be specified using the style parameter on the 'Blockwall' macro call.
+<p>
+The styles illustrated in this example are:
+<ul>
+  <li>"RedBrick"   (Top Left)     
+  <li>"BlueBrick"  (Top Centre)   
+  <li>"GreenBrick" (Top Right)    
+  <li>"PinkBrick"  (Bottom Left)  
+  <li>"BuffBrick"  (Bottom Centre)
+  <li>"GreyBrick"  (Bottom Right)  
+</ul>
+<p align=center>
+  <a href="blockwall_17.jpg"><img src="blockwall_17.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+
+
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example18'></a>Example=18; Colored Stone Styles</th><tr>
+    <tr><td width=20></td><td>
+Example 18 illustrates the use of predefined stone styles. The stone styles are defined using POV-Ray Blob objects and incorporate a degree of randomness intended to emulate rough stone. The following predefined colors are defined. The 'Blockwall_Block' macro is organised so as to try to make it easy for you to add new predefined color and texture styles if you wish. <p>
+<p>
+<div class=codesample>
+&nbsp;&nbsp;      object&nbsp;{Blockwall("RedStone"&nbsp;&nbsp;)&nbsp;translate&nbsp;&nbsp;<-Blockwall_CentreToCentre,0,1>} 
+<br>&nbsp;&nbsp;  object&nbsp;{Blockwall("BlueStone"&nbsp;)&nbsp;translate&nbsp;&nbsp;<0,0,1>}            <br>&nbsp;&nbsp;  object&nbsp;{Blockwall("GreenStone")&nbsp;translate&nbsp;&nbsp;<&nbsp;Blockwall_CentreToCentre,0,1>} 
+<br>&nbsp;&nbsp;  object&nbsp;{Blockwall("PinkStone"&nbsp;)&nbsp;translate&nbsp;-x*Blockwall_CentreToCentre}      
+<br>&nbsp;&nbsp;  object&nbsp;{Blockwall("BuffStone"&nbsp;)&nbsp;}                                    
+<br>&nbsp;&nbsp;  object&nbsp;{Blockwall("GreyStone"&nbsp;)&nbsp;translate&nbsp;&nbsp;x*Blockwall_CentreToCentre}      
+</div>
+<p>
+This example renders six different swatches showing 6 predefined color settings that can be specified using the style parameter on the 'Blockwall' macro call.
+<p>
+The styles illustrated in this example are:
+<ul>
+  <li>"RedStone"   (Top Left)     
+  <li>"BlueStone"  (Top Centre)   
+  <li>"GreenStone" (Top Right)    
+  <li>"PinkStone"  (Bottom Left)  
+  <li>"BuffStone"  (Bottom Centre)
+  <li>"GreyStone"  (Bottom Right)  
+</ul>
+<p align=center>
+  <a href="blockwall_18.jpg"><img src="blockwall_18.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+<p>
+
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example19'></a>Example=19;  Further standard style settings</th><tr>
+    <tr><td width=20></td><td>
+Example 19 renders four different swatches showing alternative predefined styles used with the 'Blockwall' macro call. These styles all define shapes but no color settings, so it picks up whatever color settings you specify before making the macro call or, as in this case, the default color settings if you don't specify anything. The color and size randomisation seeds are reset between macro calls to illustrate how you can generate the same pattern from multiple calls to a Blockwall macro. 
+<p>
+      <div class=codesample>
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Rows&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;10;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Radius&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0.8;&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_ColorSeed&nbsp;&nbsp;=&nbsp;seed(1);
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_SizeSeed&nbsp;&nbsp;&nbsp;=&nbsp;seed(1);
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall("Pebbles"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;translate&nbsp;&nbsp;<-Blockwall_CentreToCentre/2,1,0>}
+<br> &nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_ColorSeed&nbsp;&nbsp;=&nbsp;seed(1);
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_SizeSeed&nbsp;&nbsp;&nbsp;=&nbsp;seed(1);
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall("RoughStone"&nbsp;&nbsp;&nbsp;)&nbsp;translate&nbsp;&nbsp;<Blockwall_CentreToCentre/2,1,0>}
+<br> &nbsp;
+<br> &nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MortarGap&nbsp;&nbsp;=&nbsp;0.015;&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_ColorSeed&nbsp;&nbsp;=&nbsp;seed(1);
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_SizeSeed&nbsp;&nbsp;&nbsp;=&nbsp;seed(1);
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall("Box"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;translate&nbsp;-x*Blockwall_CentreToCentre/2}
+<br> &nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_ColorSeed&nbsp;&nbsp;=&nbsp;seed(1);
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_SizeSeed&nbsp;&nbsp;&nbsp;=&nbsp;seed(1);
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall("Polygon"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;translate&nbsp;&nbsp;x*Blockwall_CentreToCentre/2}
+      </div>
+<p>
+The styles illustrated in this example are:
+<ul>
+  <li>"Pebbles"   (Top Left)     
+  <li>"RoughStone" (Top Right)    
+  <li>"Box"  (Bottom Left)  
+  <li>"Polygon"  (Bottom Right)  
+</ul>
+<p>
+The "Pebbles" style uses POV-Ray sphere objects and the "Box" style uses POV-Ray box objects. The "Polygon" style uses POV-Ray polygon objects that are flat (2D) objects which therefore ignore the Blockwall_BlockThickness settings. 
+<p>
+Note that, before using the "Box" and "Polygon" styles it is usual (as is done with this example) to increase the mortar gap because the default mortar gap leaves adjacent blocks virtually touching and relies upon the rounding of the front corners of the blocks to create distinct blocks.
+      <p align=center>
+      <img src="blockwall_19.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Example20'></a>Example=20; Adjusting for Different Lighting Levels</th><tr>
+    <tr><td width=20></td><td>
+Example 20 illustrates the use of the <a href="#Blockwall_Brightness">Blockwall_Brightness</a> setting to adjust for alternative lighting levels. Different scene files can use very different lighting levels. The brightness setting helps you to compensate for this.
+<p>
+The image on the left was rendered with the default settings and a single full intensity light source. 
+<p>
+The central image shows bleaching caused by color saturation when ten times as much light is added to the scene.
+<p>
+The image on the right uses the same light settings as the central image, but is generated with:
+<div class=codesample>
+&nbsp;&nbsp;  #declare Blockwall_Brightness = 0.1;
+<br>&nbsp;&nbsp;  object {Blockwall("")}
+</div>
+<p>
+to redress the balance. The <a href="#Blockwall_Brightness">'Blockwall_Brightness'</a> variable is simply used as a multiplication factor for the color when the macro defines the block texture. It can therefore be used to help counteract lighting variations from one scene to another. As in this example, other factors such as the surface normal and finish settings can also influence the results, so this setting cannot necessarily give you a complete and exact match.
+<p align=center>
+  <a href="blockwall_20.jpg"><img src="blockwall_20.jpg" align=center width=600></a>
+    </td></tr>   
+  </table>
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example21'></a>Example=21;  A circular stone stairwell.</th><tr>
+    <tr><td width=20></td><td>
+      Example 21 declares a circular spline and calls the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro to form a circular stone tower. It adds a couple of straight walls using the <a href="#Blockwall_Fill">Blockwall_Fill</a> macro with the same style of stonework defined. The paving is generated using the <a href="#Blockwall">Blockwall</a> macro with the same color stone, but using different size and style settings. The remaining elements are standard POV-Ray objects with a CSG object used to build the circular stone staircase inside the tower. 
+      <p>
+      The <a href="#Blockwall_Wrap">Blockwall_Wrap</a> variable is set to 1 to generate the tower so that the two ends of the spline are interwoven. To provide deep shadows compatible with a nighttime scene the default ambient finish needs reducing quite significantly. This could be done using a global setting, but is done here for each texture as it provides a degree more control. 
+      <p>
+      The <a href="#Blockwall_Holes">Blockwall_Holes</a> object is declared before the Blockwall_FollowSpline macro call so that the macro can cut individual blocks using corresponding texture settings. It would also have been possible to cut holes in the complete wall object after it had been generated by the macro , but this is usually less efficient and it can be difficult to get an appropriate texture onto the cut surfaces.   
+      <p>
+      <div class=codesample>
+&nbsp;&nbsp;//&nbsp;Declare&nbsp;a&nbsp;circular&nbsp;spline
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Spline&nbsp;=&nbsp;spline&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cubic_spline
+<br>&nbsp;&nbsp;&nbsp;&nbsp;#local&nbsp;I&nbsp;=&nbsp;-0.25;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;#while&nbsp;(I<=1.25)&nbsp;&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I,&nbsp;vrotate(1.4*z,-y*I*360)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#local&nbsp;I&nbsp;=&nbsp;I&nbsp;+&nbsp;0.01;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;#end
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Set&nbsp;up&nbsp;a&nbsp;very&nbsp;rough&nbsp;stone&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MinColor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<0.98,0.65,0.25>;&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxColor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<1.0&nbsp;,0.7&nbsp;,0.3>;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Contrast&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0.6;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_ClipBlock&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;0.02;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_HBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0.3;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_VBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxHU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;10;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxVU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Finish&nbsp;=&nbsp;finish&nbsp;{phong&nbsp;0&nbsp;ambient&nbsp;0}
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Normal&nbsp;=&nbsp;normal&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;average
+<br>&nbsp;&nbsp;&nbsp;&nbsp;normal_map&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0.5&nbsp;&nbsp;granite&nbsp;1&nbsp;scale&nbsp;0.25]
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0.5&nbsp;&nbsp;agate&nbsp;&nbsp;&nbsp;1&nbsp;scale&nbsp;0.05]
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1.0&nbsp;&nbsp;marble&nbsp;&nbsp;1&nbsp;rotate&nbsp;z*90&nbsp;turbulence&nbsp;0.5&nbsp;scale&nbsp;<0.3,0.1,0.5>]
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;}
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;circular&nbsp;wall
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Wrap&nbsp;=&nbsp;1;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_WallHeight&nbsp;=&nbsp;5;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Holes&nbsp;=&nbsp;union&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-0.401,0.099,-1.41><0.401,1.4,-1>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder&nbsp;{<0,1.4,-1.41><0,1.4,-1>,0.4}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;translate&nbsp;2*y
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("GreyStone")&nbsp;translate&nbsp;-2*y}&nbsp;
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;a&nbsp;little&nbsp;bridge
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_Fill(<&nbsp;0.55,0,-4>,<&nbsp;0.8,1,-1.3>,"GreyStone")}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_Fill(<-0.6,0,-4>,<-0.9,0.6,-1.3>,"GreyStone")}
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Paving.&nbsp;To&nbsp;use&nbsp;as&nbsp;paving,&nbsp;we&nbsp;can&nbsp;use&nbsp;a&nbsp;matching&nbsp;horizontal&nbsp;and&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;vertical&nbsp;bias&nbsp;for&nbsp;the&nbsp;pattern&nbsp;and&nbsp;rotate&nbsp;the&nbsp;'wall'&nbsp;to&nbsp;be&nbsp;horizontal.&nbsp;
+<br>&nbsp;&nbsp;Blockwall_Undef()
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_WallLength&nbsp;=&nbsp;1.2;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_WallHeight&nbsp;=&nbsp;3;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;0.1;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_HBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_VBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxHU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxVU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Finish&nbsp;=&nbsp;finish&nbsp;{ambient&nbsp;0.001};
+<br>&nbsp;&nbsp;difference&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;object&nbsp;{Blockwall("GreyBrick")&nbsp;rotate&nbsp;x*90&nbsp;translate&nbsp;<-0.6,0,-4>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder&nbsp;{-0.5*y,0.1*y,1.4}
+<br>&nbsp;&nbsp;}
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_21.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example22'></a>Example=22;  A stone well</th><tr>
+    <tr><td width=20></td><td>
+      Example 22 provides a simple scene illustrating the use of the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro to generate a circular wall to represent a stone well. Standard CSG objects are used to add simple winding gear and a roof (see the 'blockwall.pov' file for details).
+      <p>
+      <div class=codesample>
+&nbsp;&nbsp;//&nbsp;Declare&nbsp;a&nbsp;circular&nbsp;spline
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Spline&nbsp;=&nbsp;spline&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cubic_spline
+<br>&nbsp;&nbsp;&nbsp;&nbsp;#local&nbsp;I&nbsp;=&nbsp;-0.25;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;#while&nbsp;(I<=1.25)&nbsp;&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I,&nbsp;vrotate(0.6*z,-y*I*360)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#local&nbsp;I&nbsp;=&nbsp;I&nbsp;+&nbsp;0.01;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;#end
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Set&nbsp;up&nbsp;a&nbsp;very&nbsp;rough&nbsp;stone&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Contrast&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0.8;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_ClipBlock&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;0.05;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_HBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0.3;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_VBias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxHU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MaxVU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Finish&nbsp;=&nbsp;finish{ambient&nbsp;0.01}&nbsp;
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;circular&nbsp;wall
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Wrap&nbsp;=&nbsp;1;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_WallHeight&nbsp;=&nbsp;0.6;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_BlockThickness&nbsp;=&nbsp;0.18;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Holes&nbsp;=&nbsp;union&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-0.401,0.099,-1.41><0.401,1.4,-1>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder&nbsp;{<0,1.4,-1.41><0,1.4,-1>,0.4}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;translate&nbsp;2*y
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("BuffBrick")}&nbsp;&nbsp;
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_22.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example23'></a>Example=23;  A Fireplace</th><tr>
+    <tr><td width=20></td><td>
+      Example 23 uses the <a href="#Blockwall_Fill">Blockwall_Fill</a> macro to generate a stone fireplace and surround. The <a href="#Blockwall_Holes">Blockwall_Holes</a> object is defined before calling the Blockwall_Fill macro to create the gap for the fire and for the lintel. The lintel is defined as a single block and serves to illustrate how to call the <a href="#Blockwall_Block">Blockwall_Block</a> macro directly (a macro that is more often called indirectly via one of the other Blockwall macros).  
+      <p>
+      <div class=codesample>
+&nbsp;&nbsp;global_settings&nbsp;{ambient_light&nbsp;0.2}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Declare&nbsp;the&nbsp;holes&nbsp;to&nbsp;cut
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Holes&nbsp;=&nbsp;union&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-0.251,-0.01&nbsp;,-0.01><0.251,0.501,0.301>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-0.351,&nbsp;0.499,-0.01><0.351,0.601,0.301>}
+<br>&nbsp;&nbsp;}
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Generate&nbsp;the&nbsp;masonry
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;=&nbsp;0.05;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_Fill(<-0.6,0,0>,<0.6,0.8,0.3>,"BlueBrick")}&nbsp;&nbsp;
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Lintel
+<br>&nbsp;&nbsp;Blockwall_Block(
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<-0.35,&nbsp;0.6,0>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<0.35,0.6,0.0>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<0.35,0.5,0.0>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<-0.35,&nbsp;0.5,0>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;"GreyBrick"
+<br>&nbsp;&nbsp;)
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Surround&nbsp;
+<br>&nbsp;&nbsp;#undef&nbsp;Blockwall_Holes
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_Fill(<-0.65,0,0>,<0.65,0.5,0.05>,"RedBrick")
+<br>&nbsp;&nbsp;&nbsp;&nbsp;rotate&nbsp;x*90
+<br>&nbsp;&nbsp;&nbsp;&nbsp;translate&nbsp;-z*0.2
+<br>&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Mantlepiece
+<br>&nbsp;&nbsp;box&nbsp;{<-0.63,0.8,-0.03><0.63,0.83,0.33>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;pigment&nbsp;{wood&nbsp;scale&nbsp;0.01&nbsp;turbulence&nbsp;0.4&nbsp;rotate&nbsp;y*90}
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Mortar
+<br>&nbsp;&nbsp;difference&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-0.59,0,0.011>,<0.59,0.8,0.29>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-0.26,-0.01&nbsp;,-0.01><0.26,0.51,0.29>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;texture&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pigment&nbsp;{rgb&nbsp;0.3}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;{agate&nbsp;scale&nbsp;0.01}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;}
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_23.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+
+  <table border=1 width=100%>
+    <tr><th class=macroheaders colspan=2><a name='Example24'></a>Example=24;  A Bridge</th><tr>
+    <tr><td width=20></td><td>
+      Example 24 uses several macros, but mostly the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro to generate the bridge shape illustrated below. The bridge is centred on the origin using a scale of 1 POV-Ray unit to represent 1 metre. It is oriented so that the road runs along the Z-axis for about 15 units in either direction. 
+      <p>
+      The bridge is 'built' around a shape created using the POV-Ray blob object. This blob object is also used to cut the dip that the stream occupies. You can change the strengths of these blobs a little to adjust the shape of the bridge and the depth of the stream. The blob uses a long central cylindrical core and four negative strength cylindrical components to squash the front and back edges into two cusps. This leaves a rounded hump in the middle that the road goes over and a rounded dip in the middle used to cut the river valley. This object is not itself displayed in the scene but is simply used to define the main shapes.
+      <p>
+      <a href="blockwall_24a.jpg"><img src="blockwall_24a.jpg" align=right width=210 alt="Click for larger image" title="Click for larger image"></a>
+      The default image (right) uses a setting of 0.5 for the <a href="#Blockwall_MatrixSpacing">Blockwall_MatrixSpacing</a> setting and was rendered at 640x480 (No AA) using a distant camera. These factors in combination took just 4 seconds to render on a 2 Quad 2.4GHz machine, using POV-Ray 3.7 Beta 27 (click the image to see it full-size). The example in the 'blockwall.pov' file contains an alternative camera setting for the close-up shot (shown below the code sample) where the <a href="#Blockwall_MatrixSpacing">Blockwall_MatrixSpacing</a> variable is set to 0.05. This provides a high block density giving a very detailed bridge, but is slow to render, taking about 5 minutes at 800x600 (AA 0.3) on the above machine. Using a relatively high value for Blockwall_MatrixSpacing reduces the parse time very significantly.         
+      <p> 
+      The blob object also contains three cylindrical components that are used upstream and downstream of the bridge to disrupt the straightness of the river. One of these shoots off at 30 degrees upstream to represent a tributary joining the main body of water.   
+      <p>
+      A spline is dropped onto the top surface of the blob object using the <a href="#Blockwall_DropSplineToSurface">Blockwall_DropSplineToSurface</a> macro to create a spline that defines a line across the top of the bridge. The sides of the bridge are defined using the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro with this spline. Before calling this macro an object named <a href="#Blockwall_Holes">Blockwall_Holes</a> is defined and is consequently used by the macro to cut out the overall shape of the bridge and the shape of the arches beneath it.
+      <p>
+      Strong rectangular walls are added to support the arches using the <a href="#Blockwall_Fill">Blockwall_Fill</a> macro. The 3 arches are added using the <a href="#Blockwall_Arc">Blockwall_Arc</a> macro (which itself calls the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro) to create semi-circular walls that are rotated to the vertical and translated into position.
+      <p>
+      The kurb and the walls along the roadside on top of the bridge use the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro, following the spline that was dropped onto the top of the blob object. The kurb stones protrude through the outer surfaces of the bridge walls to cap the horizontally coursed main body of the bridge.
+      <p>
+      <br clear=all>
+
+      <div class=codesample>
+&nbsp;&nbsp;//&nbsp;Declare&nbsp;a&nbsp;line&nbsp;for&nbsp;the&nbsp;bridge&nbsp;to&nbsp;follow.
+<br>&nbsp;&nbsp;#declare&nbsp;BridgeLineSpline&nbsp;=&nbsp;spline&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cubic_spline&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;-0.25,&nbsp;<&nbsp;15&nbsp;,10,-20&nbsp;&nbsp;>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;&nbsp;&nbsp;&nbsp;<&nbsp;5&nbsp;&nbsp;,10,-15&nbsp;&nbsp;>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.25,&nbsp;<&nbsp;0.4,10,&nbsp;-7.5>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.5&nbsp;,&nbsp;<&nbsp;0&nbsp;&nbsp;,10,&nbsp;&nbsp;0&nbsp;&nbsp;>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.75,&nbsp;<-0.4,10,&nbsp;&nbsp;7.5>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;&nbsp;&nbsp;&nbsp;<-2&nbsp;&nbsp;,10,&nbsp;15&nbsp;&nbsp;>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.25,&nbsp;<-8&nbsp;&nbsp;,10,&nbsp;20&nbsp;&nbsp;>
+<br>&nbsp;&nbsp;}&nbsp;
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;big&nbsp;long&nbsp;blobby&nbsp;object&nbsp;the&nbsp;shape&nbsp;of&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;bridge&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;and&nbsp;the&nbsp;indentation&nbsp;in&nbsp;the&nbsp;ground.
+<br>&nbsp;&nbsp;#declare&nbsp;RiverCutting&nbsp;=&nbsp;blob&nbsp;{&nbsp;threshold&nbsp;0.6&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Use&nbsp;a&nbsp;strong&nbsp;cylindrical&nbsp;core&nbsp;with&nbsp;4&nbsp;negative&nbsp;corner&nbsp;cylinders&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;to&nbsp;compress&nbsp;the&nbsp;edges&nbsp;into&nbsp;cusps&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder{<-1000,0,0>,&nbsp;<1000,0,0>,&nbsp;4&nbsp;&nbsp;,&nbsp;&nbsp;1.5&nbsp;scale&nbsp;<1,1,5>&nbsp;}&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder{<-1000,0,0>,&nbsp;<1000,0,0>,&nbsp;2.5,&nbsp;-1&nbsp;&nbsp;&nbsp;scale&nbsp;<1,1,3>&nbsp;translate&nbsp;<0,&nbsp;2,7.5>}&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder{<-1000,0,0>,&nbsp;<1000,0,0>,&nbsp;2.5,&nbsp;-1&nbsp;&nbsp;&nbsp;scale&nbsp;<1,1,3>&nbsp;translate&nbsp;<0,-2,7.5>}&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder{<-1000,0,0>,&nbsp;<1000,0,0>,&nbsp;2.5,&nbsp;-1&nbsp;&nbsp;&nbsp;scale&nbsp;<1,1,3>&nbsp;translate&nbsp;<0,&nbsp;2,-7.5>}&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder{<-1000,0,0>,&nbsp;<1000,0,0>,&nbsp;2.5,&nbsp;-1&nbsp;&nbsp;&nbsp;scale&nbsp;<1,1,3>&nbsp;translate&nbsp;<0,-2,-7.5>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Add&nbsp;some&nbsp;components&nbsp;to&nbsp;break&nbsp;up&nbsp;the&nbsp;straight&nbsp;lines&nbsp;upstream&nbsp;and&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;downstream&nbsp;of&nbsp;the&nbsp;bridge
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder{<-1000,0,0>,&nbsp;<-3,0,0>,&nbsp;2.5,&nbsp;0.5
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scale&nbsp;<1,1,4>&nbsp;rotate&nbsp;<0,&nbsp;&nbsp;3,-1>&nbsp;translate&nbsp;<&nbsp;&nbsp;0,0,-1.5>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder{<-1000,0,0>,&nbsp;<&nbsp;3,0,0>,&nbsp;4.5,&nbsp;2
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scale&nbsp;<1,1,1>&nbsp;rotate&nbsp;<0,-30,&nbsp;0>&nbsp;translate&nbsp;<-10,0,&nbsp;0&nbsp;&nbsp;>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder{<&nbsp;1000,0,0>,&nbsp;<&nbsp;3,0,0>,&nbsp;2.5,&nbsp;1
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scale&nbsp;<1,1,3>&nbsp;rotate&nbsp;<0,&nbsp;-3,&nbsp;3>&nbsp;translate&nbsp;<&nbsp;&nbsp;4,0,-1.5>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;scale&nbsp;<1,1,1.4>
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Declare&nbsp;an&nbsp;object&nbsp;that&nbsp;the&nbsp;Blockwall_FollowSpline&nbsp;macro&nbsp;can&nbsp;use&nbsp;to&nbsp;cut&nbsp;the&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;bridge&nbsp;shape&nbsp;out&nbsp;of.
+<br>&nbsp;&nbsp;//&nbsp;This&nbsp;includes&nbsp;arch&nbsp;holes&nbsp;and&nbsp;the&nbsp;top&nbsp;and&nbsp;bottom&nbsp;surfaces.&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Holes&nbsp;=&nbsp;union&nbsp;{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-2.5,-4,-5.15><2.5,-0.5,-2.45>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-2.5,-4,-1.95><2.5,-0.5,&nbsp;1.95>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;{<-2.5,-4,&nbsp;5.15><2.5,-0.5,&nbsp;2.45>}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder&nbsp;{<-2.5,-0.5,-3.8><2.5,-0.5,-3.8>,1.35}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder&nbsp;{<-2.5,-0.5,&nbsp;0&nbsp;&nbsp;><2.5,-0.5,&nbsp;0&nbsp;&nbsp;>,1.95}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;cylinder&nbsp;{<-2.5,-0.5,&nbsp;3.8><2.5,-0.5,&nbsp;3.8>,1.35}&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;object&nbsp;{RiverCutting&nbsp;inverse&nbsp;translate&nbsp;-y*0.5}&nbsp;
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Create&nbsp;the&nbsp;main&nbsp;body&nbsp;of&nbsp;the&nbsp;bridge&nbsp;(with&nbsp;holes)
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Finish&nbsp;=&nbsp;finish&nbsp;{ambient&nbsp;0.01}
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;MatrixSpacing;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_WallHeight&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;6.75;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_BlockThickness&nbsp;&nbsp;=&nbsp;0.4;
+<br>&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;spline&nbsp;that&nbsp;tracks&nbsp;along&nbsp;the&nbsp;bottom&nbsp;of&nbsp;the&nbsp;bridge
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Target&nbsp;=&nbsp;plane&nbsp;{y,-4}
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Spline&nbsp;=&nbsp;BridgeLineSpline;
+<br>&nbsp;&nbsp;Blockwall_DropSplineToSurface()&nbsp;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("BuffStone")&nbsp;translate&nbsp;-1.8*x}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("BuffStone")&nbsp;translate&nbsp;&nbsp;2.3*x}
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;thick&nbsp;walls&nbsp;to&nbsp;support&nbsp;the&nbsp;arches
+<br>&nbsp;&nbsp;Blockwall_Undef()
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Finish&nbsp;=&nbsp;finish&nbsp;{ambient&nbsp;0.01}
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;MatrixSpacing;
+<br>&nbsp;&nbsp;Blockwall_Fill(<-2.4,-2.2,-5.45><2.4,-0.5,-4.95>,"BuffBrick")
+<br>&nbsp;&nbsp;Blockwall_Fill(<-2.4,-3.0,-1.75><2.4,-0.5,-2.65>,"BuffBrick")
+<br>&nbsp;&nbsp;Blockwall_Fill(<-2.4,-3.0,&nbsp;1.75><2.4,-0.5,&nbsp;2.65>,"BuffBrick")
+<br>&nbsp;&nbsp;Blockwall_Fill(<-2.4,-2.2,&nbsp;5.45><2.4,-0.5,&nbsp;4.95>,"BuffBrick")
+<br>&nbsp;&nbsp;
+<br>&nbsp;&nbsp;//&nbsp;Insert&nbsp;the&nbsp;three&nbsp;arches
+<br>&nbsp;&nbsp;Blockwall_Undef()
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;MatrixSpacing;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_WallHeight&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;4.8;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Radius&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1.15;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Finish&nbsp;=&nbsp;finish&nbsp;{ambient&nbsp;0.01}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_Arc(180,"BuffBrick")
+<br>&nbsp;&nbsp;&nbsp;&nbsp;rotate&nbsp;z*90&nbsp;translate&nbsp;<2.4,-0.5,-3.80>
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_Arc(180,"BuffBrick")
+<br>&nbsp;&nbsp;&nbsp;&nbsp;rotate&nbsp;z*90&nbsp;translate&nbsp;<2.4,-0.5,3.80>
+<br>&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Radius&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1.75;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_Arc(180,"BuffBrick")
+<br>&nbsp;&nbsp;&nbsp;&nbsp;rotate&nbsp;z*90&nbsp;translate&nbsp;<2.4,-0.5,0>
+<br>&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Reset&nbsp;control&nbsp;variables&nbsp;so&nbsp;we&nbsp;can&nbsp;use&nbsp;the&nbsp;defaults&nbsp;for&nbsp;the&nbsp;next&nbsp;type&nbsp;of&nbsp;wall
+<br>&nbsp;&nbsp;Blockwall_Undef()
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;spline&nbsp;that&nbsp;tracks&nbsp;along&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;bridge
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Target&nbsp;=&nbsp;object&nbsp;{RiverCutting&nbsp;translate&nbsp;-y*0.5}
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Spline&nbsp;=&nbsp;BridgeLineSpline;
+<br>&nbsp;&nbsp;Blockwall_DropSplineToSurface()&nbsp;
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;Roadside&nbsp;Walls&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_MatrixSpacing&nbsp;&nbsp;&nbsp;=&nbsp;MatrixSpacing*1.2;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_BlockThickness&nbsp;&nbsp;=&nbsp;0.3;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_Finish&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;finish&nbsp;{ambient&nbsp;0.01}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("BuffBrick")&nbsp;translate&nbsp;<-2.0,0.17,0>}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("BuffBrick")&nbsp;translate&nbsp;<&nbsp;2.3,0.17,0>}
+<br>
+<br>&nbsp;&nbsp;//&nbsp;Add&nbsp;kurbstones&nbsp;along&nbsp;the&nbsp;edges&nbsp;of&nbsp;the&nbsp;road&nbsp;and&nbsp;out&nbsp;through&nbsp;the&nbsp;bridge&nbsp;parapet
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_WallHeight&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0.2;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;#declare&nbsp;Blockwall_BlockThickness&nbsp;&nbsp;=&nbsp;0.5;&nbsp;&nbsp;
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("BuffBrick")&nbsp;translate&nbsp;<-1.9,-0.02,0>}
+<br>&nbsp;&nbsp;object&nbsp;{Blockwall_FollowSpline("BuffBrick")&nbsp;translate&nbsp;<&nbsp;2.4,-0.02,0>}
+      </div>
+      <br>
+      <p align=center>
+      <img src="blockwall_24.jpg" align=center>
+    </td></tr>
+  </table>
+  <p>
+
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>   
+
+
+
+  <a name='Macros'></a>
+  <h1>Macros</h1>
+The following macros are all contained in the 'blockwall.inc' file:
+<p>
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall'></a>Blockwall macro </th><tr>
+    <tr><td width=20></td><td>
+You can call the Blockwall macro to create a single, straight section of block walling. The functionality is controlled through a series of <a href="#Variables">variables</a>, each of which has a default value, so you can generate the default section of paving with the following code:
+<div class=codesample>
+&nbsp;camera {orthographic location <0,2.8,1.74> look_at 1.75*z }
+<br>&nbsp;light_source {<-10,20,-5>, rgb 1}   
+<br>&nbsp;#include "blockwall.inc"  
+<br>&nbsp;Blockwall("")
+</div>
+<p>
+This creates a 1 metre square and 8cm thick section of wall (where 1 POV-Ray unit = 1 metre) with its bottom left corner at the origin. You can use variables such as <a href="#Blockwall_WallHeight">Blockwall_WallHeight</a>, <a href="#Blockwall_WallLength">Blockwall_WallLength</a>, <a href="#Blockwall_BlockThickness">Blockwall_BlockThickness</a> and <a href="#Blockwall_MortarGap">Blockwall_MortarGap</a> to control the dimensions. For example:
+<div class=codesample>
+&nbsp;#include "blockwall.inc"  
+<br>&nbsp;#declare Blockwall_WallHeight = 2;
+<br>&nbsp;#declare Blockwall_WallLength = 5;
+<br>&nbsp;Blockwall("")
+</div>
+<p>
+Other variables enable you to control the color, finish, surface normal and the maximum sizes and distribution of different sized blocks throughout the wall. You can also adjust the seed streams used for the randomisation of color and block size, so that, if a particular random pattern causes you problems, you can just use a different one (see <a href="#Blockwall_ColorSeed">Blockwall_ColorSeed</a> and <a href="#Blockwall_SizeSeed">Blockwall_SizeSeed</a>).
+<p>
+The Blockwall_Block macro has 1 parameter:
+<table border=1>
+<tr><td>
+  Blockwall_BlockType            
+</td><td width=100%>
+A string that can be used to specify a predefined block type (e.g. specific color settings or the object type to be generated). Pass an empty string into the macro ("") to use default settings or to use settings that you set inline within your code. The following set styles can be specified:
+<ul>
+  <li>"RedBrick"       
+  <li>"BlueBrick"     
+  <li>"GreenBrick"     
+  <li>"PinkBrick"    
+  <li>"BuffBrick"  
+  <li>"GreyBrick" 
+  <li>"RoughStone"
+  <li>"RedStone"       
+  <li>"BlueStone"     
+  <li>"GreenStone"     
+  <li>"PinkStone"    
+  <li>"BuffStone"  
+  <li>"GreyStone" 
+  <li>"Pebbles"   
+  <li>"Polygon"        
+  <li>"Box"          
+  <li>"Superellipsoid"     
+</ul>
+See <a href="#Example17">example 17</a>, <a href="#Example18">example 18</a> and <a href="#Example19">example 19</a> above for illustrations of these style settings. 
+</td></tr>
+</table> 
+    </td></tr>   
+  </table>
+  <p>
+   
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_Fill'></a>Blockwall_Fill macro</th><tr>
+    <tr><td width=20></td><td>
+       You can call the Blockwall_Fill macro to create a single, straight section of block walling based on two vectors that delimit the extents of the wall, passed as parameters into the macro. This is an alternative to setting variables to define the size of the wall with the <a href="#Blockwall">Blockwall</a> macro. 
+<p>
+This macro fills the area delimited by the minimum extent vector and a maximum extent vector with block walling. The wall is oriented so that the thinest horizontal dimension (X or Z) is used for the block thickness and the larger horizontal dimension is used as the wall length. The box used is aligned to the X, Y and Z axes but you can readily transform the returned object by wrapping the macro call inside an 'object' statement.       
+<p>       
+You can generate the default block wall with the following code:
+<div class=codesample>
+&nbsp;#include "blockwall.inc"  
+<br>&nbsp;Blockwall_Fill(<0,0,0>,<2,1,0.3>,"")
+</div>
+<p>
+The functionality is still controlled through the same <a href="#Variables">variables</a> as the Blockwall macro, except that the dimensions specified in the parameters override any previous size settings. 
+      
+      <p>
+      The Blockwall_Fill macro has 3 parameters:
+      <table border=1>
+        <tr><td>
+           Blockwall_MinExtents
+        </td><td width=100%>
+          A 3D coordinate vector specifying the bottom left corner of the wall.
+          See <a href="#Example02">example 2</a> for an illustration of this setting.
+        </td></tr>
+        <tr><td>
+           BlockwallMaxExtents
+        </td><td width=100%>
+          A 3D coordinate vector specifying the top right corner of the wall.
+          See <a href="#Example02">example 2</a> for an illustration of this setting.
+        </td></tr>
+        <tr><td>
+           Blockwall_BlockType
+        </td><td width=100%>
+          A string specifying a predefined style to use or an empty string ("") to not use a predefined style.
+          See the <a href="#Blockwall">Blockwall</a> macro for a list of valid settings for this parameter .
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_Shell'></a>Blockwall_Shell macro </th><tr>
+    <tr><td width=20></td><td>
+      You can call the Blockwall_Shell macro to wrap a wall around the perimeter of a box defined using the minimum and maximum extent vectors supplied as parameters to the macro call. This creates a form similar to the shell of a simple rectangular building inside a box aligned to the X, Y and Z axes. The macros functionality is controlled through a series of 
+      <a href="#Variables">variables</a>, 
+      each of which has a default value.
+      <p>
+      You can generate a shell wall with the following code:
+      <div class=codesample>
+        <br>&nbsp;&nbsp;Blockwall_Shell(<-2,0,0>, <2,2.3,5>, "")
+      </div>
+      <p>
+This gives you a wall structure that could be used as the outer shell of a building. These parameters generate a 4 unit wide, 2.3 unit high and 5 unit long rectangular wall centred on the +Z axis.      
+      <p>
+      The Blockwall_Shell macro has 3 parameters:
+      <table border=1>
+        <tr><td>
+           Blockwall_MinExtents
+        </td><td width=100%>
+          A 3D coordinate vector specifying the bottom left corner of the box.
+          See <a href="#Example06">example 6</a> for an illustration of this setting.
+        </td></tr>
+        <tr><td>
+           BlockwallMaxExtents
+        </td><td width=100%>
+          A 3D coordinate vector specifying the top right corner of the box.
+          See <a href="#Example06">example 6</a> for an illustration of this setting.
+        </td></tr>
+        <tr><td>
+           Blockwall_BlockType
+        </td><td width=100%>
+          A string specifying a predefined style to use or an empty string ("") to not use a predefined style.
+          See the <a href="#Blockwall">Blockwall</a> macro for a list of valid settings for this parameter.
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_FollowArray'></a>Blockwall_FollowArray macro </th><tr>
+    <tr><td width=20></td><td>
+      You can call the Blockwall_FollowArray macro to create a multi-segment wall comprising a series of connected, straight sections where the bottom front edge of the wall follows the 2D coordinate vectors specified in the <a href="#Blockwall_CornerArray">Blockwall_CornerArray</a> array. Only the X and Z coordinates need to be specified. The wall will sit on the XZ plane (ie at y=0). If the Blockwall_CornerArray array is not defined when the Blockwall_FollowArray macro is called then a default array will be created that describes a 1 unit square that will be delimited by the wall.
+      <p> 
+If the first and last point in the Blockwall_CornerArray array are the same the ends of the block wall will be interwoven. Otherwise the ends blocks at each of the two ends of the wall will be vertically aligned.     
+      
+      <p>
+      The functionality of this macro is controlled through a series of 
+      <a href="#Variables">variables</a>, 
+      each of which has a default value. You can generate the default block wall with the following code:
+      <div class=codesample>
+        <br>&nbsp;&nbsp;Blockwall_FollowArray("")
+      </div>
+      <p>
+See <a href="#Example08">Example 8</a> for a slightly more complex example.        
+      <p>
+      The Blockwall_FollowArray macro has 1 parameter:
+      <table border=1>
+        <tr><td>
+           Blockwall_BlockType
+        </td><td width=100%>
+          A string specifying a predefined style to use or an empty string ("") to not use a predefined style.
+          See the <a href="#Blockwall">Blockwall</a> macro for a list of valid settings for this parameter.
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+  <p>
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_Arc'></a>Blockwall_Arc macro </th><tr>
+    <tr><td width=20></td><td>
+      You can call the Blockwall_Arc macro to create a block wall that follows a circular path. This can either be a complete circle of 360 degrees, or an arc of a lesser number of degrees. The arc starts at the radius as defined using the variable <a href="#Blockwall_Radius">Blockwall_Radius</a>, which defaults to 1 POV-Ray unit (representing a radius of 1 metre) in the +Z direction. If a complete circle is produced (within 0.01 units) then the default value for <a href="#Blockwall_Wrap">Blockwall_Wrap</a> is set to 1 to interleave the ends, otherwise the default for <a href="#Blockwall_Wrap">Blockwall_Wrap</a> is 0 resulting in square cut ends. You can set <a href="#Blockwall_Wrap">Blockwall_Wrap</a> before calling the macro to override the default behaviour. 
+      <p>
+      If a positive value is specified for the number of degrees, the wall is drawn clockwise and the <b>inner</b> face follows the line described by the radius as it is rotated around the origin. In this case the outer face will contain wider mortar gaps as the blocks fan out. If a negative value is given for the number of degrees, the wall is drawn anticlockwise and the <b>outer</b> face follows the line described by the radius rotated around the origin. This results in a smaller wall where the mortar gap on the inner face is reduced, possibly resulting in some overlap of the blockwork on the inner face.
+      <p> 
+      You can rotate and translate the results as required. <a href="#Example24">Example 24</a> illustrates the use of this macro to generate arches under a bridge. <a href="#Example22">Example 22</a> use this macro to generate the circular wall for a well.  
+      <p>
+      Most of the functionality is controlled through a series of 
+      <a name=Variables>variables</a>, 
+      each of which has a default value, so you can generate the default circular block wall with the following code:
+      <div class=codesample>
+        <br>&nbsp;&nbsp;Blockwall_Arc(360, "")
+      </div>
+      <p>
+       This creates a circular (cylindrical) wall with an internal radius of 1 metre.
+      <p>
+      The Blockwall_Arc macro has 2 parameters:
+      <table border=1>
+        <tr><td>
+           Blockwall_ArcDegrees
+        </td><td width=100%>
+          A decimal value used to specify the number of degrees of arc. Valid values are in the range -360 to 360. A positive value draws a clockwise arc with the dressed face on the inside. A negative value draws an anticlockwise arc with the dressed face on the outside.
+        </td></tr>
+        <tr><td>
+           Blockwall_BlockType
+        </td><td width=100%>
+          A string specifying a predefined style to use, or an empty string ("") to not use a predefined style.
+          See the <a href="#Blockwall">Blockwall</a> macro for a list of valid settings for this parameter.
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_FollowSpline'></a>Blockwall_FollowSpline macro </th><tr>
+    <tr><td width=20></td><td>
+      You can call the Blockwall_FollowSpline macro to create a wall that follows a spline. The front face of the base of the spline will follow the 3D spline assigned to the identifier <a href="#Blockwall_Spline">Blockwall_Spline</a>. If this identifier is not set the Blockwall_FollowSpline will define a default spline that creates a hump-baked bridge parapet as illustrated in <a href="#Example03">Example 3</a>. 
+      <p>
+      It is usual to specify a curved spline rather than a linear spline as corners resulting from a linear spline will not interlace properly. To create a series of straight sections where the base of the wall is level you can use the <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro which should handle the corners better. The functionality of this macro is controlled through a series of 
+      <a href="#Variables">variables</a>, 
+      each of which has a default value, so you can generate the default block wall with the following code:
+      <div class=codesample>
+        <br>&nbsp;&nbsp;Blockwall_FollowSpline("")
+      </div>
+      <p>
+This macro can also be used in conjunction with the <a href="#Blockwall_DropSplineToSurface">Blockwall_DropSplineToSurface</a> macro to draw a wall that follows the contours of a surface as as illustrated in <a href="#Example04">Example 4</a>.
+      <p>
+      The Blockwall_FollowSpline macro has 1 parameter:
+      <table border=1>
+        <tr><td>
+           Blockwall_BlockType
+        </td><td width=100%>
+          A string specifying a predefined style to use or an empty string ("") to not use a predefined style.
+          See the <a href="#Blockwall">Blockwall</a> macro for a list of valid settings for this parameter.
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+  <p>
+ 
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_DropSplineToSurface'></a>Blockwall_DropSplineToSurface macro </th><tr>
+    <tr><td width=20></td><td>
+      You can call the Blockwall_DropSplineToSurface macro to drop the spline assigned to identifier <a href="#Blockwall_Spline">Blockwall_Spline</a> onto the surface of the target object assigned to the identifier <a href="#Blockwall_Target">Blockwall_Target</a>. For example:
+      <div class=codesample>
+        <br>&nbsp;&nbsp;Blockwall_DropSplineToSurface()
+      </div>
+      <p>
+      Example 4 illustrates the use of this macro in conjunction with the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro to create a wall that follows the contours of an object.
+      <p>
+      The Blockwall_DropSplineToSurface macro has 0 parameters:
+    </td></tr>
+  </table>
+  <p>
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_Block'></a>Blockwall_Block macro </th><tr>
+    <tr><td width=20></td><td>
+The Blockwall_Block macro is used to create an individual block based upon the specified settings. This macro is called repeatedly by the other Blockwall macros to draw each of the blocks that go to make up a section of blockwork.
+<p>
+You won't normally need to invoke this macro directly, it is called indirectly by the other Blockwall macros. However, you can if you wish to generate individual blocks. 
+<p>
+The Blockwall_Block macro can easily be tailored to add more 'predefined' colors or shapes to those supplied. You can do this by adding a new '#case' clause to one of the two '#switch' statements. This usually only involves adding a couple of lines using basic coding elements, such as declarations of colors etc. and subsequently enables you to refer to your new style of block by name whenever you wish to use it in the future. 
+<p>
+The Blockwall_Block macro has 5 parameters:
+<table border=1>
+<tr><td>
+  Blockwall_TopLeft            
+</td><td width=100%>
+A 3D vector defining the coordinates of the top left corner of the space into which this block needs to fit.
+</td></tr>
+<tr><td>
+  Blockwall_TopRight            
+</td><td width=100%>
+A 3D vector defining the coordinates of the top right corner of the space into which this block needs to fit.
+</td></tr>
+<tr><td>
+  Blockwall_BottomRight            
+</td><td width=100%>
+A 3D vector defining the coordinates of the bottom right corner of the space into which this block needs to fit.
+</td></tr>
+<tr><td>
+  Blockwall_BottomLeft            
+</td><td width=100%>
+A 3D vector defining the coordinates of the bottom left corner of the space into which this block needs to fit.
+</td></tr>
+<tr><td>
+  Blockwall_BlockType            
+</td><td width=100%>
+A string that can be used to specify a predefined block type (e.g. specific color settings or the object type to be generated). Pass an empty string into the macro ("") to use default settings. See <a href="#Example17">example 17</a>, <a href="#Example18">example 18</a> and <a href="#Example19">example 19</a> above for illustrations of the available style settings.
+</td></tr>
+</table> 
+    </td></tr>   
+  </table>
+  <p>
+  
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_BlobBlock'></a>Blockwall_BlobBlock macro </th><tr>
+    <tr><td width=20></td><td>
+      This macro is called by the Blockwall_Block macro when a block type parameter of "RoughStone" is used with one of the Blockwall macros. This macro adds blob components together to create a rough stone shape of the block size required. By default the shape can extend slightly beyond the limits specified, but the <a href="#Blockwall_ClipBlock">Blockwall_ClipBlock</a> variable can be used to clip the edges so that the shape is clipped to size, giving partially flat faces to the blocks. For example: 
+      <div class=codesample>
+        <br>&nbsp;&nbsp;Blockwall_BlobBlock(2, 3)
+      </div>
+      <p>
+      Returns a blob object that is 2 units wide by 3 units high. Blocks dimensions are defined as integer numbers of units. This macro contains dedicated code to generate smaller blocks and more generic code for categories of larger blocks. If you permit very large blocks e.g. 6x5 you may find that the generic code does a poor job. If this is a problem you can fairly simply add a #case statement to this macro to handle a particular new block size or new categories of block sizes with just a few lines of SDL.
+      <p>
+      Each block consists of a core formed using 3 squashed spherical components plus 8 spherical corner components that draw the shape out into a more rectangular shape.   
+      <p>
+      The Blockwall_BlobBlock macro has 2 parameters:
+      <table border=1>
+        <tr><td>
+           Blockwall_BlockUnits_X
+        </td><td width=100%>
+          An integer value used to specify the number of horizontal units occupied by this block.
+        </td></tr>
+        <tr><td>
+           Blockwall_BlockUnits_Y
+        </td><td width=100%>
+          An integer value used to specify the number of vertical units occupied by this block.
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+  <p>
+ 
+ 
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_CoreBlob'></a>Blockwall_CoreBlob macro </th><tr>
+    <tr><td width=20></td><td>
+This macro is called by the <a href="#Blockwall_Block">Blockwall_Block</a> macro when you use the "Roughstone" block style. This macro is called 3 times per block to add 3 large blobs to form the core of the block. You won't need to call this macro unless you are adjusting the blob definitions used for the "Roughstone" block style. 
+Typical values passed to this macro could look something like this:
+      <div class=codesample>
+&nbsp;&nbsp;Blockwall_CoreBlob(
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Blockwall_CoreBlobRadius, 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Blockwall_CoreStrength, 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Blockwall_CoreScale, 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Blockwall_CoreHeight
+<br>&nbsp;&nbsp;)
+      </div>
+      <p>
+      The Blockwall_CoreBlob macro has 4 parameters:
+      <table border=1>
+        <tr><td>
+           Blockwall_CoreBlobRadius
+        </td><td width=100%>
+          A decimal value used to define the radius of a sphere component of a blob.
+        </td></tr>
+        <tr><td>
+           Blockwall_CoreStrength
+        </td><td width=100%>
+          A decimal value used to define the strength of a sphere component of a blob.
+        </td></tr>
+        <tr><td>
+           Blockwall_CoreScale
+        </td><td width=100%>
+          A 3D vector used to define a scale factor for this sphere component.
+        </td></tr>
+        <tr><td>
+           Blockwall_CoreHeight
+        </td><td width=100%>
+          A decimal value used to define the height at which this blob component is to be located. The value is relative to the centre of the blob.
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+  <p>
+
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_CornerBlobs'></a>Blockwall_CornerBlobs macro </th><tr>
+    <tr><td width=20></td><td>
+This macro is called by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to add 8 corner blobs to a block core. You won't need to call this macro unless you are adjusting the blob definitions used for the "Roughstone" block style. 
+Typical values passed to this macro could look something like this:
+      <div class=codesample>
+        <br>&nbsp;&nbsp;Blockwall_CornerBlobs(0.8, 0.3, <0.55,0.55,0.55>, 1)
+      </div>
+      <p>
+      The Blockwall_CornerBlobs macro has 4 parameters:
+      <table border=1>
+        <tr><td>
+           Blockwall_CornerBlobRadius
+        </td><td width=100%>
+          A decimal value specifying the radius of each of the corner blob components.
+        </td></tr>
+        <tr><td>
+           Blockwall_CornerStrength
+        </td><td width=100%>
+          A decimal value specifying the strength of each of the corner blob components.
+        </td></tr>
+        <tr><td>
+           Blockwall_CornerPosition
+        </td><td width=100%>
+          A 3D vector specifying how far out from the centre in the x, y and z directions each of the corner blob components is to be positioned.
+        </td></tr>
+        <tr><td>
+           Blockwall_CornerDepth
+        </td><td width=100%>
+          A decimal scale value used to scale each corner blob in the z dimension. A value of 1 produces no scaling. Increasing the value causes each of the corner blob components to have more influence deeper into the blocks. Reducing it constrains the influence of the corner blocks more to the front and back surfaces.
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+  <p>
+ 
+ 
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_AdjustCorner'></a>Blockwall_AdjustCorner macro </th><tr>
+    <tr><td width=20></td><td>
+      This macro is called by the <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro against the matrix that stores the blockwork pattern to adjust blocksizes at the corner positions so that they don't overlap the corners. It adjusts the matrix so that there is a mortar gap either to the left or right of each corner stone for a specified corner position. It follows a line up the matrix and, if there is no suitable junction it creates one by shortening blocks so that the matrix can fold along the required line. For example:
+      <div class=codesample>
+        <br>&nbsp;&nbsp;Blockwall_AdjustCorner(12)
+      </div>
+      <p>
+       Follows the matrix up at column 12 so that it can fold cleanly after column 11. 
+      <p>
+      The Blockwall_AdjustCorner macro has 1 parameter:
+      <table border=1>
+        <tr><td>
+           Blockwall_MatrixIndex
+        </td><td width=100%>
+          An integer value that specifies the column in the matrix that will form the first column on a straight section of walling following a corner. This value must be within the horizontal matrix dimension and can't point to the last column or a parse error will occur.
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+  <p>
+
+
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_MakeMatrix'></a>Blockwall_MakeMatrix macro </th><tr>
+    <tr><td width=20></td><td>
+       You can call this macro to generate a randomised blockwork pattern. This macro defines and populates a matrix that describes the positions and sizes of a series of blocks. The start position of each block corresponds to one of the grid positions in the matrix. The X and Y dimensions of a block are randomly generated but are always whole numbers of grid positions and meet a certain set of user defined criteria which control the relative distribution of large and small blocks.
+       <p>
+      The functionality of this macro is controlled through a series of 
+      <a href="#Variables">variables</a>. <a href="#Blockwall_MatrixDimX">Blockwall_MatrixDimX</a> and <a href="#Blockwall_MatrixDimY">Blockwall_MatrixDimY</a> control the number of units in the horizontal and vertical dimensions of the matrix. The <a href="#Blockwall_MaxHU">Blockwall_MaxHU</a> and <a href="#Blockwall_MaxVU">Blockwall_MaxVU</a> settings define maximum block sizes in terms of horizontal and vertical units. The <a href="#Blockwall_HBias">Blockwall_HBias</a> and <a href="#Blockwall_VBias">Blockwall_VBias</a> variables control the proportion of blocks that will be large in a given dimension.
+      <p> 
+      Each of these variables has a default value, so you can generate the default block wall with the following code:
+      <div class=codesample>
+        <br>&nbsp;&nbsp;Blockwall_MakeMatrix()
+      </div>
+      <p>
+      <p>
+      The Blockwall_MakeMatrix macro has no parameters:
+    </td></tr>
+  </table>
+  <p>
+  
+  
+  <table border=1>
+    <tr><th class=macroheaders colspan=2><a name='Blockwall_Undef'></a>Blockwall_Undef macro </th><tr>
+    <tr><td width=20></td><td>
+The Blockwall_Undef macro can be used to undefine all of the key control variables between calls to the 'Blockwall' macro. This is often not necessary, but can be useful if you have set a lot of control variables for one call and you want to return most of those settings to their default values the next time the 'Blockwall' macro is called. This can also be useful if you are using named block types as it avoids you having to work out which variables were set during the first call. By undefining them all between macro calls you can avoid that the settings for one predefined block type interfere with the next.
+<p>
+The Blockwall_Undef macro has no parameters:
+    </td></tr>   
+  </table>
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+  <a name='Variables'></a>
+  <h1>Control Variables</h1>
+The following variables are used to control the operation of the 'Blockwall' macros. Each has a default setting, so you only need to specify settings that you wish to override.
+
+  <table border=1>
+    <tr><th>Variable</th><th>Description</th>
+    <tr>
+      <th><a name='Blockwall_MortarGap'>Blockwall_MortarGap</a></th><td>
+      Decimal value used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to control the average space between blocks. The generated blocks are defined to fit into the space calculated using the <a href="#Blockwall_BlockThicness">Blockwall_BlockThicness</a> setting with half this gap all around them. The default value is 0.0001 which represents 0.01mm to produce blocks that butt right up against each other. Because the Superellipsoid shape is usually used to generate rounded blocks, the space available for mortar will actually appear to be substantially larger. If you use the "Box" or "Polygon" shapes you should increase this value to about 0.01 to give a 1cm gap because these shapes don't have rounded edges (see example 18). 
+      <p>
+      The general default is set in the <a href="#Blockwall_Block">Blockwall_Block</a> macro. The <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro also sets the same default value because it uses the value in its calculations and therefore needs a value to avoid errors.
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_BlockThickness'>Blockwall_BlockThickness</a></th><td>
+        Decimal value used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to control the Block Thickness. The general default value is 0.08 POV-Ray units and is intended to represent an 8 centimetre thick block except that: 
+        <ul>
+        <li>The <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro declares a default value based upon the values of the Blockwall_MatrixSpacing and Blockwall_MortarGap variables to attempt to construct decent corners. 
+        <li>The <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro sets a default of 0.25 POV-Ray units and is intended to represent a thickness of 25 centimetres as this is likely to be more suitable for the sort of walls that this macro generates.
+        </ul> 
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_BlockThicknessDecrement'>Blockwall_BlockThicknessDecrement</a></th><td>
+        Decimal value used by the Blockwall macros to control the Block Thickness Decrement measured in metres. The default value is 0 POV-Ray units and leaves the block thickness constant through the height of the wall. Using a value of 0.01 decreases the block thickness by 1cm for each layer of blocks, where a layer is defined as the setting of Blockwall_MatrixSpacing. If you have a 1m high wall of 10 courses a decrement of 0.01 will make the top block 10cm thinner than the bottom block.
+        <p>
+        See <a href="#Example16">example 16</a> for an illustration of this setting.
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_BlockRoundness'>Blockwall_BlockRoundness</a></th><td>
+      Decimal value between 0 and 1 used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to control the roundness of the blocks when using the Superellipsoid object, which is used to create all of the colored brick objects and is the default shape. The default value is 0.2 which produces a superellipsoid block with a distinctly rounded edge. A value of 0 gives square edges and 1 makes the blocks spherical.
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_MinColor'>Blockwall_MinColor</a></th><td>
+       3D RGB color vector used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to control the selection of colors. This vector provides the minimum red, green and blue values. The default value is <0.7,0.4,0.4> which makes the minimum color mostly red. Each color element is generated independently, so a minimum of <0,0,0> with a maximum of <1,1,1> will permit any valid color to be selected. See <a href="#Example12">example 12</a> for an illustration of this setting. 
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_MaxColor'>Blockwall_MaxColor</a></th><td>
+        3D RGB color vector used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to control the selection of colors. This vector provides the maximum red, green and blue values. The default value is <0.9,0.45,0.45> which makes the maximum color a fairly bright red. Each color element is generated independently, so a minimum of <0,0,0> with a maximum of <1,1,1> will permit any valid color to be selected.See <a href="#Example12">example 12</a> for an illustration of this setting.
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_Contrast'>Blockwall_Contrast</a></th><td>
+Decimal value between 0 and 1 used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to control the degree by which randomly selected colors can be randomnly darkened. The default value is 0.8 which results in each generated color value being multiplied by a random factor between 1 and 0.2. A setting of 0 results in the colors being within the range specified using Blockwall_MinColor and Blockwall_MaxColor. A setting of 1 means that randomly selected blocks could be darkened all the way down to black.
+      <p>
+Most real blockwork consists of a base color range with some blocks being a darker version of that same limited range. This setting allows that sort of control to be applied. See <a href="#Example13">example 13</a> for an illustration of this setting. 
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_Brightness'>Blockwall_Brightness</a></th><td>
+        Decimal value used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to control the overall brightness of the block texture. The default value of 1 doesn't adjust the colors at all.
+<p>
+This setting is designed to accommodate the hugely different lighting settings used in POV-Ray scene files. Some people use a lot of light and dim colors. Others use low light levels and bright colors. The default settings and most of the examples use a single, full light source. If your scene uses more light you can reduce this value. If you use less light in your scene you can increase this value. See example 20, which uses a light source that is 10 times brighter, setting this value to 0.1 to compensate and avoid color saturation artifacts. 
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_ClipBlock'>Blockwall_ClipBlock</a></th><td>
+        Integer value used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro when the "RoughStone" block type is specified to control whether or not a block made up of blobs is clipped so that it fits completely within the block size specified. The default value is 0 which permits the blocks to overlap the edges of the theoretical container. A value of 1 cuts off the overlaps leaving a partially flat surface on the face of any block that extends beyond the container.
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_Normal'>Blockwall_Normal</a></th><td>
+A normal definition used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to define the normal component of a texture used for the blocks. The default normal averages a granite and an agate normal. See <a href="#Example14">example 14</a>, which demonstrates how to override this default by specifying an agate normal for the blocks on the left. 
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_Finish'>Blockwall_Finish</a></th><td>
+A finish definition used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to define the finish component of a texture used for the blocks. The default finish uses a small amount of specular and a little roughness. See <a href="#Example14">example 14</a>, which demonstrates how to override this default by specifying a phong setting of 1 for the blocks on the right.
+<p>
+Adding phong or reflection to the finish setting can provide a simple way of emulating wet blocks. 
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_CornerDepth'>Blockwall_CornerDepth</a></th><td>
+        Integer value used by the <a href="#Blockwall_BlobBlock">Blockwall_BlobBlock</a> macro to control the depth of the blobs (the Z dimension) used to influence the shape of the corners of blocks created using the blob object. This object is only used if the "RoughStone" block style is used. None of the other object types use this setting. The default value is 1 which results in no scaling of the depth of the corner blobs. A value of 0.5 scales in Z by 0.5 reducing the influence of the corner blobs back through the depth of the block.
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_MatrixArray'>Blockwall_MatrixArray</a></th><td>
+      An array with 3 dimensions populated by the <a href="#Blockwall_MakeMatrix">Blockwall_MakeMatrix</a> macro with a randomized blockwork pattern and used by the other Blockwall macros to construct a wall. You should not normally need to manipulate this array directly. The only macro that alters this array once it's been defined is the <a href="#Blockwall_AdjustCorner">Blockwall_AdjustCorner</a> macro which adjusts block sized along a specified vertical line so that the blocks will fold neatly around corners.
+      <p> 
+      The first two dimensions are used to index a location in the matrix. The third dimension stores two values. The first value is used to store the number of horizontal units occupied by a block starting with its bottom left corner at that location, or 0 if no block starts here. The second dimension is used to store the number of vertical units occupied by a block starting with its bottom left corner at the location. If the second dimension is not set by the <a href="#Blockwall_MakeMatrix">Blockwall_MakeMatrix</a> macro then that position is inside a block.
+      </td>
+    </tr>
+    
+    <tr>
+      <th><a name='Blockwall_MatrixDimX'>Blockwall_MatrixDimX</a></th><td>
+        Integer value used by the <a href="#Blockwall_MakeMatrix">Blockwall_MakeMatrix</a> macro to define the X dimension of the matrix used to construct a blockwork pattern. The Blockwall_MakeMatrix sets a default value of 50 POV-Ray units, but this default value is seldom used as the Blockwall macros generally explicitly define this value. For example, the <a href="#Blockwall">Blockwall</a> macro defines this value as floor(max(1,Blockwall_WallLength/Blockwall_MatrixSpacing+0.5)) to derive the whole number of blockwork units that will fit into the required wall length.
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_MatrixDimY'>Blockwall_MatrixDimY</a></th><td>
+        Integer value used by the <a href="#Blockwall_MakeMatrix">Blockwall_MakeMatrix</a> macro to define the Y dimension of the matrix used to construct a blockwork pattern. The Blockwall_MakeMatrix sets a default value of 40 POV-Ray units, but this default value is seldom used as the Blockwall macros generally explicitly define this value. For example, the <a href="#Blockwall">Blockwall</a> macro defines this value as floor(max(1,Blockwall_WallHeight/Blockwall_MatrixSpacing+0.5)) to derive the whole number of blockwork units that will fit into the required wall height.
+      </td>
+    </tr>
+
+    <tr>
+      <th><a name='Blockwall_HBias'>Blockwall_HBias</a></th><td>
+        Decimal value used by the <a href="#Blockwall_MakeMatrix">Blockwall_MakeMatrix</a> macro to control the Horizontal Bias when selecting randomised block sizes. If the same number of big and small blocks are selected then the larger blocks tend to overwhelm the smaller blocks as they occupy a far greater surface area in the pattern. This variable allows you to influence the blocksize selection to create more blocks with a smaller horizontal dimension. This value is used as an exponent on the random decimal fraction used to select the number of horizontal units used for the block dimensions. Increasing the value of this exponent increases the number of smaller values generated.   
+        <p>
+        The default value is  2.5. A value of 1 would create a uniform distribution of small and large values. A value of 30 produces the occasional large block. 
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_VBias'>Blockwall_VBias</a></th><td>
+        Decimal value used by the <a href="#Blockwall_MakeMatrix">Blockwall_MakeMatrix</a> macro to control the Vertical Bias when selecting randomised block sizes. If the same number of big and small blocks are selected then the larger blocks tend to overwhelm the smaller blocks as they occupy a far greater surface area in the pattern. This variable allows you to influence the blocksize selection to create more blocks with a smaller vertical dimension. This value is used as an exponent on the random decimal fraction used to select the number of horizontal units used for the block dimensions. Increasing the value of this exponent increases the number of smaller values generated.   
+        <p>
+        The default value is  3. A value of 1 would create a uniform distribution of small and large values. A value of 30 produces the occasional large block. To get a wall made mainly of long low blocks you can increase this value and use a low value for Blockwall_HBias.
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_MaxHU'>Blockwall_MaxHU</a></th><td>
+        Integer value used by the <a href="#Blockwall_MakeMatrix">Blockwall_MakeMatrix</a> macro to limit the number of horizontal units that a block can occupy. The default value is 5. 
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_MaxVU'>Blockwall_MaxVU</a></th><td>
+        Integer value used by the <a href="#Blockwall_MakeMatrix">Blockwall_MakeMatrix</a> macro to limit the number of vertical units that a block can occupy. The default value is 3. If Blockwall_MaxHU is set to 5 then the largest block you can get in a pattern will be 5x3, but a particular random pattern may not contain any blocks that big.
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_MatrixSpacing'>Blockwall_MatrixSpacing</a></th><td>
+        Decimal value used by the various <a href="#Macros">Blockwall</a> macros to control the Matrix Spacing (the distance from a one unit cell to the adjacent cell). The default value is  0.1 POV-Ray units and is intended to represent a spacing of 10 centimetres. This size represents the size of the smallest block (before the mortar gap is trimmed off the blocksize) that can be used in the wall and all other sizes are multiples of this size so, with the default matrix spacing a 3x2 block will be 30 centimetres by 20 centimetres (minus any mortar gap defined).  
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_Wrap'>Blockwall_Wrap</a></th><td>
+        Integer value used by the <a href="#Blockwall_MakeMatrix">Blockwall_MakeMatrix</a> macro to control whether or not the blockwork pattern is able to wrap around from the last column to the first column in the blockwork pattern matrix.  The default value is 0 which switches wrapping off. A value of 1 switches wrapping on. The <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro switches wrapping on automatically if the first and last points of the array are the same, creating a closed shell. The <a href="#Blockwall_Shell">Blockwall_Shell</a> macro uses the <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro to draw a closed shape, so effectively uses wrapping by default.   
+      <p>
+      You should set this value to 1 if you specify a closed spline for use with the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro to avoid having a seam at the join. Setting this value to 1 when using the <a href="#Blockwall">Blockwall</a> macro or the <a href="#Blockwall_Fill">Blockwall_Fill</a> gives you a panel that you can tile horizontally without apparent seams, but will give you wiggly ends, so you may wish to use CSG to trim them.
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_RoughStoneRandomness'>Blockwall_RoughStoneRandomness</a></th><td>
+        Decimal value used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to control the randomness of rough stone walling. The default value is  1 which adds quite a lot of randomness. Normal values range from 0 to 1, but you can go over 1 if you wish. 
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_RoughStoneSeed'>Blockwall_RoughStoneSeed</a></th><td>
+        Randomisation seed stream definition used by the <a href="#Blockwall_Block">Blockwall_Block</a> macro to control the randomisation used for generating rough stone walling. The default stream is  seed(1). If the randomisation generates an unwanted pattern you can set this seed to generate a different pattern.  
+      </td>
+    </tr>
+
+    <tr>
+      <th><a name='Blockwall_ColorSeed'>Blockwall_ColorSeed</a></th><td>
+        Randomisation seed stream definition used by the <a href="#Blockwall_MakeMatrix">Blockwall_MakeMatrix</a> macro to control the color seed. The default stream is  seed(1) and normally you don't need to alter this value as it is initialised with the first macro call, producing a unique sequence of randomised colors for each subsequent call. However, if a particular call to one of the Blockwall macros produces a randomised pattern that causes you problems you can redeclare this seed stream before making the macro call to generate a different randomised color pattern.
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_SizeSeed'>Blockwall_SizeSeed</a></th><td>
+        Randomisation seed stream definition used by the <a href="#Blockwall_MakeMatrix">Blockwall_MakeMatrix</a> macro to control the size seed. The default stream is  seed(2) and normally you don't need to alter this value as it is initialised with the first macro call, producing a unique sequence of randomised block sizes for each subsequent call. However, if a particular call to one of the Blockwall macros produces a randomised pattern that causes you problems you can redeclare this seed stream before making the macro call to generate a different randomised block size pattern.
+      </td>
+    </tr>
+ 
+ 
+    <tr>
+      <th><a name='Blockwall_WallLength'>Blockwall_WallLength</a></th><td>
+        Decimal value used by the Blockwall macros to control the Wall Length. You can use this value with the <a href="#Blockwall">Blockwall</a> macro to set the wall length. The default value defined by the <a href="#Blockwall">Blockwall</a> macro is 1 POV-Ray unit which is intended to represent a wall length of 1 metre. Most of the Blockwall macros calculate this value based upon other settings. For example, the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro calculates the length of the <a href="#Blockwall_Spline">Blockwall_Spline</a> spline and the <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro adds up the lengths of the lines joining the corners defined in the <a href="#Blockwall_CornerArray">Blockwall_CornerArray</a> array.   
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_WallHeight'>Blockwall_WallHeight</a></th><td>
+        Decimal value used by the Blockwall macros to control the height of the generated wall. The <a href="#Blockwall">Blockwall</a> and <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macros use a default of 1 POV-Ray unit (to represent 1 metre). The <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro uses a default of 0.8 (to represent 80 centimetres). The <a href="#Blockwall_Shell">Blockwall_Shell</a> and <a href="#Blockwall_Fill">Blockwall_Fill</a> macros both explicitly set the wall height based upon the parameters passed on the macro call.
+      </td>
+    </tr>
+
+    <tr>
+      <th><a name='Blockwall_Radius'>Blockwall_Radius</a></th><td>
+        Decimal value used by the <a href="#Blockwall_Arc">Blockwall_Arc</a> macro to control the radius of the arc used to create a wall that follows a circular path. The default value is 1 POV-Ray unit and is intended to represent a radius of 1 metre. This value defines the radius of the "dressed" face, which can be the inside face or the outside face depending upon whether a positive or negative rotation is specified on the <a href="#Blockwall_Arc">Blockwall_Arc</a> macro call. If a positive rotation is specified, Blockwall_Radius is used to define the internal radius of the arc. If a negative rotation is specified on the macro call, Blockwall_Radius is used to define the external radius of the arc. 
+      </td>
+    </tr>
+  
+    <tr>
+      <th><a name='Blockwall_CornerArray'>Blockwall_CornerArray</a></th><td>
+        Array of 2D (X and Z) coordinates used by the <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro as the corner points of the base of the front face of the wall that it creates. If not already defines, an array is defined that creates a 1 unit cube with its bottom left corner at the origin.
+        <p>
+        The wall generated by the <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro sits on the XZ plane (y=0), but you can transform it from there to wherever you need to use it in your scene by wrapping the macro call in an object statement (see <a href="#Example02">example 2</a>)
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_Spline'>Blockwall_Spline</a></th><td>
+        Spline definition used by the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro to determine the line that the base of the front face of the wall that it creates will follow. If not specified, the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro defines a default cubic spline that starts at the origin and extends 1.25 units along the +Z axis. This default spline has a slight vertical hump in the middle intended to represent the shape of the parapet on a hump-backed bridge. 
+      <p>
+        The <a href="#Blockwall_DropSplineToSurface">Blockwall_DropSplineToSurface</a> macro can be used to manipulate the spline assigned to the Blockwall_Spline identifier by dropping it onto the surface of an object assigned to the <a href="#Blockwall_Target">Blockwall_Target</a> identifier. This is done using the POV-Ray trace command to drop a line down from a large number of points on the original spline, usually resulting in a larger spline. The results are written back into the same spline identifier (Blockwall_Spline) as a cubic spline (irrespective of the original spline type).
+      <p>  
+      It's up to you to make sure that the spline is entirely above the surface onto which it needs to be dropped.  
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_Target'>Blockwall_Target</a></th><td>
+        A POV-Ray object used by the <a href="#Blockwall_DropSplineToSurface">Blockwall_DropSplineToSurface</a> macro to manipulate a spline assigned to the <a href="#Blockwall_Spline">Blockwall_Spline</a> identifier. The spline will be dropped onto the surface of this object. The default value is plane {y,-0.01}.
+      <p>  
+      It's up to you to make sure that the spline is entirely above the surface onto which it needs to be dropped.  
+      </td>
+    </tr>
+ 
+    <tr>
+      <th><a name='Blockwall_Holes'>Blockwall_Holes</a></th><td>
+        A POV-Ray object used by the Blockwall macros to cut holes in the wall objects they generate. You can declare this object before calling one of the macros and it will cut each block individually so that you get the correct texture on each cut surface. Alternatively you can use the object generated by one of these macros in a CSG operation to cut holes in it, but that is slower and you are likely to find it difficult to get anything more than a single texture on the cut surfaces. See <a href="#Example06">Example 6</a>, <a href="#Example07">Example 7</a> and <a href="#Example21">Example 21</a>. Note that you should #undef this object between macro calls unless you want the same holes cut in subsequently generated walls.   
+      </td>
+    </tr>
+
+    <tr><th><a name='Blockwall_ThisBlockTexture'>Blockwall_ThisBlockTexture</a></th><td>
+A read-only texture setting that returns the last texture definition used to create a block. In fact you can set this texture, but it has no affect on the operation of the macro which will simply overwrite it on each call.
+<p>
+This can be handy when cutting a section of blocks using CSG (Constructive Solid Geometry) operations to apply a credible texture to the cut surface (See <a href="#Example07">example 7</a>) 
+    </td></tr> 
+
+    <tr><th><a name='Blockwall_CentreToCentre'>Blockwall_CentreToCentre</a></th><td>
+A read-only variable that returns the distance in X that you need to translate one panel to the left or right to join two copies of the same panel seamlessly together (See <a href="#Example01">example 1</a>). This is only really of use with walls generated using the <a href="#Blockwall">Blockwall</a> and <a href="#Blockwall_Fill">Blockwall_Fill</a> macros. These macros overwrite this value each time they are called.
+    </td></tr> 
+ 
+    <tr>
+      <th><a name='Blockwall_Debug'>Blockwall_Debug</a></th><td>
+        Integer value used by the <a href="#Blockwall_FollowArray">Blockwall_FollowArray</a> macro to switch on or off a small number of debug messages. The default value is 0 (no debug messages) a value of 1 displays the debug messages. 
+      </td>
+    </tr>
+ 
+  </table>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+
+
+  <a name='Versions'></a>
+  <h1>Version History</h1>
+
+  <table border=1>
+
+    <tr><th>Version</th><th>Date</th><th>By</th>
+    <tr>
+      <th>V1.0</a></th><th>24th December 2008</th><th>ChrisB</th>
+    </tr><tr>
+      <td colspan=3>
+        A range of macros for generating walls. Some draw different wall shapes, such as rectangular or curved wall segments, others simply provide alternative means for specifying the wall. 
+      </td>
+    </tr>
+
+    <tr>
+      <th>V1.1</a></th><th>1st January 2009</th><th>ChrisB</th>
+    </tr><tr>
+      <td colspan=3>
+        Fixed a bug with the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro so that the final end position is more precise, enabling closed splines to form perfect circles.
+        <br>Fixed a bug with the precision of the wall height in the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro. 
+        <br>Added the <a href="#Blockwall_Wrap">Blockwall_Wrap</a> function to the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro to enable the ends of closed splines to be interwoven. 
+        <br>Added the <a href="#Blockwall_Holes">Blockwall_Holes</a> identifier to direct the macros to cut CSG holes in walls as they are being generated. This enables correct texturing to be applied to the cut surfaces and is much more performant than cutting the holes afterwards. 
+        <br>Added examples <a href="#Example21">21</a>, <a href="#Example22">22</a>, <a href="#Example23">23</a> and <a href="#Example24">24</a>. 
+      </td>
+    </tr>
+      <th>V1.1.1</a></th><th>13th January 2009</th><th>ChrisB</th>
+    <tr>
+      <td colspan=3>
+        Fixed a bug with the <a href="#Blockwall_FollowSpline">Blockwall_FollowSpline</a> macro that caused occasional parser errors. 
+      </td>
+    </tr>
+ 
+  </table>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+</body>
+</html>
+
+

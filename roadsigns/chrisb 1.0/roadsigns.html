@@ -1,0 +1,371 @@
+<html>
+<style>
+  .codesample {background-color:#FFFFAA;width:500;padding:8px}
+  body {font-family:arial;font-size:80%}
+  h1 {color:#0000AA}
+  h2 {color:#0000AA}
+  h3 {color:#0000AA}
+  th {background-color:#F0F0FF;padding:8px;text-align:left}
+  .macroheaders {text-align:center}
+  td {font-size:80%}
+</style>
+<head>
+  <title>POV-Ray Object Collection - Roadsigns macro</title>
+</head>
+<body>
+
+  <a name='toc'></a>
+<table width=100%>
+<tr><td width=100%>
+  <h1 style="text-align:center">POV-Ray Object Collection<br>Roadsigns Macro</h1>
+<hr>
+  <a href="#intro"         >Overview                  </a><br>
+  <a href="#adding"        >Adding New Signs          </a><br>
+<p>
+  <a href="#files"         >Files in this Distribution</a><br>
+  <a href="#redistribution">Redistribution            </a><br>
+  <a href="#macros"        >Macro Reference           </a><br>
+  <a href="#variables"     >Variable Reference        </a><br>
+  
+  
+</td><td>
+<img src="roadsigns.png" width=640 height=480>
+</td></tr>
+</table>
+
+<hr>
+
+
+
+
+
+
+  <a name='intro'></a>
+  <h1>Overview</h1>
+The Roadsigns macros were created by Chris Bartlett in March 2008 for the <a href="http://lib.povray.org/">POV-Ray Object Collection at http://lib.povray.org/</a> (search for 'Roadsigns') and are licensed under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a>.  The download consists of an include file containing prism objects representing the symbols used on road signs in the UK and an include file containing a set of macros that can combine these symbols with road sign shapes.
+<p>
+To add a road sign to your scene file you include the "roadsigns.inc" file and call the 'Roadsigns_Panel' macro. 
+<p>
+<div class=codesample>
+    light_source { <-15,7.5,-15>, rgb 2}
+<br>camera {location -y look_at 0}
+<br>#include "roadsigns.inc"        
+<br>Roadsigns_Panel("Warning", "WildHorses")
+<br>object {Roadsigns_Panel("Regulatory", "NoCarsOrBikes") translate 0.6*y}
+</div>
+<p>
+Various examples are provided in the file 'roadsigns.pov'. Dimensions are specified in metres. The ScaleConvert macro from the <a href="http://lib.povray.org/">POV-Ray Object Collection</a> can be used to convert between different units of measure.
+<p>
+The following pre-defined symbols are provided. <b>Note.</b> Although the symbols in the table below are categorised by the 'type' of sign they normally appear on, you can use any symbol with any sign type. Just specify the sign type ("Warning", "Hazard" etc.) as the first parameter to the 'Roadsigns_Panel' macro and the symbol name ("HumpBridge", "Fire" etc.) as the second parameter:
+<p>
+<table border=1>
+<tr><th colspan=5>"Warning" symbols</th></tr>
+<tr>
+<td><img src="roadsigns_documentimages01.png"><br>"Aircraft"                   </td>
+<td><img src="roadsigns_documentimages02.png"><br>"Cattle"                     </td>
+<td><img src="roadsigns_documentimages03.png"><br>"DoubleBendLeft"             </td>
+<td><img src="roadsigns_documentimages04.png"><br>"DoubleBendRight"            </td>
+<td><img src="roadsigns_documentimages05.png"><br>"DualCarriagewayEnds"        </td>
+</tr><tr>
+<td><img src="roadsigns_documentimages06.png"><br>"FallingRocks"               </td>
+<td><img src="roadsigns_documentimages07.png"><br>"FrailPedestrians"           </td>
+<td><img src="roadsigns_documentimages08.png"><br>"HumpBridge"                 </td>
+<td><img src="roadsigns_documentimages09.png"><br>"JunctionOnBend"             </td>
+<td><img src="roadsigns_documentimages10.png"><br>"LevelCrossingWithBarrier"   </td>
+</tr><tr>
+<td><img src="roadsigns_documentimages11.png"><br>"LevelCrossingWithoutBarrier"</td>
+<td><img src="roadsigns_documentimages12.png"><br>"MenAtWork"                  </td>
+<td><img src="roadsigns_documentimages13.png"><br>"OpeningBridge"              </td>
+<td><img src="roadsigns_documentimages14.png"><br>"Quayside"                   </td>
+<td><img src="roadsigns_documentimages15.png"><br>"RiskOfGrounding"            </td>
+</tr><tr>
+<td><img src="roadsigns_documentimages16.png"><br>"RoadNarrowsBothSides"       </td>
+<td><img src="roadsigns_documentimages17.png"><br>"RoadNarrowsOnLeft"          </td>
+<td><img src="roadsigns_documentimages18.png"><br>"RoadNarrowsOnRight"         </td>
+<td><img src="roadsigns_documentimages19.png"><br>"Roundabout"                 </td>
+<td><img src="roadsigns_documentimages20.png"><br>"Sidewinds"                  </td>
+</tr><tr>
+<td><img src="roadsigns_documentimages21.png"><br>"StaggeredJunction"          </td>
+<td><img src="roadsigns_documentimages22.png"><br>"TramcarCrossing"            </td>
+<td><img src="roadsigns_documentimages23.png"><br>"TwoWayTraffic"              </td>
+<td><img src="roadsigns_documentimages24.png"><br>"TwoWayTrafficCrossing"      </td>
+<td><img src="roadsigns_documentimages25.png"><br>"WildAnimals"                </td>
+</tr><tr>
+<td><img src="roadsigns_documentimages26.png"><br>"WildHorses"                 </td>
+</tr>
+<tr><th colspan=5>"Regulatory" symbols</th></tr>
+<tr>
+<td><img src="roadsigns_documentimages27.png"><br>"NoCarsOrBikes"  </td>
+<td><img src="roadsigns_documentimages28.png"><br>"NoExplosives"   </td>
+<td><img src="roadsigns_documentimages29.png"><br>"MaxTruckLength" </td>
+<td><img src="roadsigns_documentimages30.png"><br>"MaxTruckWeight" </td> 
+</tr>
+<tr><th colspan=5>"Compulsory" symbols</th></tr>
+<tr>
+<td><img src="roadsigns_documentimages31.png"><br>"KeepLeft"       </td>
+<td><img src="roadsigns_documentimages32.png"><br>"KeepRight"      </td>
+<td><img src="roadsigns_documentimages33.png"><br>"TurnLeftAhead"  </td>
+<td><img src="roadsigns_documentimages34.png"><br>"TurnRightAhead" </td> 
+<td><img src="roadsigns_documentimages35.png"><br>"PassEitherSide" </td> 
+</tr>
+<tr><th colspan=5>Where no symbol is found the symbol 'name' is displayed. e.g.</th></tr>
+<tr>
+<td><img src="roadsigns_documentimages36.png"><br>"20"</td>
+<td><img src="roadsigns_documentimages37.png"><br>"60"</td>
+<td><img src="roadsigns_documentimages38.png"><br>"!"</td>
+<td><img src="roadsigns_documentimages39.png"><br>"?"</td>
+</tr>
+<tr><th colspan=5><a name="hazard"></a>"Hazard" symbols  </th></tr>
+<tr><td colspan=5>
+<b>Note</b>. These symbols are contained in the "roadsigns_hazardsymbols.inc" include file. To use this file add the following line:
+<div class=codesample>#declare Roadsigns_SymbolFile = "roadsigns_hazardsymbols.inc";</div>
+to your scene file before calling the 'Roadsigns_Panel' macro
+</td></tr>
+<tr>
+<td><img src="roadsigns_documentimages40.png"><br>"ScullAndCrossBones"</td>
+<td><img src="roadsigns_documentimages41.png"><br>"Cross"             </td>
+<td><img src="roadsigns_documentimages42.png"><br>"Explosion"         </td>
+<td><img src="roadsigns_documentimages43.png"><br>"Fire"              </td> 
+<td><img src="roadsigns_documentimages44.png"><br>"Oxidation"         </td> 
+</tr><tr>
+<td><img src="roadsigns_documentimages45.png"><br>"Corrosion"         </td> 
+<td><img src="roadsigns_documentimages46.png"><br>"Biohazard"         </td> 
+</tr>
+</table>
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+
+  <a name='adding'></a>
+  <h1>Adding New Signs</h1>
+The easiest way to add a new sign design is to add a prism object to the 'roadsigns_uksymbols.inc' file then update the 'Roadsigns_UKSymbolTexture' macro in the file 'roadsigns.inc', adding a clause to handle your new symbol. For example, to add a symbol called 'Hedgehog' you should call your prism object 'Roadsigns_Hedgehog' and add the following lines to the 'Roadsigns_UKSymbolTexture' macro:
+<p>
+<div class=codesample>
+   #case (strcmp(SymbolName,"Hedgehog"))  
+<br>&nbsp;&nbsp;#local Roadsigns_SymbolOffset = <-0.1 ,-0.55,0>;  // Hedgehog
+<br>&nbsp;&nbsp;#local Roadsigns_ThisSymbolTexture = texture {
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Roadsigns_PrismToTexture(Roadsigns_Hedgehog,<1,1,1,1>,<0,0,0>)
+<br>&nbsp;&nbsp;}
+<br>#break
+</div>
+<p>
+Having done that (so long as you get the scaling of the prism in the include file and the offset defined in this macro right) you should be able to add a Hedgehog warning sign to your scene file:
+<p>
+<div class=codesample>
+    #include "roadsigns.inc"        
+<br>Roadsigns_Panel("Warning", "Hedgehog")
+</div>
+<p>
+Alternatively, if you want to keep your own symbols separate or if you wish to build a file containing a distinct set of symbols that can be incorporated back into this collection, you can create a separate file and specify the file name using the 'Roadsigns_SymbolFile' variable before calling the 'Roadsigns_Panel' macro. 
+<p>
+<div class=codesample>
+  #declare Roadsigns_SymbolFile = "roadsigns_hedgehogsymbols.inc";
+<br>Roadsigns_Panel("Warning", "Hedgehog")
+</div>
+<p>
+<b>Note</b>. If you fail to specify the right file name or if the file is not located within the POV-Ray include path, the default file will be used. If the symbol is not found the symbol name will be displayed as text on the panel.<h2>Tips</h2>
+<p>
+Within the 'Roadsigns_UKSymbolTexture' macro in the 'roadsigns.inc' file you'll find some examples of building up more complex objects, for example objects using multiple symbols and text. 
+<p>
+You'll notice that the symbol name (e.g. 'Hedgehog') is different from the name of the object used to create the symbol (e.g. 'Roadsigns_Hedgehog'). In fact you can have multiple symbol names that use the same object definition. For example, you may wish to change the offset to align your hedgehog for a different style of sign or you may want to change the colour of the symbol for display on a different coloured background. Also you can use multiple symbol objects to build a single road sign. For example, the "NoExplosives" symbol uses two separate prism objects, one for the car and one for the explosion erupting out of the roof. 
+<p>
+To change the colour of the symbol displayed (default &lt;0,0,0&gt;=Black) simply adjust the second parameter on the 'Roadsigns_PrismToTexture' macro call.
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+  <a name='files'></a>
+  <h1>Files</h1>
+You should have received the following files with this distribution. The latest versions are available from <a href="http://lib.povray.org">http://lib.povray.org</a>.
+  <h2>Main Files</h2>
+  <table border=1>
+    <tr><th>roadsigns.inc  </th><td colspan=2>
+The main include file for the Roadsigns object containing the 'Roadsigns_Panel' macro.
+    </td></tr>
+    <tr><th>roadsigns.pov  </th><td colspan=2>
+A sample scene file illustrating the use of the Roadsigns macro to generate the signs shown in the image at the top of this page.
+    </td></tr>
+    <tr><th>roadsigns.html </th><td colspan=2>
+This document.
+    </td></tr>
+    <tr><th>roadsigns_documentimages.pov</th><td colspan=2>
+A scene file that generated most of the images used in this document. Images can be generated one at a time or by using the animation settings that are documented in comments at the top of that scene file.
+    </td></tr>
+    <tr><th>roadsigns_uksymbols.inc  </th><td colspan=2>
+The default symbol file containing prism objects to represent a selection of UK road sign symbols.
+    </td></tr>
+    <tr><th>roadsigns_hazardsymbols.inc  </th><td colspan=2>
+A symbol file containing prism objects to represent a selection of hazard sign symbols. To use symbols from this file, set the 'Roadsigns_SymbolFile' variable to "roadsigns_hazardsymbols.inc" before calling the 'Roadsigns_Panel' macro. 
+    </td></tr>
+  </table>
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+
+  <a name='redistribution'></a>
+  <h1>Redistribution</h1>
+The Roadsigns macros are licensed under the terms of the <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-LGPL</a> which permits (and encourages) reuse and redistribution. You can therefore incorporate these macros along with scene files that use them into a set of files that you distribute to others. 
+<p>
+Most of the files included with the Roadsigns macros are sample images and documentation files. If you don't wish to distribute all of these files you only need to include a copy of the file 'roadsigns.inc' and an include file containing the symbols you want to use e.g. the 'roadsigns_uksymbols.inc' file or a cut-down version of it. 
+<p>
+If you plan to submit your object to the <a href="http://lib.povray.org/">POV-Ray Object Collection at http://lib.povray.org/</a> you will need to rename the files to conform to the naming standards (All files from your submission will need the same unique prefix). Remember to update the renamed 'roadsigns.inc' file to point to the renamed symbols file.
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+  <a name='macros'></a>
+  <h1>Macro Reference</h1>
+The macros contained in the 'roadsigns.inc' file are listed below. It is unlikely that you will need to use most of these macros, but they are described for completeness. 
+<p>  
+  <table border=1>
+    <tr><th class=macroheaders colspan=3>Roadsigns_Panel macro      </th><tr>
+    <tr><td width=20></td><td colspan=2>
+The Roadsigns_Panel macro may well be the only macro you ever need to call. It defines a panel whose shape is determined based on the first parameter and adds the symbol named in the second parameter (or text if it doesn't find a symbol of that name).
+<table border=1>
+<tr><td>
+   Style            
+</td><td width=100%>
+indicates the type of panel to generate ("Warning" or "Regulatory")
+</td></tr>
+<tr><td>
+   Symbol            
+</td><td width=100%>
+provides the name of the symbol to use on the panel, or some text/digits to display on it.
+</td></tr>
+</table>
+    </td></tr>
+    <tr><th class=macroheaders colspan=2>Roadsigns_PrismToTexture macro      </th><tr>
+    <tr><td width=20></td><td>
+This utility macro takes an object that is passed to it and returns a pigment
+<br>
+It also centres the object at the origin and turns it through -90 degrees around the x axis.
+<br>
+It requires 3 parameters:
+<table border=1>
+<tr><td>
+   SymbolObject            
+</td><td width=100%>
+a POV-Ray object suitable for use as a pigment (one with a well defined inside and outside)
+</td></tr>
+<tr><td>
+   ExteriorColour            
+</td><td width=100%>
+a colour value for everything outside the object
+</td></tr>
+<tr><td>
+   InteriorColour            
+</td><td width=100%>
+a colour value for everything inside the object
+</td></tr>
+</table> 
+    </td></tr>
+    <tr><th class=macroheaders colspan=2>Roadsigns_UKSymbolTexture macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro tries to find the specified symbol in the uk symbols file and returns a texture using the symbol as an 
+object pattern. If it's not in the list it simply returns it as a piece of text converted to a texture.
+This macro requires one parameter:<br>
+It also centres the object at the origin and turns it through -90 degrees around the x axis.
+<p>
+<table border=1>
+<tr><td>
+   SymbolName            
+</td><td width=100%>
+The name of the symbol to display. Otherwise text to display e.g. "50"
+</td></tr>
+</table> 
+    </td></tr>
+    <tr><th class=macroheaders colspan=2>Roadsigns_DefaultSettings macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro assigns default values to any key control variables that are not yet set.
+    </td></tr>
+    <tr><th class=macroheaders colspan=2>Roadsigns_Undef macro      </th><tr>
+    <tr><td width=20></td><td>
+This macro resets key control variables so that they can revert to default values.
+    </td></tr>
+  </table>
+  
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+
+
+
+
+
+
+  <a name='variables'></a>
+  <h1>Variable Reference</h1>
+  <table border=1>
+    <tr><th>Variable</th><th>Description</th>
+    <tr><th>Roadsigns_SymbolFile          </th><td>
+The file containing the definition of the symbols to be used to make the sign. This defaults to "roadsigns_uksymbols.inc" but can be set to "roadsigns_hazardsymbols.inc" for the Hazards symbols shown <a href="#hazard">above</a> or to a file of your own making.
+    </td></tr>
+    <tr><th>Roadsigns_Thickness          </th><td>
+The thickness of the material used to make the sign. 
+    </td></tr>
+    <tr><th>Roadsigns_Diameter          </th><td>
+The diameter of a circular sign (e.g. a "Regulatory" sign). 
+    </td></tr>
+    <tr><th>Roadsigns_FaceHeight          </th><td>
+The height of a non-circular sign (e.g. a "Warning" sign). 
+    </td></tr>
+    <tr><th>Roadsigns_SymbolText          </th><td>
+Certain road signs contain text within the symbols. Where this text is configurable you can set this variable to the required text. For example, the maximum lorry length for the "MaxTruckLength" symbol can be set using: 
+<div class=codesample>
+#declare Roadsigns_SymbolText = "Max 12m";
+</div>
+before calling the 'Roadsigns_SymbolText' macro.
+    </td></tr>
+    <tr><th>Roadsigns_Normal          </th><td>
+You can add a surface normal definition to the texture used for the front surface of the sign by setting this value. 
+    </td></tr>
+    <tr><th>Roadsigns_Finish          </th><td>
+You can add a surface finish definition to the texture used for the front surface of the sign by setting this value. 
+    </td></tr>
+    <tr><th>Roadsigns_DirtTexture          </th><td>
+You can add a layer of texture on top of the other textures that are used to make up the road sign. Although this can be used for a variety of purposes, the main intention is to enable a layer of dirt to be added to obscure the surface. This is a full texture definition and can include a pigment, a normal and a finish. <b>Note.</b> The pigment has to be partially transparent or it will totally obscure the surface of the road sign. The default setting is completely transparent.
+    </td></tr>
+    <tr><th>Roadsigns_SignalRed          </th><td>
+A colour vector defining the colour 'Signal Red' as used on UK road signs. You can change this setting in your scene file to substitute an alternative colour. 
+    </td></tr>
+    <tr><th>Roadsigns_MiddleBlue          </th><td>
+A colour vector defining the colour 'Middle Blue' as used on UK road signs. You can change this setting in your scene file to substitute an alternative colour. 
+    </td></tr>
+    <tr><th>Roadsigns_Orange          </th><td>
+A colour vector defining the orange colour used for the hazard signs. You can change this setting in your scene file to substitute an alternative colour. 
+    </td></tr>
+    <tr><th>Roadsigns_White          </th><td>
+A colour vector defining the white parts of a sign. You can change this setting in your scene file to substitute an alternative colour. 
+    </td></tr>
+    <tr><th>Roadsigns_GreyBack          </th><td>
+A colour vector defining the grey parts of a sign. You can change this setting in your scene file to substitute an alternative colour. 
+    </td></tr>
+    <tr><th>Roadsigns_BorderWidth          </th><td>
+The width of the border around the edge of the "Warning" and "Regulatory" signs. This width is normally defined automatically, but you can set it in your scene file, although a number of dimensions are calculated based upon this value, such as the amount by which symbols are offset from their geometrical centre to 'centre' them on the road sign. 
+    </td></tr>
+    <tr><th>Roadsigns_CornerRadius          </th><td>
+The radius of the corners of the triangles for the "Warning" signs. This is normally defined automatically, but you can set it in your scene file, although certain other dimensions are calculated based upon this value.
+    </td></tr>
+    <tr><th>Roadsigns_Delta          </th><td>
+When constructing the road sign object, certain dimensions need to be adjusted by a small amount to avoid coincident surfaces. This variable controls that amount and is usually set to 0.0000001. This should not normally need to be changed.
+    </td></tr>   
+</table> 
+
+<p align=center><a href=#toc>Return to Table of Contents</a>
+<hr>
+ 
+</body>
+</html>

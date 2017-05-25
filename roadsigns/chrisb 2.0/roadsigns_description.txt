@@ -1,0 +1,2 @@
+A set of 100 symbols (mainly POV-Ray prism objects) and macros to display them on 9 different styles of road sign. The macros can also display numbers on the signs to create speed limit signs and text to provide supplementary information.
+Instructions are included to enable you to add your own symbols and additional styles of road sign. Variable settings control panel size, colours, finish etc.

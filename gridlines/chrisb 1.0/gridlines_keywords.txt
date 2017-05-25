@@ -1,0 +1,5 @@
+latitude
+longitude
+grid
+gridlines
+texture

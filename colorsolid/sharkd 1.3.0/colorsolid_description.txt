@@ -1,0 +1,3 @@
+This include file contains a collection of pigments that, when used along with
+the appropriate shapes, may be used to make a color solid. The HSL, HSV and RGB
+color models are supported, as well as the following shapes.

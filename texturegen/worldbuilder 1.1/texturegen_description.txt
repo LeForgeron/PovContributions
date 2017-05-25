@@ -1,0 +1,1 @@
+This new version of TextureGen includes a color map and an ocean mask or specular map.

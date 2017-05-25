@@ -1,0 +1,16 @@
+ShapeGrid
+SGrid
+shape
+grid
+cube
+sphere
+cylinder
+cone
+double
+double-cone
+inverted
+pigment
+pattern
+object
+csg
+texture

@@ -1,0 +1,14 @@
+LegoRoad
+LRoad
+road
+street
+spline
+ellipse
+straight
+spiral
+lego
+ldraw
+bank
+banking
+auto
+super-elevation

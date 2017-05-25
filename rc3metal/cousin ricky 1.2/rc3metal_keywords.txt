@@ -1,0 +1,12 @@
+RC3Metal
+RC3M
+metal
+metallic
+finish
+ambient
+diffuse
+color
+texture
+galvanized
+blurred reflection
+brushed

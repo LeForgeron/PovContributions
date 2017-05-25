@@ -1,0 +1,4 @@
+PlatonicSolids
+Platonic
+polyhedron
+polyhedra

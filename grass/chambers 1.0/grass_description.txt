@@ -1,0 +1,1 @@
+An include file containing a parameter controlled macro that generates patches of grass and a sample scene file illustrating the use of the macro.

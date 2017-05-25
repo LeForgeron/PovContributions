@@ -1,0 +1,2 @@
+A simple macro for generating a cylinder with a knurled exterior.
+Most aspects are variable, no textures included. Uses a mesh2 in CSG with two cylinders.

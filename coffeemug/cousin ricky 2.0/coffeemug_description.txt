@@ -1,0 +1,2 @@
+A coffee mug, with optional beverage-shaped object.
+In version 2.0, there are more texture options, the mugs are easy to stack, and a short prefix is introduced to save typing.

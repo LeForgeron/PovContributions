@@ -1,0 +1,12 @@
+Carbonated fluid bubble generator
+Created by Charles Robertson, 14 July 2009
+
+Optimised for POV-Ray 3.6
+
+Description  Creates collumns of bubbles, representing CO2 inside a fluid.
+Bubbles increase in size the higher they ascend, in line with a decrease in fluid pressure
+Bubbles collumns are placed randomly within  a specified cylinder vector
+Bubble start end position can be modified
+Bubble start end radius can be modified
+Bubble collumn quantity can be modified
+Bubble texture can be modified

@@ -1,0 +1,2 @@
+Used to find points along the surface of any object.
+A macro is included to cover the surface in hair.

@@ -1,0 +1,1 @@
+A pigment for mapping the HSV (Hue, Saturation, Value) color model to a unit cone (inverted) with the bottom centered on the origin.

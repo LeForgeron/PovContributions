@@ -1,0 +1,858 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>RoundEdge User Manual</title>
+<link rel="stylesheet" type="text/css" href="roundedge.css">
+</head>
+
+<h1>RoundEdge User Manual</h1>
+
+<p>A library module from the
+ <a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+ <a href="http://lib.povray.org/">Object Collection</a>.
+
+<h2>Abstract</h2>
+
+<p><a href="roundedge.jpg"><img class="demo" src="roundedge_thumbnail.jpg"
+ title="Larger image" alt="[Demo]"></a>
+Perfectly sharp edges are rare in real life. Blunting or rounding-off the
+edges of ray traced objects brings out specular highlights and other, more
+subtle lighting effects that can make the difference between &ldquo;That&rsquo;s
+a nice ray-traced scene,&rdquo; and &ldquo;Wow!&rdquo;
+ 
+<p>Unfortunately, with CSG this task is tedious and time-consuming. The standard
+include file <code>shapes.inc</code> has some helpful macros to assist with this
+task, but they are rather limited. RoundEdge builds upon <code>shapes.inc</code>
+and adds some additional objects and functions.
+
+<hr>
+
+<h2 id="toc">Contents</h2>
+
+<table>
+ <tr>
+  <td>
+   <ul>
+    <li><a href="#Overview"><b>Overview</b></a>
+     <ul>
+      <li><a href="#Files">Downloaded files</a>
+      <li><a href="#Usage">Usage</a>
+      <li><a href="#Prerequisites">Prerequisites</a>
+      <li><a href="#Compliance">Name Space Compliance</a>
+     </ul>
+    <li><a href="#Joint_Macros"><b>Joint Macros</b></a>
+     <ul>
+      <li><a href="#RE_Round_join">RE_Round_join</a>
+      <li><a href="#RE_Straight_join_x">RE_Straight_join_x</a>
+      <li><a href="#RE_Straight_join_y">RE_Straight_join_y</a>
+      <li><a href="#RE_Straight_join_z">RE_Straight_join_z</a>
+     </ul>
+    <li><a href="#Edge_Macro"><b>Edge Macro</b></a>
+     <ul>
+      <li><a href="#RE_Parabolic_torus">RE_Parabolic_torus</a>
+     </ul>
+    <li><a href="#Rounded_Cylinder_Macros"><b>Rounded Cylinder Macros</b></a>
+     <ul>
+      <li><a href="#RE_Cylinder">RE_Cylinder</a>
+      <li><a href="#RE_Cylinder_end">RE_Cylinder_end</a>
+      <li><a href="#RE_Hole">RE_Hole</a>
+      <li><a href="#RE_Hole_end">RE_Hole_end</a>
+      <li><a href="#RE_Hole_minimal">RE_Hole_minimal</a>
+      <li><a href="#RE_Hole_end_minimal">RE_Hole_end_minimal</a>
+      <li><a href="#RE_Washer">RE_Washer</a>
+      <li><a href="#RE_Washer_end">RE_Washer_end</a>
+     </ul>
+   </ul>
+  </td> <td>
+   <ul>
+    <li><a href="#Rounded_Box_Macros"><b>Rounded Box Macros</b></a>
+     <ul>
+      <li><a href="#RE_Box">RE_Box</a>
+      <li><a href="#RE_Box_x">RE_Box_x</a>
+      <li><a href="#RE_Box_y">RE_Box_y</a>
+      <li><a href="#RE_Box_z">RE_Box_z</a>
+      <li><a href="#RE_Box_left">RE_Box_left</a>
+      <li><a href="#RE_Box_right">RE_Box_right</a>
+      <li><a href="#RE_Box_up">RE_Box_up</a>
+      <li><a href="#RE_Box_down">RE_Box_down</a>
+      <li><a href="#RE_Box_near">RE_Box_near</a>
+      <li><a href="#RE_Box_far">RE_Box_far</a>
+      <li><a href="#RE_Box_x_up">RE_Box_x_up</a>
+      <li><a href="#RE_Box_x_down">RE_Box_x_down</a>
+      <li><a href="#RE_Box_x_near">RE_Box_x_near</a>
+      <li><a href="#RE_Box_x_far">RE_Box_x_far</a>
+      <li><a href="#RE_Box_y_left">RE_Box_y_left</a>
+      <li><a href="#RE_Box_y_right">RE_Box_y_right</a>
+      <li><a href="#RE_Box_y_near">RE_Box_y_near</a>
+      <li><a href="#RE_Box_y_far">RE_Box_y_far</a>
+      <li><a href="#RE_Box_z_up">RE_Box_z_up</a>
+      <li><a href="#RE_Box_z_down">RE_Box_z_down</a>
+      <li><a href="#RE_Box_z_left">RE_Box_z_left</a>
+      <li><a href="#RE_Box_z_right">RE_Box_z_right</a>
+     </ul>
+   </ul>
+  </td> <td>
+   <ul>
+    <li><a href="#Isosurface_Functions"><b>Isosurface Functions</b></a>
+     <ul>
+      <li><a href="#RE_fn_Blob">RE_fn_Blob</a>
+      <li><a href="#RE_fn_Blob2">RE_fn_Blob2</a>
+      <li><a href="#RE_fn_Hole">RE_fn_Hole</a>
+      <li><a href="#RE_fn_Parabolic_torus">RE_fn_Parabolic_torus</a>
+      <li><a href="#RE_fn_Wheel">RE_fn_Wheel</a>
+     </ul>
+    <li><a href="#Blob_Assist_Functions"><b>Blob Assist Functions</b></a>
+     <ul>
+      <li><a href="#RE_fn_Blob_distance">RE_fn_Blob_distance</a>
+      <li><a href="#RE_fn_Blob_radius">RE_fn_Blob_radius</a>
+      <li><a href="#RE_fn_Blob_strength">RE_fn_Blob_strength</a>
+     </ul>
+    <li><a href="#Other"><b>Other identifiers</b></a>
+    <li><a href="#About"><b>About RoundEdge</b></a>
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<hr><!--=====================================================================-->
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<table class="pc">
+<tr><th colspan=2>Key Files</th></tr>
+<tr><th>File</th> <th>Description</th></tr>
+<tr><td><code>roundedge.html</code></td> <td>The user manual (this document)</td></tr>
+<tr><td><code>roundedge.inc</code></td> <td>The RoundEdge software</td></tr>
+<tr><td><code>roundedge.jpg</code></td> <td>Sample output</td></tr>
+<tr><td><code>roundedge_</code><var>nn</var><code>.jpg</code></td>
+    <td>Illustrations of the various features (26 images, numbered 01...22 and 25...28)</td></tr>
+<tr><td><code>roundedge.pov</code></td> <td>An example scene file,
+     which was used to render the sample illustrations in this manual</td></tr>
+<tr><td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+    <td>Important information that you need to know</td></tr>
+<tr><th colspan=2>Other Files</th></tr>
+<tr><th>File</th> <th>Description</th></tr>
+<tr><td><code>roundedge.css</code></td> <td>A support file for the user manual</td></tr>
+<tr><td><code>roundedge_cc-lgpl.png</code></td> <td>A support file for the user manual</td></tr>
+<tr><td><code>roundedge_description.txt</code></td> <td>A brief description of Roundedge</td></tr>
+<tr><td><code>roundedge_keywords.txt</code></td> <td>A list of keywords</td></tr>
+<tr><td><code>roundedge_prereqs.txt</code></td> <td>Prerequisites (empty file)</td></tr>
+<tr><td><code>roundedge_thumbnail.jpg</code></td> <td>Sample output</td></tr>
+<tr><td><code>cc-LGPL-a.png</code></td> <td>Administrative support file</td></tr>
+<tr><td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+    <td>Administrative support file</td></tr>
+</table>
+
+<p><a href="#toc">Contents</a><hr>
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include this file once prior to using any of the features of RoundEdge:
+
+<pre>#include "roundedge.inc"</pre>
+
+<p>Including the file more than once is harmless.
+
+<h4 id="Invalid">Invalid Arguments</h4>
+
+<p>The descriptions of the objects assume valid arguments. If the arguments
+are not valid (for example, a negative radius), then the shape is undefined,
+with no guarantee of what it will look like or that it will fit anywhere.
+To assist the user, a warning or error message will be issued.
+
+<h3 id="Prerequisites">Prerequisites</h3>
+
+<p>There are no external prerequisites. Some of the standard include files are used.
+
+<h3 id="Compliance">Name Space Compliance</h3>
+
+<p>All file names, global identifiers, and local identifiers comply with the
+Object Collection revised naming standards. The case-insensitive prefixes for
+this module are &ldquo;<code>roundedge</code>&rdquo; and
+&ldquo;<code>re</code>.&rdquo;
+
+<!--================--><p><a href="#toc">Contents</a><hr><!--================-->
+
+<h2 id="Joint_Macros">Joint Macros</h2>
+
+<h3 id="RE_Round_join">RE_Round_join (RPost, rBlob)</h3>
+
+<p><img class="demo" src="roundedge_17.jpg" alt="">
+An instant blob for a vertical cylindrical post joined to a horizontal plane.
+The joint is at the origin. The bottom surface is slightly below the origin in
+order to avoid potential coincident surfaces.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>RPost</code>: <dd>The radius of the post.
+ <dt><code>rBlob</code>: <dd>The radius of the blob curve.
+</dl>
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Straight_join_x" class="anew">RE_Straight_join_x (Start, End_x, rBlob, Dir)</h3>
+
+<p><img class="demo" src="roundedge_18.jpg" alt="">
+An instant blob for the intersection between a <var>y</var>-normal plane
+and a <var>z</var>-normal plane.
+The object overlaps the line of intersection in the <var>y</var> and
+<var>z</var> directions in order to avoid potential coincident surfaces.
+
+<p class="intro">These arguments may seem odd, but they were
+chosen to minimize typing and mental effort.
+<dl class="args">
+ <dt><code>Start</code>: <dd>One end point of the intersection.
+ <dt><code>End_x</code>:
+ <dd>The <strong>scalar</strong> <var>x</var> value of the other end point.
+ <dt><code>rBlob</code>: <dd>The radius of the blob curve.
+ <dt><code>Dir</code>: <dd>Rotation about the line of intersection, in degrees.
+</dl>
+
+<h3 id="RE_Straight_join_y">RE_Straight_join_y (Start, End_y, rBlob, Dir)</h3>
+
+<p>An instant blob for the intersection between an <var>x</var>-normal plane
+and a <var>z</var>-normal plane.
+The object overlaps the line of intersection in the <var>x</var> and
+<var>z</var> directions in order to avoid potential coincident surfaces.
+
+<p class="intro">These arguments may seem odd, but they were
+chosen to minimize typing and mental effort.
+<dl class="args">
+ <dt><code>Start</code>: <dd>One end point of the intersection.
+ <dt><code>End_y</code>:
+ <dd>The <strong>scalar</strong> <var>y</var> value of the other end point.
+ <dt><code>rBlob</code>: <dd>The radius of the blob curve.
+ <dt><code>Dir</code>: <dd>Rotation about the line of intersection, in degrees.
+</dl>
+
+<h3 id="RE_Straight_join_z">RE_Straight_join_z (Start, End_z, rBlob, Dir)</h3>
+
+<p>An instant blob for the intersection between an <var>x</var>-normal plane
+and a <var>y</var>-normal plane.
+The object overlaps the line of intersection in the <var>x</var> and
+<var>y</var> directions in order to avoid potential coincident surfaces.
+
+<p class="intro">These arguments may seem odd, but they were
+chosen to minimize typing and mental effort.
+<dl class="args">
+ <dt><code>Start</code>: <dd>One end point of the intersection.
+ <dt><code>End_z</code>:
+ <dd>The <strong>scalar</strong> <var>z</var> value of the other end point.
+ <dt><code>rBlob</code>: <dd>The radius of the blob curve.
+ <dt><code>Dir</code>: <dd>Rotation about the line of intersection, in degrees.
+</dl>
+
+<!--================--><p><a href="#toc">Contents</a><hr><!--================-->
+
+<h2 id="Edge_Macro">Edge Macro</h2>
+
+<h3 id="RE_Parabolic_torus">RE_Parabolic_torus (H, R)</h3>
+
+<p><img class="demo" src="roundedge_19.jpg" alt="">
+A circle of radius <code>R</code> parallel to the <var>y</var>-<var>z</var> plane,
+swept along the curve <var>y</var> = <code>H</code><var>x</var><sup>2</sup>
+| <var>z</var> = 0. The user is responsible for bounding.
+The objects are prone to floating point error, so an isosurface function,
+<a href="#RE_fn_Parabolic_torus"><code>RE_fn_Parabolic_torus()</code></a>,
+is also provided.
+
+<!--================--><p><a href="#toc">Contents</a><hr><!--================-->
+
+<h2 id="Rounded_Cylinder_Macros">Rounded Cylinder Macros</h2>
+
+<h3 id="RE_Cylinder">RE_Cylinder (A, B, ROuter, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_09.jpg" alt="">
+A wrapper for macro <a href="http://www.povray.org/documentation/view/3.6.1/468/#Round_Cylinder_Union"><code>Round_Cylinder()</code></a> with several enhancements:
+<ul>
+ <li>Scalar end points are automatically expanded to vectors.
+ <li>The degenerate cylinder case where the axis is exactly twice the edge
+  radius is intercepted and rendered.
+ <li>For the union version, if set as a photons target, photons will be shot
+  at the object as a whole, rather than at its component parts separately.
+  For compact unions such as <code>Round_Cylinder_Union()</code>, this generally
+  results in faster renders. (This feature can be disabled by setting
+  <a href="#Other"><code>RE_Split_union</code></a> to <code>on</code>.)
+</ul>
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>A</code>, <code>B</code>: <dd>The end points of the cylinder.
+ <dt><code>ROuter</code>: <dd>The radius of the cylinder.
+ <dt><code>rEdge</code>: <dd>The radius of the edges of the cylinder.
+ <dt style="width:6em"><code>Use_merge</code>:
+ <dd>Whether or not to use a merge. In general, pass <code>yes</code>
+  if the object is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Cylinder_end" class="anew">RE_Cylinder_end (A, B, ROuter, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_10.jpg" alt="">
+A cylinder that is rounded on one end. The resulting object <a href="#Invalid">will
+fit</a> snugly within <code>cylinder {&nbsp;A, B, ROuter&nbsp;}</code>.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>A</code>: <dd>The rounded end point of the cylinder.
+ <dt><code>B</code>: <dd>The flat end point of the cylinder.
+ <dt><code>ROuter</code>: <dd>The radius of the cylinder.
+ <dt><code>rEdge</code>: <dd>The radius of the rounded edge.
+ <dt style="width:6em"><code>Use_merge</code>:
+ <dd>Whether or not to use a merge. In general, pass <code>yes</code>
+  if the object is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Hole" class="anew">RE_Hole (A, B, ROuter, RInner, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_11.jpg" alt="">
+A cylinder with a hole along the central axis. The edges of the hole are rounded.
+The resulting object <a href="#Invalid">will fit</a> snugly within
+<code>cylinder {&nbsp;A, B, ROuter&nbsp;}</code> and snugly around
+<code>cylinder {&nbsp;A, B, RInner&nbsp;}</code>.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>A</code>, <code>B</code>: <dd>The end points of the cylinder.
+ <dt><code>ROuter</code>: <dd>The radius of the cylinder.
+ <dt><code>RInner</code>: <dd>The inner radius of the hole.
+ <dt><code>rEdge</code>: <dd>The radius of the rounded edges.
+ <dt style="width:6em"><code>Use_merge</code>:
+ <dd>Whether or not to use a merge. In general, pass <code>yes</code>
+  if the object is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Hole_end" class="anew">RE_Hole_end (A, B, ROuter, RInner, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_12.jpg" alt="">
+A cylinder with a hole along the central axis.
+The edge of the hole at one end is rounded.
+The resulting object <a href="#Invalid">will fit</a> snugly within
+<code>cylinder {&nbsp;A, B, ROuter&nbsp;}</code> and snugly around
+<code>cylinder {&nbsp;A, B, RInner&nbsp;}</code>.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>A</code>: <dd>The end point of the cylinder with the rounded opening.
+ <dt><code>B</code>: <dd>The end point of the cylinder with the sharp opening.
+ <dt><code>ROuter</code>: <dd>The radius of the cylinder.
+ <dt><code>RInner</code>: <dd>The inner radius of the hole.
+ <dt><code>rEdge</code>: <dd>The radius of the rounded edge.
+ <dt style="width:6em"><code>Use_merge</code>:
+ <dd>Whether or not to use a merge. In general, pass <code>yes</code>
+  if the object is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Hole_minimal" class="anew">RE_Hole_minimal (A, B, RInner, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_13.jpg" alt="">
+A cylinder with a hole along the central axis.
+The edges of the hole are rounded, and the cylinder is just wide enough to
+cover the joint between perpendicular rounded boxes of the same edge radius.
+The object <a href="#Invalid">will fit</a> snugly around
+<code>cylinder {&nbsp;A, B, RInner&nbsp;}</code>.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>A</code>, <code>B</code>: <dd>The end points of the cylinder.
+ <dt><code>RInner</code>: <dd>The inner radius of the hole.
+ <dt><code>rEdge</code>: <dd>The radius of the rounded edges.
+ <dt style="width:6em"><code>Use_merge</code>:
+ <dd>Whether or not to use a merge. In general, pass <code>yes</code>
+  if the object is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Hole_end_minimal" class="anew">RE_Hole_end_minimal (A, B, RInner, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_14.jpg" alt="">
+A cylinder with a hole along the central axis.
+One edge of the hole is rounded, and the cylinder is just wide enough to
+cover the joint between perpendicular rounded boxes of the same edge radius.
+The object <a href="#Invalid">will fit</a> snugly around
+<code>cylinder {&nbsp;A, B, RInner&nbsp;}</code>.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>A</code>: <dd>The end point of the cylinder with the rounded opening.
+ <dt><code>B</code>: <dd>The end point of the cylinder with the sharp opening.
+ <dt><code>RInner</code>: <dd>The inner radius of the hole.
+ <dt><code>rEdge</code>: <dd>The radius of the rounded edge.
+ <dt style="width:6em"><code>Use_merge</code>:
+ <dd>Whether or not to use a merge. In general, pass <code>yes</code>
+  if the object is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Washer" class="anew">RE_Washer (A, B, ROuter, RInner, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_15.jpg" alt="">
+A cylinder with a hole along the central axis.
+The edges of the cylinder and the hole are rounded.
+The resulting object <a href="#Invalid">will fit</a> snugly within
+<code>cylinder {&nbsp;A, B, ROuter&nbsp;}</code> and snugly around
+<code>cylinder {&nbsp;A, B, RInner&nbsp;}</code>.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>A</code>, <code>B</code>: <dd>The end points of the cylinder.
+ <dt><code>ROuter</code>: <dd>The outer radius of the cylinder.
+ <dt><code>RInner</code>: <dd>The inner radius of the hole.
+ <dt><code>rEdge</code>: <dd>The radius of the rounded edges.
+ <dt style="width:6em"><code>Use_merge</code>:
+ <dd>Whether or not to use a merge. In general, pass <code>yes</code>
+  if the object is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Washer_end" class="anew">RE_Washer_end (A, B, ROuter, RInner, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_16.jpg" alt="">
+A cylinder with a hole along the central axis.
+The edges on one side of the cylinder and the hole are rounded.
+The resulting object <a href="#Invalid">will fit</a> snugly within
+<code>cylinder {&nbsp;A, B, ROuter&nbsp;}</code> and snugly around
+<code>cylinder {&nbsp;A, B, RInner&nbsp;}</code>.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>A</code>: <dd>The end point of the rounded side of the cylinder.
+ <dt><code>B</code>: <dd>The end point of the flat side of the cylinder.
+ <dt><code>ROuter</code>: <dd>The outer radius of the cylinder.
+ <dt><code>RInner</code>: <dd>The inner radius of the hole.
+ <dt><code>rEdge</code>: <dd>The radius of the rounded edges.
+ <dt style="width:6em"><code>Use_merge</code>:
+ <dd>Whether or not to use a merge. In general, pass <code>yes</code>
+  if the object is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<!--================--><p><a href="#toc">Contents</a><hr><!--================-->
+
+<h2 id="Rounded_Box_Macros">Rounded Box Macros</h2>
+
+<h3>Summary</h3>
+
+<p>The first macro creates a box with all its edges rounded off. The remaining
+macros create boxes with only some rounded edges. The intent of the partially
+rounded box macros is to reduce object counts. This can result in significantly
+faster renders where differences, intersections, or photons are used.
+
+<p>Despite the large number of macros in this section, there are only four basic
+shapes: the fully rounded box; and three partially rounded boxes that are
+pre-rotated into various orientations by the macros.
+
+<p class="intro">All of the rounded box macros take the same set of arguments:
+
+<dl class="args">
+ <dt><code>A</code>, <code>B</code>:
+ <dd>Opposite points of the box.
+ <dt><code>rEdge</code>: <dd>The radius of the edges of the box.
+ <dt style="width:6em"><code>Use_merge</code>:
+ <dd>Whether or not to use a merge. In general, pass <code>yes</code>
+  if the object is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<p>The resulting object <a href="#Invalid">will fit</a> snugly within
+<code>box {&nbsp;A, B&nbsp;}</code>.
+
+<h3 id="RE_Box">RE_Box (A, B, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_01.jpg" alt="">
+A wrapper for macro <a href="http://www.povray.org/documentation/view/3.6.1/468/#Round_Box_Union"><code>Round_Box()</code></a> with two enhancements:
+<ul>
+ <li>Scalar end points are automatically expanded to vectors.
+ <li>For the union version, if set as a photons target, photons will be shot
+  at the object as a whole, rather than at its component parts separately.
+  For compact unions such as <code>Round_Box_Union()</code>, this generally
+  results in faster renders. (This feature can be disabled by setting
+  <a href="#Other"><code>RE_Split_union</code></a> to <code>on</code>.)
+</ul>
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Box_x" class="anew">RE_Box_x (A, B, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_02.jpg" alt="">
+A box with the four edges in the <var>x</var>-direction rounded,
+like a can of sardines on its side.
+
+<h3 id="RE_Box_y">RE_Box_y (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the four edges in the <var>y</var>-direction rounded,
+like a can of sardines.
+
+<h3 id="RE_Box_z">RE_Box_z (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the four edges in the <var>z</var>-direction rounded,
+like a can of sardines on its side.
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Box_left" class="anew">RE_Box_left (A, B, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_03.jpg" alt="">
+A box with the four corners on the &minus;<var>x</var> side and the eight
+adjacent edges rounded.
+
+<h3 id="RE_Box_right">RE_Box_right (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the four corners on the +<var>x</var> side and the eight
+adjacent edges rounded.
+
+<h3 id="RE_Box_up" class="anew">RE_Box_up (A, B, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_04.jpg" alt="">
+A box with the four corners on the +<var>y</var> side and the eight
+adjacent edges rounded.
+
+<h3 id="RE_Box_down">RE_Box_down (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the four corners on the &minus;<var>y</var> side and the eight
+adjacent edges rounded.
+
+<h3 id="RE_Box_near" class="anew">RE_Box_near (A, B, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_05.jpg" alt="">
+A box with the four corners on the &minus;<var>z</var> side and the eight
+adjacent edges rounded.
+
+<h3 id="RE_Box_far">RE_Box_far (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the four corners on the +<var>z</var> side and the eight
+adjacent edges rounded.
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Box_x_up" class="anew">RE_Box_x_up (A, B, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_06.jpg" alt="">
+A box with the two top edges in the <var>x</var>-direction rounded.
+
+<h3 id="RE_Box_x_down">RE_Box_x_down (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the two bottom edges in the <var>x</var>-direction rounded.
+
+<h3 id="RE_Box_x_near">RE_Box_x_near (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the two edges in the <var>x</var>-direction on the
+&minus;<var>z</var> side rounded.
+
+<h3 id="RE_Box_x_far">RE_Box_x_far (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the two edges in the <var>x</var>-direction on the
++<var>z</var> side rounded.
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Box_y_left" class="anew">RE_Box_y_left (A, B, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_07.jpg" alt="">
+A box with the two edges in the <var>y</var>-direction on the
+&minus;<var>x</var> side rounded.
+
+<h3 id="RE_Box_y_right">RE_Box_y_right (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the two edges in the <var>y</var>-direction on the
++<var>x</var> side rounded.
+
+<h3 id="RE_Box_y_near">RE_Box_y_near (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the two edges in the <var>y</var>-direction on the
+&minus;<var>z</var> side rounded.
+
+<h3 id="RE_Box_y_far">RE_Box_y_far (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the two edges in the <var>y</var>-direction on the
++<var>z</var> side rounded.
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_Box_z_up" class="anew">RE_Box_z_up (A, B, rEdge, Use_merge)</h3>
+
+<p><img class="demo" src="roundedge_08.jpg" alt="">
+A box with the two top edges in the <var>z</var>-direction rounded.
+
+<h3 id="RE_Box_z_down">RE_Box_z_down (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the two bottom edges in the <var>z</var>-direction rounded.
+
+<h3 id="RE_Box_z_left">RE_Box_z_left (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the two edges in the <var>z</var>-direction on the
+&minus;<var>x</var> side rounded.
+
+<h3 id="RE_Box_z_right">RE_Box_z_right (A, B, rEdge, Use_merge)</h3>
+
+<p>A box with the two edges in the <var>z</var>-direction on the
++<var>x</var> side rounded.
+
+<!--================--><p><a href="#toc">Contents</a><hr><!--================-->
+
+<h2 id="Isosurface_Functions">Isosurface Functions</h2>
+
+<p>Note: In order to avoid a POV-Ray scoping feature, function arguments (other
+than <code>x</code>, <code>y</code>, and <code>z</code>) are prefixed with
+&ldquo;<code>RE_P</code><var>n</var><code>_</code>&rdquo; in
+<code>roundedge.inc</code>. In this document, these prefixes are omitted for clarity.
+
+<h3 id="RE_fn_Blob">RE_fn_Blob (Value, Blob)</h3>
+
+<p><img class="demo" src="roundedge_20.jpg" alt="">
+An isosurface blobbing function. This function is based on the formula for
+POV-Ray&rsquo;s blob primitive, so it gives identical results when used with
+<code>f_sphere()</code>.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>Value</code>:
+ <dd>The unblobbed function value
+  <var>f</var> (<var>x</var>, <var>y</var>, <var>z</var>)
+ <dt><code>Blob</code>:
+ <dd>&ldquo;Blobbiness.&rdquo; Depending on the function, this is typically:
+  <ul>
+   <li><var>field radius</var> &minus; <var>surface radius</var>
+   <li><var>field radius</var> &divide; <var>surface radius</var> &minus; 1
+  </ul>
+</dl>
+<dl>
+ <dt>Usage:
+ <dd>Subtract <code>RE_fn_Blob()</code> of all base functions from 1.
+  For example:
+  <pre>isosurface
+{  function
+   {  1 - RE_fn_Blob (abs(x) + abs(z) - 1, 0.3)
+        - RE_fn_Blob (f_sphere (0, y, z, 0.8), 0.2)
+   }
+   max_gradient 4 / 0.2
+   contained_by { box { -<2.5, 2, 1>, <2.5, 2, 1> } }
+}</pre>
+</dl>
+
+<h3 id="RE_fn_Blob2">RE_fn_Blob2 (Value, Blob)</h3>
+
+<p><img class="demo" src="roundedge_21.jpg" alt="">
+Another isosurface blobbing function. This function uses an alternate formula
+that gives smoother curves for some joins than the standard blob formula.
+Perpendicular planes yield a cylindrical blob with this formula, making it
+useful in conjunction with the cylinder, sphere, and torus primitives.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>Value</code>:
+ <dd>The unblobbed function value
+  <var>f</var> (<var>x</var>, <var>y</var>, <var>z</var>)
+ <dt><code>Blob</code>:
+ <dd>&ldquo;Blobbiness.&rdquo; Depending on the function, this is typically:
+  <ul>
+   <li><var>field radius</var> &minus; <var>surface radius</var>
+   <li><var>field radius</var> &divide; <var>surface radius</var> &minus; 1
+  </ul>
+</dl>
+<dl>
+ <dt>Usage:
+ <dd>
+  <ul>
+   <li>Add <code>RE_fn_Blob2()</code> of all base functions.
+   <li>Take the square root of the sum.
+    (This stabilizes the gradient; it&rsquo;s <em>well</em> worth the overhead.)
+   <li>Subtract from 1.
+  </ul>
+ <dt>Example:
+ <dd><pre>isosurface
+{  function
+   {  1 - sqrt
+      (  RE_fn_Blob2 (abs(x) + abs(z) - 1, 0.3)
+       + RE_fn_Blob2 (f_sphere (0, y, z, 0.8), 0.2)
+      )
+   }
+   max_gradient 1.3 / 0.2
+   contained_by { box { -<2.5, 2, 1>, <2.5, 2, 1> } }
+}</pre>
+</dl>
+
+<p>Note: the max gradient will typically be inversely proportional to
+ <code>Blob</code>.
+
+<h3>Editorial</h3>
+
+<dl>
+ <dt>Why use the <code>blob</code> primitive?
+ <dd>It is highly optimized by the competent POV-Ray team;
+  it&rsquo;s much faster than <code>isosurface</code>.
+ <dd>Components can have individual textures.
+
+ <dt>Why use <code>isosurface</code>?
+ <dd>Arbitrary component shapes can be used, not just spheres and cylinders.
+
+ <dt>Why use <code>RE_fn_Blob()</code> or <code>RE_fn_Blob2()</code> instead of
+  the isosurface blobbing methods suggested in the POV-Ray documentation?
+ <dd><code>RE_fn_Blob()</code> and <code>RE_fn_Blob2()</code> match the curves
+  of POV-Ray primitives, allowing primitive and isosurface blob to work together.
+  The primitives can then model the bulk of the object, resulting in dramatically
+  shorter rendering times.
+  The illustrations for <a href="#RE_fn_Hole"><code>RE_fn_Hole()</code></a> and
+  <a href="#RE_fn_Wheel"><code>RE_fn_Wheel()</code></a> demonstrate seamless joins
+  between <code>RE_fn_Blob2()</code> blobs and <code>RE_Straight_join_x()</code>.
+</dl>
+
+<p><a href="#toc">Contents</a>
+
+<h3 id="RE_fn_Hole" class="anew">RE_fn_Hole (x, y, z, RMajor, rMinor)</h3>
+
+<p><img class="demo" src="roundedge_22.jpg" alt="">
+A slab with a rounded-edged hole punched through it, equivalent to
+<code><a href="#RE_Hole">RE_Hole</a> (-rMinor*y, rMinor*y,
+</code>&infin;<code>, RMajor - rMinor, rMinor, 1)</code>.
+It is intended for use with isosurface blobs.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>RMajor</code>: <dd>The major radius of the torus.
+ <dt><code>rMinor</code>: <dd>The minor radius of the torus.
+</dl>
+
+<h3 id="RE_fn_Parabolic_torus" class="anew">RE_fn_Parabolic_torus (x, y, z, H, R)</h3>
+
+<p><img class="demo" src="roundedge_25.jpg" alt="">
+A circle of radius <code>R</code> parallel to the <var>y</var>-<var>z</var>
+plane, swept along the curve <var>y</var> = <code>H</code><var>x</var><sup>2</sup>
+| <var>z</var> = 0. Slower, but better behaved than
+<a href="#RE_Parabolic_torus">macro <code>RE_Parabolic_torus()</code></a>.
+Check the message window to determine <code>max_gradient</code>.
+
+<p><a href="#toc">Contents</a><hr>
+
+<h3 id="RE_fn_Wheel" class="anew">RE_fn_Wheel (x, y, z, RMajor, rMinor)</h3>
+
+<p><img class="demo" src="roundedge_26.jpg" alt="">
+A merge of a torus and a cylinder, equivalent to
+<code><a href="#RE_Cylinder">RE_Cylinder</a> (-rMinor*y, rMinor*y, RMajor +
+rMinor, rMinor, 1)</code>. It is intended for use with isosurface blobs.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>RMajor</code>: <dd>The major radius of the torus.
+ <dt><code>rMinor</code>: <dd>The minor radius of the torus.
+</dl>
+
+<!--================--><p><a href="#toc">Contents</a><hr><!--================-->
+
+<h2 id="Blob_Assist_Functions">Blob Assist Functions</h2>
+
+<p>Note: In order to avoid a POV-Ray scoping feature, function arguments are
+prefixed with &ldquo;<code>RE_P</code><var>n</var><code>_</code>&rdquo; in
+<code>roundedge.inc</code>. In this document, these prefixes are omitted for clarity.
+
+<h3 id="RE_fn_Blob_distance">RE_fn_Blob_distance (Radius, Strength)</h3>
+
+<p><img class="demo" src="roundedge_27.jpg" alt="">
+Returns the surface radius of a blob, given the field radius and field
+strength. The default blob threshold of 1.0 is assumed.
+Use this function when the exact size of a blob component needs to be known.
+In the illustration, the size of the opening is matched to the blob.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt><code>Radius</code>: <dd>The field radius of the component.
+ <dt style="width:5.5em"><code>Strength</code>: <dd>The field strength of the component.
+</dl>
+
+<h3 id="RE_fn_Blob_radius">RE_fn_Blob_radius (Distance, Strength)</h3>
+
+<p><img class="demo" src="roundedge_28.jpg" alt="">
+Returns the field radius that yields a blob component of the desired surface
+radius. The default blob threshold of 1.0 is assumed.
+Use this function when the exact size of a blob component is important.
+In the illustration, the blob is matched seamlessly to the half-torus.
+ 
+<p class="intro">Arguments:
+<dl class="args">
+ <dt style="width:5.5em"><code>Distance</code>: <dd>The desired surface radius of the component.
+ <dt style="width:5.5em"><code>Strength</code>: <dd>The field strength of the component.
+</dl>
+
+<h3 id="RE_fn_Blob_strength">RE_fn_Blob_strength (Distance, Radius)</h3>
+
+<p>Returns the field strength that yields a blob component of the desired
+surface radius. The default blob threshold of 1.0 is assumed.
+Use this function when the exact size of a blob component is important.
+In the illustration above, the blob is matched seamlessly to the half-torus.
+
+<p class="intro">Arguments:
+<dl class="args">
+ <dt style="width:5.5em"><code>Distance</code>: <dd>The desired surface radius of the component.
+ <dt><code>Radius</code>: <dd>The field radius of the component.
+</dl>
+
+<!--================--><p><a href="#toc">Contents</a><hr><!--================-->
+
+<h2 id="Other">Other Identifiers</h2>
+
+<table class="pc">
+<tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Default</th></tr>
+<tr>
+ <td><code>RE_MORE</code></td> <td>float</td>
+ <td>Slightly greater than one, for avoiding coincident surfaces.</td> <td>1.001</td>
+</tr><tr>
+ <td><code>RE_LESS</code></td> <td>float</td>
+ <td>Slightly less than one, for avoiding coincident surfaces.</td> <td>0.999</td>
+</tr><tr>
+ <td><code>RE_ABIT</code></td> <td>float</td>
+ <td>Slightly greater than zero, for avoiding coincident surfaces.</td> <td>0.001</td>
+</tr><tr>
+ <td><code>RE_Split_union</code></td> <td>Boolean</td>
+ <td>If <code>off</code>, then
+  <a href="http://www.povray.org/documentation/view/3.6.1/304/#s02_04_06_02_01"><code>split_union off</code></a>
+  will be applied to the various rounded box and rounded cylinder unions.
+  This can result in faster rendering when photons are used.</td>
+ <td><code>off</code></td>
+</tr>
+</table>
+
+<p>If the user finds the default values unsatisfactory, they may be modified by
+declaring them prior to including <code>roundedge.inc</code>. For example:
+
+<pre>#declare RE_Split_union = on;
+#include "roundedge.inc"</pre>
+
+<p>Any identifiers in <code>roundedge.inc</code> that are not documented in this
+manual are subject to change or elimination in a future update.
+
+<!--================--><p><a href="#toc">Contents</a><hr><!--================-->
+
+<h2 id="About">About RoundEdge</h2>
+
+<address>Copyright &copy; 2008 Richard Callwood III.
+<a href="http://creativecommons.org/licenses/LGPL/2.1/">
+<img src="roundedge_cc-lgpl.png"
+ alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+</a>
+</address>
+
+<h3>Change Log</h3>
+
+<table class="pc">
+<tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+<tr><td rowspan=2>1.0</td> <td rowspan=2>September 2, 2008</td>
+    <td>Compiled and adapted for the Object Collection.</td></tr>
+<tr><td>Namespace compliance is extended to local identifiers.</td></tr>
+</table>
+<p>User Manual (this document) updated September 4, 2008.
+
+<p><a href="#toc">Contents</a>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<body>
+<table>
+  <tr>
+    <TD align=left width="50%">
+      <h2>Pumpkin Macro</h2>
+      The 'Pumpkin()' macro generates an object to represent a pumpkin and optionally cuts eye, nose and mouth holes to create a traditional Halloween lantern. The macro is controlled using control variables and has no parameters. The pumpkin is constructed using Constructive Solid Geometry (CSG) to assemble primitive POV-Ray objects. The main shape consists of a set of a segments rotated around an axis to give a the segmented look. A lighter orange coloured sphere is then cut out from the centre and a variety of light orange coloured holes are poked through to make eyes, nose and mouth. Textures and settings have default values, but can be overridden using control variables as listed below. A sample scene file is included with the include file to illustrate the use of the macro and its control variables.
+      <P>
+      By default the macro places two lights inside each pumpkin. One is a bright light close to the bottom of the inside surface, this is about where a candle would be. The other is a spotlight shining down on the first just to make the candle area glow a bit more. 
+    </TD>
+    <TD align=middle>
+      <img src="pumpkin.jpg" width=600><br>
+      <b>Family Group</b>
+    </TD>
+  </tr>
+</table>    
+
+      <h2>Control Variables</h2>
+      You don't need to specify any of these values to generate a pumpkin. They all have default values. The pumpkin is always generated at the origin with an approximate radius of 0.4 units.
+      <table border=1>
+        <tr><th>Control Variable          </th><th>Value</th><th>Description</th></tr>
+        <tr><td><b>Pumpkin_Segments           </b></td><td>Typically between 12 and 24</td><td>The number of segments used to create a complete pumpkin. Default is 19. </td></tr>
+        <tr><td><b>Pumpkin_SegmentType        </b></td><td>"Blob" or "Sphere"</td><td>Blob is more realistic but takes longer to render (a couple of minutes). Sphere is quicker to render (seconds rather than minutes). Hint: You can easily use "Sphere" in test renders and switch to "Blob" for a final render. Default is "Sphere"</td></tr>
+        <tr><td><b>Pumpkin_SegmentPerturbation</b></td><td>0 to 1</td><td>0=Not very perturbed, 1=Very perturbed, 2=Deformed. Default is 1.</td></tr>
+        <tr><td><b>Pumpkin_StalkOn            </b></td><td>0 or 1</td><td>0=No Stalk, 1=With Stalk. Default is to add a stalk.</td></tr>
+        <tr><td><b>Pumpkin_FaceHolesOn        </b></td><td>0 or 1</td><td>0=No Holes, 1=With Holes. Default is to cut holes using the content of 'Pumpkin_FaceHoles'.       </td></tr>
+        <tr><td><b>Pumpkin_LightsOn           </b></td><td>0 or 1</td><td>Add interior lights                                </td></tr>
+        <tr><td><b>Pumpkin_Seed               </b></td><td>Positive Integer</td><td>Randomisation seed used only with Pumpkin_SegmentType="Blob". This makes successive pumpkins take on a different shape. To make a set of pumpkins all the same shape you can assign the results of the macro call to a variable and use it many times or you can reset the Pumpkin_Seed to the same value before each call to the macro (e.g. if you want the same shape with a different texture, etc.).</td></tr>
+        <tr><td><b>Pumpkin_ExternalTexture          </b></td><td>Texture Definition</td><td>A texture definition for the external surface of the pumpkin.</td></tr>
+        <tr><td><b>Pumpkin_InternalTexture          </b></td><td>Texture Definition</td><td>A texture definition for the internal surfaces of the pumpkin.</td></tr>
+        <tr><td><b>Pumpkin_FaceHoles                </b></td><td>CSG Compatible Object</td><td>A union of objects that will be used to cut holes to represent a face. Objects reaching from z=-1 to z=0, positioned between about x=-0.3 and x=0.3 and y=-0.3 and y=0.3 should cut holes through the front surface of the pumpkin.</td></tr>
+      </table>
+
+</BODY></HTML>

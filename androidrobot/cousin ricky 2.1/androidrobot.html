@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>AndroidRobot User Manual</title>
+<link rel="stylesheet" type="text/css" href="androidrobot.css">
+</head>
+
+<body>
+
+<h1>AndroidRobot User Manual</h1>
+
+<p>A library module from the
+ <a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+ <a href="http://lib.povray.org/">Object Collection</a>.
+
+<h2>Abstract</h2>
+
+<p><a href="androidrobot.jpg"><img class="demo" src="androidrobot_thumbnail.png"
+ title="Larger image" alt="[Demo image]"></a>
+A 3-D model of Google’s <a href="http://www.android.com/index.html">Android</a>™ robot.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Usage">Usage</a>
+   <li><a href="#Compliance">Name space compliance</a>
+  </ul>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#AndroidRobot">AndroidRobot</a>
+   <li><a href="#AndroidRobot_posed">AndroidRobot_posed</a>
+  </ul>
+ <li><a href="#Other">Other public identifiers</a>
+ <li><a href="#About">About AndroidRobot</a>
+  <ul>
+   <li><a href="#Changes">Change log</a>
+   <li><a href="#See_also">See also</a>
+  </ul>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<table>
+<tr><th colspan=2>Key Files</th></tr>
+<tr><th>File</th> <th>Description</th></tr>
+<tr><td><code>androidrobot.html</code></td> <td>The user manual (this document)</td></tr>
+<tr><td><code>androidrobot.inc</code></td> <td>The AndroidRobot software</td></tr>
+<tr><td><code>androidrobot.jpg</code><br><code>androidrobot_posed.jpg</code></td>
+    <td>Sample output</td></tr>
+<tr><td><code>androidrobot.pov</code><br><code>androidrobot_posed.pov</code></td>
+    <td>Demo scene files</td></tr>
+<tr><td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+    <td>Important information that you need to know</td></tr>
+<tr><th colspan=2>Other Files</th></tr>
+<tr><th>File</th> <th>Description</th></tr>
+<tr><td><code>androidrobot.css</code></td> <td>A support file for the user manual</td></tr>
+<tr><td><code>androidrobot_description.txt</code></td> <td>A brief description of AndroidRobot</td></tr>
+<tr><td><code>androidrobot_keywords.txt</code></td> <td>A list of keywords</td></tr>
+<tr><td><code>androidrobot_prereqs.txt</code></td> <td>Prerequisites (empty file)</td></tr>
+<tr><td><code>androidrobot_thumbnail.png</code></td> <td>Sample output</td></tr>
+<tr><td><code>cc-LGPL-a.png</code></td> <td>Administrative support file</td></tr>
+<tr><td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+    <td>Administrative support file</td></tr>
+</table>
+
+<p>Note: The files <code>androidrobot_cc-lgpl.png</code> and <code>droid.pov</code> are not used in this version.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Usage">Usage</h3>
+
+<ol>
+ <li>If you are using POV-Ray 3.7 or later, you <em>must</em> set <code>assumed_gamma</code> in <code>global_settings{}</code> prior to the next step.
+ <li>Include this file once prior to using any of the macros:
+  <pre>#include "androidrobot.inc"</pre>
+  Including the file more than once is harmless, though unnecessary.
+</ol>
+
+<h3>Prerequisites</h3>
+
+<p>Requires POV-Ray version 3.5 or later.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names, global identifiers, and local identifiers comply with the
+Object Collection revised naming standards. The prefix for this
+module is “<code>androidrobot</code>,” including any uppercase and lowercase variations.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros">Macros</h2>
+
+<h3 id="AndroidRobot">AndroidRobot (Use_merge)</h3>
+
+<p>An untextured robot. The robot faces the <var>x</var>-direction and the
+ bottom of the robot is at <code>ANDROIDROBOT_V_BASE</code>.
+
+<p class="intro">Argument:
+
+<dl>
+ <dt><code>Use_merge</code>:
+ <dd>If <code>yes</code>, the robot will be composed using CSG merge.
+  If <code>no</code>, then CSG union will be used. In general, pass
+  <code>yes</code> if the object is to be transparent, <code>no</code> otherwise.
+</dl>
+
+<h3 id="AndroidRobot_posed">AndroidRobot_posed
+ (Use_merge, x_Head, x_Left_arm, x_Right_arm, x_Left_leg, x_Right_leg)</h3>
+
+<p>An untextured posable robot.
+<img class="demo" src="androidrobot_posed.jpg" alt="[Image of posed robot]">
+See file <code>androidrobot_posed.pov</code> for an example of how to use this.
+
+<p class="intro">Arguments:
+
+<dl>
+ <dt><code>Use_merge</code>:
+ <dd>If <code>yes</code>, the robot will be composed using CSG merge.
+  If <code>no</code>, then CSG union will be used. In general, pass
+  <code>yes</code> if the object is to be transparent, <code>no</code> otherwise.
+ <dt><code>x_Head</code>:
+ <dd>The transformation to be applied to the head. The origin is at the neck.
+ <dt><code>x_Left_arm</code>:
+ <dd>The transformation to be applied to the left arm. The origin is at the shoulder.
+ <dt><code>x_Right_arm</code>:
+ <dd>The transformation to be applied to the right arm. The origin is at the shoulder.
+ <dt><code>x_Left_leg</code>:
+ <dd>The transformation to be applied to the left leg. The origin is at the hip.
+ <dt><code>x_Right_leg</code>:
+ <dd>The transformation to be applied to the right leg. The origin is at the hip.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other">Other Public Identifiers</h2>
+
+<table>
+<tr><th>Identifier</th> <th>Type</th> <th>Description</th></tr>
+<tr>
+ <td><code>ANDROIDROBOT_V_BASE</code></td>
+ <td>3-D vector</td>
+ <td>The location of the bottom of the unposed robot</td>
+</tr><tr>
+ <td><code>ANDROIDROBOT_C_RAWCOLOR</code></td>
+ <td>color</td>
+ <td>The official Android color</td>
+</tr><tr>
+ <td><code>ANDROIDROBOT_C_COLOR</code></td>
+ <td>color</td>
+ <td>The gamma-adjusted official Android color. Use this if you have set <code>global_settings { assumed_gamma 1&nbsp;}</code>.</td>
+</tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About AndroidRobot</h2>
+
+<address>© 2011 &ndash; 2012 Richard Callwood III.
+<a href="http://creativecommons.org/licenses/LGPL/2.1/">
+<img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+</a>
+</address>
+
+<h3 id="Changes">Change Log</h3>
+
+<table>
+<tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+<tr><td>1.0</td> <td>October 30, 2009</td>
+    <td>Software is created by Karl Ostmo.</td></tr>
+<tr><td>2.0</td> <td>July 23, 2011</td>
+    <td>Software is made namespace compliant and more flexible.</td></tr>
+<tr><td>2.1</td> <td>June 26, 2012</td>
+    <td>Non-gamma-adjusted official color is added.
+    <br>Demo files are reverted to POV-Ray 3.5.</td></tr>
+</table>
+
+<h3 id="See_also">See Also</h3>
+
+<ul>
+ <li><a href="http://www.android.com/branding.html">Branding information</a>: important legal information from Google</li>
+ <li><a href="http://commons.wikimedia.org/wiki/File:Android_Robot_POV-Ray.png">Wikimedia Commons image</a></li>
+</ul>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

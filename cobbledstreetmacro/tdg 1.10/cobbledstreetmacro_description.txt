@@ -1,0 +1,1 @@
+A simple macro for making a cobbled surface, where the cobbles are traced upon a heightfield. Three patterns are available. A mesh2 cobble is provided.

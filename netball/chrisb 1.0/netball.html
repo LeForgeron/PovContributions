@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>Netball.inc</title>
+</head>
+
+<body>
+<table>
+<tr><td>
+<h2>NB_Netball Macro</h2>
+NB_Netball (BallType)
+<br>
+&nbsp;&nbsp;where:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;BallType is either "Stitched" or "Moulded"
+<p>
+<h2>Control Variables</h2>
+The following variables are optional, but can be set before calling the macro in order to override default settings:
+
+<h3>NB_BallRadius</h3>   
+NB_BallRadius can be used to specify the radius of the ball in POV-Ray units.  
+The default value is 1 which generates a 1 POV-Ray unit radius ball centred at the origin. 
+<h3>NB_BallTexture</h3>      
+NB_BallTexture can be used to specify a texture for the ball.
+The default setting uses a plain white pigment with no normal and no special finish. 
+<h3>NB_StitchTexture</h3>    
+NB_StitchTexture can be used to specify a texture for the stitches if you choose to generate a Stitched ball.
+The default setting uses the same texture as the ball. 
+<h3>NB_IndentTexture</h3>    
+NB_IndentTexture can be used to specify a texture for the moulded seams if you choose to generate a Moulded ball.
+The default setting uses a plain green pigment with no normal and no special finish. 
+<h3>NB_BladderTexture</h3>   
+NB_BladderTexture can be used to specify a texture for the bladder if you choose to generate a Stitched ball.
+The default setting uses a plain yellow pigment with no normal and no special finish. 
+</td><td>
+<img src="netball.jpg">
+</td></tr>
+</table>
+</body>
+</html>

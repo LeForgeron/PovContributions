@@ -1,0 +1,4 @@
+An include file containing a macro for generating a Netball along with a scene file illustrating its use.
+The macro can generate either stitched leather balls or moulded plastic ones.
+Textures can be set to control the colour and surface finishes for the outer surfaces and for the indents or bladder.
+An HTML file is included which describes the use of the control variables.

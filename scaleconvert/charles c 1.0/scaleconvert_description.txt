@@ -1,0 +1,3 @@
+The macro ScaleConvert() is intended to make it slightly easier to mix, in a single scene, objects designed for different measurement systems.  Say you want to put a vehicle modeled in feet into a scene modeled in kilometers.  How many feet are in a kilometer (or rather, km to a foot)?  You could figure this out directly in your object's scale-statement, but the arithmetic might not make it as readable as writing...
+
+scale ScaleConvert("feet", "km")

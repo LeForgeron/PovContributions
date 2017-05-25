@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>BeamTest User Manual</title>
+<link rel="stylesheet" type="text/css" href="beamtest.css">
+</head>
+
+<h1>BeamTest User Manual</h1>
+
+<p>A library module from the
+ <a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+ <a href="http://lib.povray.org/">Object Collection</a>.
+
+<h2>Abstract</h2>
+
+<p><a href="beamtest.jpg"><img class="demo" src="beamtest_thumbnail.png"
+ title="Larger image" alt="[Demo]"></a>
+Sometimes, it is desirable to know the behavior of light refracting through or
+reflecting off a transparent or specular object before incorporating the object
+into a scene. Examples could be a gem cut or a lens system.
+
+BeamTest provides for optical testing of such objects by shooting beams of light
+at two-dimensional slices of objects.
+
+<hr>
+
+<h2 id="toc">Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Usage">Usage</a>
+   <li><a href="#Compliance">Name space compliance</a>
+  </ul>
+ <li><a href="#Parameters">Parameters</a>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#Beam_angled">Beam_angled</a>
+   <li><a href="#Beam_sloped">Beam_sloped</a>
+   <li><a href="#Beam_targeted">Beam_targeted</a>
+  </ul>
+ <li><a href="#Other">Other public identifiers</a>
+ <li><a href="#About">About BeamTest</a>
+  <ul>
+   <li><a href="#Changes">Change log</a>
+   <li><a href="#Acknowledgements">Acknowledgements</a>
+  </ul>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<table>
+<tr><th colspan=2>Key Files</th></tr>
+<tr><th>File</th> <th>Description</th></tr>
+<tr><td><code>beamtest.html</code></td> <td>The user manual (this document)</td></tr>
+<tr><td><code>beamtest.inc</code></td> <td>The BeamTest software</td></tr>
+<tr><td><code>beamtest.jpg</code></td> <td>Sample output</td></tr>
+<tr><td><code>beamtest.pov</code></td> <td>An example scene file</td></tr>
+<tr><td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+    <td>Important information that you need to know</td></tr>
+<tr><th colspan=2>Other Files</th></tr>
+<tr><th>File</th> <th>Description</th></tr>
+<tr><td><code>beamtest.css</code></td> <td>A support file for the user manual</td></tr>
+<tr><td><code>beamtest_cc-lgpl.png</code></td> <td>A support file for the user manual</td></tr>
+<tr><td><code>beamtest_description.txt</code></td> <td>A brief description of BeamTest</td></tr>
+<tr><td><code>beamtest_keywords.txt</code></td> <td>A list of keywords</td></tr>
+<tr><td><code>beamtest_prereqs.txt</code></td> <td>Prerequisites (empty file)</td></tr>
+<tr><td><code>beamtest_thumbnail.png</code></td> <td>Sample output</td></tr>
+<tr><td><code>cc-LGPL-a.png</code></td> <td>Administrative support file</td></tr>
+<tr><td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+    <td>Administrative support file</td></tr>
+</table>
+
+<p><a href="#toc">Contents</a><hr>
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include this file once prior to using any of the macros:
+
+<pre>#include "beamtest.inc"</pre>
+
+<p>Including the file more than once is harmless, though unnecessary.
+
+<p>A camera is set up automatically.
+
+<p>Light fixtures are arrayed along the left side of the image. The user
+chooses the height, aiming, and color of the lights.
+
+<p>The objects to be tested should be placed on the right (<var>x</var> > 0),
+with the slice to be tested along the <var>x-y</var> plane. All tested objects
+must be declared as a <code>photons { target&nbsp;}</code>; in addition,
+refractive objects must be declared <code>hollow</code>.
+
+<h3>Prerequisites</h3>
+
+<p>None.
+
+<h3 id="Compliance">Name Space Compliance</h3>
+
+<p>All file names and global identifiers comply with the Object Collection
+naming standards. The prefixes for this module are
+&ldquo;<code>beamtest</code>&rdquo; and &ldquo;<code>beam</code>.&rdquo;
+
+<p><a href="#toc">Contents</a><hr>
+
+<h2 id="Parameters">Parameters</h2>
+
+<p>The following parameters may be modified by
+declaring them prior to including <code>beamtest.inc</code>.
+
+<table class="values">
+<tr><th>Parameter</th> <th>Description</th> <th>Default</th></tr>
+<tr>
+ <td><code>Beam_extinction</code></td>
+ <td><a href="http://www.povray.org/documentation/view/3.6.1/420/#extinction">Scattering
+  extinction</a> of the environmental media. This value may need to be increased
+  if <code>Beam_image_depth</code> is increased. A practical maximum appears to
+  be 0.1.</td>
+ <td>0.0</td>
+</tr><tr>
+ <td><code>Beam_field_of_view</code></td>
+ <td>Camera angle, in degrees</td>
+ <td>15.0</td>
+</tr><tr>
+ <td><code>Beam_fixture_length</code></td>
+ <td>Length of each light fixture, in POV units</td>
+ <td>0.6</td>
+</tr><tr>
+ <td><code>Beam_fixture_radius</code></td>
+ <td>Radius of each light fixture, in POV units</td>
+ <td>0.1</td>
+</tr><tr>
+ <td><code>Beam_fixture_shadow</code></td>
+ <td>Whether or not the light fixtures cast shadows. Set this parameter to
+  <code>no</code> if the fixtures interfere with the light beams.</td>
+ <td><code>yes</code></td>
+</tr><tr>
+ <td><code>Beam_fixture_x</code></td>
+ <td>Horizontal position of the light fixtures</td>
+ <td>-5.0</td>
+</tr><tr>
+ <td><code>Beam_image_depth</code></td>
+ <td>Depth (in the <var>z</var>-direction) of the environmental media, in POV
+  units. Set a large value if a test object deflects light outside the
+  <var>x-y</var> plane. (Warning: This may slow render times and oversaturate
+  deflected light beams.)</td>
+ <td>Slightly more than twice <code>Beam_radius</code></td>
+</tr><tr>
+ <td><code>Beam_image_width</code></td>
+ <td>Width of the image, in POV units</td>
+ <td>32/3</td>
+</tr><tr>
+ <td><code>Beam_max_trace</code></td>
+ <td><a href="http://www.povray.org/documentation/view/3.6.1/264/">Maximum
+  trace level</a></td>
+ <td>15</td>
+</tr><tr>
+ <td><code>Beam_photons</code></td>
+ <td>
+  <ul>
+   <li>If greater than 1.0, the photon <code>count</code>;
+   <li>Otherwise, if greater than 0.0, the photon <code>spacing</code>;
+   <li>Otherwise photons are not used.
+  </ul>
+ </td>
+ <td>0.005</td>
+</tr><tr>
+ <td><code>Beam_photons_media</code></td>
+ <td><a href="http://www.povray.org/documentation/view/3.6.1/425/#photons, media">Media
+  photons</a> max steps</td>
+ <td>200</td>
+</tr><tr>
+ <td><code>Beam_radius</code></td>
+ <td>Radius of each light beam, including the falloff, in POV units</td>
+ <td>0.05</td>
+</tr><tr>
+ <td><code>Beam_umbra</code></td>
+ <td>The width of the bright core of each light beam, i.e., without the falloff,
+  as a fraction of the total diameter</td>
+ <td>0.5</td>
+</tr>
+</table>
+
+<p><a href="#toc">Contents</a><hr>
+
+<h2 id="Macros">Macros</h2>
+
+<h3 id="Beam_angled">Beam_angled (Height, Color, Angle)</h3>
+
+<p>A light beam with fixture, aimed by angle.
+
+<p class="intro">Arguments:
+
+<dl>
+ <dt><code>Height</code>:
+ <dd>The height of the fixture, with 0.0 at the middle of the image. 
+ <dt><code>Color</code>: <dd>The color of the light.
+ <dt><code>Angle</code>: <dd>The angle of the light beam from the horizontal.
+</dl>
+
+<h3 id="Beam_sloped">Beam_sloped (Height, Color, Slope)</h3>
+
+<p>A light beam with fixture, aimed by mathematical slope.
+
+<p class="intro">Arguments:
+
+<dl>
+ <dt><code>Height</code>:
+ <dd>The height of the fixture, with 0.0 at the middle of the image.
+ <dt><code>Color</code>: <dd>The color of the light.
+ <dt><code>Slope</code>: <dd>The slope of the light beam,
+  &Delta;<var>vertical</var> &divide; &Delta;<var>horizontal</var>.
+</dl>
+
+<h3 id="Beam_targeted">Beam_targeted (Height, Color, Target)</h3>
+
+<p>A light beam with fixture, aimed at a target point.
+
+<p class="intro">Arguments:
+
+<dl>
+ <dt><code>Height</code>:
+ <dd>The height of the fixture, with 0.0 at the middle of the image.
+ <dt><code>Color</code>: <dd>The color of the light.
+ <dt><code>Target</code>: <dd>The target point.
+  If the <var>z</var>-coordinate is non-zero, the result is undefined.
+</dl>
+
+<p><a href="#toc">Contents</a><hr>
+
+<h2 id="Other">Other Public Identifiers</h2>
+
+<table>
+<tr><th>Identifier</th> <th>Type</th> <th>Description</th></tr>
+<tr>
+ <td><code>Beam_media</code></td>
+ <td>media</td>
+ <td>The media used for the test environment</td>
+</tr>
+</table>
+
+<p>Any identifiers not documented in this manual are subject to change or
+elimination in a future update.
+
+<p><a href="#toc">Contents</a><hr>
+
+<h2 id="About">About BeamTest</h2>
+
+<address>&copy; 2008 Richard Callwood III.
+<a href="http://creativecommons.org/licenses/LGPL/2.1/">
+<img src="beamtest_cc-lgpl.png"
+ alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+</a>
+</address>
+
+<h3 id="Changes">Change Log</h3>
+
+<table>
+<tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+<tr><td>n/a</td> <td>November 21, 2007</td> <td>Software is created.</td></tr>
+<tr><td>1.0</td> <td>July 30, 2008</td> <td>Software is adapted for the Object Collection.</td></tr>
+<tr><td>1.0.1</td> <td>August 4, 2008</td> <td>User manual is edited; software is unmodified.</td></tr>
+<!--Note to self: revalidate HTML, CSS after every change.-->
+</table>
+<p>User Manual (this document) updated August 4, 2008.
+
+<h3 id="Acknowledgements">Acknowledgements</h3>
+
+<p>Many thanks to Warp (who will recognize his parabolic mirror) and to Blue Herring.
+
+<p><a href="#toc">Contents</a>
+
+</body>
+</html>

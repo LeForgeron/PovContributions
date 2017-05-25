@@ -1,0 +1,6 @@
+SphereSweep
+SSwp
+sphere sweep
+sphere_sweep
+artifacts
+bounding

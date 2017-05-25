@@ -1,0 +1,181 @@
+<html>
+<head>
+  <title>WarpChess include file</title>
+  <style type="text/css"> <!--
+html { background-color: #FFDDCC; }
+body
+{
+  background-color: white;
+  margin-left: 7%;
+  margin-top: 16px;
+  margin-right: 7%;
+  padding-top: 2em;
+  padding-left: 7%;
+  padding-right: 7%;
+  padding-bottom: 2%;
+  border-color: black;
+  border: solid;
+  border-width: 1px;
+}
+
+h1
+{
+  text-align: center;
+  background-color: #FFEEBB;
+  padding-bottom: 0.2em;
+  padding-top: 0.1em;
+}
+
+h2
+{
+  background-color: #FFFFCC;
+  padding-left: 0.5em;
+}
+
+pre
+{
+  background-color: #E8E8E8;
+  padding-left: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+code
+{
+  font-family: monospace;
+  color: #900040;
+}
+  --> </style>
+</head>
+
+<body bgcolor="white">
+
+<h1>WarpChess include file</h1>
+
+<h2>Declared objects</h2>
+
+<p>This include file declares the following untextured objects:
+
+<pre>
+WarpChess_Pawn
+WarpChess_Rook
+WarpChess_Knight
+WarpChess_Bishop
+WarpChess_Queen
+WarpChess_King
+</pre>
+
+<p>It also declares textured versions of these objects. These have the
+word "<code>White</code>" or "<code>Black</code>" before the piece name, like:
+
+<pre>
+WarpChess_WhitePawn
+WarpChess_BlackPawn
+etc.
+</pre>
+
+<p>The materials of the pieces can be modified by #declaring any of these
+material identifiers <em>before</em> #including <code>"WarpChess.inc"</code>:
+
+<pre>
+WarpChess_BaseMaterial
+WarpChess_WhiteMaterial
+WarpChess_BlackMaterial
+</pre>
+
+<p>The materials can be transparent (and have ior). If the base of the pieces
+should not use its own material (but simply share the material of the rest
+of the piece), the identifier <code>WarpChess_UseBaseMaterial</code> can
+be declared as <code>false</code> before the #include.
+
+<p>If the textured pieces should use a <code>photons</code> block, this can be
+achieved by implementing a macro called <code>WarpChess_UsePhotons()</code>
+before the #include. This macro should contain the entire photons block (ie.
+"<code>photons { ...something... }</code>").
+
+<p>A chessboard is also included as an object:
+
+<pre>
+WarpChess_Board
+</pre>
+
+<p>The following optional identifiers can be declared <em>before</em>
+#including <code>"WarpChess.inc"</code> to set up the texturing and labels:
+
+<pre>
+WarpChess_WhiteSquareTexture
+WarpChess_BlackSquareTexture
+WarpChess_WoodTexture
+WarpChess_BoardLettersTexture
+WarpChess_BoardFont (default is "timrom.ttf")
+</pre>
+
+<p>If <code>WarpChess_BoardFont</code> is declared to be an empty string
+the labels will not be created.
+
+<h2>Declared macros</h2>
+
+<p>This include file also defines two macros to create a chessboard with
+pieces placed on it:
+
+<pre>
+WarpChess_CreateDefaultBoard()
+</pre>
+
+<p>Simply creates a chessboard with all the pieces in their initial places.
+
+<pre>
+WarpChess_CreateBoard(Moves)
+</pre>
+
+<p>Creates a chessboard based on the given moves. The parameter should be
+an array of strings, each string denoting a chess move. These moves are
+similar to the moves of a regular chess game record. The board situation
+is started from the initial position, and pieces are moved according to
+the given moves. Captured pieces are moved to the edge of the board.
+
+<p>Example usage:
+
+<pre>
+#declare Moves = array[8]
+{ "E2E4", "E7E5", "G1F3", "B8C6",
+  "D2D3", "F8B4", "B1C3", "G8F6" }
+
+WarpChess_CreateBoard(Moves)
+</pre>
+
+<p>The following identifier can be declared <em>before</em> #including
+"<code>WarpChess.inc</code>" to affect the placement of captured pieces:
+
+<pre>
+WarpChess_DropCapturedPieces (default is false)
+</pre>
+
+<p>If <code>WarpChess_DropCapturedPieces</code> is <code>true</code>,
+captured pieces will not be created at all, else they will be created at
+the ends of the board.
+
+<p>If a piece arrangement which is not the result of a series of moves is
+desired, the following macro can be used to make the task easier:
+
+<pre>
+WarpChess_TranslatePiece(X_Index, Z_Index)
+</pre>
+
+<p>Where X_Index and Z_Index are integers between 0 and 7 (although fractional
+values and values outside the range are possible as well). It simply creates a
+<code>translate</code> command that moves an origin-centered object on the
+corresponding square of the (yet untransformed) board. For example:
+
+<pre>
+object { WarpChess_Board }
+object { WarpChess_BlackKing WarpChess_TranslatePiece(4, 4) }
+</pre>
+
+<p>Note: Since the board is created oriented on the X axis, with the
+white side on the positive X side, and the parameters to the macro correspond
+directly to world coordinates, the indices (0, 0) correspond to the board
+coordinates "A8" and the indices (7, 7) to the board coordinates "H1".
+
+</body>
+</html>

@@ -1,0 +1,2 @@
+This macro creates an object in the shape of a grid of height, longitude and radial lines found on a sphere. The thickness of the "lines" of the grid remains constant. The object can be used as an object within a CSG operation (e.g., intersection or difference), or as an object pattern (e.g., a pigment). An example scene is provided to show three different ways of using the object.
+Note - this macro uses the Munsell form of a sphere; for the standard parametric form, see the other macro.
