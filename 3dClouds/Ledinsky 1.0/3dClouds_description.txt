@@ -1,0 +1,3 @@
+Generates clouds in the sky (hard coded left-hand coordinate with +y as up)
+
+Plenty of parameters to play with, with default value for each.

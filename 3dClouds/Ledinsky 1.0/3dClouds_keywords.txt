@@ -1,0 +1,4 @@
+clouds
+cloud
+sky
+outdoor
