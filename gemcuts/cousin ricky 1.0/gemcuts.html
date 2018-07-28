@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GemCuts 1.0 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="gemcuts.css">
+</head>
+
+<body>
+
+<h1>GemCuts 1.0 User&nbsp;Manual</h1>
+
+<h2>Abstract</h2>
+
+<p>
+<a href="gemcuts.jpg"><img class="demo" src="gemcuts_thumbnail.jpg" title="Larger demo image" alt="[Thumbnail which links to a larger demo image]"></a>
+GemCuts is a library module from the
+<a href="http://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+<a href="http://lib.povray.org/">Object Collection</a>
+that defines gem cuts and gem settings. In this initial version, the emerald and round brilliant cuts are defined, and rings with prong settings can be created.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Glossary">Glossary</a>. Please read the glossary, as terms and conventions used throughout this user manual are explained there.
+ <li><a href="#Macros_cuts">Cut macros</a>
+  <ul>
+   <li><a href="#Gem_Emerald_cut">Gem_Emerald_cut</a>
+   <li><a href="#Gem_Round_brilliant">Gem_Round_brilliant</a>
+  </ul>
+ <li><a href="#Macros_aux">Accessories and auxiliary macros</a>
+  <ul>
+   <li><a href="#Gem_Prong">Gem_Prong</a>
+   <li><a href="#Gem_Rail">Gem_Rail</a>
+   <li><a href="#Gem_Scale">Gem_Scale</a>
+   <li><a href="#Gem_Setting_poly">Gem_Setting_poly</a>
+   <li><a href="#Gem_Setting_poly_auto">Gem_Setting_poly_auto</a>
+   <li><a href="#Gem_Setting_round">Gem_Setting_round</a>
+   <li><a href="#Gem_Setting_round_auto">Gem_Setting_round_auto</a>
+   <li><a href="#Gem_Shank">Gem_Shank</a>
+  </ul>
+ <li><a href="#Functions">Functions</a>
+  <ul>
+   <li><a href="#Gem_fn_1Step_height">Gem_fn_1Step_height</a>
+   <li><a href="#Gem_fn_2Step_height">Gem_fn_2Step_height</a>
+   <li><a href="#Gem_fn_3Step_height">Gem_fn_3Step_height</a>
+   <li><a href="#Gem_fn_4Step_height">Gem_fn_4Step_height</a>
+   <li><a href="#Gem_fn_Crown_angle">Gem_fn_Crown_angle</a>
+   <li><a href="#Gem_fn_Lakshmi">Gem_fn_Lakshmi</a>
+   <li><a href="#Gem_fn_Pavilion_angle">Gem_fn_Pavilion_angle</a>
+  </ul>
+ <li><a href="#Other_identifiers">Other identifiers</a>
+ <li><a href="#About">About GemCuts</a>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan="2">Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>gemcuts.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>gemcuts.inc</code></td>
+  <td>The GemCuts software</td>
+ </tr><tr>
+  <td><code>gemcuts.pov</code></td>
+  <td>A scene description file demonstrating many of the features of GemCuts</td>
+ </tr><tr>
+  <td><code>gemcuts.jpg</code></td>
+  <td rowspan="2">Sample output images</td>
+ </tr><tr>
+  <td><code>gemcuts_thumbnail.jpg</code></td>
+ </tr><tr>
+  <td><code>gemcuts_36.ini</code></td>
+  <td>An INI file to render the sample scene with POV-Ray 3.6</td>
+ </tr><tr>
+  <td><code>gemcuts_37.ini</code></td>
+  <td>An INI file to render the sample scene with POV-Ray 3.7 or later</td>
+ </tr><tr>
+  <td><code>gemcuts_glossary.jpg</code></td>
+  <td rowspan="2">Illustrations for the user manual</td>
+ </tr><tr>
+  <td><code>gemcuts_shank.jpg</code></td>
+ </tr><tr>
+  <th colspan="2">Administrative Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <td><code>gemcuts_description.txt</code></td>
+  <td>A brief description of GemCuts</td>
+ </tr><tr>
+  <td><code>gemcuts_geometry1.png</code></td>
+  <td rowspan="4">Visualizations of some of the SDL in <code>gemcuts.inc</code> (These are technical diagrams for the curious, and understanding them is not required for use of the module. They assume some knowledge of analytical geometry.)</td>
+ </tr><tr>
+  <td><code>gemcuts_geometry2.png</code></td>
+ </tr><tr>
+  <td><code>gemcuts_geometry3.png</code></td>
+ </tr><tr>
+  <td><code>gemcuts_geometry4.png</code></td>
+ </tr><tr>
+  <td><code>gemcuts_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>gemcuts_prereqs.txt</code></td>
+  <td>Prerequisites (empty file)</td>
+ </tr><tr>
+  <td><code>gemcuts.css</code></td>
+  <td rowspan="3">Other administrative files</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<p>GemCuts requires POV-Ray version 3.6 or later. For best results with chromatic dispersion, version 3.7 or later is <em>strongly</em> recommended.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in the include files comply fully with the Object Collection naming standards, as <a href="http://news.povray.org/povray.object-collection/message/%3C48ba92e8%241%40news.povray.org%3E/#%3C48ba92e8%241%40news.povray.org%3E">revised August 2008</a> and <a href="http://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The reserved prefixes for this module are “<code>GemCuts</code>” and “<code>Gem</code>,” including any uppercase and lowercase variants. To avoid conflicts, do not introduce into your scene description file any identifiers with these names, or any identifiers that start with these names plus an underscore.
+
+<p>There is a macro named <code>Gem()</code> in Lilysoft’s <a href="http://www.lilysoft.org/CGI/SR/Spectral%20Render.htm">SpectralRender package</a>. At this time, GemCuts does not define any identifier by that name. In order to maintain compatibility with SpectralRender, it is suggested that future developers of GemCuts not introduce <code>Gem</code> as an identifier.
+
+<p>The standard include file <code>shapes.inc</code> is used by <code>gemcuts.inc</code>.
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include this file once prior to using any of the macros:
+<pre>#include "gemcuts.inc"</pre>
+<p>Including the file more than once is harmless, though unnecessary.
+
+<p>POV-Ray version 3.6 may issue warnings on <code>gemcuts.inc</code> that patch objects are not allowed in intersections. All patch objects in <code>gemcuts.inc</code> are closed meshes with an <code>inside_vector</code>, so these warnings may be ignored.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Glossary">Glossary</h2>
+
+<h3>Facets</h3>
+
+<p>This diagram illustrates the concepts and terminology used in this manual.
+
+<p><img src="gemcuts_glossary.jpg" alt="[Diagram of a round brilliant cut]">
+
+<dl>
+ <dt>Bezel facet
+ <dd>Any of the kite-shaped crown main facets of a round brilliant cut.
+ <dt>Crown angle
+ <dd>The angle between a crown facet and the horizontal.
+ <dt>Crown facet
+ <dd>A facet between the table and the girdle.
+ <dt>Crown height
+ <dd>The height of the top part of the gem, that is, from the top of the girdle to the top of the gem.
+ <dt>Crown main facet
+ <dd>A facet spanning the entire length from the table to the girdle.
+ <dt>Culet
+ <dd>The bottom of the gemstone; also, the bottom horizontal facet, if any.
+ <dt>Girdle
+ <dd>The outer rim of the gem.
+ <dt>Keel
+ <dd>The elongated culet of an oblong cut.
+ <dt>Lower girdle facet
+ <dd>Any of the triangular facets of a round brilliant cut bordering the lower side of the girdle.
+ <dt>Pavilion angle
+ <dd>The angle between a pavilion facet and the horizontal.
+ <dt>Pavilion depth
+ <dd>The vertical depth of the underside of the gem, that is, from the bottom of the girdle to the bottom of the gem.
+ <dt>Pavilion facet
+ <dd>A facet between the girdle and the culet.
+ <dt>Pavilion main facet
+ <dd>A facet spanning the entire length from the girdle to the culet.
+ <dt>Table
+ <dd>The top horizontal facet.
+ <dt>Star facet
+ <dd>Any of the triangular facets bordering the table.
+ <dt>Upper girdle facet
+ <dd>Any of the triangular facets of a round brilliant cut bordering the upper side of the girdle.
+</dl>
+
+<p>Crown and pavilion facet angles in this module are in degrees from the horizontal.
+
+<h3>Parts of a Setting</h3>
+
+<p>Note: Terms vary among sources.</p>
+
+<dl>
+ <dt>Bridge
+ <dd>The base of the setting; also called the <dfn>bottom bezel</dfn>.
+ <dt>Gallery rail
+ <dd>A horizontal rail connecting the middles of the prongs; also called the <dfn>middle bezel</dfn> or <dfn>bearing</dfn>.
+ <dt>Prong
+ <dd>A vertical shaft holding the gemstone in place; also called the <dfn>gallery wire</dfn> or <dfn>claw</dfn>.
+ <dt>Seat
+ <dd>The notch in a prong that holds the girdle of the gemstone.
+ <dt>Shank
+ <dd>The main part of a ring, excluding the setting and the gemstone.
+</dl>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros_cuts">Cut Macros</h2>
+
+<h3 id="Gem_Emerald_cut">Gem_Emerald_cut (Ratio, Table, Corner, aCrown1, aCrown2, aCrown3, aPavilion1, aPavilion2, aPavilion3, aPavilion4, Girdle, Culet)</h3>
+
+<p>Creates an untextured emerald cut gemstone. The short width of the gem is 1 POV unit, and the origin is at the bottom of the gem.  The long axis of the gemstone is oriented in the <var>z</var> direction.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Ratio</code></td>
+  <td>float</td>
+  <td>The ratio of the length to the width of the gemstone; this must be 1 or greater</td>
+ </tr><tr>
+  <td><code>Table</code></td>
+  <td>float</td>
+  <td>The width of the table in the shorter dimension</td>
+ </tr><tr>
+  <td><code>Corner</code></td>
+  <td>float</td>
+  <td>The <var>x</var> component of the width of a corner chamfer</td>
+ </tr><tr>
+  <td><code>aCrown1</code></td>
+  <td>float</td>
+  <td>The angle in degrees of the crown facet nearest the girdle</td>
+ </tr><tr>
+  <td><code>aCrown2</code></td>
+  <td>float</td>
+  <td>The angle in degrees of the middle crown facet</td>
+ </tr><tr>
+  <td><code>aCrown3</code></td>
+  <td>float</td>
+  <td>The angle in degrees of the crown facet nearest the table</td>
+ </tr><tr>
+  <td><code>aPavilion1</code></td>
+  <td>float</td>
+  <td>The angle in degrees of the pavilion facet nearest the girdle</td>
+ </tr><tr>
+  <td><code>aPavilion2</code></td>
+  <td>float</td>
+  <td>The angle in degrees of the pavilion facet 2nd nearest to the girdle</td>
+ </tr><tr>
+  <td><code>aPavilion3</code></td>
+  <td>float</td>
+  <td>The angle in degrees of the pavilion facet 3rd nearest to the girdle</td>
+ </tr><tr>
+  <td><code>aPavilion4</code></td>
+  <td>float</td>
+  <td>The angle in degrees of the pavilion facet nearest the keel; use 0 if the pavilion has only 3 steps</td>
+ </tr><tr>
+  <td><code>Girdle</code></td>
+  <td>float</td>
+  <td>The thickness of the girdle</td>
+ </tr><tr>
+  <td><code>Culet</code></td>
+  <td>float</td>
+  <td>The width of the keel in the shorter dimension; use 0 if there is no keel facet</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_Round_brilliant">Gem_Round_brilliant (Table, aCrown, aPavilion, Girdle, Star, Lower_girdle, Culet)</h3>
+
+<p>Creates an untextured round brilliant gemstone. The diameter of the gem is 1 POV unit, and the origin is at the bottom of the gem. This macro creates a round girdle.
+
+<p>A non-fatal warning is issued if the arguments result in a knife-edge girdle.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Table</code></td>
+  <td>float</td>
+  <td>The width of the table</td>
+ </tr><tr>
+  <td><code>aCrown</code></td>
+  <td>float</td>
+  <td>The crown angle, in degrees</td>
+ </tr><tr>
+  <td><code>aPavilion</code></td>
+  <td>float</td>
+  <td>The pavilion angle, in degrees</td>
+ </tr><tr>
+  <td><code>Girdle</code></td>
+  <td>float</td>
+  <td>The maximum thickness of the girdle</td>
+ </tr><tr>
+  <td><code>Star</code></td>
+  <td>float</td>
+  <td>The horizontal length of a star facet, in proportion to the distance from the table edge to the girdle</td>
+ </tr><tr>
+  <td><code>Lower_girdle</code></td>
+  <td>float</td>
+  <td>The horizontal length of the lower girdle facets, in proportion to the <em>radius</em> of the girdle</td>
+ </tr><tr>
+  <td><code>Culet</code></td>
+  <td>float</td>
+  <td>The width of the culet; use 0 if there is no culet facet</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros_aux">Accessories and Auxiliary Macros</h2>
+
+<p>Note: The objects created by these macros are not intended to be used with transparent materials.
+
+<h3 id="Gem_Prong">Gem_Prong (Untextured_gem, Girdle, yGirdle_max, Base_test, yBase, R, Theta)</h3>
+
+<p>Creates an untextured prong object suitable to be incorporated into a gem setting.
+
+<p>Warning: <code>Gem_Prong()</code> attempts to trace the girdle. If the girdle is variable thickness (as is the case with the round brilliant cut) and has a knife-edge or a very thin minimum thickness, there is a danger of the trace missing the girdle, causing the seat to be cut too deeply into the prong. No warning of this condition is given during the trace.
+
+<p>Note: <code>Gem_Prong()</code> is called by the setting macros. If you get a parse error from <code>Gem_Prong()</code>, but didn’t call it directly, then check your calls to the setting macros.
+
+<p>Note: Construction of the prong assumes a typical setting design. If extreme arguments&mdash;for example, a bridge that is much wider than the stone itself&mdash;are passed to <code>Gem_Prong()</code> or to the setting macros that call it, the prong may be clipped improperly.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Untextured_gem</code></td>
+  <td>untextured object</td>
+  <td>A surrogate for the gemstone that is to be set. This object must be reasonably centered about the <var>y</var>-axis, and must be untextured in order to avoid an unwanted texture patch at the gem/prong interface.</td>
+ </tr><tr>
+  <td><code>Girdle</code></td>
+  <td>float</td>
+  <td>The thickness of the gemstone’s girdle</td>
+ </tr><tr>
+  <td><code>yGirdle_max</code></td>
+  <td>float</td>
+  <td>The <var>y</var> coordinate of the top of the gemstone’s girdle</td>
+ </tr><tr>
+  <td><code>Base_test</code></td>
+  <td>object</td>
+  <td>A simple object (e.g., a cylinder) roughly representing the bridge (base) of the setting</td>
+ </tr><tr>
+  <td><code>yBase</code></td>
+  <td>float</td>
+  <td>The <var>y</var> coordinate of the middle of the bridge</td>
+ </tr><tr>
+  <td><code>R</code></td>
+  <td>float</td>
+  <td>The radius of the prong</td>
+ </tr><tr>
+  <td><code>Theta</code></td>
+  <td>float</td>
+  <td>The angular position of the prong in degrees, where 0 is in the <var>x</var> direction and 90 is in the &minus;<var>z</var> direction</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_Rail">Gem_Rail (Untextured_gem, Y, R, Type, nPoints)</h3>
+
+<p>Creates an untextured gallery rail. The rail will be form-fitted to the gemstone.
+
+<p>Note: <code>Gem_Rail()</code> is called by the setting macros. If you get a parse error from <code>Gem_Rail()</code>, but didn’t call it directly, then check your calls to the setting macros.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Untextured_gem</code></td>
+  <td>untextured object</td>
+  <td>A surrogate for the gem that is to be set. This object must be reasonably centered about the <var>y</var>-axis, and must be untextured in order to avoid unwanted texture patches at gem/rail contact points.</td>
+ </tr><tr>
+  <td><code>Y</code></td>
+  <td>float</td>
+  <td>The vertical position of the rail</td>
+ </tr><tr>
+  <td><code>R</code></td>
+  <td>float</td>
+  <td>The radius of the rail wire</td>
+ </tr><tr>
+  <td><code>Type</code></td>
+  <td>float</td>
+  <td>The form of the rail:
+   <ul>
+    <li><code>GEM_SEGMENTED</code>: made of straight segments
+    <li><code>GEM_CURVED</code>: curved
+   </ul>
+  </td>
+ </tr><tr>
+  <td><code>nPoints</code></td>
+  <td>float</td>
+  <td>The number of distinct control points for the spline that defines the rail path</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_Scale">Gem_Scale (Gemstone, Scale, hPavilion, Girdle)</h3>
+
+<p>Creates a scaled gem object.
+
+<p>An attempt is made to position the new object such that it nests with the original object.
+If <code>hPavilion</code> is positive, the nesting will be centered at the middle of the girdle. In order for this to work properly, the culet of the gemstone must be at the origin. If <code>hPavilion</code> is negative or zero, the nesting will be based on the gemstone’s bounding box.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Gemstone</code></td>
+  <td>object</td>
+  <td>The gemstone to be scaled</td>
+ </tr><tr>
+  <td><code>Scale</code></td>
+  <td>float or vector</td>
+  <td>The scaling factor</td>
+ </tr><tr>
+  <td><code>hPavilion</code></td>
+  <td>float</td>
+  <td>The depth of the pavilion. If the pavilion datum is an angle, it must be converted to a depth (using function <a href="#Gem_fn_1Step_height"><code>Gem_fn_1Step_height()</code></a>, for example) before being used as an argument.</td>
+ </tr><tr>
+  <td><code>Girdle</code></td>
+  <td>float</td>
+  <td>The maximum thickness of the girdle</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_Setting_poly">Gem_Setting_poly (Untextured_gem, hPavilion, Girdle, Space, Mode, yBase, v_Base_size, Prongs, dProng, Rail_type, yRail, Rail_res)</h3>
+
+<p>Creates an untextured prong setting with a polygonal bridge and an optional gallery rail. The prong positions are specified in an array.
+
+<h4>Arguments</h4>
+<p>The bottom of the gemstone must be at <var>y</var> = 0; all vertical positions are interpreted with this assumption. The gemstone must be reasonably centered about the <var>y</var>-axis.
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Untextured_gem</code></td>
+  <td>untextured object</td>
+  <td>A surrogate for the gem that is to be set. This object must be untextured in order to avoid unwanted texture patches at gem/rail contact points.</td>
+ </tr><tr>
+  <td><code>hPavilion</code></td>
+  <td>float</td>
+  <td>The depth of the pavilion. If the pavilion datum is an angle, it must be converted to a depth (using function <a href="#Gem_fn_1Step_height"><code>Gem_fn_1Step_height()</code></a>, for example) before being used as an argument.</td>
+ </tr><tr>
+  <td><code>Girdle</code></td>
+  <td>float</td>
+  <td>The thickness of the girdle</td>
+ </tr><tr>
+  <td><code>Space</code></td>
+  <td>float</td>
+  <td>A nominal amount of space between the gemstone and the contact points of the setting, to prevent coincident surfaces. The actual amount of space may vary over parts of the gemstone.</td>
+ </tr><tr>
+  <td><code>Mode</code></td>
+  <td>float</td>
+  <td>One of the following:
+   <ul>
+    <li><code>GEM_OPEN</code>: the bridge will have an opening in the middle.
+    <li><code>GEM_CLOSED</code>: the bridge will be solid.
+    <li><code>GEM_HOLE</code>: instead of creating a setting object, <code>Gem_Setting_poly()</code> will create an object suitable for carving a hole in the shank that matches the would-be setting.
+   </ul>
+  </td>
+ </tr><tr>
+  <td><code>yBase</code></td>
+  <td>float</td>
+  <td>The vertical position of the bridge</td>
+ </tr><tr>
+  <td><code>v_Base_size</code></td>
+  <td>vector</td>
+  <td>Nominal dimensions of the bridge. The actual <var>x</var> or <var>z</var> dimensions may be smaller due to polygonal clipping.</td>
+ </tr><tr>
+  <td><code>Prongs</code></td>
+  <td>array of float</td>
+  <td>The longitudinal angular positions of the prongs, in degrees, where 0 is in the <var>x</var> direction and 90 is in the &minus;<var>z</var> direction</td>
+ </tr><tr>
+  <td><code>dProng</code></td>
+  <td>float</td>
+  <td>The diameter of the prongs</td>
+ </tr><tr>
+  <td><code>Rail_type</code></td>
+  <td>float</td>
+  <td>The form of the gallery rail:
+   <ul>
+    <li><code>GEM_NONE</code>: no gallery rail
+    <li><code>GEM_SEGMENTED</code>: a gallery rail made of straight segments
+    <li><code>GEM_CURVED</code>: a curved gallery rail
+   </ul>
+  </td>
+ </tr><tr>
+  <td><code>yRail</code></td>
+  <td>float</td>
+  <td>The vertical position of the gallery rail</td>
+ </tr><tr>
+  <td><code>Rail_res</code></td>
+  <td>float</td>
+  <td>The number of distinct control points for the spline that defines the rail path</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_Setting_poly_auto">Gem_Setting_poly_auto (Untextured_gem, hPavilion, Girdle, Space, Mode, yBase, v_Base_size, nProngs, dProng, Rail_type, yRail, Rail_res)</h3>
+
+<p>Creates an untextured prong setting with a polygonal bridge and an optional gallery rail. The prong positions are determined automatically.
+
+<h4>Arguments</h4>
+<p>The bottom of the gemstone must be at <var>y</var> = 0; all vertical positions are interpreted with this assumption. The gemstone must be reasonably centered about the <var>y</var>-axis.
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Untextured_gem</code></td>
+  <td>untextured object</td>
+  <td>A surrogate for the gem that is to be set. This object must be untextured in order to avoid unwanted texture patches at gem/rail contact points.</td>
+ </tr><tr>
+  <td><code>hPavilion</code></td>
+  <td>float</td>
+  <td>The depth of the pavilion. If the pavilion datum is an angle, it must be converted to a depth (using function <a href="#Gem_fn_1Step_height"><code>Gem_fn_1Step_height()</code></a>, for example) before being used as an argument.</td>
+ </tr><tr>
+  <td><code>Girdle</code></td>
+  <td>float</td>
+  <td>The thickness of the girdle</td>
+ </tr><tr>
+  <td><code>Space</code></td>
+  <td>float</td>
+  <td>A nominal amount of space between the gemstone and the contact points of the setting, to prevent coincident surfaces. The actual amount of space may vary over parts of the gemstone.</td>
+ </tr><tr>
+  <td><code>Mode</code></td>
+  <td>float</td>
+  <td>One of the following:
+   <ul>
+    <li><code>GEM_OPEN</code>: the bridge will have an opening in the middle.
+    <li><code>GEM_CLOSED</code>: the bridge will be solid.
+    <li><code>GEM_HOLE</code>: instead of creating a setting object, <code>Gem_Setting_poly_auto()</code> will create an object suitable for carving a hole in the shank that matches the would-be setting.
+   </ul>
+  </td>
+ </tr><tr>
+  <td><code>yBase</code></td>
+  <td>float</td>
+  <td>The vertical position of the bridge</td>
+ </tr><tr>
+  <td><code>v_Base_size</code></td>
+  <td>vector</td>
+  <td>Nominal dimensions of the bridge. The actual <var>x</var> or <var>z</var> dimensions may be smaller due to polygonal clipping.</td>
+ </tr><tr>
+  <td><code>nProngs</code></td>
+  <td>array of float</td>
+  <td>The number of prongs</td>
+ </tr><tr>
+  <td><code>dProng</code></td>
+  <td>float</td>
+  <td>The diameter of the prongs</td>
+ </tr><tr>
+  <td><code>Rail_type</code></td>
+  <td>float</td>
+  <td>The form of the gallery rail:
+   <ul>
+    <li><code>GEM_NONE</code>: no gallery rail
+    <li><code>GEM_SEGMENTED</code>: a gallery rail made of straight segments
+    <li><code>GEM_CURVED</code>: a curved gallery rail
+   </ul>
+  </td>
+ </tr><tr>
+  <td><code>yRail</code></td>
+  <td>float</td>
+  <td>The vertical position of the gallery rail</td>
+ </tr><tr>
+  <td><code>Rail_res</code></td>
+  <td>float</td>
+  <td>The number of distinct control points for the spline that defines the rail path</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_Setting_round">Gem_Setting_round (Untextured_gem, hPavilion, Girdle, Space, Mode, yBase, v_Base_size, Prongs, dProng, Rail_type, yRail, Rail_res)</h3>
+
+<p>Creates an untextured prong setting with a circular or elliptical bridge and an optional gallery rail. The prong positions are specified in an array.
+
+<h4>Arguments</h4>
+<p>The bottom of the gemstone must be at <var>y</var> = 0; all vertical positions are interpreted with this assumption. The gemstone must be reasonably centered about the <var>y</var>-axis.
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Untextured_gem</code></td>
+  <td>untextured object</td>
+  <td>A surrogate for the gem that is to be set. This object must be untextured in order to avoid unwanted texture patches at gem/rail contact points.</td>
+ </tr><tr>
+  <td><code>hPavilion</code></td>
+  <td>float</td>
+  <td>The depth of the pavilion. If the pavilion datum is an angle, it must be converted to a depth (using function <a href="#Gem_fn_1Step_height"><code>Gem_fn_1Step_height()</code></a>, for example) before being used as an argument.</td>
+ </tr><tr>
+  <td><code>Girdle</code></td>
+  <td>float</td>
+  <td>The thickness of the girdle</td>
+ </tr><tr>
+  <td><code>Space</code></td>
+  <td>float</td>
+  <td>A nominal amount of space between the gemstone and the contact points of the setting, to prevent coincident surfaces. The actual amount of space may vary over parts of the gemstone.</td>
+ </tr><tr>
+  <td><code>Mode</code></td>
+  <td>float</td>
+  <td>One of the following:
+   <ul>
+    <li><code>GEM_OPEN</code>: the bridge will have an opening in the middle.
+    <li><code>GEM_CLOSED</code>: the bridge will be solid.
+    <li><code>GEM_HOLE</code>: instead of creating a setting object, <code>Gem_Setting_round()</code> will create an object suitable for carving a hole in the shank that matches the would-be setting.
+   </ul>
+  </td>
+ </tr><tr>
+  <td><code>yBase</code></td>
+  <td>float</td>
+  <td>The vertical position of the bridge</td>
+ </tr><tr>
+  <td><code>v_Base_size</code></td>
+  <td>vector</td>
+  <td>The dimensions of the bridge</td>
+ </tr><tr>
+  <td><code>Prongs</code></td>
+  <td>array of float</td>
+  <td>The longitudinal angular positions of the prongs, in degrees, where 0 is in the <var>x</var> direction and 90 is in the &minus;<var>z</var> direction</td>
+ </tr><tr>
+  <td><code>dProng</code></td>
+  <td>float</td>
+  <td>The diameter of the prongs</td>
+ </tr><tr>
+  <td><code>Rail_type</code></td>
+  <td>float</td>
+  <td>The form of the gallery rail:
+   <ul>
+    <li><code>GEM_NONE</code>: no gallery rail
+    <li><code>GEM_SEGMENTED</code>: a gallery rail made of straight segments
+    <li><code>GEM_CURVED</code>: a curved gallery rail
+   </ul>
+  </td>
+ </tr><tr>
+  <td><code>yRail</code></td>
+  <td>float</td>
+  <td>The vertical position of the gallery rail</td>
+ </tr><tr>
+  <td><code>Rail_res</code></td>
+  <td>float</td>
+  <td>The number of distinct control points for the spline that defines the rail path</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_Setting_round_auto">Gem_Setting_round_auto (Untextured_gem, hPavilion, Girdle, Space, Mode, yBase, v_Base_size, nProngs, dProng, Rail_type, yRail, Rail_res)</h3>
+
+<p>Creates an untextured prong setting with a circular or elliptical bridge and an optional gallery rail. The prong positions are determined automatically.
+
+<h4>Arguments</h4>
+<p>The bottom of the gemstone must be at <var>y</var> = 0; all vertical positions are interpreted with this assumption. The gemstone must be reasonably centered about the <var>y</var>-axis.
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Untextured_gem</code></td>
+  <td>untextured object</td>
+  <td>A surrogate for the gem that is to be set. This object must be untextured in order to avoid unwanted texture patches at gem/rail contact points.</td>
+ </tr><tr>
+  <td><code>hPavilion</code></td>
+  <td>float</td>
+  <td>The depth of the pavilion. If the pavilion datum is an angle, it must be converted to a depth (using function <a href="#Gem_fn_1Step_height"><code>Gem_fn_1Step_height()</code></a>, for example) before being used as an argument.</td>
+ </tr><tr>
+  <td><code>Girdle</code></td>
+  <td>float</td>
+  <td>The thickness of the girdle</td>
+ </tr><tr>
+  <td><code>Space</code></td>
+  <td>float</td>
+  <td>A nominal amount of space between the gemstone and the contact points of the setting, to prevent coincident surfaces. The actual amount of space may vary over parts of the gemstone.</td>
+ </tr><tr>
+  <td><code>Mode</code></td>
+  <td>float</td>
+  <td>One of the following:
+   <ul>
+    <li><code>GEM_OPEN</code>: the bridge will have an opening in the middle.
+    <li><code>GEM_CLOSED</code>: the bridge will be solid.
+    <li><code>GEM_HOLE</code>: instead of creating a setting object, <code>Gem_Setting_round_auto()</code> will create an object suitable for carving a hole in the shank that matches the would-be setting.
+   </ul>
+  </td>
+ </tr><tr>
+  <td><code>yBase</code></td>
+  <td>float</td>
+  <td>The vertical position of the bridge</td>
+ </tr><tr>
+  <td><code>v_Base_size</code></td>
+  <td>vector</td>
+  <td>The dimensions of the bridge</td>
+ </tr><tr>
+  <td><code>nProngs</code></td>
+  <td>array of float</td>
+  <td>The number of prongs</td>
+ </tr><tr>
+  <td><code>dProng</code></td>
+  <td>float</td>
+  <td>The diameter of the prongs</td>
+ </tr><tr>
+  <td><code>Rail_type</code></td>
+  <td>float</td>
+  <td>The form of the gallery rail:
+   <ul>
+    <li><code>GEM_NONE</code>: no gallery rail
+    <li><code>GEM_SEGMENTED</code>: a gallery rail made of straight segments
+    <li><code>GEM_CURVED</code>: a curved gallery rail
+   </ul>
+  </td>
+ </tr><tr>
+  <td><code>yRail</code></td>
+  <td>float</td>
+  <td>The vertical position of the gallery rail</td>
+ </tr><tr>
+  <td><code>Rail_res</code></td>
+  <td>float</td>
+  <td>The number of distinct control points for the spline that defines the rail path</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_Shank">Gem_Shank (RInner, ROuter, Width, Side, rEdge, use_Sturm)</h3>
+
+<p>Creates an untextured ring shank.
+<img class="demo" src="gemcuts_shank.jpg" alt="[Diagram of Gem_Shank() arguments]">
+The shank is flat on the inside, curved on the outside, centered on the origin, and oriented on the <var>x</var>-<var>z</var> plane.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>RInner</code></td>
+  <td>float</td>
+  <td>The inner radius of the shank</td>
+ </tr><tr>
+  <td><code>ROuter</code></td>
+  <td>float</td>
+  <td>The outer radius of the shank</td>
+ </tr><tr>
+  <td><code>Width</code></td>
+  <td>float</td>
+  <td>The vertical width of the shank</td>
+ </tr><tr>
+  <td><code>Side</code></td>
+  <td>float</td>
+  <td>The width of the side of the shank</td>
+ </tr><tr>
+  <td><code>rEdge</code></td>
+  <td>float</td>
+  <td>The radius of curvature of the edges of the shank where the inner or outer surface meets with the side</td>
+ </tr><tr>
+  <td><code>use_Sturm</code></td>
+  <td>float/Boolean</td>
+  <td>Whether or not to use the slower, but more accurate Sturmian root solver</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Functions">Functions</h2>
+
+<p>Note: In order to avoid a POV-Ray namespace scope feature, all function arguments in <code>gemcuts.inc</code> begin with “<code>gem_P</code>” followed by a digit. In this user manual, the “<code>gem_</code>” prefix is omitted for clarity.
+
+<h3 id="Gem_fn_1Step_height">Gem_fn_1Step_height (P0_Flat, P1)</h3>
+
+<p>Converts a crown or pavilion main facet angle to a height or depth. The girdle diameter is assumed to be 1.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>P0_Flat</code></td>
+  <td>float</td>
+  <td>The width of the table (for a crown) or the culet (for a pavilion)</td>
+ </tr><tr>
+  <td><code>P1</code></td>
+  <td>float</td>
+  <td>The angle, in degrees</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_fn_2Step_height">Gem_fn_2Step_height (P0_Flat, P1, P2)</h3>
+
+<p>Converts 2-step crown or pavilion facet angles to a height or depth. The facet widths are assumed to have equal horizontal components. The girdle diameter is assumed to be 1.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>P0_Flat</code></td>
+  <td>float</td>
+  <td>The width of the table (for a crown) or the culet (for a pavilion)</td>
+ </tr><tr>
+  <td><code>P1</code></td>
+  <td>float</td>
+  <td>The angle nearest the girdle, in degrees</td>
+ </tr><tr>
+  <td><code>P2</code></td>
+  <td>float</td>
+  <td>The angle farthest from the girdle, in degrees</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_fn_3Step_height">Gem_fn_3Step_height (P0_Flat, P1, P2, P3)</h3>
+
+<p>Converts 3-step crown or pavilion facet angles to a height or depth. The facet widths are assumed to have equal horizontal components. The girdle diameter is assumed to be 1.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>P0_Flat</code></td>
+  <td>float</td>
+  <td>The width of the table (for a crown) or the culet (for a pavilion)</td>
+ </tr><tr>
+  <td><code>P1</code></td>
+  <td>float</td>
+  <td>The angle nearest the girdle, in degrees</td>
+ </tr><tr>
+  <td><code>P2</code></td>
+  <td>float</td>
+  <td>The middle angle, in degrees</td>
+ </tr><tr>
+  <td><code>P3</code></td>
+  <td>float</td>
+  <td>The angle farthest from the girdle, in degrees</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_fn_4Step_height">Gem_fn_4Step_height (P0_Flat, P1, P2, P3, P4)</h3>
+
+<p>Converts 4-step crown or pavilion facet angles to a height or depth. The facet widths are assumed to have equal horizontal components. The girdle diameter is assumed to be 1.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>P0_Flat</code></td>
+  <td>float</td>
+  <td>The width of the table (for a crown) or the culet (for a pavilion)</td>
+ </tr><tr>
+  <td><code>P1</code></td>
+  <td>float</td>
+  <td>The angle nearest the girdle, in degrees</td>
+ </tr><tr>
+  <td><code>P2</code></td>
+  <td>float</td>
+  <td>The 2nd nearest angle from the girdle, in degrees</td>
+ </tr><tr>
+  <td><code>P3</code></td>
+  <td>float</td>
+  <td>The 3nd nearest angle from the girdle, in degrees</td>
+ </tr><tr>
+  <td><code>P4</code></td>
+  <td>float</td>
+  <td>The angle farthest from the girdle, in degrees</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_fn_Crown_angle">Gem_fn_Crown_angle (P0_Table, P1_hCrown)</h3>
+
+<p>Converts a crown height to a single crown main facet angle. The girdle diameter is assumed to be 1.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>P0_Table</code></td>
+  <td>float</td>
+  <td>The width of the table</td>
+ </tr><tr>
+  <td><code>P1_hCrown</code></td>
+  <td>float</td>
+  <td>The crown height</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_fn_Lakshmi">Gem_fn_Lakshmi (P0_Table)</h3>
+
+<p>Returns a star facet length that yields a <a href="https://en.wikipedia.org/wiki/Star_of_Lakshmi">Star of Lakshmi</a> on a round brilliant cut. The length is of the horizontal component, in proportion to the distance from the table edge to the girdle.
+
+<h4>Argument</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>P0_Table</code></td>
+  <td>float</td>
+  <td>The width of the table</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Gem_fn_Pavilion_angle">Gem_fn_Pavilion_angle (P0_Culet, P1_dPavilion)</h3>
+
+<p>Converts a pavilion depth to a single pavilion main facet angle. The girdle diameter is assumed to be 1.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>P0_Culet</code></td>
+  <td>float</td>
+  <td>The width of the culet</td>
+ </tr><tr>
+  <td><code>P1_dPavilion</code></td>
+  <td>float</td>
+  <td>The pavilion depth</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other_identifiers">Other Identifiers</h2>
+
+<h3>Example Round Brilliant Cut Arguments for Diamond</h3>
+
+<p>These values were calculated assuming diamond’s index of refraction and chromatic dispersion. Other materials will use different values.
+
+<table>
+ <tr>
+  <th>Identifier</th>
+  <th>Type</th>
+  <th>Description</th>
+  <th>Value</th>
+  <th>Cut</th>
+ </tr><tr>
+  <td><code>GEM_AMERICAN_CROWN</code></td>
+  <td>float</td>
+  <td>An example crown angle</td>
+  <td>34.5</td>
+  <td rowspan="3">American Standard, a.k.a. Ideal Cut or Tolkowsky Brilliant</td>
+ </tr><tr>
+  <td><code>GEM_AMERICAN_PAVILION</code></td>
+  <td>float</td>
+  <td>An example pavilion angle</td>
+  <td>40.75</td>
+ </tr><tr>
+  <td><code>GEM_AMERICAN_TABLE</code></td>
+  <td>float</td>
+  <td>An&nbsp;example&nbsp;table&nbsp;diameter</td>
+  <td>0.530</td>
+ </tr><tr>
+  <td><code>GEM_EPPLER_CROWN</code></td>
+  <td>float</td>
+  <td>An example crown angle</td>
+  <td>33.2</td>
+  <td rowspan="3">Practical Fine Cut or Eppler Cut</td>
+ </tr><tr>
+  <td><code>GEM_EPPLER_PAVILION</code></td>
+  <td>float</td>
+  <td>An example pavilion angle</td>
+  <td>40.8</td>
+ </tr><tr>
+  <td><code>GEM_EPPLER_TABLE</code></td>
+  <td>float</td>
+  <td>An example table diameter</td>
+  <td>0.560</td>
+ </tr><tr>
+  <td><code>GEM_EULITZ_CROWN</code></td>
+  <td>float</td>
+  <td>An example crown angle</td>
+  <td>33.6*</td>
+  <td rowspan="4">Eulitz Brilliant</td>
+ </tr><tr>
+  <td><code>GEM_EULITZ_GIRDLE</code></td>
+  <td>float</td>
+  <td>An example girdle thickness</td>
+  <td>0.015†</td>
+ </tr><tr>
+  <td><code>GEM_EULITZ_PAVILION</code></td>
+  <td>float</td>
+  <td>An example pavilion angle</td>
+  <td>40.8*</td>
+ </tr><tr>
+  <td><code>GEM_EULITZ_TABLE</code></td>
+  <td>float</td>
+  <td>An example table diameter</td>
+  <td>0.565</td>
+ </tr><tr>
+  <td><code>GEM_PRFINE_CROWN</code></td>
+  <td>float</td>
+  <td>An example crown angle</td>
+  <td>33.2</td>
+  <td rowspan="3">Practical Fine Cut or Eppler Cut</td>
+ </tr><tr>
+  <td><code>GEM_PRFINE_PAVILION</code></td>
+  <td>float</td>
+  <td>An example pavilion angle</td>
+  <td>40.8</td>
+ </tr><tr>
+  <td><code>GEM_PRFINE_TABLE</code></td>
+  <td>float</td>
+  <td>An example table diameter</td>
+  <td>0.560</td>
+ </tr><tr>
+  <td><code>GEM_IDEAL_CROWN</code></td>
+  <td>float</td>
+  <td>An example crown angle</td>
+  <td>41.1</td>
+  <td rowspan="3">Ideal Brilliant (not to be confused with the American Standard)</td>
+ </tr><tr>
+  <td><code>GEM_IDEAL_PAVILION</code></td>
+  <td>float</td>
+  <td>An example pavilion angle</td>
+  <td>38.7</td>
+ </tr><tr>
+  <td><code>GEM_IDEAL_TABLE</code></td>
+  <td>float</td>
+  <td>An example table diameter</td>
+  <td>0.561</td>
+ </tr><tr>
+  <td><code>GEM_PARKER_CROWN</code></td>
+  <td>float</td>
+  <td>An example crown angle</td>
+  <td>25.5</td>
+  <td rowspan="3">Parker Brilliant</td>
+ </tr><tr>
+  <td><code>GEM_PARKER_PAVILION</code></td>
+  <td>float</td>
+  <td>An example pavilion angle</td>
+  <td>40.9</td>
+ </tr><tr>
+  <td><code>GEM_PARKER_TABLE</code></td>
+  <td>float</td>
+  <td>An example table diameter</td>
+  <td>0.559</td>
+ </tr><tr>
+  <td><code>GEM_SCAND_CROWN</code></td>
+  <td>float</td>
+  <td>An example crown angle</td>
+  <td>34.5</td>
+  <td rowspan="3">Scandinavian Standard</td>
+ </tr><tr>
+  <td><code>GEM_SCAND_PAVILION</code></td>
+  <td>float</td>
+  <td>An example pavilion angle</td>
+  <td>40.75</td>
+ </tr><tr>
+  <td><code>GEM_SCAND_TABLE</code></td>
+  <td>float</td>
+  <td>An example table diameter</td>
+  <td>0.575</td>
+ </tr><tr>
+  <td><code>GEM_TOLKOWSKY_CROWN</code></td>
+  <td>float</td>
+  <td>An example crown angle</td>
+  <td>34.5</td>
+  <td rowspan="3">American Standard, a.k.a. Ideal Cut or Tolkowsky Brilliant</td>
+ </tr><tr>
+  <td><code>GEM_TOLKOWSKY_PAVILION</code></td>
+  <td>float</td>
+  <td>An example pavilion angle</td>
+  <td>40.75</td>
+ </tr><tr>
+  <td><code>GEM_TOLKOWSKY_TABLE</code></td>
+  <td>float</td>
+  <td>An&nbsp;example&nbsp;table&nbsp;diameter</td>
+  <td>0.530</td>
+ </tr>
+</table>
+
+<p>*Published sources give 33.36° and 40.48°, respectively, for the Eulitz crown and pavilion angles. These angles do not yield the published crown height and pavilion depth, but if the decimals are read as arc minutes, the mathematics works out. I am therefore assuming that the published sources have confused the units.
+
+<p>†Macro <code>Gem_Round_brilliant()</code> expects a maximum girdle thickness, but the Eulitz girdle value appears to be either the minimum or the average. The maximum thickness will vary depending on the other parameters, but is generally between 0.016 and 0.017 more than the minimum.
+
+<h3 id="other_ref">Other Reference Identifiers</h3>
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+ <tr>
+  <td><code>GEM_CLOSED</code></td>
+  <td>float</td>
+  <td>A directive to create a setting with no opening in the base</td>
+  <td>*</td>
+ </tr><tr>
+  <td><code>GEM_OPEN</code></td>
+  <td>float</td>
+  <td>A directive to create a setting with an opening in the base</td>
+  <td>*</td>
+ </tr><tr>
+  <td><code>GEM_HOLE</code></td>
+  <td>float</td>
+  <td>A directive that, instead of returning a setting object, an object suitable for carving a hole that matches the would-be setting be returned</td>
+  <td>*</td>
+ </tr><tr>
+  <td><code>GEM_CURVED</code></td>
+  <td>float</td>
+  <td>A directive to create a setting with a curved gallery rail</td>
+  <td>*</td>
+ </tr><tr>
+  <td><code>GEM_NONE</code></td>
+  <td>float</td>
+  <td>A directive to create a setting with no gallery rail</td>
+  <td>*</td>
+ </tr><tr>
+  <td><code>GEM_SEGMENTED</code></td>
+  <td>float</td>
+  <td>A directive to create a setting with a gallery rail made of straight segments</td>
+  <td>*</td>
+ </tr><tr>
+  <td><code>GEMCUTS_VERSION</code></td>
+  <td>float</td>
+  <td>The GemCuts version, in case the scene file needs that information</td>
+  <td>1.0</td>
+ </tr>
+</table>
+
+<p>*A <a href="https://en.wikipedia.org/wiki/Black_box">black box</a> value.
+
+<h3>Internal Identifiers</h3>
+
+<p>Any identifiers in <code>gemcuts.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About GemCuts</h2>
+
+<address>Copyright © 2018 Richard Callwood III.
+ <a href="http://creativecommons.org/licenses/LGPL/2.1/">
+  <img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+ </a>
+</address>
+
+<h3 id="Categories">Object Collection Categories</h3>
+
+<ul>
+ <li><strong>Areas of Interest</strong>
+  <ul>
+   <li>Household/office
+  </ul>
+ <li><strong>Contribution Types</strong>
+  <ul>
+   <li>Objects
+    <ul>
+     <li>Solid (CSG-able)
+    </ul>
+   <li>Macros
+   <li>Functions
+    <ul>
+     <li>Other
+    </ul>
+  </ul>
+</ul>
+
+<h3 id="Changes">Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>1.0</td>
+  <td>2018 February 27</td>
+  <td>The initial release:
+   <ul>
+    <li>The emerald and round brilliant cuts are implemented.
+    <li>Tools for modeling a ring setting are included.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<h3 id="Future">Possible Future Development</h3>
+
+<ul>
+ <li>Additional cuts, of course!
+ <li>More complex settings.
+</ul>
+
+<h3 id="Acknowledgments">Acknowledgments and Further Reading</h3>
+
+<ul>
+ <li><a href="http://diamondcut.gia.edu/05_diamond_anatomy.html">Gemological Institute of America’s diamond anatomy</a>
+ <li><a href="http://www.folds.net/diamond/index.html">Jasper Paulsen</a>
+ <lI><a href="http://www.prosumerdiamonds.com/">Prosumer Diamond</a>’s tutorials
+ <li>The round brilliant example arguments are taken from <a href="https://en.wikipedia.org/wiki/Diamond_cut#Proportions">Wikipedia</a> <sup>[additional citations needed]</sup>, and cross checked with other sources around the Web.
+</ul>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

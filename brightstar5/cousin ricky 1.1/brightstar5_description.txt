@@ -1,0 +1,2 @@
+Selected data derived from the Yale Bright Star Catalogue, preliminary 5th ed. This catalog contains all nighttime stars of magnitude 6.5 and brighter (roughly all nighttime stars visible to the naked eye), plus a few dimmer ones. Macros are included for star coloration and Bayer designation labels.
+In version 1.1, search times are greatly reduced.

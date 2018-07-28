@@ -1,0 +1,1 @@
+Some features require a Unicode font with the Greek alphabet. The demo scene uses times.ttf (Times New Roman), but the user may edit this.
