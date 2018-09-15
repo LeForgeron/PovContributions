@@ -1,0 +1,1 @@
+The 1943 Munsell renotations rendered as a CSG object.

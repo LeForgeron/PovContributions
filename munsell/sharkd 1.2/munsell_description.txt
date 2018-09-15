@@ -1,0 +1,5 @@
+The 1943 Munsell renotations rendered as a CSG object. There are two files.
+  1. Only includes real colors that exist in the sRGB gamut.
+  2. Includes all real values, but normalizes every color so that they all fit
+     within the sRGB gamut.
+ColorMine.inc is a dependency of the latter.

@@ -1,0 +1,8 @@
+1.0 - 2018-09-15
+* Initial release.
+* Planets do not have texture maps.
+* Planets are not tilted with respect to their orbital planes.
+* Planets are not oriented such that the correct side of the planet is facing 
+  the sun at a given moment.
+* Does not include a realistic and accurate star field.
+* Does not include Pluto and Ceres.
