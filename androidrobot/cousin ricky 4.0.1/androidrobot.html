@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AndroidRobot 4.0.1 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="androidrobot.css">
+</head>
+
+<body>
+
+<h1>AndroidRobot 4.0.1 User&nbsp;Manual</h1>
+
+<h2>Abstract</h2>
+
+<p><a href="androidrobot.jpg"><img class="demo" src="androidrobot_thumbnail.png"
+ title="Larger demo image" alt="[Thumbnail which links to a demo image]"></a>
+AndroidRobot is a library module from the
+<a href="https://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+<a href="http://lib.povray.org/">Object Collection</a>
+that defines a 3-D model of Google’s
+<a href="https://www.android.com/index.html">Android</a>™ robot,
+with posable head and limbs.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#AndroidRobot">AndroidRobot</a>
+   <li><a href="#AndroidRobot_Eye_radius">AndroidRobot_Eye_radius</a>
+   <li><a href="#AndroidRobot_Eye_v">AndroidRobot_Eye_v</a>
+   <li><a href="#AndroidRobot_Head">AndroidRobot_Head</a>
+   <li><a href="#AndroidRobot_Head_x">AndroidRobot_Head_x</a>
+   <li><a href="#AndroidRobot_Posed">AndroidRobot_Posed</a>
+   <li><a href="#AndroidRobot_Set_color">AndroidRobot_Set_color</a>
+  </ul>
+ <li><a href="#Other">Other identifiers</a>
+  <ul>
+   <li><a href="#Params">Global parameter</a>
+   <li><a href="#Reference">Reference identifiers</a>
+   <li><a href="#Short">Short form identifiers</a>
+   <li><a href="#Internal">Internal identifiers</a>
+  </ul>
+ <li><a href="#About">About AndroidRobot</a>
+  <ul>
+   <li><a href="#Categories">Categories</a>
+   <li><a href="#Changes">Change log</a>
+   <li><a href="#See_also">See also</a>
+  </ul>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan=2>Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>androidrobot.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>androidrobot.inc</code></td>
+  <td>The AndroidRobot software</td>
+ </tr><tr>
+  <td>
+   <code>androidrobot.pov</code><br>
+   <code>androidrobot_posed.pov</code>
+  </td>
+  <td>Scene description files demonstrating use of AndroidRobot</td>
+ </tr><tr>
+  <td>
+   <code>androidrobot.jpg</code><br>
+   <code>androidrobot_posed.jpg</code><br>
+   <code>androidrobot_thumbnail.png</code>
+  </td>
+  <td>Sample output images</td>
+ </tr><tr>
+  <th colspan=2>Administrative Files</th>
+ </tr><tr>
+  <th>File</th> <th>Description</th>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection
+   <p class="caveat"><strong>Caveat:</strong> This README file contains the text: “You may use images that you generate using these files without restriction.” For the AndroidRobot module, the Google license overrides this README clause. Google Inc. retains all trademark rights to the Android robot.
+  </td>
+ </tr><tr>
+  <td><code>androidrobot_description.txt</code></td>
+  <td>A brief description of AndroidRobot</td>
+ </tr><tr>
+  <td><code>androidrobot_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>androidrobot_prereqs.txt</code></td>
+  <td>Prerequisites (empty file)</td>
+ </tr><tr>
+  <td><code>androidrobot.css</code></td>
+  <td rowspan="3">Other administrative files</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p>Note for users of older versions of AndroidRobot: Files <code>androidrobot_cc-lgpl.png</code> and <code>droid.pov</code> are no longer used, and <code>androidrobot.png</code> has been replaced with <code>androidrobot.jpg</code>.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<p>AndroidRobot requires POV-Ray version 3.5 or later.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>androidrobot.inc</code> comply fully with the Object Collection naming standards, as <a href="https://news.povray.org/48ba92e8%241%40news.povray.org">revised August 2008</a> and <a href="https://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The reserved prefixes for this module are “<code>AndroidRobot</code>” and “<code>Droid</code>,” including any uppercase and lowercase variants. To avoid conflicts, do not introduce into your scene description file any identifiers with these names, or any identifiers that start with these names plus an underscore.
+
+<p>The identifier <code>View_POV_Include_Stack</code> from the standard include file <code>debug.inc</code> is referenced by <code>androidrobot.inc</code>; <code>debug.inc</code> itself is not used.
+
+<h3 id="Usage">Usage</h3>
+
+<ol>
+ <li>If you are using POV-Ray 3.7 or later, you <em>must</em> set <code>assumed_gamma</code> in <code>global_settings{}</code> prior to the next step, or you will get a parse error.
+ <li>Include this file once prior to using any of the macros:
+  <pre>#include "androidrobot.inc"</pre>
+  Including the file more than once is harmless, though unnecessary.
+</ol>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros">Macros</h2>
+
+<h3 id="AndroidRobot">AndroidRobot (Use_merge)</h3>
+
+<p>Creates an untextured robot. The robot faces the <var>x</var>-direction and the
+ bottom of the robot is at <code>ANDROIDROBOT_V_BASE</code>.
+
+<h4>Argument</h4>
+
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Use_merge</code></td>
+  <td>float/Boolean</td>
+  <td>If <code>yes</code>, the robot will be composed using CSG merge. If <code>no</code>, then CSG union will be used. In general, pass <code>yes</code> if the robot is to be transparent, <code>no</code> otherwise.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="AndroidRobot_Eye_radius">AndroidRobot_Eye_radius ()</h3>
+
+<p>Returns the radius (float) of the eyes’ cylindrical sockets.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="AndroidRobot_Eye_v">AndroidRobot_Eye_v ()</h3>
+
+<p>Returns the point (vector) where the central axis of the left eye’s cylindrical socket intersects the dome of the head.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="AndroidRobot_Head">AndroidRobot_Head (Outset)</h3>
+
+<p>Returns the dome on which the robot’s head is based. This is useful for developing eyes or other facial features.
+
+<h4>Argument</h4>
+
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Outset</code></td>
+  <td>float</td>
+  <td>An amount by which the dome is larger or smaller than the head. Zero returns a dome the same size as the head, a positive number returns a larger dome, and a negative number returns a smaller dome.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="AndroidRobot_Head_x">AndroidRobot_Head_x (x_Head)</h3>
+
+<p>Returns a transformation that is suitable for facial features. Apply this macro to facial features if you have applied a transformation to the robot’s head with <a href="#AndroidRobot_Posed">macro <code>AndroidRobot_Posed()</code></a>. (Do not apply the head’s transformation directly to the facial features, as this will not work properly for some transformations.)
+
+<h4>Argument</h4>
+
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>x_Head</code></td>
+  <td>transformation</td>
+  <td>The transformation to be applied to the facial features. Typically, this should be the same as the <code>x_Head</code> argument passed to <code>AndroidRobot_Posed()</code>.</td>
+ </tr>
+</table>
+
+<h4>Example</h4>
+
+<pre>union
+{ AndroidRobot_Posed
+  ( no, MyHeadRotation,
+    transform{}, transform{}, transform{}, transform{}
+  )
+  union
+  { object { UserDefinedEye translate AndroidRobot_Eye_v() }
+    object { UserDefinedEye translate AndroidRobot_Eye_v() * &lt;1, 1, -1> }
+    <strong>// transform { MyHeadRotation } // Wrong!</strong>
+    <strong>AndroidRobot_Head_x (MyHeadRotation) // Correct</strong>
+  }
+  pigment { ANDROIDROBOT_C_COLOR }
+}</pre>
+
+<p>See the demo scene file <code>androidrobot_posed.pov</code> for a complete example.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="AndroidRobot_Posed">AndroidRobot_Posed
+ (Use_merge, x_Head, x_Left_arm, x_Right_arm, x_Left_leg, x_Right_leg)</h3>
+
+<p>Creates an untextured posable robot.
+<img class="demo" src="androidrobot_posed.jpg" alt="[Image of posed robot]">
+See the demo scene file <code>androidrobot_posed.pov</code> for an example of how to use this.
+
+<p>For backward compatibility, <code>AndroidRobot_posed()</code> is also accepted.
+
+<h4>Arguments</h4>
+
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Use_merge</code></td>
+  <td>float/Boolean</td>
+  <td>If <code>yes</code>, the robot will be composed using CSG merge. If <code>no</code>, then CSG union will be used. In general, pass <code>yes</code> if the robot is to be transparent, <code>no</code> otherwise.</td>
+ </tr><tr>
+  <td><code>x_Head</code></td>
+  <td>transformation</td>
+  <td>The transformation to be applied to the head. The origin is at the neck.</td>
+ </tr><tr>
+  <td><code>x_Left_arm</code></td>
+  <td>transformation</td>
+  <td>The transformation to be applied to the left arm. The origin is at the shoulder.</td>
+ </tr><tr>
+  <td><code>x_Right_arm</code></td>
+  <td>transformation</td>
+  <td>The transformation to be applied to the right arm. The origin is at the shoulder.</td>
+ </tr><tr>
+  <td><code>x_Left_leg</code></td>
+  <td>transformation</td>
+  <td>The transformation to be applied to the left leg. The origin is at the hip.</td>
+ </tr><tr>
+  <td><code>x_Right_leg</code></td>
+  <td>transformation</td>
+  <td>The transformation to be applied to the right leg. The origin is at the hip.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="AndroidRobot_Set_color">AndroidRobot_Set_color (Version)</h3>
+
+<p>Sets the values of the Android Web color variables <a href="#Reference"><code>ANDROIDROBOT_C_COLOR</code> and <code>ANDROIDROBOT_C_RAWCOLOR</code></a>. Google has changed the official color, and this macro allows you to revert to the previous color.
+
+<h4>Argument</h4>
+
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Version</code></td>
+  <td>float</td>
+  <td>
+   <dl>
+    <dt>Value 4.0 or greater
+    <dd>The <a href="http://wiki.povray.org/content/Documentation:Tutorial_Section_3.3#Gamma_Handling">gamma</a>-adjusted color is <span class="color" style="background:#78C257">#78C257</span>, and the non-adjusted color is <span class="color" style="background:#B6E29E">rgb &lt;120, 194, 87> / 255</span>.
+    <dt>Values less than 4
+    <dd>The gamma-adjusted color is <span class="color" style="background:#A4C639">#A4C639</span>, and the non-adjusted color is <span class="color" style="background:#D2E482">rgb &lt;164, 198, 57> / 255</span>.
+   </dl>
+  </td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other">Other Identifiers</h2>
+
+<h3 id="Params">Global Parameter</h3>
+
+<p>This parameter may be #declared by the user prior to using the macros.
+
+<table>
+<tr><th>Parameter</th> <th>Type</th> <th>Description</th> <th>Default</th></tr>
+<tr>
+ <td><code>AndroidRobot_Version</code></td>
+ <td>float</td>
+ <td>A backwards compatibility setting to select the modeling of the robot according to the version of AndroidRobot:
+  <dl>
+   <dt>Values 1.0 &ndash; 2.1
+   <dd>The original model, which had the arms flush against the torso.
+   <dt>Value 2.2
+   <dd>Like the original model, except the arms are slightly separated from the torso.
+   <dt>Value 3.0
+   <dd>A model based on the source code of <a href="https://commons.wikimedia.org/wiki/File:Android_robot.svg">an SVG image</a>.
+   <dt>Value 4.0 or greater
+   <dd>Like 3.0, but with an updated official Web color.
+  </dl>
+ </td>
+ <td>4.01</td>
+</tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Reference">Reference Identifiers</h3>
+
+<table>
+<tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+<tr>
+ <td><code>ANDROIDROBOT_C_COLOR</code></td>
+ <td>color</td>
+ <td>The <a href="http://wiki.povray.org/content/Documentation:Tutorial_Section_3.3#Gamma_Handling">gamma</a>-adjusted official Android Web color. Use this if:
+  <ul>
+   <li>you have set <code>global_settings { assumed_gamma 1&nbsp;}</code> or
+   <li>you are using POV-Ray 3.7 or later (whatever your <code>assumed_gamma</code> setting).
+  </ul>
+  <p><strong>Warning:</strong> If you are using POV-Ray 3.62 or older, the gamma adjustment will be <em>incorrect</em> if <code>assumed_gamma</code> is set to any value other than 1.
+ <td>
+  <span class="color" style="background:#78C257">#78C257</span> *
+ </td>
+</tr><tr>
+ <td><code>ANDROIDROBOT_C_RAWCOLOR</code></td>
+ <td>color</td>
+ <td>The official Android Web color, without gamma adjustment. Use this if:
+  <ul>
+   <li>you have set <code>global_settings { assumed_gamma 2.2&nbsp;}</code>;
+   <li>you have set <code>global_settings { assumed_gamma srgb&nbsp;}</code>; or
+   <li>you are using POV-Ray 3.62 or older and have not set <code>assumed_gamma</code>.
+  </ul>
+ </td>
+ <td>
+  <span class="color" style="background:#B6E29E">rgb &lt;120, 194, 87> / 255</span> *
+ </td>
+</tr><tr>
+ <td><code>ANDROIDROBOT_HEIGHT</code></td>
+ <td>float</td>
+ <td>The height of the unposed robot, not including the antennae.</td>
+ <td>1.65</td>
+</tr><tr>
+ <td><code>ANDROIDROBOT_V_BASE</code></td>
+ <td>3-D vector</td>
+ <td>The location of the bottom of the unposed robot.</td>
+ <td>&lt;0, -0.55, 0></td>
+</tr>
+</table>
+
+<p>* This value may be changed with <a href="#AndroidRobot_Set_color">macro <code>AndroidRobot_Set_color()</code></a>.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Short">Short Form Identifiers</h3>
+
+<p>The short prefix from AndroidRobot 1.0 has been reinstated as of version 4.0. The following table lists the identifiers that have short form alternatives.
+
+<table>
+ <tr>
+  <th>Long Form</th>
+  <th>Short Form</th>
+ </tr><tr>
+  <td><code>AndroidRobot</code></td>
+  <td><code>Droid</code></td>
+ </tr><tr>
+  <td><code>ANDROIDROBOT_C_COLOR</code></td>
+  <td><code>DROID_C_COLOR</code></td>
+ </tr><tr>
+  <td><code>ANDROIDROBOT_C_RAWCOLOR</code></td>
+  <td><code>DROID_C_RAWCOLOR</code></td>
+ </tr><tr>
+  <td><code>AndroidRobot_Eye_radius</code></td>
+  <td><code>Droid_Eye_radius</code></td>
+ </tr><tr>
+  <td><code>AndroidRobot_Eye_v</code></td>
+  <td><code>Droid_Eye_v</code></td>
+ </tr><tr>
+  <td><code>AndroidRobot_Head</code></td>
+  <td><code>Droid_Head</code></td>
+ </tr><tr>
+  <td><code>AndroidRobot_Head_x</code></td>
+  <td><code>Droid_Head_x</code></td>
+ </tr><tr>
+  <td><code>ANDROIDROBOT_HEIGHT</code></td>
+  <td><code>DROID_HEIGHT</code></td>
+ </tr><tr>
+  <td><code>AndroidRobot_Posed</code></td>
+  <td><code>Droid_Posed</code></td>
+ </tr><tr>
+  <td><code>AndroidRobot_Set_color</code></td>
+  <td><code>Droid_Set_color</code></td>
+ </tr><tr>
+  <td><code>ANDROIDROBOT_V_BASE</code></td>
+  <td><code>DROID_V_BASE</code></td>
+ </tr>
+</table>
+
+<p>The following identifier has no short form:
+<ul>
+ <li>AndroidRobot_Version
+</ul>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Internal">Internal Identifiers</h3>
+
+<p>Any identifiers in <code>androidrobot.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About AndroidRobot</h2>
+
+<address>
+ The SDL code is copyright © 2009 Karl Ostmo and © 2011 &ndash; 2018 Richard Callwood III.
+ <a href="https://creativecommons.org/licenses/LGPL/2.1/"><img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License."></a>
+ <br>Android is a trademark of Google Inc. The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons 3.0 Attribution License</a>.
+</address>
+
+<h3 id="Categories">Object Collection Categories</h3>
+
+<ul>
+ <li><strong>Areas of Interest</strong>
+  <ul>
+   <li>Household/office
+    <ul>
+     <li>Computers
+    </ul>
+  </ul>
+ <li><strong>Contribution Types</strong>
+  <ul>
+   <li>Objects
+    <ul>
+     <li>Solid (CSG-able)
+    </ul>
+   <li>Macros
+  </ul>
+</ul>
+
+<h3 id="Changes">Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>1.0</td> <td>2009 October 30</td>
+  <td>
+   <ul>
+    <li>The software is created by Karl Ostmo.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>2.0</td> <td>2011 July 23</td>
+  <td>
+   <ul>
+    <li>The module is made namespace compliant.
+    <li>To facilitate modularization, the code is separated into an include file and a demo scene.
+    <li>In the process, the pigment is removed from the robot model, and the official color declared separately.
+    <li>The position of the base of the robot is declared.
+    <li>The robot is made posable, and an additional demo scene is added to illustrate this capability.
+    <li>The modeling, position, height, and orientation of the robot are left unchanged.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>2.1</td> <td>2012 June 26</td>
+  <td>
+   <ul>
+    <li>The non-gamma-adjusted official color is added.
+    <li>The demo files are set to POV-Ray 3.5.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>2.1a</td> <td>2012 June 28</td>
+  <td>
+   <ul>
+    <li>A correction is made to the Google license statement.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>2.2</td> <td>2014 October 5</td>
+  <td>
+   <ul>
+    <li>The arms are moved away from the torso, as they appear in the 2-D logo.
+    <li>The Google license statement is upgraded.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>3.0</td> <td>2015 April 25</td>
+  <td>
+   <ul>
+    <li>The robot is remodeled based on an SVG source. The position, height, and orientation of the robot are left unchanged.
+    <li>The height of the robot is declared.
+    <li>Tools are added to facilitate user modeling of eyes.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>3.0a</td> <td>2015 April 27</td>
+  <td>
+   <ul>
+    <li>A correction is made to the user manual.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>4.0</td> <td>2018 September 23</td>
+  <td>
+   <ul>
+    <li>The short prefix is reinstated.
+    <li>The official Android Web color is updated.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>4.0.1</td> <td>2019 March 21</td>
+  <td>
+   <ul>
+    <li>The message to the debug stream stating that <code>androidrobot.inc</code> is included is suppressed by default.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<h4>New SVG Model</h4>
+<p>Google has published a new SVG image since AndroidRobot 3.0a was released. The new image appears virtually indistinguishable from the old, except for the color and the lack of a white border. Upon close visual inspection, it appears very slightly different. However, the new SVG file is much harder to examine than the file posted to Wikimedia, and I do not believe such minor changes would be worth the effort to update the POV model.
+
+<h3 id="See_also">See Also</h3>
+
+<ul>
+ <li><a href="https://developer.android.com/distribute/marketing-tools/brand-guidelines#android_robot">Branding information</a>: important legal information from Google</li>
+ <li><a href="https://commons.wikimedia.org/wiki/File:Android_Robot_POV-Ray.png">POV-Ray render at Wikimedia Commons</a></li>
+ <li><a href="https://commons.wikimedia.org/wiki/File:Android_robot.svg">SVG image at Wikimedia Commons</a>, allegedly taken from a no-longer-extant Google Web page</li>
+</ul>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

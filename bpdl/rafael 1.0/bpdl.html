@@ -1,0 +1,307 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>BPDL</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "BPDL_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="BPDL_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"BPDL.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="BPDL_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "BPDL.inc" (BaseParaDecorarLampara)
+dibuja una base para lámpara, en la parte superior se ubicaría
+un bombillo o algún otro objeto con fines decorativos.
+Tiene una macro para cambiar las texturas, 
+y es muy poco flexible. No es compatible con POV-Ray 3.1.
+<p>
+La versión original de este archivo se desarrolló con el popular software
+gratuito Blender. Para su conversión a POV-Ray se utilizó el programa Poseray.
+<br>
+<table border=0>
+<tr>
+<td>
+<img alt="Poseray" src="BPDL_pose.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://mysite.verizon.net/sfg0000/">http://mysite.verizon.net/sfg0000/</a>
+</td>
+</tr>
+</table>
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie los archivos "BPDL.inc" y "BPDL_AUX.inc" en dicho subdirectorio;&nbsp; únicamente 
+estos dos son necesarios.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "BPDL.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "BPDL.inc" y "BPDL_AUX.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="BPDL.jpg" target="_blank" >
+<img alt="Base lámpara" src="BPDL_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="BPDL.jpg" target="_blank" >
+<font size = -2>
+Base lámpara
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "BPDL.inc"
+    
+    object      {
+      BPDL_BaseLampara( )
+      translate         <-1.95,+1.60,-4.80>    
+    }
+</pre>
+<p>
+La macro principal no tiene parámetros.
+<pre>
+    #macro BPDL_BaseLampara( )
+</pre>
+<p>
+La siguiente macro permite modificar las texturas.
+<pre>
+    #macro BPDL_BaseParaDecorarLampara( TexturaPrincipal, TexturaSuperior )
+</pre>
+<dl>
+<dt><i>TexturaPrincipal</i> :
+<dd>Textura principal del objeto.
+Valor por defecto BPDL_TexturaPrincipal.
+<dt><i>TexturaSuperior</i> :
+<dd>Textura de la cápsula superior para el bombillo.
+Valor por defecto BPDL_TexturaSuperior.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "BPDL.inc"
+    
+    object      {
+      BPDL_BaseParaDecorarLampara( BPDL_TexturaPrincipal, BPDL_TexturaSuperior )
+      translate         <-1.95,+1.60,-4.80>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El aparato se encuentra contenido entre las siguientes dimensiones:
+<pre>
+    Alto		= 128*L
+    Radio Base		=  55*L
+</pre>
+<p>
+Los extremos de las patas de la base, se encuentran en los vértices de un triángulo
+casi equilátero sobre el plano </>XZ</i>.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>BPDL_DefectoTexturaPrincipal</i> 
+<dd>Textura principal del aparato.
+<dt><i>BPDL_DefectoTexturaSuperior</i> 
+<dd>Textura de la cápsula superior para ubicar el bombillo.
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad.
+<p>
+<pre>
+    #declare BPDL_TexturaPrincipal		=
+		texture  { BPDL_DefectoTexturaPrincipal			}
+</pre>
+Textura principal del aparato.
+<p>
+<pre>
+    #declare BPDL_TexturaSuperior		=	 
+		texture  { BPDL_DefectoTexturaSuperior			}
+</pre>
+Textura de la cápsula superior para ubicar el bombillo.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "BPDL.inc"
+    #include "textures.inc"
+                 
+    #declare BPDL_TexturaPrincipal      = 
+      texture                           {
+        average
+        texture_map                     {
+          [ 0.5 BPDL_DefectoTexturaPrincipal ]
+          [ 0.5 Gold_Texture ]
+        }
+      }  
+      
+    #declare BPDL_TexturaSuperior       = BPDL_TexturaPrincipal             
+    
+    object      {
+      BPDL_BaseLampara( )
+      translate         <-1.95,+1.60,-4.80>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+La simetría del objeto es sólo aproximada, pues varios elementos se ubicaron en forma visual.
+Algunas rejillas fueron generadas sin la simetría apropiada.
+<p>
+La estructura original utilizó en forma abundantes metabolas de forma variada generadas en
+Blender. Lamentablemente, desconozco como aprovechar estas metabolas en POV-Ray sin 
+interconvertirlas a <i>mesh2</i>.
+<p>
+El archivo <i>Blender</i> original que podría venir incluído en la distribución, se exportó
+a formato <i>3ds</i> que es reconocido por <i>Poseray</i>. Nosotros preferimos exportar
+a Moray, en vez de POV-Ray pues el archivo resultante Moray ofrece una mejor separación
+de los elementos.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros modelos de base para lámpara.</li>
+  <li>Ofrecer una versión como lámpara completa.</li>
+  <li>Mayor cantidad de texturas por defecto.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="BPDL_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(28/agosto/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="BPDL_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="BPDL_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

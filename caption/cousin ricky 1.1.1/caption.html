@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Caption 1.1.1 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="caption.css">
+</head>
+
+<body>
+
+<h1>Caption 1.1.1 User&nbsp;Manual</h1>
+
+<h2>Abstract</h2>
+
+<p>
+<a href="caption.jpg"><img class="demo" src="caption_thumbnail.jpg" title="Larger demo image" alt="[Thumbnail which links to a demo image]"></a>
+Caption is a library module from the
+<a href="https://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+<a href="http://lib.povray.org/">Object Collection</a>
+that creates boxes with imprinted text. With an opaque or partially transparent box, this is useful for quickly annotating busy scenes where text might otherwise be difficult to read.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#Emission">The c_Emission argument</a>
+   <li><a href="#Object">The Object argument</a>
+   <li><a href="#Caption">Caption</a>
+   <li><a href="#Caption_Object">Caption_Object</a>
+   <li><a href="#Caption_Object_by_font">Caption_Object_by_font</a>
+   <li><a href="#Caption_Texture">Caption_Texture</a>
+   <li><a href="#Caption_Uniform">Caption_Uniform</a>
+  </ul>
+ <li><a href="#Other_identifiers">Other identifiers</a>
+ <li><a href="#About">About Caption</a>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan="2">Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>caption.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>caption.inc</code></td>
+  <td>The Caption software</td>
+ </tr><tr>
+  <td><code>caption.pov</code></td>
+  <td rowspan="2">Scene description files demonstrating use of Caption</td>
+ </tr><tr>
+  <td><code>caption_uniform.pov</code></td>
+ </tr><tr>
+  <td><code>caption.jpg</code></td>
+  <td rowspan="3">Sample output images</td>
+ </tr><tr>
+  <td><code>caption_uniform.png</code></td>
+ </tr><tr>
+  <td><code>caption_thumbnail.jpg</code></td>
+ </tr><tr>
+  <td><code>caption_prism.png</code></td>
+  <td>An illustration for the user manual</td>
+ </tr><tr>
+  <th colspan="2">Administrative Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <td><code>caption_description.txt</code></td>
+  <td>A brief description of Caption</td>
+ </tr><tr>
+  <td><code>caption_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>caption_prereqs.txt</code></td>
+  <td>Prerequisites (empty file)</td>
+ </tr><tr>
+  <td><code>caption.css</code></td>
+  <td rowspan="3">Other administrative files</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<p>Caption requires POV-Ray version 3.5 or later.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>caption.inc</code> comply fully with the Object Collection naming standards, as <a href="https://news.povray.org/48ba92e8%241%40news.povray.org">revised August 2008</a> and <a href="https://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The reserved prefix for this module is “<code>caption</code>,” including any uppercase and lowercase variants. To avoid conflicts, do not introduce into your scene description file any identifiers with this name, or any identifiers that start with this prefix plus an underscore.
+
+<p>The standard include file <code>math.inc</code> is used by <code>caption.inc</code>. The identifier <code>View_POV_Include_Stack</code> from the standard include file <code>debug.inc</code> is referenced by <code>caption.inc</code>, although <code>debug.inc</code> itself is not used.
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include this file once prior to using any of the macros:
+<pre>#include "caption.inc"</pre>
+<p>Including the file more than once is harmless, though unnecessary.
+
+<p>Note that as of POV-Ray version 3.7, objects positioned with <code>screen.inc</code> do not contribute radiosity to a scene, but in earlier versions of POV-Ray, they do.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros">Macros</h2>
+
+<h3 id="Emission">The c_Emission Argument</h3>
+
+<p>This argument controls the “glow” of a caption object, that is, the portion of the object’s colors that is independent of the environmental lighting. The effect is slightly different depending on the version of POV-Ray.
+
+<ul>
+ <li><strong>POV-Ray 3.7</strong>
+  <ul>
+   <li>If all three color components of the <code>c_Emission</code> argument are negative (or if the argument is a negative float), then the ambient and diffuse finishes are turned off for the object, and the emission finish is set to 1.0.
+   <li>Otherwise, the emission finish on the object is set to the value of the <code>c_Emission</code> argument, and the ambient and diffuse finishes default.
+  </ul>
+ <li><strong>POV-Ray 3.5 or 3.6</strong>
+  <ul>
+   <li>If all three color components of the <code>c_Emission</code> argument are negative (or if the argument is a negative float), then the diffuse finish is turned off for the object, and the ambient finish is set to 1.0.
+   <li>Otherwise, the ambient finish on the object is set to the value of the <code>c_Emission</code> argument, and the diffuse finish defaults.
+  </ul>
+</ul>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Object">The Object Argument</h3>
+
+<p>
+<img class="demo" src="caption_prism.png" alt="[Example of a prismatic object on the left, and a non-prismatic object on the right]">
+Several of the macros take an object as an argument to use as a pattern. The object is projected along the <var>z</var> direction such that it is centered on the <var>x</var>-<var>y</var> plane, the object’s “center” being measured from its bounding box. The easiest way to get predictable results is for the object to be prismatic in form; that is, its cross section in <var>x</var>-<var>y</var> should not vary for any value of <var>z.</var>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Caption" class="anew">Caption (s_Text, s_Font, v_Padding, c_Text, c_Background, c_Emission)</h3>
+
+<p>Returns a box with text printed on its &minus;<var>z</var> face. The &minus;<var>z</var> face will lie in the <var>x</var>-<var>y</var> plane.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>s_Text</code></td>
+  <td>string</td>
+  <td>The text string to be imprinted.</td>
+ </tr><tr>
+  <td><code>s_Font</code></td>
+  <td>string</td>
+  <td>The font to be used. A null string defaults to Cyrvetica (<code>cyrvetic.ttf</code>).</td>
+ </tr><tr>
+  <td><code>v_Padding</code></td>
+  <td>vector</td>
+  <td>The <var>x</var> and <var>y</var> components are the padding to apply around the text, and <var>z</var> is the depth of the box. If there is a <var>t</var> component, then it will be used instead of <var>y</var> to pad the top of the text.</td>
+ </tr><tr>
+  <td><code>c_Text</code></td>
+  <td>color</td>
+  <td>The color of the text.</td>
+ </tr><tr>
+  <td><code>c_Background</code></td>
+  <td>color</td>
+  <td>The color of the negative space.</td>
+ </tr><tr>
+  <td><code>c_Emission</code></td>
+  <td>color</td>
+  <td>See the <a href="#Emission">description of the <code>c_Emission</code> argument</a>.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Caption_Object">Caption_Object (Object, v_Padding, c_Object, c_Background, c_Emission)</h3>
+
+<p>Returns a box with a cross section of an object imprinted on its &minus;<var>z</var> face. The &minus;<var>z</var> face will lie in the <var>x</var>-<var>y</var> plane.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Object</code></td>
+  <td>object</td>
+  <td>The <a href="#Object">object to be imprinted</a>.</td>
+ </tr><tr>
+  <td><code>v_Padding</code></td>
+  <td>vector</td>
+  <td>The <var>x</var> and <var>y</var> components are the padding to apply around the object, and <var>z</var> is the depth of the box. If there is a <var>t</var> component, then it will be used instead of <var>y</var> to pad the top of the object. The padding is measured around the object’s bounding box.</td>
+ </tr><tr>
+  <td><code>c_Object</code></td>
+  <td>color</td>
+  <td>The color of the object to be imprinted.</td>
+ </tr><tr>
+  <td><code>c_Background</code></td>
+  <td>color</td>
+  <td>The color of the negative space.</td>
+ </tr><tr>
+  <td><code>c_Emission</code></td>
+  <td>color</td>
+  <td>See the <a href="#Emission">description of the <code>c_Emission</code> argument</a>.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Caption_Object_by_font">Caption_Object_by_font (Object, s_Font, v_Padding, c_Object, c_Background, c_Emission)</h3>
+
+<p>Returns a box with a cross section of an object imprinted on its &minus;<var>z</var> face. To facilitate visual consistency across different calls to this macro, vertical padding will be applied around a font’s metrics, rather than the object itself. The &minus;<var>z</var> face will lie in the <var>x</var>-<var>y</var> plane.
+
+<p>Font metrics are measured around the string <a href="#Parameters"><code>Caption_s_Font_exemplar</code></a>.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Object</code></td>
+  <td>object</td>
+  <td>The <a href="#Object">object to be imprinted</a>.</td>
+ </tr><tr>
+  <td><code>s_Font</code></td>
+  <td>string</td>
+  <td>A font to be used as a template for the metrics. A null string defaults to Cyrvetica (<code>cyrvetic.ttf</code>).</td>
+ </tr><tr>
+  <td><code>v_Padding</code></td>
+  <td>vector</td>
+  <td>The <var>x</var> component is the horizontal padding around the object’s bounding box; <var>y</var> is the vertical padding, measured around the pre-determined character string; and <var>z</var> is the depth of the box. If there is a <var>t</var> component, then it will be used instead of <var>y</var> to pad the top of the object.
+  </td>
+ </tr><tr>
+  <td><code>c_Object</code></td>
+  <td>color</td>
+  <td>The color of the object to be imprinted.</td>
+ </tr><tr>
+  <td><code>c_Background</code></td>
+  <td>color</td>
+  <td>The color of the negative space.</td>
+ </tr><tr>
+  <td><code>c_Emission</code></td>
+  <td>color</td>
+  <td>See the <a href="#Emission">description of the <code>c_Emission</code> argument</a>.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Caption_Texture">Caption_Texture (Object, c_Object, c_Background, c_Emission)</h3>
+
+<p>Returns an object texture. The object will be translated and scaled in the <var>z</var> direction such that 0.5 POV unit of the object lies on the each side of <var>x</var>-<var>y</var> plane. No transformations will be made in <var>x</var> or <var>y</var>. Note that the transformations are applied only to the texture, and will not affect the object itself.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Object</code></td>
+  <td>object</td>
+  <td>The <a href="#Object">object to be used for the texture</a>.</td>
+ </tr><tr>
+  <td><code>c_Object</code></td>
+  <td>color</td>
+  <td>The color of the object space.</td>
+ </tr><tr>
+  <td><code>c_Background</code></td>
+  <td>color</td>
+  <td>The color of the negative space.</td>
+ </tr><tr>
+  <td><code>c_Emission</code></td>
+  <td>color</td>
+  <td>See the <a href="#Emission">description of the <code>c_Emission</code> argument</a>.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Caption_Uniform">Caption_Uniform (s_Text, s_Font, v_Padding, c_Text, c_Background, c_Emission)</h3>
+
+<p>Returns a box with text printed on its &minus;<var>z</var> face.
+<img class="demo" src="caption_uniform.png" alt="[Illustration of the difference between Caption() and Caption_Uniform()]">
+To facilitate visual consistency across different calls to this macro, vertical padding will be applied around the font’s metrics, rather than the text object itself. The illustration shows how <code>Caption_Uniform()</code> can align several captions in a way that <code>Caption()</code> cannot. The &minus;<var>z</var> face will lie in the <var>x</var>-<var>y</var> plane.
+
+<p>Font metrics are measured around the string <a href="#Parameters"><code>Caption_s_Font_exemplar</code></a>.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>s_Text</code></td>
+  <td>string</td>
+  <td>The text string to be imprinted.</td>
+ </tr><tr>
+  <td><code>s_Font</code></td>
+  <td>string</td>
+  <td>The font to be used. A null string defaults to Cyrvetica (<code>cyrvetic.ttf</code>).</td>
+ </tr><tr>
+  <td><code>v_Padding</code></td>
+  <td>vector</td>
+  <td>The <var>x</var> component is the horizontal padding around the text; <var>y</var> is the vertical padding, measured around the pre-determined character string; and <var>z</var> is the depth of the box. If there is a <var>t</var> component, then it will be used instead of <var>y</var> to pad the top of the text.
+   <p>Note: The bottom and top extents of the pre-determined character string are not intended to represent the minimum and maximum extents of all character glyphs in the font. Therefore, zero is not recommended as the <var>y</var> or <var>t</var> component, as the bottoms or tops of some characters may be clipped.
+  </td>
+ </tr><tr>
+  <td><code>c_Text</code></td>
+  <td>color</td>
+  <td>The color of the text.</td>
+ </tr><tr>
+  <td><code>c_Background</code></td>
+  <td>color</td>
+  <td>The color of the negative space.</td>
+ </tr><tr>
+  <td><code>c_Emission</code></td>
+  <td>color</td>
+  <td>See the <a href="#Emission">description of the <code>c_Emission</code> argument</a>.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other_identifiers">Other Identifiers</h2>
+
+<h3 id="Parameters">Global Parameter</h3>
+
+<table>
+ <tr>
+  <th>Identifier</th> <th>Type</th> <th>Description</th> <th>Default</th>
+ </tr><tr>
+  <td><code>Caption_s_Font_exemplar</code></td>
+  <td>string</td>
+  <td>A string used to determine the text top and text bottom working values. It should not be assumed that all character glyphs will fit entirely between these values.</td>
+  <td><code>"Xp"</code></td>
+ </tr>
+</table>
+
+<h3>Reference Identifier</h3>
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+ <tr>
+  <td><code>CAPTION_VERSION</code></td>
+  <td>float</td>
+  <td>The Caption version, in case the scene file needs that information.</td>
+  <td>1.11</td>
+ </tr>
+</table>
+
+<h3>Internal Identifiers</h3>
+
+<p>Any identifiers in <code>caption.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About Caption</h2>
+
+<address>Copyright © 2013 &ndash; 2019 Richard Callwood III.
+ <a href="https://creativecommons.org/licenses/LGPL/2.1/">
+  <img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+ </a>
+</address>
+
+<h3 id="Categories">Object Collection Categories</h3>
+
+<ul>
+ <li><strong>Areas of Interest</strong>
+  <ul>
+   <li>Abstract forms
+   <li>Games
+    <ul>
+     <li>Video games
+    </ul>
+  </ul>
+ <li><strong>Contribution Types</strong>
+  <ul>
+   <li>Objects
+    <ul>
+     <li>Solid (CSG-able)
+    </ul>
+   <li>Textures
+   <li>Macros
+  </ul>
+</ul>
+
+<h3>Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>N/A</td>
+  <td>2013 March 13</td>
+  <td>
+   <ul>
+    <li>The software is created, based on code I wrote between 2004 and 2006.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.0</td>
+  <td>2013 December 23</td>
+  <td>
+   <ul>
+    <li>A macro is added for general objects, not just text.
+    <li>The software is adapted for the Object Collection.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.0.1</td>
+  <td>2015 May 31</td>
+  <td>
+   <ul>
+    <li>Colors are accepted for the <code>Emission</code> argument.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.1</td>
+  <td>2016 April 29<br>(uploaded April 30)</td>
+  <td>
+   <ul>
+    <li>Top padding may differ from bottom padding.
+    <li>Padding may be applied around the font metrics rather than the text or object itself.
+    <li>A texture may be obtained without being attached to an object.
+    <li>The emission formal parameters are prefixed with <code>c_</code> to emphasize their type. The functionality is unchanged.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.1.1</td> <td>2019 March 30</td>
+  <td>
+   <ul>
+    <li>The message to the debug stream stating that <code>caption.inc</code> is included is suppressed by default.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+A tool for integrating spectral curves, intended for use with Lilysoft's spectral renderer. The intention is to capture sharp peaks in continuous emission spectra, but it also works with reflection spectra.

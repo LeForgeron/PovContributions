@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BeamTest 1.2.1 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="beamtest.css">
+</head>
+
+<body>
+
+<h1>BeamTest 1.2.1 User&nbsp;Manual</h1>
+
+<p class="intro">A library module from the
+<a href="https://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+<a href="http://lib.povray.org/">Object Collection</a>.
+
+<h2>Abstract</h2>
+
+<p><a href="beamtest.jpg"><img class="demo" src="beamtest_thumbnail.png" title="Larger demo image" alt="[Thumbnail which links to a demo image]"></a>
+Sometimes, it is desirable to know the behavior of light refracting through or reflecting off a transparent or specular object before incorporating the object into a scene. Examples could be a gem cut or a lens system.
+BeamTest provides for optical testing of such objects by shooting beams of light at two-dimensional slices of objects.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Parameters">Parameters</a>
+ <li><a href="#Macros">Macros</a>
+  <ul>
+   <li><a href="#Beam_angled">Beam_angled</a>
+   <li><a href="#Beam_sloped">Beam_sloped</a>
+   <li><a href="#Beam_targeted">Beam_targeted</a>
+  </ul>
+ <li><a href="#Other">Other identifiers</a>
+ <li><a href="#About">About BeamTest</a>
+  <ul>
+   <li><a href="#Categories">Categories</a>
+   <li><a href="#Changes">Change log</a>
+   <li><a href="#Acknowledgments">Acknowledgments</a>
+  </ul>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan=2>Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>beamtest.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>beamtest.inc</code></td>
+  <td>The BeamTest software</td>
+ </tr><tr>
+  <td><code>beamtest.pov</code></td>
+  <td>A demonstration scene description file</td>
+ </tr><tr>
+  <td><code><a href="beamtest.jpg">beamtest.jpg</a></code></td>
+  <td rowspan="2">Sample output images</td>
+ </tr><tr>
+  <td><code>beamtest_thumbnail.png</code></td>
+ </tr><tr>
+  <td><code>beamtest_spectral.pov</code></td>
+  <td>A scene description file demonstrating use with Lilysoft’s SpectralRender</td>
+ </tr><tr>
+  <td><code><a href="beamtest_spectral.jpg">beamtest_spectral.jpg</a></code></td>
+  <td>A spectrally rendered sample output image</td>
+ </tr><tr>
+  <th colspan=2>Administrative Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <td><code>beamtest_description.txt</code></td>
+  <td>A brief description of BeamTest</td>
+ </tr><tr>
+  <td><code>beamtest_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>beamtest_prereqs.txt</code></td>
+  <td>Prerequisites</td>
+ </tr><tr>
+  <td><code>beamtest.css</code></td>
+  <td rowspan="3">Other administrative files</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p>Note: The file <code>beamtest_cc-lgpl.png</code> is no longer used.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<p>BeamTest requires POV-Ray version 3.6 or later. POV-Ray 3.7 or later is recommended for the most accurate dispersion.
+
+<hr style="display:block">
+
+<p>The demo scene <code>beamtest_spectral.pov</code> requires <a href="https://www.lilysoft.org/CGI/SR/Spectral%20Render.htm">SpectralRender</a> and <a href="http://www.ignorancia.org/index.php/technical/lightsys/">Lightsys&nbsp;IV</a> (available under other licenses), and POV-Ray 3.7 or later. (These are not prerequisites for general use of the module.) Only two files from Lightsys are actually required; if you do not wish to download the entire package, these two files can be downloaded at the <a href="https://www.lilysoft.org/CGI/SR/Spectral%20Render.htm">SpectralRender page</a>, in the prerequisites section.
+<ul>
+ <li>If you choose to download SpectralRender and Lightsys IV, <strong>do not</strong> save them to your Object Collection folder, but do make sure that they are in your <a href="http://wiki.povray.org/content/Reference:Scene_Parsing_Options#Library_Paths">library path</a>.
+</ul>
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>beamtest.inc</code> comply fully with the Object Collection naming standards, as <a href="https://news.povray.org/48ba92e8%241%40news.povray.org">revised August 2008</a> and <a href="https://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The reserved prefixes for this module are “<code>BeamTest</code>” and “<code>Beam</code>,” including any uppercase and lowercase variants. To avoid conflicts, do not introduce into your scene description file any identifiers with these names, or any identifiers that start with these names plus an underscore.
+
+<p>The identifier <code>View_POV_Include_Stack</code> from the standard include file <code>debug.inc</code> is referenced by <code>beamtest.inc</code>; <code>debug.inc</code> itself is not used.
+
+<h3 id="Usage">Usage</h3>
+
+<ol>
+ <li>Declare the appropriate parameters, <a href="#Parameters">described below</a>.
+ <li>
+  <p>Include this file once prior to using any of the macros:
+  <pre>#include "beamtest.inc"</pre>
+  <p>Including the file more than once is harmless, though unnecessary.
+ <li>Create the light sources using the <a href="#Macros">provided macros</a>, and place the objects to be tested.
+</ol>
+
+<p>A camera is set up automatically, and the <code>assumed_gamma</code> is set to 1.
+
+<p>Light fixtures are arrayed along the left side of the image (with the <var>x</var> direction being toward the right). The user chooses the height, aiming, and color of the lights.
+
+<p>The objects to be tested should be placed to the right (with the <var>x</var> direction being toward the right), with the slice to be tested along the <var>x-y</var> plane. All tested objects must be declared as a <code>photons { target&nbsp;}</code>; in addition, refractive objects must be declared <code>hollow</code>.
+
+<p>In POV-Ray 3.7.0, spurious unrefracted light beams are often traced concurrently with refracted beams. This can be avoided by disregarding the POV-Ray recommendation to set <code>collect off</code> in the <code>photons{}</code> block of the refracting object.
+
+<p>So that objects in the scene may be visible, an environmental light is created automatically. This light does not shoot photons or interact with media. To accommodate spectral rendering with SpectralRender, the color of this light may be set by the user.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Parameters">Global Parameters</h2>
+
+<p>The following parameters may be modified by declaring them prior to including <code>beamtest.inc</code>.
+
+<table>
+ <tr><th>Parameter</th> <th>Type</th> <th>Description</th> <th>Default</th></tr>
+ <tr>
+  <td><code>Beam_c_lighting</code></td>
+  <td>color</td>
+  <td>The color of the environmental lighting.</td>
+  <td><code>rgb 1</code></td>
+ </tr><tr>
+  <td><code>Beam_extinction</code></td>
+  <td>float</td>
+  <td><a href="https://www.povray.org/documentation/3.7.0/r3_4.html#r3_4_8_2_3">Scattering extinction</a> of the environmental media. This value may need to be increased if <code>Beam_image_depth</code> is increased. A practical maximum appears to be 0.1.</td>
+  <td>0.0</td>
+ </tr><tr>
+  <td><code>Beam_field_of_view</code></td>
+  <td>float</td>
+  <td>Camera angle, in degrees. If set to 0, the orthographic camera will be used.</td>
+  <td>0.0 (changed from previous versions)</td>
+ </tr><tr>
+  <td><code>Beam_fixture_length</code></td>
+  <td>float</td>
+  <td>Length of each light fixture, in POV units</td>
+  <td>0.6</td>
+ </tr><tr>
+  <td><code>Beam_fixture_radius</code></td>
+  <td>float</td>
+  <td>Radius of each light fixture, in POV units</td>
+  <td>0.1</td>
+ </tr><tr>
+  <td><code>Beam_fixture_shadow</code></td>
+  <td>float/Boolean</td>
+  <td>Whether or not the light fixtures cast shadows. Set this parameter to <code>no</code> if the fixtures interfere with the light beams.</td>
+  <td><code>yes</code></td>
+ </tr><tr>
+  <td><code>Beam_fixture_x</code></td>
+  <td>float</td>
+  <td>Horizontal position of the light fixtures</td>
+  <td>-5.0</td>
+ </tr><tr>
+  <td><code>Beam_image_depth</code></td>
+  <td>float</td>
+  <td>Depth (in the <var>z</var>-direction) of the environmental media, in POV units. Set a large value if a test object deflects light outside the <var>x-y</var> plane. (Warning: This may slow render times and oversaturate deflected light beams.)</td>
+  <td>Slightly more than twice <code>Beam_radius</code></td>
+ </tr><tr>
+  <td><code>Beam_image_height</code></td>
+  <td>float</td>
+  <td>Height of the image, in POV units. Normally, this parameter is calculated automatically, but the user may set it to force a certain aspect ratio.</td>
+  <td>Derived from <code>Beam_image_width</code> and the image dimensions, in pixels.</td>
+ </tr><tr>
+  <td><code>Beam_image_width</code></td>
+  <td>float</td>
+  <td>Width of the image, in POV units</td>
+  <td>32/3</td>
+ </tr><tr>
+  <td><code>Beam_max_trace</code></td>
+  <td>float</td>
+  <td><a href="https://www.povray.org/documentation/3.7.0/r3_4.html#r3_4_1_7">Maximum trace level</a></td>
+  <td>15</td>
+ </tr><tr>
+  <td><code>Beam_photons</code></td>
+  <td>float</td>
+  <td>
+   <ul>
+    <li>If greater than 1.0, the photon <code>count</code>;
+    <li>Otherwise, if greater than 0.0, the photon <code>spacing</code>;
+    <li>Otherwise photons are not used.
+   </ul>
+   Note: Photons are required for a proper simulation; they should be turned off only for draft renders.
+  </td>
+  <td>0.005</td>
+ </tr><tr>
+  <td><code>Beam_photons_media</code></td>
+  <td>float</td>
+  <td><a href="https://www.povray.org/documentation/3.7.0/r3_4.html#r3_4_4_4_6">Maximum media photons</a> (<code>media</code> <var>max_steps</var>)</td>
+  <td>200</td>
+ </tr><tr>
+  <td><code>Beam_radius</code></td>
+  <td>float</td>
+  <td>Radius of each light beam, including the falloff, in POV units</td>
+  <td>0.05</td>
+ </tr><tr>
+  <td><code>Beam_umbra</code></td>
+  <td>float</td>
+  <td>The width of the bright core of each light beam, i.e., without the falloff, as a fraction of the total diameter</td>
+  <td>0.5</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macros">Macros</h2>
+
+<h3 id="Beam_angled">Beam_angled (Height, Color, Angle)</h3>
+
+<p>A light beam with fixture, aimed by angle.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Height</code></td>
+   <td>float</td>
+ <td>The height of the fixture, with 0.0 at the middle of the image.</td>
+ </tr><tr>
+  <td><code>Color</code></td>
+  <td>color</td>
+  <td>The color of the light.</td>
+ </tr><tr>
+  <td><code>Angle</code></td>
+  <td>float</td>
+  <td>The angle of the light beam from the horizontal.</td>
+ </tr>
+</table>
+
+<h3 id="Beam_sloped">Beam_sloped (Height, Color, Slope)</h3>
+
+<p>A light beam with fixture, aimed by mathematical slope.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Height</code></td>
+  <td>float</td>
+  <td>The height of the fixture, with 0.0 at the middle of the image.</td>
+ </tr><tr>
+  <td><code>Color</code></td>
+  <td>color</td>
+  <td>The color of the light.</td>
+ </tr><tr>
+  <td><code>Slope</code></td>
+  <td>float</td>
+  <td>The slope of the light beam, Δ<var>vertical</var> ÷ Δ<var>horizontal</var>.</td>
+ </tr>
+</table>
+
+<h3 id="Beam_targeted">Beam_targeted (Height, Color, Target)</h3>
+
+<p>A light beam with fixture, aimed at a target point.
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Height</code></td>
+  <td>float</td>
+  <td>The height of the fixture, with 0.0 at the middle of the image.</td>
+ </tr><tr>
+  <td><code>Color</code></td>
+  <td>color</td>
+  <td>The color of the light.</td>
+ </tr><tr>
+  <td><code>Target</code></td>
+  <td>vector</td>
+  <td>The target point. If the <var>z</var>-coordinate is non-zero, the result is undefined.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Other">Other Identifiers</h2>
+
+<h3>Reference Identifiers</h3>
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+ <tr>
+  <td><code>Beam_media</code></td>
+  <td>media</td>
+  <td>The media used for the test environment</td>
+  <td></td>
+ </tr><tr>
+  <td><code>BEAMTEST_VERSION</code></td>
+  <td>float</td>
+  <td>The BeamTest version, in case the scene file needs that information.</td>
+  <td>1.21</td>
+ </tr>
+</table>
+
+<h3>Internal Identifiers</h3>
+
+<p>Any identifiers in <code>beamtest.inc</code> that are not documented in this manual are considered “private” or “protected,” and are subject to change or elimination in a future update.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About BeamTest</h2>
+
+<address>Copyright © 2008 &ndash; 2019 Richard Callwood III.
+ <a href="https://creativecommons.org/licenses/LGPL/2.1/"><img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License."></a>
+</address>
+
+<h3 id="Categories">Object Collection Categories</h3>
+
+<ul>
+ <li><strong>Contribution Types</strong>
+  <ul>
+   <li>Interiors
+    <ul>
+     <li>Media
+    </ul>
+  </ul>
+</ul>
+
+<h3 id="Changes">Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th></tr>
+ <tr>
+  <td>N/A</td>
+  <td>2007 November 21</td>
+  <td>
+   <ul>
+    <li>The software is created.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.0</td>
+  <td>2008 July 30</td>
+  <td>
+   <ul>
+    <li>The software is adapted for the Object Collection.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.0.1</td>
+  <td>2008 August 4</td>
+  <td>
+   <ul>
+    <li>The user manual is edited; software is unmodified.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.1</td>
+  <td>2008 September 1</td>
+  <td>
+   <ul>
+    <li>Namespace compliance is extended to local identifiers.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.1.1</td>
+  <td>2012 June 30</td>
+  <td>
+   <ul>
+    <li>Demo scene is re-rendered using POV-Ray 3.7.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.2</td>
+  <td>2014 November 1</td>
+  <td>
+   <ul>
+    <li>An orthographic camera is introduced.
+    <li>Parameters are introduced to color the environmental lighting and control the image aspect ratio.
+    <li>A demo scene is added showing BeamTest used with SpectralRender.
+   </ul>
+  </td>
+ </tr><tr>
+  <td>1.2.1</td> <td>2019 March 24</td>
+  <td>
+   <ul>
+    <li>A message is optionally sent to the debug stream stating that <code>beamtest.inc</code> is included.
+   </ul>
+  </td>
+ </tr>
+</table>
+
+<h3 id="Acknowledgments">Acknowledgments</h3>
+
+<p>Many thanks to Matthew Goulet, Juha Nieminen (who will recognize his parabolic mirror), and William F. Pokorny.
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

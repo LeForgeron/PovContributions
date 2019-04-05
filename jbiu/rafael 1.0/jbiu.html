@@ -1,0 +1,433 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>JBIU</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "JBIU_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="JBIU_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"JBIU.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;
+La biblioteca de este proyecto se encuentra 
+actualmente suscrita a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="JBIU_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "JBIU.inc" (JoystickButtonInteractiveUser)
+dibuja un joystick para video juegos, basado en el modelo Atari Flashback.
+Tiene una macro para modificar las características principales, pero
+es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie el archivos "JBIU.inc" en dicho subdirectorio;&nbsp; únicamente este es necesario.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "JBIU.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "JBIU.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="JBIU.jpg" target="_blank" >
+<img alt="Classic joystick" src="JBIU_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="JBIU.jpg" target="_blank" >
+<font size = -2>
+Classic joystick
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "JBIU.inc"
+    
+    object      {
+      JBIU_Joystick( off, 0, 45, 1 )
+      translate         <-1.95,+1.65,-4.85>    
+    }
+</pre>
+<p>
+La macro principal tiene cuatro parámetros.
+<pre>
+    #macro JBIU_Joystick( ApretarBoton, GiroJoystick,
+                        AnguloJoystick, FraccionEmpujar )
+</pre>
+<dl>
+<dt><i>ApretarBoton</i> :
+<dd><i>on</i> presiona el botón de disparo.
+<i>off</i> lo deja libre.
+<dt><i>GiroJoystick</i> :
+<dd>Gira la palanca sobre su propio eje.
+<dt><i>AnguloJoystick</i> :
+<dd>Angulo en grados para presionar la palanca. Utilice <i>0</i> para sentido X+.
+<dt><i>FraccionEmpujar</i> :
+<dd>Fracción propia para presionar la palanca.
+</dl>
+<p>
+La siguiente macro permite mayor flexibilidad de diseño.
+<pre>
+    #macro JBIU_JoystickButtonInteractiveUser
+                 ( ApretarBoton, GiroJoystick,
+                   AnguloJoystick, FraccionEmpujar,
+                   LadoJoystick, ExtraLateral, AltoBase,
+                   RadioDecorativo, FraccionAltoEngorde,
+                   ContraccionAltura, AltoPalanca, MaximoAngulo,
+                   DiametroPalanca, AltoAmortiguado,
+                   DiametroBoton, ArregloTexturas )
+</pre>
+<dl>
+<dt><i>ApretarBoton</i> :
+<dd><i>on</i> presiona el botón de disparo.
+<i>off</i> lo deja libre.
+<dt><i>GiroJoystick</i> :
+<dd>Gira la palanca sobre su propio eje.
+<dt><i>AnguloJoystick</i> :
+<dd>Angulo en grados para presionar la palanca. Utilice <i>0</i> para sentido X+.
+<dt><i>FraccionEmpujar</i> :
+<dd>Fracción propia para presionar la palanca.
+<dt><i>LadoJoystick</i> :
+<dd>Tamaño del frente en <i>X</i> del Joystick. Valor por defecto 61*L.
+<dt><i>ExtraLateral</i> :
+<dd>Tamaño en exceso de la dimensión <i>Z</i> respecto a la dimensión <i>X</i> para ubicar el
+botón y el logo. Valor por defecto 5*L.
+<dt><i>AltoBase</i> :
+<dd>Altura de la base sin relieve. Valor por defecto 26*L.
+<dt><i>RadioDecorativo</i> :
+<dd>Referencia para la curvatura en los extremos. Valor por defecto 5*L.
+<dt><i>FraccionAltoEngorde</i> :
+<dd>Fracción propia respecto al <i>AltoBase</i> de la sección más ancha de la base.
+Valor por defecto 0.75.
+<dt><i>ContraccionAltura</i> :
+<dd>Referencia para la inclinación lateral de la base. Utilice fracciones propias pequeñas.
+Valor por defecto 0.10.
+<dt><i>AltoPalanca</i> :
+<dd>Alto de la palanca.
+Valor por defecto 52*L.
+<dt><i>MaximoAngulo</i> :
+<dd>Máxima inclinación en grados de la palanca al empujar.
+Valor por defecto 14.
+<dt><i>Diámetro palanca</i> :
+<dd>Diámetro principal de la palanca.
+Valor por defecto 11*L.
+<dt><i>AltoAmortiguado</i> :
+<dd>Referencia para el alto de la palanca, ocupado por el plástico amortiguador.
+Valor por defecto 6*L.
+<dt><i>DiametroBoton</i> :
+<dd>Diámetro del botón.
+Valor por defecto 10*L.
+<dt><i>ArregloTexturas</i> :
+<dd>Es un arreglo que describe las texturas. <i>array [JBIU_TotalTexturas] = { TexturaPrincipal, 
+TexturaAmortiguado, TexturaBoton, TexturaPlastico, TexturaLogo }</i>.
+<table border=2>
+<tr>
+<td>
+TexturaPrincipal
+</td>
+<td>
+Textura principal del aparato. Valor por defecto JBIU_TexturaPrincipal.
+</td>
+</tr>
+<tr>
+<td>
+TexturaAmortiguado
+</td>
+<td>
+Textura del plástico de amortiguamiento. Valor por defecto JBIU_TexturaAmortiguado.
+</td>
+</tr>
+<tr>
+<td>
+TexturaBoton
+</td>
+<td>
+Textura del botón. Valor por defecto JBIU_TexturaBoton.
+</td>
+</tr>
+<tr>
+<td>
+TexturaPlastica
+</td>
+<td>
+Textura de la superficie decorada. Valor por defecto JBIU_TexturaPlastica.
+</td>
+</tr>
+<tr>
+<td>
+TexturaLogo
+</td>
+<td>
+Textura del logo y marcas. Valor por defecto JBIU_TexturaLogo.
+</td>
+</tr>
+</table>
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "JBIU.inc"
+    
+    object      {
+      JBIU_JoystickButtonInteractiveUser( off, 0, 45, 1,
+                0.061, 0.005, 0.026, 0.005, 0.75, 0.10,
+                0.052, 14, 0.011, 0.006, 0.010, JBIU_DefectoArregloTexturas )
+      translate         <-1.95,+1.65,-4.85>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El aparato se encuentra contenido entre las siguientes dimensiones:
+<pre>
+    Mínimo		= <  -31,   0,  -31 >*L	
+    Máximo		= <  +31, +78,  +36 >*L
+    Mínimo		= < -LadoJoystick/2,   0, -LadoJoystick/2 >
+    Máximo		= < +LadoJoystick/2, AltoBase+AltoPalanca,  
+			    +LadoJoystick/2+ExtraLateral >
+</pre>
+<p>
+El botón en el hemisferio <i>X-Z+</i>. La palanca con parámetros nulos en el eje <i>Y+</i>.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>JBIU_TotalTexturas</i>
+<dd>Total de texturas para el parámetro <i>ArregloTexturas</i>.
+<dt><i>JBIU_IndiceTexturaPrincipal</i> 
+<dd>Indice para la textura principal del aparato en el parámetro <i>ArregloTexturas</i>.
+<dt><i>JBIU_IndiceTexturaAmortiguado</i> 
+<dd>Indice para la textura del plástico de amortiguamiento en el parámetro <i>ArregloTexturas</i>.
+<dt><i>JBIU_IndiceTexturaBoton</i> 
+<dd>Indice para la textura del botón en el parámetro <i>ArregloTexturas</i>.
+<dt><i>JBIU_IndiceTexturaPlastica</i> 
+<dd>Indice para la textura de la superficie decorada en el parámetro <i>ArregloTexturas</i>.
+<dt><i>JBIU_IndiceTexturaLogo</i> 
+<dd>Indice para la textura del logo y marcas en el parámetro <i>ArregloTexturas</i>.
+<dt><i>JBIU_DefectoTexturaPrincipal</i> 
+<dd>Textura principal del aparato.
+<dt><i>JBIU_DefectoTexturaAmortiguamiento</i> 
+<dd>Textura del plástico de amortiguamiento.
+<dt><i>JBIU_DefectoTexturaBoton</i> 
+<dd>Textura del botón.
+<dt><i>JBIU_DefectoTexturaPlastica</i> 
+<dd>Textura de la superficie decorada.
+<dt><i>JBIU_DefectoTexturaLogo</i> 
+<dd>Textura del logo y marcas.
+<dt><i>JBIU_DefectoArregloTexturas</i>
+<dd>Sirve como parámetro <i>ArregloTexturas</i>. Contiene las texturas por defecto
+(no las modificadas por el usuario).
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad.
+<p>
+<pre>
+    #declare JBIU_LogoCustom			= object  { ... }
+</pre>
+Si se define, sustituye el logo de marca por defecto.
+<p>
+<pre>
+    #declare JBIU_TexturaPrincipal		=
+		texture  { JBIU_DefectoTexturaPrincipal			}
+</pre>
+Textura principal del aparato.
+<p>
+<pre>
+    #declare JBIU_TexturaAmortiguado		=	 
+		texture  { JBIU_DefectoTexturaAmortiguado		}
+</pre>
+Textura del plástico de amortiguamiento.
+<p>
+<pre>
+    #declare JBIU_TexturaBoton			=	 
+		texture  { JBIU_DefectoTexturaBoton			}
+</pre>
+Textura del botón.
+<p>
+<pre>
+    #declare JBIU_TexturaPlastica		=	 
+		texture  { JBIU_DefectoTexturaPlastica			}
+</pre>
+Textura de la superficie decorada.
+<p>
+<pre>
+    #declare JBIU_TexturaLogo			=	 
+		texture  { JBIU_DefectoTexturaLogo			}
+</pre>
+Textura del logo y marcas.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "JBIU.inc"
+    #include "textures.inc"
+
+    #declare JBIU_LogoCustom            = box { -0.5, 0.5 rotate 45*z scale <0.5,1,0.2> } 
+    
+    #declare JBIU_TexturaPrincipal      = Silver_Metal
+    #declare JBIU_TexturaAmortiguado    = Yellow_Pine
+    #declare JBIU_TexturaBoton          = Brass_Valley
+    #declare JBIU_TexturaPlastica       = New_Brass
+    #declare JBIU_TexturaLogo           = Gold_Metal
+    
+    object      {
+      JBIU_Joystick( off, 0, 0, 0 )
+      translate         <-1.95,+1.65,-4.85>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+El botón tiende a quedar mal ubicado al modificar los parámetros. Puede intentar ajustar
+<i>DiametroBoton</i> y <i>ContraccionAltura</i>.
+<p>
+Si desea utilizar la macro estructural y a su vez modificar las texturas,
+deberá declarar un nuevo <i>ArregloTexturas</i>. Pues <i>JBIU_DefectoArregloTexturas</i>
+conserva los valores originales, no las texturas modificadas.
+<p>
+Para el modificador <i>JBIU_LogoCustom</i> utilice diseños en el interior de un 
+<i>box { 0.5, 0.5 }</i> cuyo frente mire hacia <i>Z-</i>. El logo se aplanará en el interior de la macro.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros modelos de joystick para videojuegos.</li>
+  <li>Agregar cables con herramientas de interacción con el usuario.</li>
+  <li>Mayor cantidad de texturas por defecto.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="JBIU_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(14/agosto/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="JBIU_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="JBIU_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

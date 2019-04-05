@@ -1,0 +1,401 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>SPMF</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "SPMF_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="SPMF_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"SPMF.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="SPMF_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "SPMF.inc" (SelloProgramacionManualFecha)
+dibuja un modelo sencillo de sello para tinta con fecha ajustable.
+Es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie los archivos "SPMF.inc" y "SPMF_IM1.gif" en dicho subdirectorio;&nbsp; únicamente 
+estos dos son necesarios.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "SPMF.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "SPMF.inc" y "SPMF_IM1.gif".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="SPMF.jpg" target="_blank" >
+<img alt="Sello" src="SPMF_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="SPMF.jpg" target="_blank" >
+<font size = -2>
+Sello
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "SPMF.inc"
+    
+    object      {
+      SPMF_Sello( )
+      translate         <-1.98,+1.70,-4.90>    
+    }
+</pre>
+<p>
+La macro principal no tiene parámetros.
+<pre>
+    #macro SPMF_Sello( )
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El aparato se encuentra contenido entre las siguientes dimensiones:
+<pre>
+    Mínimo		= < -17, -32, -10 >*L
+    Máximo		= <  30,  24    9 >*L
+</pre>
+<p>
+El mango se dibuja orientado en el eje hacia <i>Y+</i>, la palanca para mensaje de formulario
+se ubica hacia <i>X-</i>.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>SPMF_DefectoTexturaPrincipal</i> 
+<dd>Textura principal del sello.
+<dt><i>SPMF_DefectoTexturaPlastica</i> 
+<dd>Textura del mango y algunos cilindros de selección.
+<dt><i>SPMF_DefectoTexturaCorcho</i> 
+<dd>Textura de los rodillos de selección.
+<dt><i>SPMF_DefectoTexturaDecorativa</i> 
+<dd>Textura decorativa del mango superior.
+<dt><i>SPMF_DefectoTexturaMensajes</i> 
+<dd>Textura de los mensajes a imprimir.
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad. En general los
+índices comienzan en cero y será válido utilizar fracciones impropias en vez de índices
+enteros para los selectores de impresión.
+<p>
+<pre>
+    #declare AnguloTrianguloGiro		= 40;
+</pre>
+Gira el selector triangular de formulario.
+<p>
+<pre>
+    #declare SPMF_ListaMensajesMes		= array [12]
+      { "ENE", "FEB", "MAR", "ABR", "MAY", "JUN",
+        "JUL", "AGO", "SEP", "OCT", "NOV", "DIC" }
+</pre>
+Las etiquetas de mes en tres letras, comenzando en enero. Podrían modificarse
+para traducción.
+<p>
+<pre>
+    #declare SPMF_DeltaMes			= 8;
+</pre>
+Permite elegir un mes para impresión.
+<p>
+<pre>
+    #declare SPMF_ListaMensajesAno		= array [12]
+      { "2014", "2015", "2016", "2017", "2018", "2019",
+        "2020", "2021", "2022", "2023", "2024", "2025" }
+</pre>
+Lista para los años de impresión. Es de esperar que sea necesario modificar
+la lista en el futuro próximo.
+<p>
+<pre>
+    #declare SPMF_DeltaAno			= 4;
+</pre>
+Permite elegir un año de impresión. El número <i>0</i> actualmente corresponde al
+año <i>2014</i>.
+<p>
+<pre>
+    #declare SPMF_ListaMensajesDiaUnidades	= array [12]
+      { "0", "1", "2", "3", "4", "5", 
+        "6", "7", "8", "9", "-", "/" }
+</pre>
+Lista de la unidad del día de mes. Se ofrece la posibilidad de modificarla,
+aunque probablemente no será necesario.
+<p>
+<pre>
+    #declare SPMF_DeltaDiaUnidades		= 9;
+</pre>
+Lista de la unidad del día de mes. El índice <i>0</i> corresponde a la unidad <i>0</i>.
+<p>
+<pre>
+    #declare SPMF_ListaMensajesDiaDecenas	= array [12]
+      { "0", "1", "2", "3", "-", "/",
+        "0", "1", "2", "3", "-", "/" }
+</pre>
+Lista de las decenas para el día de mes.
+<p>
+<pre>
+    #declare SPMF_DeltaDiaDecenas		= 0;
+</pre>
+Permite elegir las decenas para el día de mes. El índice <i>0</i> corresponde a decenas <i>0</i>.
+<p>
+<pre>
+    #declare SPMF_ListaMensajesFormulario	= array [12]
+      { "DESPACHADO", "ABONADO", "ARCHIVADO", "ENTREGADO", "ANOTADO", "REVISADO",
+        "RECIBIDO", "CERTIFICADO", "CONTESTADO", "CANCELADO", "CONTADO", "PAGADO" }
+</pre>
+Contiene las posibles alternativas de mensajes. Es de esperar que concuerde
+con la imagen <i>SPMF_GIFIndice</i> si se utiliza.
+<p>
+<pre>
+    #declare SPMF_DeltaFormulario		= 2;
+</pre>
+Permite elegir el mensaje.
+<p>
+<pre>
+    #declare SPMF_ListaMensajesIndice		= array [12]
+      { "1", "2", "3", "4", "5", "6",
+        "7", "8", "9", "10", "11", "12" }
+</pre>
+Los mensajes de formulario se encuentran numerados aquí. Los números rotan en forma
+simultánea.
+<p>
+<pre>
+    #declare SPMF_BanderaGIF			= on;
+</pre>
+Si <i>on</i> se aplica una imagen <i>GIF</i> como índice selector.
+<p>
+<pre>
+    #declare SPMF_GIFIndice			= "SPMF_IM1.gif"
+</pre>
+Nombre de la imagen <i>GIF</i> a aplicar como índice.
+<p>
+<pre>
+    #declare SPMF_CustomTexturaGIF
+</pre>
+Si se declara esta <i>texture</i> se coloca encima de la imagen <i>SPMF_GIFIndice</i>, para
+agregar otros efectos adicionales.
+<p>
+<pre>
+    #declare SPMF_TexturaPrincipal		=
+		texture  { SPMF_DefectoTexturaPrincipal			}
+</pre>
+Textura principal del sello.
+<p>
+<pre>
+    #declare SPMF_TexturaPlastica		=	 
+		texture  { SPMF_DefectoTexturaPlastica			}
+</pre>
+Textura del mango y algunos cilindros de selección.
+<p>
+<pre>
+    #declare SPMF_TexturaCorcho			=
+		texture  { SPMF_DefectoTexturaCorcho			}
+</pre>
+Textura de los rodillos de selección.
+<p>
+<pre>
+    #declare SPMF_TexturaDecorativa		=
+		texture  { SPMF_DefectoTexturaDecorativa		}
+</pre>
+Textura decorativa del mango superior.
+<p>
+<pre>
+    #declare SPMF_TexturaMensajes		=	 
+		texture  { SPMF_DefectoTexturaMensajes			}
+</pre>
+Textura de los mensajes a imprimir.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "SPMF.inc"    
+    #include "textures.inc"
+
+    #declare SPMF_TexturaPrincipal  = PinkAlabaster
+    #declare SPMF_TexturaPlastica   = Rosewood
+    #declare SPMF_TexturaDecorativa = Yellow_Pine
+    #declare SPMF_TexturaCorcho     = Chrome_Texture
+    #declare SPMF_TexturaMensajes   = Gold_Texture  
+    #declare SPMF_BanderaGIF        = off;  
+    
+    object      {
+      SPMF_Sello( ) 
+      translate         <-1.98,+1.70,-4.90>    
+    }
+</pre>
+Otro ejemplo del uso de los modificadores.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "SPMF.inc"    
+    #include "textures.inc"
+    
+    #declare SPMF_AnguloTrianguloGiro   = 0;  
+    #declare SPMF_DeltaMes              = 0;
+    #declare SPMF_DeltaAno              = 0;
+    #declare SPMF_DeltaDiaUnidades      = 1;
+    #declare SPMF_DeltaDiaDecenas       = 1;
+    #declare SPMF_DeltaFormulario       = 11;
+    #declare SPMF_GIFIndice             = "SPMF_freedosht.gif"
+    #declare SPMF_CustomTexturaGIF      = texture { Lightning1 scale 0.01 }
+    
+    object      {
+      SPMF_Sello( ) 
+      translate         <-1.98,+1.70,-4.90>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Los mensajes son díficiles de leer en vista perpendicular. Podría facilitar su lectura
+modificando la normal de la textura.
+<p>
+Si declara el parámetro <i>SPMF_CustomTexturaGIF</i> requerirá transparencia si desea que
+se aprecie la imagen <i>GIF</i>.
+<p>
+El parámetro <i>SPMF_AnguloTrianguloGiro</i> únicamente afecta el triángulo selector, pero no
+tienen ningún efecto en los rodillos de impresión.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros modelos de sello.</li>
+  <li>Ofrecer macros para impresión del mensaje.</li>
+  <li>Incluír texturas para diferentes intensidades de uso del sello.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="SPMF_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(3/octubre/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="SPMF_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="SPMF_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

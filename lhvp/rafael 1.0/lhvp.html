@@ -1,0 +1,399 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>LHVP</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "LHVP_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="LHVP_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"LHVP.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="LHVP_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "LHVP.inc" (LampadarioHumoVelaParafina)
+dibuja un lampadario de iglesia con alcancía.
+Incluye una macro para modificar algunas características. Además, la macro calcula
+las posiciones para que el usuario ubique velitas a gusto.
+Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie el archivo "LHVP.inc" en dicho subdirectorio;&nbsp; únicamente 
+este es necesario.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "LHVP.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "LHVP.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="LHVP.jpg" target="_blank" >
+<img alt="Lampadario" src="LHVP_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="LHVP.jpg" target="_blank" >
+<font size = -2>
+Lampadario
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "LHVP.inc"
+    
+    object      {
+      LHVP_Lampadario( )  
+      translate         < -1.4, 0, -2.5 >
+    }
+</pre>
+<p>
+La macro principal no tiene parámetros.
+<pre>
+    #macro LHVP_Lampadario( )
+</pre>
+<p>
+La siguiente macro permite un mayor control de las características.
+<pre>
+    #macro LHVP_LampadarioHumoVelaParafina(
+                    FrenteFundamental, LateralFundamental,
+                    AltoFundamental, LateralBandeja,
+                    DiametroBarra, LadoCuadradoSoporte,
+                    AnguloExposicion, DiametroAlcancia,
+                    GruesoLamina, TotalHileras,   
+                    VelasPorHilera, DiametroSoporteVela, AltoCruz,
+                    MaterialPrincipal, MaterialAlcancia,  
+                    MaterialBandeja, MaterialCandelero )
+</pre>
+<dl>
+<dt><i>FrenteFundamental</i> :
+<dd>Valor de referencia para el frente del lampadario.
+Valor por defecto 643*L.
+<dt><i>LateralFundamental</i> :
+<dd>Valor de referencia para el ancho lateral <i>Z</i>.
+Valor por defecto 477*L.
+<dt><i>AltoFundamental</i> :
+<dd>Alto sin la cruz del lampadario.
+Valor por defecto 700*L.
+<dt><i>LateralBandeja</i> :
+<dd>Valor de referencia para el ancho lateral <i>Z</i> de la bandeja.
+Valor por defecto 550*L.
+<dt><i>DiametroBarra</i> :
+<dd>Diámetro de las barras soporte.
+Valor por defecto 10*L.
+<dt><i>LadoCuadradoSoporte</i> :
+<dd>Lado del cuadrado formado por las barras laterales para soporte de la estructura.
+Valor por defecto 100*L.
+<dt><i>AnguloExposicion</i> :
+<dd>Angul de inclinación del plano imaginario para las velitas.
+Valor por defecto 25.
+<dt><i>DiametroAlcancia</i> :
+<dd>Diámetro principal de la alcancía.
+Valor por defecto 50*L.
+<dt><i>GruesoLamina</i> :
+<dd>Grueso de algunas láminas de metal de la estructura.
+Valor por defecto 3*L.
+<dt><i>TotalHileras</i> :
+<dd>Total de hileras con velitas.
+Valor por defecto 6.
+<dt><i>VelasPorHilera</i> :
+<dd>Total de velitas en cada hilera.
+Valor por defecto 10.
+<dt><i>DiametroSoporteVela</i> :
+<dd>Diámetro de los aros que soportan los candeleros individuales.
+Valor por defecto 20*L.
+<dt><i>AltoCruz</i> :
+<dd>Alto de la cruz posterior.
+Valor por defecto 100*L.
+<dt><i>MaterialPrincipal</i> :
+<dd>Material de las barras soporte.
+Valor por defecto LHVP_MaterialPrincipal.
+<dt><i>MaterialAlcancia</i> :
+<dd>Material para la alcancía.
+Valor por defecto LHVP_MaterialAlcancia.
+<dt><i>MaterialBandeja</i> :
+<dd>Material para la bandeja.
+Valor por defecto LHVP_MaterialBandeja.
+<dt><i>MaterialCandelero</i> :
+<dd>Material de los candeleros individuales.
+Valor por defecto LHVP_MaterialCandelero.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "LHVP.inc"
+    
+    object      {
+      LHVP_LampadarioHumoVelaParafina(
+            0.643, 0.477, 0.700, 0.550, 0.010, 0.100,
+            25, 0.050, 0.003, 6, 10, 0.030, 0.100,
+            LHVP_MaterialPrincipal, LHVP_MaterialAlcancia,
+            LHVP_MaterialBandeja, LHVP_MaterialCandelero )
+      translate         < -1.4, 0, -2.5 >
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El aparato se encuentra contenido entre las siguientes dimensiones:
+<pre>
+    Mínimo (defecto)	= < -330,    0, -305 >*L
+    Máximo (defecto)    = <  330,  800,  305 >*L
+</pre>
+<p>
+La base descansa semicentrada sobre el plano <i>XZ</i>. El frente mira hacia <i>Z-</i>,
+con la alcancía hacia <i>X+</i>.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>LHVP_DefectoMaterialPrincipal</i> 
+<dd>Material de las barras soporte.
+<dt><i>LHVP_DefectoMaterialAlcancia</i> 
+<dd>Material para la alcancía.
+<dt><i>LHVP_DefectoMaterialBandeja</i> 
+<dd>Material para la bandeja.
+<dt><i>LHVP_DefectoMaterialCandelero</i> 
+<dd>Material de los candeleros individuales.
+<dt><i>LHVP_ArregloCandelero</i> 
+<dd>Definido como <i>array [TotalHileras][VelasPorHilera]</i> de vectores 3D. vontiene
+la ubicación de la base para las velitas. Las filas
+se numeran de abajo hacia arriba, y las columnas de izquierda a derecha.
+</dl>
+<p>
+El siguiente ejemplo ubica algunas velitas simples.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "LHVP.inc"
+      
+    #local S                = seed( 10000 );  
+    union                   {
+      object                {
+        LHVP_Lampadario()
+      }       
+      #local C              = 0;
+      #while ( C < 40 )
+        cylinder            {
+          0, 0.015*y, 0.0125
+          pigment { Yellow }
+          translate     LHVP_ArregloCandelero[6*rand(S)][9*rand(S)]
+        }    
+        #local C            = C+1;
+      #end  
+      translate         < -1.4, 0, -2.5 >
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad. En general los
+índices comienzan en cero y será válido utilizar fracciones impropias en vez de índices
+enteros para los selectores de impresión.
+<p>
+<pre>
+    #declare LHVP_MaterialPrincipal		=
+		material { LHVP_DefectoMaterialPrincipal		}
+</pre>
+Material de las barras soporte.
+<p>
+<pre>
+    #declare LHVP_MaterialAlcancia		=	 
+		material { LHVP_DefectoMaterialAlcancia			}
+</pre>
+Material para la alcancía.
+<p>
+<pre>
+    #declare LHVP_MaterialBandeja		=
+		material { LHVP_DefectoMaterialBandeja 			}
+</pre>
+Material para la bandeja.
+<p>
+<pre>
+    #declare LHVP_MaterialCandelero		=
+		material { LHVP_DefectoMaterialCandelero 		}
+</pre>
+Material de los candeleros individuales.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "LHVP.inc"
+    #include "textures.inc" 
+    
+    #declare LHVP_MaterialPrincipal     = 
+        material { texture { PinkAlabaster } }
+        
+    #declare LHVP_MaterialAlcancia      =
+        material { M_Glass }  
+        
+    #declare LHVP_MaterialBandeja       =
+        material { texture { Cork } }
+        
+    #declare LHVP_MaterialCandelero     =
+        material { M_Yellow_Glass }          
+      
+    object                              {
+      LHVP_Lampadario()
+      translate         < -1.4, 0, -2.5 >
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Al modificar los parámetros se ha observado que en ocasiones la alcancía perfora el piso.
+<p>
+El arreglo <i>LHVP_ArregloCandelero</i> guarda un matriz de posiciones para los candeleros
+individuales. Esta posición corresponde al piso donde eventualmente se ubicaría una velita.
+<p>
+Aunque no se utilizan se definen las posiciones eliminadas para ubicar la alcancía. Si se 
+define una alcancía muy gruesa, podría superponerse con algunos candeleros.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir velitas, herramientas para encenderlas y generar residuos.</li>
+  <li>Agregar una variante con velitas eléctricas.</li>
+  <li>Incluir mayor variedad de estilos.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="LHVP_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(21/noviembre/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="LHVP_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="LHVP_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>PIFC</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "PIFC_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="PIFC_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"PIFC.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="PIFC_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "PIFC.inc" (PeladorInoxidableFiloCortante)
+dibuja un pelador de verduras para cocina.
+La cuchilla puede desplazarse levemente similar al modelo original.
+Es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie el archivo "PIFC.inc" en dicho subdirectorio;&nbsp; 
+únicamente este es necesario.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "PIFC.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "PIFC.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="PIFC.jpg" target="_blank" >
+<img alt="Pelador" src="PIFC_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="PIFC.jpg" target="_blank" >
+<font size = -2>
+Pelador
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "PIFC.inc"
+    
+    object      {
+      PIFC_Pelador( <0,0,0>, 0 )
+      translate         <-1.950,+1.700,-4.800>    
+    }
+</pre>
+<p>
+La macro principal tiene solo dos parámetros.
+<pre>
+    #macro PIFC_Pelador( RotateFilo, FraccionAvance )
+</pre>
+<dl>
+<dt><i>RotateFilo</i> :
+<dd>Vector para rotar las navajas.
+<dt><i>FraccionAvance</i> :
+<dd>Fracción propia que permite un desplazamiento leve de las cuchillas.
+</dl>
+<p>
+La siguiente macro permite mucha mayor flexibilidad.
+<pre>
+    #macro PIFC_PeladorInoxidableFiloCortante
+              ( RotateFilo, FraccionAvance,
+                DimensionesMango, LargoFilo, AnchoFilo, AberturaFilo, 
+                DiametroBaseFilo, ExcesoFilo, GruesoMetal,
+                TexturaMetalica, TexturaFilo, TexturaMango )
+</pre>
+<dl>
+<dt><i>RotateFilo</i> :
+<dd>Vector para rotar las navajas.
+<dt><i>FraccionAvance</i> :
+<dd>Fracción propia que permite un desplazamiento leve de las cuchillas.
+<dt><i>DimensionesMango</i> :
+<dd>Vector 3D para dar tamaño al mango.
+Valor por defecto <81.7,18.0,13.6>*L.
+<dt><i>LargoFilo</i> :
+<dd>Largo total de la cuchilla.
+Valor por defecto 46.31*L.
+<dt><i>AnchoFilo</i> :
+<dd>Ancho de la cuchilla.
+Valor por defecto 8.2*L.
+<dt><i>AberturaFilo</i> :
+<dd>Ancho de la abertura del pelador. 
+Valor por defecto 3.6*L.
+<dt><i>DiametroBaseFilo</i> :
+<dd>Diámetro del cilindro en la base de la cuchilla.
+Valor por defecto 4.5*L.
+<dt><i>ExcesoFilo</i> :
+<dd>Corresponde al desplazamiento máximo de la cuchilla como si el parámetro 
+<i>FraccionAvance</i> fuera unitario.
+Valor por defecto 1.8*L.
+<dt><i>GruesoMetal</i> :
+<dd>Grueso de las laminillas de metal.
+Valor por defecto 0.2*L.
+<dt><i>TexturaMetalica</i> :
+<dd>Textura de las hojas de metal. Valor por defecto PIFC_TexturaMetalica.
+<dt><i>TexturaFilo</i> :
+<dd>Textura del filo. Valor por defecto PIFC_TexturaFilo.
+<dt><i>TexturaMango</i> :
+<dd>Textura del mango. Valor por defecto PIFC_TexturaMango.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "PIFC.inc"
+    
+    object      {
+      PIFC_PeladorInoxidableFiloCortante
+          ( <0,0,0>, 0, <0.0817,0.018,0.0136>, 0.04631,
+            0.0082, 0.0036, 0.0045, 0.0018, 0.0002, 
+            PIFC_TexturaMetalica, PIFC_TexturaFilo, PIFC_TexturaMango )
+      translate         <-1.950,+1.700,-4.800>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+La silla desplegada tiene las siguientes dimensiones:
+<pre>
+    Mínimo      	= <  -82,   -9,  -14 >*L
+    Máximo      	= <  +46,   +9,  +14 >*L
+    Mínimo      	= < -DimensionMango.x, -DimensionMango.y/2, -DimensionMango.z/2 >
+    Máximo      	= < LargoFilo, +DimensionMango.y/2, +DimensionMango.z/2 >
+</pre>
+<p>
+El frente del objeto mira hacia X+, es casi simétrico con respecto al plano XY y XZ.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>PIFC_DefectoTexturaMetalica</i> 
+<dd>Textura de las hojas de metal.
+<dt><i>PIFC_DefectoTexturaFilo</i> 
+<dd>Textura del filo.
+<dt><i>PIFC_DefectoTexturaMango</i> 
+<dd>Textura del mango.
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad.
+<p>
+<pre>
+    #declare PIFC_FraccionCorreccionCortante	= 1.6;
+</pre>
+Este parámetro existe como medida de precaución. Es posible que al variar
+los parámetros, el filo quede mal acomodado. Se espera que la modificación
+de este valor ayude al usuario a mitigar el problema.
+<p>
+<pre>
+    #declare PIFC_Marca				= "POV-Ray"
+</pre>
+Mensaje para el logo de marca.
+<p>
+<pre>
+    #declare PIFC_ScaleMarca			= <1,1,1>;
+</pre>
+Modifica el escalamiento de la marca.
+<p>
+<pre>
+    #declare PIFC_TranslateMarca		= <0,0,0>;
+</pre>
+Translada el mensaje de marca, en unidades relativas a las dimensiones del mango.
+<p>
+<pre>
+    #declare PIFC_TexturaMetalica		=	 
+		texture  { PIFC_DefectoTexturaMetalica		}
+</pre>	
+Textura de las hojas de metal.
+<p>
+<pre>
+    #declare PIFC_TexturaFilo			=	 
+		texture  { PIFC_DefectoTexturaFilo		}
+</pre>
+Textura del filo.
+<p>
+<pre>
+    #declare PIFC_TexturaMango			=	 
+		texture  { PIFC_DefectoTexturaMango		}
+</pre>
+Textura del mango.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "PIFC.inc"
+    #include "textures.inc"
+    
+    #declare PIFC_Marca             = "CGS"
+    #declare PIFC_ScaleMarca        = <2,1.2,1>; 
+    #declare PIFC_TranslateMarca    = 0.025*x; 
+    #declare PIFC_TexturaMetalica   = Gold_Texture  
+    #declare PIFC_TexturaFilo       = Rust
+    #declare PIFC_TexturaMango      = PinkAlabaster
+    
+    object      {
+      PIFC_Pelador( <0,0,0>, 0 )
+      translate         <-1.950,+1.700,-4.800>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Si desea modificar la marca, es probable que requiera utilizar los modificadores 
+para ubicarla de forma adecuada.
+<p>
+El efecto del modificador <i>PIFC_FraccionCorreccionCortante</i> es algo complicado
+de controlar. Puede ser útil cuando al modificar las características el filo tienda
+a cambiar de posición o desaparezca.
+<p>
+Las cuchillas del objeto original se acomodan y oscilan por sí mismas para facilitar el corte de
+la verdura.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros modelos de peladores.</li>
+  <li>Agregar herramientas para facilitar la animación.</li>
+  <li>Mayor cantidad de texturas por defecto.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="PIFC_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(15/mayo/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="PIFC_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="PIFC_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

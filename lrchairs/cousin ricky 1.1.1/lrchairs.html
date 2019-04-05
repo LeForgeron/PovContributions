@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lrchairs 1.1.1 User Manual | POV-Ray Object Collection</title>
+<link rel="stylesheet" type="text/css" href="lrchairs.css">
+</head>
+
+<body>
+
+<h1>Lrchairs 1.1.1 User&nbsp;Manual</h1>
+
+<h2>Abstract</h2>
+
+<p>
+<a href="lrchairs.jpg"><img class="demo" src="lrchairs_thumbnail.jpg" title="Larger demo image" alt="[Thumbnail which links to a demo image]"></a>
+Lrchairs is a library module from the
+<a href="https://www.povray.org/">Persistence of Vision Ray Tracer (POV-Ray)</a>
+<a href="http://lib.povray.org/">Object Collection</a>
+that defines an inexpensive chair. The textures of the frame and seat are set by the user.
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+ <li><a href="#Overview">Overview</a>
+  <ul>
+   <li><a href="#Files">Downloaded files</a>
+   <li><a href="#Prereqs">Prerequisites</a>
+   <li><a href="#Compliance">Namespace compliance</a>
+   <li><a href="#Usage">Usage</a>
+  </ul>
+ <li><a href="#Macro">Macro</a>
+  <ul>
+   <li><a href="#Cp_Chair">Cp_Chair</a>
+  </ul>
+ <li><a href="#Scale">Scale Conversions</a>
+ <li><a href="#About">About Lrchairs</a>
+</ul>
+
+<hr>
+
+<h2 id="Overview">Overview</h2>
+
+<h3 id="Files">Downloaded Files</h3>
+
+<p>The italicized <var>nnnnnn</var> in some of the file names represents the 6-digit number that is in the name of the <code>.zip</code> file.
+
+<table>
+ <tr>
+  <th colspan="2">Key Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>lrchairs.html</code></td>
+  <td>The user manual (this document)</td>
+ </tr><tr>
+  <td><code>lrchairs.inc</code></td>
+  <td>The lrchairs software</td>
+ </tr><tr>
+  <td><code>lrchairs_example.pov</code></td>
+  <td>An example scene description file demonstrating the use of lrchairs</td>
+ </tr><tr>
+  <td><code>lrchairs.jpg</code></td>
+  <td rowspan="2">Sample output images</td>
+ </tr><tr>
+  <td><code>lrchairs_thumbnail.jpg</code></td>
+ </tr><tr>
+  <th colspan="2">Administrative Files</th>
+ </tr><tr>
+  <th>File</th>
+  <th>Description</th>
+ </tr><tr>
+  <td><code>README</code><var>nnnnnn</var><code>.html</code></td>
+  <td>Important information about using the POV-Ray Object Collection</td>
+ </tr><tr>
+  <td><code>lrchairs_description.txt</code></td>
+  <td>A brief description of lrchairs</td>
+ </tr><tr>
+  <td><code>lrchairs_keywords.txt</code></td>
+  <td>A list of keywords</td>
+ </tr><tr>
+  <td><code>lrchairs_prereqs.txt</code></td>
+  <td>Prerequisites (empty file)</td>
+ </tr><tr>
+  <td><code>lrchairs.css</code></td>
+  <td rowspan="3">Other administrative files</td>
+ </tr><tr>
+  <td><code>cc-LGPL-a.png</code></td>
+ </tr><tr>
+  <td><code>Version</code><var>nnnnnn</var><code>.js</code></td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h3 id="Prereqs">Prerequisites</h3>
+
+<p>Lrchairs requires POV-Ray 3.5 or later.
+
+<h3 id="Compliance">Namespace Compliance</h3>
+
+<p>All file names in this module and all global and local identifiers defined in <code>lrchairs.inc</code> comply fully with the Object Collection naming standards, as <a href="https://news.povray.org/48ba92e8%241%40news.povray.org">revised August 2008</a> and <a href="https://news.povray.org/povray.object-collection/thread/%3Cweb.5018a69dae7e89cb85de7b680%40news.povray.org%3E/">proposed August 2012</a>. The reserved prefixes for this module are “<code>lrchairs</code>” and “<code>Cp</code>,” including any uppercase and lowercase variants. To avoid conflicts, do not introduce into your scene description file any identifiers with these names, or any identifiers that start with these names plus an underscore.
+
+<p>The identifier <code>View_POV_Include_Stack</code> from the standard include file <code>debug.inc</code> is referenced by <code>lrchairs.inc</code>, although <code>debug.inc</code> itself is not used.
+
+<h3 id="Usage">Usage</h3>
+
+<p>Include this file once prior to using any of the features of lrchairs:
+<pre>#include "lrchairs.inc"</pre>
+<p>Including the file more than once is harmless, though unnecessary.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Macro">Macro</h2>
+
+<h3 id="Cp_Chair">Cp_Chair (Cp_Ftex, Cp_Stex)</h3>
+
+<p>Defines a cheap chair. The chair faces the &minus;<var>z</var> direction, and the origin is between the bottom ends of the rear legs. The unit scale of the model is 1 foot (30.48 cm).
+
+<h4>Arguments</h4>
+<table>
+ <tr><th>Formal Parameter</th> <th>Type</th> <th>Description</th></tr>
+ <tr>
+  <td><code>Cp_Ftex</code></td>
+  <td>texture</td>
+  <td>The texture of the frame of the chair.</td>
+ </tr><tr>
+  <td><code>Cp_Stex</code></td>
+  <td>texture</td>
+  <td>The texture of the seat and back of the chair.</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="Scale">Scale Conversions</h2>
+
+<p>The unit scale of the chair is 1 foot. If your scene uses a different POV unit, you may scale the chair with one of the following values:
+
+<table>
+ <tr><th>Identifier</th> <th>Type</th> <th>Description</th> <th>Value</th></tr>
+ <tr>
+  <td><code>CP_CM</code></td>
+  <td>float</td>
+  <td>Use this if your scene’s unit is 1 centimeter.</td>
+  <td>30.48</td>
+ </tr><tr>
+  <td><code>CP_FOOT</code></td>
+  <td>float</td>
+  <td>Included for completeness, you may use this if your scene’s unit is 1 foot.</td>
+  <td>1</td>
+ </tr><tr>
+  <td><code>CP_INCH</code></td>
+  <td>float</td>
+  <td>Use this if your scene’s unit is 1 inch.</td>
+  <td>12</td>
+ </tr><tr>
+  <td><code>CP_METER</code></td>
+  <td rowspan="2">float</td>
+  <td rowspan="2">Use one of these if your scene’s unit is 1 meter.</td>
+  <td rowspan="2">0.3048</td>
+ </tr><tr>
+  <td><code>CP_METRE</code></td>
+ </tr><tr>
+  <td><code>CP_YARD</code></td>
+  <td>float</td>
+  <td>Use this if your scene’s unit is 1 yard.</td>
+  <td>1/3</td>
+ </tr>
+</table>
+
+<p>Here is an example for a scene with a POV unit of 1 meter:
+
+<pre>object
+{ Cp_Chair (MyFrameTexture, MySeatTexture)
+  scale CP_METER
+}</pre>
+
+<p>As always, remember to scale the chair <em>before</em> translating it to its final location.
+
+<p><a href="#toc">Table of contents</a><hr>
+
+<h2 id="About">About Lrchairs</h2>
+
+<address>Copyright © 2008 <a href="https://leroyspovstuff.yolasite.com/">Leroy Whetstone</a> (<a href="https://leroyw.byethost15.com/">new website under construction</a>) and © 2014 &ndash; 2019 Richard Callwood III.
+ <a href="https://creativecommons.org/licenses/LGPL/2.1/">
+  <img src="cc-LGPL-a.png" alt="Some rights reserved. Licensed under the Creative Commons-GNU Lesser General Public License.">
+ </a>
+</address>
+
+<p>The entire artistic credit for this model goes to Mr. Whetstone.
+
+<h3>Object Collection Categories</h3>
+
+<ul>
+ <li><strong>Areas of Interest</strong>
+  <ul>
+   <li>Household/office
+  </ul>
+ <li><strong>Contribution Types</strong>
+  <ul>
+   <li>Objects
+    <ul>
+     <li>Solid (CSG-able)
+    </ul>
+   <li>Macros
+  </ul>
+</ul>
+
+<h3>Change Log</h3>
+
+<table>
+ <tr><th>Version</th> <th>Date</th> <th>Notes</th> <th>Author</th></tr>
+ <tr>
+  <td>1.0</td>
+  <td>2008 August 21</td>
+  <td>
+   <ul>
+    <li>The initial Object Collection version is released.
+   </ul>
+  </td>
+  <td>Leroy Whetstone</td>
+ </tr><tr>
+  <td>1.0A</td>
+  <td>2008 August 21</td>
+  <td>
+   <ul>
+    <li>A typo is corrected.
+   </ul>
+  </td>
+  <td>Leroy Whetstone</td>
+ </tr><tr>
+  <td>1.1</td>
+  <td>2014 December 31</td>
+  <td>
+   <ul>
+    <li>The module is brought into full namespace compliance.
+    <li>The POV-Ray version is set to 3.5.
+    <li>Scale conversions are added.
+   </ul>
+  </td>
+  <td>Richard Callwood III</td>
+ </tr><tr>
+  <td>1.1.1</td>
+  <td>2019 March 30</td>
+  <td>
+   <ul>
+    <li>The messages to the debug stream stating that <code>lrchairs.inc</code> is included are suppressed by default.
+    <li>Mr. Whetstone’s contact information is updated.
+   </ul>
+  </td>
+  <td>Richard Callwood III</td>
+ </tr>
+</table>
+
+<p><a href="#toc">Table of contents</a>
+
+</body>
+</html>

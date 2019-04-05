@@ -1,0 +1,407 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>HHBI</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "HHBI_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="HHBI_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"HHBI.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="HHBI_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "HHBI.inc" (HidranteHumedadBocaIncendio)
+dibuja un modelo sencillo de hidrante municipal.
+Posee una macro para variar sus dimensiones principales y texturas. La base se 
+puede extender bajo el suelo para ubicar en terreno irregular.
+Es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+El dibujo de la cadena metálica, talvez la estructura más compleja del dibujo.&nbsp;
+Fue gracias a archivos originales de Christophe Bouffartigue y Chris Colefax.&nbsp;
+El objeto molde de cadena "link_object" fue transcrito
+con pocas modificaciones del archivo
+"fireplug.inc" tomado de la Biblioteca de POVRAY administrada por Micha Riser.&nbsp;
+Su autor es Christophe Bouffartigue con fecha 3 Julio 2000 
+(email: christophe.bouffartigue@libertysurf.fr).<p>
+Para el dibujo de la cadena de la escalera es necesario el archivo "link.inc",
+que probablemente se incluya en este paquete de distribución de "HHBI.inc".
+Su autor es Chris Colefax, 20 April 1998.<p>
+<p>
+Puede que su distribución no contenga el archivo "link.inc".&nbsp;
+El archivo "HHBI.inc" podrá ejecutarse de todas maneras, pero con alguna
+pérdida de calidad.&nbsp;  El archivo "link.inc" de Chris Colefax
+puede conseguirse en la siguiente dirección electrónica;&nbsp;
+encontrará además valiosos archivos include, sumamente útiles
+para el programador en POVRay.
+<br>
+<table border=0>
+<tr>
+<td>
+<img alt="Chris Colefax..." src="HHBI_Colefax.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.reocities.com/SiliconValley/Lakes/1434/index.html#IncludeFiles">www.reocities.com/SiliconValley/Lakes/1434/index.html#IncludeFiles</a><br>
+<a href="http://www.reocities.com/SiliconValley/Lakes/1434/otherincludes.html">www.reocities.com/SiliconValley/Lakes/1434/otherincludes.html</a>
+</td>
+</tr>
+</table>
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie los archivos "HHBI.inc", y "LINK.inc" (si disponible y no lo tiene instalado) 
+en dicho subdirectorio;&nbsp; únicamente estos don son necesarios.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "HHBI.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "HHBI.inc". El archivo de terceros "LINK.inc" podría 
+ya estar instalado en su sistema, es opcional, su función es dibujar la cadena.
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="HHBI.jpg" target="_blank" >
+<img alt="Hidrante" src="HHBI_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="HHBI.jpg" target="_blank" >
+<font size = -2>
+Hidrante
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "HHBI.inc"
+    
+    object      {
+      HHBI_Hidrante( 0 )
+      translate         <-1.8,+1.0,-4.2>    
+    }
+</pre>
+<p>
+La macro principal tiene solo un parámetro.
+<pre>
+    #macro HHBI_Hidrante( FraccionSubSuelo )                            
+</pre>
+<dl>
+<dt><i>FraccionSubSuelo</i> :
+<dd>Fracción propia, para extender la base bajo tierra. Util al ubicar
+en superficies irregulares o inclinadas. Con un valor <i>0.0</i> la base
+termina en el plano, con un valor máximo de <i>1.0</i> perfora Y- hasta una
+profundidad igual a su base.
+</dl>
+<p>
+La siguiente macro permite mayor flexibilidad de diseño.
+<pre>
+    #macro HHBI_HidranteHumedadBocaIncendio( FraccionSubSuelo,
+                  AltoHidrante, DiametroHidrante,
+                  FraccionBase, CizallaBase,
+                  FraccionIntermedia, FraccionSuperior, ContactoHidrante,
+                  TexturaPrincipal, TexturaUniones, TexturaExtremos,
+                  TexturaBase, TexturaCadenas )
+</pre>
+<dl>
+<dt><i>FraccionSubSuelo</i> :
+<dd>Fracción propia, para extender la base bajo tierra. Util al ubicar
+en superficies irregulares o inclinadas. Con un valor <i>0.0</i> la base
+termina en el plano, con un valor máximo de <i>1.0</i> perfora Y- hasta una
+profundidad igual a su base.
+<dt><i>AltoHidrante</i> :
+<dd>Alto del hidrante desde la superficie. Valor por defecto 600*L.
+<dt><i>DiametroHidrante</i> :
+<dd>Referencia para los diámetros de los cilindros. Valor por defecto 150*L.
+<dt><i>FraccionBase</i> :
+<dd>Fracción propia de <i>AltoHidrante</i> ocupada por la base visible del hidrante.
+Valor por defecto 0.4.
+<dt><i>CizallaBase</i> :
+<dd>Inclinación de la pared delantera de la base. Utilice <i>0.0</i> para paredes
+verticales, y <i>1.0</i> para 45 grados. Valor por defecto 1/4.
+<dt><i>FraccionIntermedia</i> :
+<dd>Fracción propia de <i>AltoHidrante</i> para la unión entre la base 
+y el hidrante propiamente. Valor por defecto 0.093.
+<dt><i>FraccionSuperior</i> :
+<dd>Fracción propia de <i>AltoHidrante</i> para la sección superior
+del hidrante. Valor por defecto 0.093. 
+<dt><i>ContactoHidrante</i> :
+<dd>Referencia para el largo de las prolongaciones laterales y frontal
+del hidrante para conectarse con las mangueras del carro del bomberos.
+Valor por defecto 60*L.
+<dt><i>TexturaPrincipal</i> :
+<dd>Textura principal del hidrante.
+Valor por defecto HHBI_TexturaPrincipal.
+<dt><i>TexturaUniones</i> :
+<dd>Textura de los cilindros metálicos que unen el cuerpo principal del hidrante con
+la base y sus laterales.
+Valor por defecto HHBI_TexturaUniones.
+<dt><i>TexturaExtremos</i> :
+<dd>Textura de los cierres extremos del hidrante.
+Valor por defecto HHBI_TexturaExtremos.
+<dt><i>TexturaBase</i> :
+<dd>Textura de la base de concreto.
+Valor por defecto HHBI_TexturaBase.
+<dt><i>TexturaCadenas</i> :
+<dd>Textura de las cadenas y algunos tornillos.
+Valor por defecto HHBI_TexturaCadenas.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "HHBI.inc"
+    
+    object      {
+      HHBI_HidranteHumedadBocaIncendio( 0,
+        0.600, 0.150, 0.4, 1/4, 0.093, 0.093, 0.060,
+        HHBI_TexturaPrincipal, HHBI_TexturaUniones, HHBI_TexturaExtremos,
+        HHBI_TexturaBase, HHBI_TexturaCadenas )
+      translate         <-1.8,+1.0,-4.2>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El aparato con parámetro <i>FraccionSubSuelo</i> nulo, tiene las siguientes dimensiones:
+<pre>
+    Alto		= 600*L
+    Alto		= AltoHidrante
+    Frente		= 270*L
+    Frente		= DiametroHidrante+2*ContactoHidrante 	
+    Profundidad Z	= -150*L..95*L
+    Profundidad Z	= -( DiametroHidrante/2+1.25*ContactoHidrante )..
+    			  +( DiametroHidrante/2+CizallaBase*FraccionBase*AltoHidrante/3 )
+</pre>
+<p>
+Con parámetro <i>FraccionSubSuelo</i> nulo, inicia en el plano XZ hacia Y+, con frente
+hacia Z-.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>HHBI_DefectoTexturaPrincipal</i>
+<dd>Textura principal del hidrante.
+<dt><i>HHBI_DefectoTexturaUniones</i> 
+<dd>Textura de los cilindros metálicos que unen el cuerpo principal del hidrante con
+la base y sus laterales.
+<dt><i>HHBI_DefectoTexturaExtremos</i> 
+<dd>Textura de los cierres extremos del hidrante.
+<dt><i>HHBI_DefectoTexturaBase</i> 
+<dd>Textura de la base de concreto.
+<dt><i>HHBI_DefectoTexturaCadenas</i> 
+<dd>Textura de las cadenas y algunos tornillos.
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad.
+<p>
+<pre>
+    #declare HHBI_BanderaLink			= file_exists( "LINK.inc" );
+</pre>
+Algunas distribuciones talvez no incluyan el archivo "LINK.inc"
+que no es compatible con el standard de la biblioteca oficial.
+Con un valor <i>on</i> se indica que se dibujara la cadena, y un valor <i>off</i>
+para no dibujar. Se ajusta automáticamente, pero el usuario 
+si lo necesitara podría modificar su valor.
+<p>
+<pre>
+    #declare HHBI_TexturaPrincipal		=
+		texture  { HHBI_DefectoTexturaPrincipal			}
+</pre>
+Textura principal del hidrante.
+<p>
+<pre>
+    #declare HHBI_TexturaUniones		=	 
+		texture  { HHBI_DefectoTexturaUniones			}
+</pre>
+Textura de los cilindros metálicos que unen el cuerpo del hidrante con la base
+y sus laterales.
+<p>
+<pre>
+    #declare HHBI_TexturaExtremos		=	 
+		texture  { HHBI_DefectoTexturaExtremos			}
+</pre>
+Textura de los cierres extremos del hidrante.
+<p>
+<pre>
+    #declare HHBI_TexturaBase			=	 
+		texture  { HHBI_DefectoTexturaBase			}
+</pre>
+Textura de la base de concreto.
+<p>
+<pre>
+    #declare HHBI_TexturaCadenas		=	 
+		texture  { HHBI_DefectoTexturaCadenas			}
+</pre>
+Textura de las cadenas y algunos tornillos.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "HHBI.inc"
+    #include "textures.inc"
+
+    #declare HHBI_TexturaPrincipal  = Sandalwood  
+    #declare HHBI_TexturaBase       = PinkAlabaster
+    #declare HHBI_TexturaUniones    = Yellow_Pine  
+    #declare HHBI_TexturaExtremos   = Gold_Texture
+    #declare HHBI_TexturaCadenas    = Brass_Texture
+    
+    object      {
+      HHBI_Hidrante( 0 )
+      translate         <-1.8,+1.0,-4.2>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Un elevalo valor del parámetro <i>CizallaBase</i> provocará que la base se divida
+en secciones.
+<p>
+La introducción de <i>FraccionSubSuelo</i> fue planeada para ubicar el hidrante
+en superficies inclinadas e irregulares. En tales situaciones se espera que el usuario
+considere útil una base de mayor tamaño.
+<p>
+Aunque el dibujo tiene una textura casi uniforme. Los modificadores permitirán que
+el usuario aplique diferentes texturas a las partes del hidrante.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros modelos de hidrante.</li>
+  <li>Agregar un sistema para conectar a mangueras.</li>
+  <li>Mayor cantidad de texturas por defecto.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="HHBI_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(17/julio/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="HHBI_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="HHBI_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>RABA</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "RABA_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="RABA_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"RABA.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="RABA_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "RABA.inc" (RasuradoraAfeitarBarbaAcero)
+dibuja una rasuradora simple con su navajilla.
+Puede cambiar algunas características menores incluyendo su textura,
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie el archivo "RABA.inc" en dicho subdirectorio;&nbsp; 
+únicamente este es necesario.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "RABA.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "RABA.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="RABA.jpg" target="_blank" >
+<img alt="Rasuradora" src="RABA_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="RABA.jpg" target="_blank" >
+<font size = -2>
+Rasuradora
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "RABA.inc"
+    
+    object      {
+      RABA_Rasuradora( )
+      translate         <-1.975,+1.725,-4.900>    
+    }
+</pre>
+<p>
+La macro principal no tiene parámetros.
+<pre>
+    #macro RABA_Rasuraadora( )
+</pre>
+<p>
+La siguiente macro permite mucha mayor flexibilidad.
+<pre>
+    #macro RABA_RasuradoraAfeitarBarbaAcero
+ 	      ( LargoHoja, AnchoHoja, GruesoHoja,
+        	DiametroPerforacion, LargoRasuradora, 
+		DiametroCilindro, GruesoDecorativo,
+        	AltoCabeza, AltoCabezaInterno, LargoTornillo, 
+        	TexturaPrincipal, TexturaMango, TexturaMetal, 
+		TexturaFilo, TexturaRanurada )
+</pre>
+<dl>
+<dt><i>LargoHoja</i> :
+<dd>Lado largo de la navajilla plana.
+Valor por defecto 30.9*L.
+<dt><i>AnchoHoja</i> :
+<dd>Ancho de la navajilla plana.
+Valor por defecto 16.3*L.
+<dt><i>GruesoHoja</i> :
+<dd>Grosor de la navajilla.
+Valor por defecto 0.1*L.
+<dt><i>DiametroPerforacion</i> :
+<dd>Diámetro del tornillo sujetador.
+Valor por defecto 3.5*L.
+<dt><i>LargoRasuradora</i> :
+<dd>Largo del mango.
+Valor por defecto 50.8*L.
+<dt><i>DiametroCilindro</i> :
+<dd>Diámetro del mango.
+Valor por defecto 5.4*L.
+<dt><i>GruesoDecorativo</i> :
+<dd>Valor de referencia para algunas curvas y decoraciones. 
+Valor por defecto 1*L.
+<dt><i>AltoCabeza</i> :
+<dd>Referencia para el alto en Y de la cabeza de la rasuradora.
+Valor por defecto 3.2*L.
+<dt><i>AltoCabezaInterno</i> :
+<dd>Alto Y de la base interna de la navajilla. Debe ser menor a AltoCabeza.
+Valor por defecto 1*L.
+<dt><i>LargoTornillo</i> :
+<dd>Largo del tornillo sujetador.
+Valor por defecto 6*L.
+<dt><i>TexturaPrincipal</i> :
+<dd>Textura principal de la rasuradora.
+Valor por defecto RABA_TexturaPrincipal.
+<dt><i>TexturaMango</i> :
+<dd>Textura para el rojo del mango.
+Valor por defecto RABA_TexturaMango.
+<dt><i>TexturaMetal</i> :
+<dd>Textura de la navajilla. 
+Valor por defecto RABA_TexturaMetal.
+<dt><i>TexturaFilo</i> :
+<dd>Textura para el filo de la navajilla.
+Valor por defecto RABA_TexturaFilo.
+<dt><i>TexturaRanurada</i> :
+<dd>Textura en la base y cerca de los extremos laterales de la navajilla. 
+Valor por defecto RABA_TexturaRanurada.
+</dl>
+<p>
+Se puede dibujar la navajilla en forma independienca con la siguiente macro.
+<pre>
+    #macro RABA_Navajilla
+              ( LargoHoja, AnchoHoja, GruesoHoja, CurvaturaHoja,
+        	DiametroPerforacion, FactorLargoHoja,
+        	FactorAnchoHoja, DiametroCurvatura,
+        	TexturaMetal, TexturaFilo )
+</pre>
+<dl>
+<dt><i>LargoHoja</i> :
+<dd>Lado largo de la navajilla plana.
+Valor por defecto 30.9*L.
+<dt><i>AnchoHoja</i> :
+<dd>Ancho de la navajilla plana.
+Valor por defecto 16.3*L.
+<dt><i>GruesoHoja</i> :
+<dd>Grosor de la navajilla.
+Valor por defecto 0.1*L.
+<dt><i>CurvaturaHoja</i> :
+<dd>Inverso del radio de curvatura de la hoja. Cero para plano.
+Valor por defecto 1/(32.1*L) (división).
+<dt><i>DiametroPerforacion</i> :
+<dd>Diámetro del tornillo sujetador.
+Valor por defecto 3.5*L.
+<dt><i>FactorLargoHoja</i> :
+<dd>Fracción referencia para medida de las ranuras a lo largo.
+Valor por defecto 0.4265.
+<dt><i>FactorAnchoHoja</i> :
+<dd>Fracción referencia para medida de las ranuras a lo ancho.
+Valor por defecto 0.2647.
+<dt><i>DiametroCurvatura</i> :
+<dd>Diámetro para las curvas en las ranuras. 
+Valor por defecto <i>0.085*AnchoHoja</i>.
+<dt><i>TexturaMetal</i> :
+<dd>Textura de la navajilla. 
+Valor por defecto RABA_TexturaMetal.
+<dt><i>TexturaFilo</i> :
+<dd>Textura para el filo de la navajilla.
+Valor por defecto RABA_TexturaFilo.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "RABA.inc"
+    
+    object      {
+      RABA_RasuradoraAfeitarBarbaAcero( 0.0309, 0.0163, 0.0001,
+          0.0035, 0.0508, 0.0054, 0.001, 0.0032, 0.001, 0.006,
+          RABA_TexturaPrincipal, RABA_TexturaMango, 
+          RABA_TexturaMetal, RABA_TexturaFilo, RABA_TexturaRanurada )
+      translate         <-1.975,+1.725,-4.900>    
+    }
+</pre>
+<p>
+El siguiente ejemplo dibuja la misma navajilla aunque en otra posición.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "RABA.inc"
+                       
+    object      {   
+      RABA_Navajilla( 0.0309, 0.0163, 0.0001, 1/0.0321, 
+          0.0035, 0.4265, 0.2647, 0.085*0.0163, 
+          RABA_TexturaMetal, RABA_TexturaFilo )            
+      rotate    90*x
+      translate         <-1.975,+1.725,-4.900>   
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+La rasuradora tiene las siguientes dimensiones:
+<pre>
+    Mínimo      	= <  -15.5,  -51,  -8.5 >*L
+    Máximo      	= <  +15.5,   +3,  +8.5 >*L
+    Mínimo      	= < -LargoHoja/2, -LargoRasuradora, -0.55*AnchoHoja >
+    Máximo      	= < +LargoHoja/2,      +AltoCabeza, +0.55*AnchoHoja >
+</pre>
+<p>
+El objeto es simétrico respecto a los planos YZ y XY. El mango comienza en el origen.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>RABA_DefectoTexturaPrincipal</i> 
+<dd>Textura principal del aparato.
+<dt><i>RABA_DefectoTexturaMango</i> 
+<dd>Textura para el rojo del mango.
+<dt><i>RABA_DefectoTexturaMetal</i> 
+<dd>Textura de la navajilla.
+<dt><i>RABA_DefectoTexturaFilo</i> 
+<dd>Textura del filo de la navajilla.
+<dt><i>RABA_DefectoTexturaRanurada</i> 
+<dd>Textura en la base y cerca de los extremos laterales de la navajilla.
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad.
+<p>
+<pre>
+    #declare RABA_TransformCabeza		= transform	{ }
+</pre>
+Permite un desplazamiento adicional de la cabeza de la rasuradora.
+<p>
+<pre>
+    #declare RABA_TransformNavajilla		= transform	{ }
+</pre>
+Permite un desplazamiento adicional de la navajilla.
+<p>
+<pre>
+    #declare RABA_TransformBaseInterior		= transform	{ }
+</pre>
+Permite un desplazamiento adicional de la base de la navajilla.
+<p>
+<pre>
+    #declare RABA_TransformMango		= transform	{ }
+</pre>
+Permite un desplazamiento adicional del mango.
+<p>
+<pre>
+    #declare RABA_FactorCurvaturaNavajilla	= 1.0;
+</pre>
+Para cambiar la curvatura de la navajilla. Su valor es inverso al radio de curvatura, 
+por tanto, al aumentar disminuye el radio asociado. Como regla excepcional, 
+utilice <i>0.0</i> para plano.
+<p>
+<pre>
+    #declare RABA_TexturaPrincipal		=	 
+		texture  { RABA_DefectoTexturaPrincipal		}
+</pre>	
+Textura principal del aparato.
+<p>
+<pre>
+    #declare RABA_TexturaMango			=	 
+		texture  { RABA_DefectoTexturaMango		}
+</pre>
+Textura para el rojo del mango.
+<p>
+<pre>
+    #declare RABA_TexturaMetal			=	 
+		texture  { RABA_DefectoTexturaMetal		}
+</pre>
+Textura de la navajilla.
+<p>
+<pre>
+    #declare RABA_TexturaFilo			=	 
+		texture  { RABA_DefectoTexturaFilo		}
+</pre>
+Textura del filo de la navajilla.
+<p>
+<pre>
+    #declare RABA_TexturaRanurada		=	 
+		texture  { RABA_DefectoTexturaRanurada		}
+</pre>
+Textura en la base y cerca de los extremos laterales de la navajilla.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "textures.inc"
+    #include "RABA.inc"
+                        
+    #declare RABA_TransformCabeza           =
+      transform { translate +0.04*x }                    
+    #declare RABA_TransformBaseInterior     =
+      transform { translate -0.04*x }                    
+    #declare RABA_TransformNavajilla        =
+      transform { rotate +90*x }                    
+    #declare RABA_TransformMango            =
+      transform { translate -0.02*y }                    
+    #declare RABA_FactorCurvaturaNavajilla  = 0.0; 
+    #declare RABA_TexturaPrincipal          = PinkAlabaster
+    #declare RABA_TexturaMango              = Gold_Texture
+    #declare RABA_TexturaMetal              = Brass_Texture
+    #declare RABA_TexturaFilo               = Rust
+    #declare RABA_TexturaRanurada           = 
+        texture { pigment { Red } }
+                        
+    object      {   
+      RABA_Rasuradora( )            
+      translate         <-1.975,+1.725,-4.900>   
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Al modificar los parámetros, es probable que la base inferior ubique las ranuras en forma
+inadecuada. En algunas ocasiones pequeños cambios a <i>AltoCabeza</i> y 
+<i>AltoCabezaInterior</i> podrían mitigar el problema.
+<p>
+La textura <i>RABA_TexturaRanurada</i> es difícil de apreciar, podría ser de interés al
+variar simultáneamente con <i>RABA_TexturaPrincipal</i>.
+<p>
+La navajilla puede curvarse con el parámetro <i>DiametroCurvatura</i> para uso independiente.
+O bien con el modificador <i>RABA_FactorCurvaturaNavajilla</i> para uso combinado
+con la rasuradora. Tomar en cuenta que el primero afecta en forma proporcional, y el segundo
+en forma inversamente proporcional al radio de curvatura. Sin embargo, ambos
+admiten el uso de <i>0.0</i> para generar una superficie plana.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros modelos de rasuradora.</li>
+  <li>Agregar herramientas para facilitar la interacción con personajes.</li>
+  <li>Mayor cantidad de texturas por defecto.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="RABA_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(29/mayo/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="RABA_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="RABA_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

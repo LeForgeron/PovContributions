@@ -1,0 +1,2 @@
+None, aside from a minimum POV-Ray version of 3.6.
+One of the demos requires SpectralRender, Lightsys IV, and POV-Ray 3.7, but these are not prerequisites for general use of the module.

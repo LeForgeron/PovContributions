@@ -1,0 +1,4 @@
+La version actual v1.0 de "PIFC.inc" (PeladorInoxidableFiloCortante)
+dibuja un pelador de verduras para cocina.
+La cuchilla puede desplazarse levemente similar al modelo original.
+Es muy poco flexible. Es compatible con POV-Ray 3.1.

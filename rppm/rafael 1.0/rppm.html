@@ -1,0 +1,399 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>RPPM</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "RPPM_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="RPPM_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"RPPM.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="RPPM_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "RPPM.inc" (RadiocomunicadorPortatilPersonalManual)
+dibuja un radiocomunicador de mano de corto alcance.
+Posee una macro para modificar las características principales,
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie los archivos "RPPM.inc" y "RPPM_IM1.gif" en dicho subdirectorio;&nbsp; únicamente 
+estos dos son necesarios.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "RPPM.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "RPPM.inc" y "RPPM_IM1.gif".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="RPPM.jpg" target="_blank" >
+<img alt="Radiocomunicador" src="RPPM_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="RPPM.jpg" target="_blank" >
+<font size = -2>
+Radiocomunicador
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "RPPM.inc"
+    
+    object      {
+      RPPM_Radiocomunicador( )
+      translate         <-1.98,+1.64,-4.90>    
+    }
+</pre>
+<p>
+La macro principal no tiene parámetros.
+<pre>
+    #macro RPPM_Radiocomunicador( )
+</pre>
+<p>
+La siguiente macro permite mucha mayor flexibilidad.
+<pre>
+    #macro RPPM_RadiocomunicadorPortatilPersonalManual(
+                AltoFundamental, FrenteFundamental, GruesoFundamental,
+                FactorEnsanchamiento, FraccionAltoEnsanchamiento,  
+                AltoAntena, DiametroAntena,  
+                ArregloBotones, GIFBotones, FactorBoton,
+                MaterialPrincipal, MaterialBaseCaratula, 
+                MaterialAntena, MaterialPlastico,
+                MaterialPantalla, MaterialTransparente,
+                MaterialBotones )
+</pre>
+<dl>
+<dt><i>AltoFundamental</i> :
+<dd>Alto de la radio sin antena. Valor por defecto 70*L.
+<dt><i>FrenteFundamental</i> :
+<dd>Frente en <i>X</i> de la radio sin botones. Valor por defecto 35*L.
+<dt><i>GruesoFundamental</i> :
+<dd>Grueso en <i>Z</i> del cuerpo principal inferior.
+Valor por defecto 21*L.
+<dt><i>FactorEnsanchamiento</i> :
+<dd>Factor en que la sección superior se ensancha respecto a la inferior.
+Valor por defecto 1.15.
+<dt><i>FactorAltoEnsanchamiento</i> :
+<dd>Fracción propia de <i>AltoFundamental</i> que divide la sección superior e inferior
+del cuerpo principal. Valor por defecto 0.5.
+<dt><i>AltoAntena</i> :
+<dd>Alto de la antena. Valor por defecto 40*L.
+<dt><i>DiametroAntena</i> :
+<dd>Diámetro en la base de la antena. Valor por defecto 11*L.
+<dt><i>ArregloBotones</i> :
+<dd>Arreglo bidimensional de vectores <i>2D</i> con el formato <i>array [TotalBotones][4]</i>.
+Cada renglón definirá cuatro esquinas de un cuadrilátero. Las coordenadas deberán estar
+contenidas en el rango <i>]-0.5..0.5[</i> para <i>X</i> y <i>]0..1[</i> para <i>Y</i> que son
+relativas al espacio de dibujo, aunque el dominio verdadero será mucho menor, pues debe caer
+en la zona de la placa para botones. Los botones ocuparán el cuadrilátero en su totalidad
+más un borde determinado por <i>FactorBotones</i>. Valor por defecto BMME_ArregloBotones.
+<dt><i>GIFBotones</i> :
+<dd>Archivo imagen GIF que se utiliza para etiquetar los botones. Utilice "" par ignorar este
+parámetro. El color de índice <i>0</i> se utiliza como color transparente.
+Valor por defecto BMME_GIFBotones.
+<dt><i>FactorBotones</i> :
+<dd>Agrega un borde en exceso a los botones definidos en <i>ArregloBotones</i>. 
+Utiliza coordenadas relativas al espacio disponible. Valor por defecto BMME_FactorBotones.
+<dt><i>MaterialPrincipal</i> :
+<dd>Material principal del aparato. Valor por defecto BMME_MaterialPrincipal.
+<dt><i>MaterialBaseCaratula</i> :
+<dd>Material para la base de los botones.
+Valor por defecto BMME_MaterialBaseCaratula.
+<dt><i>MaterialAntena</i> :
+<dd>Material para la antena.
+Valor por defecto BMME_MaterialAntena.
+<dt><i>MaterialPlastico</i> :
+<dd>Material para el borde plástico de la pantalla.
+Valor por defecto BMME_MaterialPlastico.
+<dt><i>MaterialPantalla</i> :
+<dd>Material para el fondo de la pantalla. Podría incluir un archivo de imagen
+para visualización.
+Valor por defecto BMME_MaterialPantalla.
+<dt><i>MaterialTransparente</i> :
+<dd>Material del vidrio que cubre la pantalla.
+Valor por defecto BMME_MaterialTransparente.
+<dt><i>MaterialBotones</i> :
+<dd>Material de los botones.
+Valor por defecto BMME_MaterialBotones.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "RPPM.inc"
+    
+    object      {
+      RPPM_RadiocomunicadorPortatilPersonalManual( 0.070, 0.035, 
+                0.021, 1.15, 0.5, 0.040, 0.011,
+                RPPM_ArregloBotones, RPPM_GIFBotones, RPPM_FactorBotones,
+                RPPM_MaterialPrincipal, RPPM_MaterialBaseCaratula,
+                RPPM_MaterialAntena, RPPM_MaterialPlastico,
+                RPPM_MaterialPantalla, RPPM_MaterialTransparente,
+                RPPM_MaterialBotones )
+      translate         <-1.98,+1.64,-4.90>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El aparato se encuentra contenido entre las siguientes dimensiones:
+<pre>
+    Mínimo		= < -22,   0, -12 >*L
+    Máximo		= <  20, 110,  15 >*L
+</pre>
+<p>
+El radiocomunicador se dibuja con la pantalla hacia <i>Z-</i>, la antena hacia <i>Y+</i>
+y el botón de recepción hacia <i>X-</i>. Descansa sobre el plano <i>XZ</i>.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>RPPM_GIFBotones</i> 
+<dd>Imagen utilizada por defecto <i>"RPPM_IM1.gif"</i> como parámetro <i>GIFBotones</i>
+con el objetivo de dibujar los botones del radiocomunicador.
+<dt><i>RPPM_FactorBotones</i> 
+<dd>Se utiliza por defecto <i>0.035</i> como parámetro <i>FactorBotones</i>, que establece
+un borde en exceso sobre los cuadriláteros definidos con <i>ArregloBotones</i>.
+<dt><i>RPPM_ArregloBotones</i> 
+<dd>Arreglo de vectores <i>2D</i> que se usa como parámetro por defecto <i>ArregloBotones</i>.
+Que define cuadriláteros en coordenadas relativas para dibujar los botones.
+<dt><i>RPPM_DefectoMaterialPrincipal</i> 
+<dd>Material principal del aparato. 
+<dt><i>RPPM_DefectoMaterialBaseCaratula</i> 
+<dd>Material para la base de los botones.
+<dt><i>RPPM_DefectoMaterialAntena</i> 
+<dd>Material para la antena.
+<dt><i>RPPM_DefectoMaterialPlastico</i> 
+<dd>Material para el borde plástico de la pantalla.
+<dt><i>RPPM_DefectoMaterialPantalla</i> 
+<dd>Material para el fondo de la pantalla. 
+<dt><i>RPPM_DefectoMaterialTransparente</i> 
+<dd>Material del vidrio que cubre la pantalla.
+<dt><i>RPPM_DefectoMaterialBotones</i> 
+<dd>Material de los botones.
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad. Cuando se
+indique, será el valor establecido por defecto. 
+<p>
+<pre>
+    #declare RPPM_MaterialPrincipal		=
+		material  { RPPM_DefectoMaterialPrincipal		}
+</pre>
+Material principal del aparato.
+<p>
+<pre>
+    #declare RPPM_MaterialBaseCaratula		=
+		material  { RPPM_DefectoMaterialBaseCaratula		}
+</pre> 
+Material para la base de los botones.
+<p>
+<pre>
+    #declare RPPM_MaterialAntena		=
+		material  { RPPM_DefectoMaterialAntena			}
+</pre> 
+Material para la antena.
+<p>
+<pre>
+    #declare RPPM_MaterialPlastico		=
+		material  { RPPM_DefectoMaterialPlastico		}
+</pre> 
+Material para el borde plástico de la pantalla.
+<p>
+<pre>
+    #declare RPPM_MaterialPantalla		=
+		material  { RPPM_DefectoMaterialPantalla		}
+</pre> 
+Material para el fondo de la pantalla. 
+<p>
+<pre>
+    #declare RPPM_MaterialTransparente		=
+		material  { RPPM_DefectoMaterialTransparente		}
+</pre> 
+Material del vidrio que cubre la pantalla.
+<p>
+<pre>
+    #declare RPPM_MaterialBotones		=
+		material  { RPPM_DefectoMaterialBotones			}
+</pre> 
+Material de los botones.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "RPPM.inc"
+    #include "textures.inc"  
+    
+    #declare RPPM_MaterialPrincipal     = M_Ruby_Glass
+    #declare RPPM_MaterialBaseCaratula  = M_NB_Beerbottle_Glass
+    #declare RPPM_MaterialAntena        = M_Vicks_Bottle_Glass
+    #declare RPPM_MaterialPlastico      = M_NB_Winebottle_Glass
+    #declare RPPM_MaterialPantalla      = material { texture { Gold_Texture } }
+    #declare RPPM_MaterialTransparente  = M_Glass 
+    #declare RPPM_MaterialBotones       = M_NB_Glass
+                
+    object      {
+      RPPM_Radiocomunicador()
+      translate         <-1.98,+1.64,-4.90>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Si desea cambiar la posición de los botones, deberá modificar 
+simultáneamente los parámetros <i>ArregloBotones</i> y <i>GIFBotones</i>.
+El segundo de ellos está previsto para ubicar etiquetas, pero podría utilizar
+<i>""</i> como una solución rápida sin etiquetas.
+<p>
+No se crearon herramientas para dibujar en la pantalla.
+La solución prevista es modificar <i>RPPM_MaterialPantalla</i>, 
+o utilizar directamente el parámetro <i>MaterialPantalla</i> en la macro detallada.
+<p>
+Por el momento, no se crearon herramientas para mover el clip sujetador o presionar los botones.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros modelos de radiocomunicador.</li>
+  <li>Ofrecer macros para presionar botones o mover el clip sujetador.</li>
+  <li>Simplificar el proceso de escritura en pantalla.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="RPPM_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(23/octubre/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="RPPM_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="RPPM_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

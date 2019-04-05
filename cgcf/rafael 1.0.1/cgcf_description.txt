@@ -1,0 +1,4 @@
+La version actual v1.0 de "CGCF.inc" (ClassicGameConsoleFull)
+dibuja una consola para video juegos, basado en el modelo Atari Flashback.
+Tiene una macro para modificar las caracter sticas principales, pero
+es muy poco flexible. Es compatible con POV-Ray 3.1.

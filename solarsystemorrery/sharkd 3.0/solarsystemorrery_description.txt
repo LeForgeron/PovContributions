@@ -1,0 +1,3 @@
+A model of the solar system. Includes all eight planets. Can be animated by
+tying the Orrery_StopDate parameter to the clock. I would like to add Pluto and
+Ceres as well, but I could not find all the necessary data for them.

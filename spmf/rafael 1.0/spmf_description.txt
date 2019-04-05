@@ -1,0 +1,3 @@
+La version actual v1.0 de "SPMF.inc" (SelloProgramacionManualFecha)
+dibuja un modelo sencillo de sello para tinta con fecha ajustable.
+Es muy poco flexible. Es compatible con POV-Ray 3.1.

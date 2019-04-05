@@ -1,0 +1,389 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>CNVI</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "CNVI_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="CNVI_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"CNVI.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="CNVI_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "CNVI.inc" (CandeleroNoVelaIncluida)
+dibuja un candelero con soporte metálico decorado en vidrio.
+Posee una macro para modificar las características principales, pero
+es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie el archivo "CNVI.inc" en dicho subdirectorio;&nbsp; únicamente 
+este es necesario.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "CNVI.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "CNVI.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="CNVI.jpg" target="_blank" >
+<img alt="Candelero" src="CNVI_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="CNVI.jpg" target="_blank" >
+<font size = -2>
+Candelero
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CNVI.inc"
+    
+    object     	{ 
+      CNVI_Candelero( 1000 ) 
+      translate         <-1.98,+1.63,-4.85>    
+    }
+</pre>
+<p>
+La siguiente principal tiene solo un parametro:
+<pre>
+    #macro CNVI_Candelero( Semilla )
+</pre>
+<dl>
+<dt><i>Semilla</i> :
+<dd>Valor semilla para el generador de números aleatorios. El efecto es poco apreciable.
+</dl>
+<p>
+Puede controlarse el dibujo del candelero con mayor detalle con la siguiente macro:
+<pre>
+    #macro CNVI_CandeleroNoVelaIncluida( Semilla,
+        DiametroSoporte, AltoSoporte,
+        DiametroCandelero, AltoCandelero,
+        TotalColumnas, ColumnasDecoradoSeccion,
+        DiametroArgolla, FrenteVidrio, GruesoVidrio,
+        AlambreGrueso, AlambreMedio, AlambreDelgado,
+        MaterialSoporte, MaterialVidrio,
+        MaterialArgolla, MaterialCandelero )
+</pre>
+<dl>
+<dt><i>Semilla</i> :
+<dd>Valor semilla para el generador de números aleatorios. El efecto es poco apreciable.
+<dt><i>DiametroSoporte</i> :
+<dd>Diámetro del soporte metálico.
+Valor por defecto 79*L.
+<dt><i>AltoSoporte</i> :
+<dd>Alto del soporte metálico.
+Valor por defecto 118*L.
+<dt><i>DiametroCandelero</i> :
+<dd>Diámetro del soporte interior para el candil.
+Valor por defecto 29.4*L.
+<dt><i>AltoCandelero</i> :
+<dd>Alto del soporte interior para el candil.
+Valor por defecto 11*L.
+<dt><i>TotalColumnas</i> :
+<dd>Total de columnas metálicas del soporte.
+Valor por defecto 3.
+<dt><i>ColumnasDecoradoSeccion</i> :
+<dd>Total de columnas de vidrio decorativa en cada una de las <i>TotalColumnas</i> secciones
+del soporte.
+Valor por defecto 4.
+<dt><i>DiametroArgolla</i> :
+<dd>Diámetro de las argollitas sujetadoras.
+Valor por defecto 8.5*L.
+<dt><i>FrenteVidrio</i> :
+<dd>Ancho respecto del observador del decorado de vidrio.
+Valor por defecto 15.6*L.
+<dt><i>GruesoVidrio</i> :
+<dd>Grueso radial del decorado de vidrio.
+Valor por defecto 7.4*L.
+<dt><i>AlambreGrueso</i> :
+<dd>Diámetro de los alambres soporte.
+Valor por defecto 2.5*L.
+<dt><i>AlambreMedio</i> :
+<dd>Diámetro de los alambres secundarios.
+Valor por defecto 2*L.
+<dt><i>AlambreDelgado</i> :
+<dd>Diámetro de las argollitas y láminas delgadas.
+Valor por defecto 0.5*L.
+<dt><i>MaterialSoporte</i> :
+<dd>Material del soporte metálico.
+Valor por defecto CNVI_MaterialSoporte.
+<dt><i>MaterialVidrio</i> :
+<dd>Material del vidrio.
+Valor por defecto CNVI_MaterialVidrio.
+<dt><i>MaterialArgolla</i> :
+<dd>Material de las argollitas.
+Valor por defecto CNVI_MaterialArgolla.
+<dt><i>MaterialCandelero</i> :
+<dd>Material del candelero interior.
+Valor por defecto CNVI_MaterialCandelero.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CNVI.inc"
+    
+    object     	{ 
+      CNVI_CandeleroNoVelaIncluida( 1000, 
+          0.079, 0.118, 0.0294, 0.011, 3, 4, 
+          0.0085, 0.0156, 0.0074, 0.0025, 0.002, 0.0005,
+          CNVI_MaterialSoporte, CNVI_MaterialVidrio,
+          CNVI_MaterialArgolla, CNVI_MaterialCandelero )
+      translate         <-1.98,+1.63,-4.85>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El candelero tiene las siguientes coordenadas:
+<pre>
+    Alto            = 118*L (AltoSoporte)
+    Diámetro        =  86*L (mayor a DiametroSoporte)
+</pre>
+<p>
+El fondo del recipiente descansa sobre el plano <i>XZ</i>, en el hemisferio <i>Y+</i>.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>CNVI_BaseVela</i> 
+<dd>Vector generado al invocar la macro, para ubicar la base de la vela dentro de la estructura. 
+<dt><i>CNVI_DefectoMaterialSoporte</i> 
+<dd>Material para el soporte metálico. 
+<dt><i>CNVI_DefectoMaterialVidrio</i> 
+<dd>Material para el decorado de vidrio.
+<dt><i>CNVI_DefectoMaterialArgolla</i> 
+<dd>Material para las argollitas sujetadoras.
+<dt><i>CNVI_DefectoMaterialCandelero</i> 
+<dd>Material para el candelero interior.
+</dl>
+<p>
+El siguiente coloca una velita sencilla al interior del candelero.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CNVI.inc"
+    
+    union           {     	
+      object        { 
+        CNVI_Candelero( 1000 ) 
+      }  
+      cylinder      { 
+        0, 0.020*y, 0.010 
+        pigment { Red } 
+        translate CNVI_BaseVela 
+      }
+      rotate     10*y
+      translate         <-1.98,+1.63,-4.85>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad. Cuando se
+indique, será el valor establecido por defecto. 
+<p>
+<pre>
+    #declare CNVI_MaterialSoporte		=
+		material  { CNVI_DefectoMaterialSoporte			}
+</pre>
+Material para el soporte metálico.
+<p>
+<pre>
+    #declare CNVI_MaterialVidrio		=
+		material  { CNVI_DefectoMaterialVidrio			}
+</pre>
+Material para el decorado de vidrio.
+<p>
+<pre>
+    #declare CNVI_MaterialArgolla		=
+		material  { CNVI_DefectoMaterialArgolla			}
+</pre> 
+Material para las argollitas sujetadoras.
+<p>
+<pre>
+    #declare CNVI_MaterialCandelero		=
+		material  { CNVI_DefectoMaterialCandelero		}
+</pre> 
+Material para el candelero interno.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CNVI.inc"    
+    #include "textures.inc"
+    
+    #declare CNVI_MaterialSoporte   = 
+        material { texture { PinkAlabaster } }
+    #declare CNVI_MaterialVidrio    = 
+        material { M_Water }
+    #declare CNVI_MaterialArgolla   = 
+        material { texture { Brass_Texture } }
+    #declare CNVI_MaterialCandelero = 
+        material { texture { Gold_Texture } }
+    
+    object     	{ 
+      CNVI_Candelero( 1000 )
+      translate         <-1.98,+1.63,-4.85>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Al variar los parámetros debe hacerlo en forma consistente para lograr buenos resultados.
+<p>
+Con el material de vidrio por defecto, resulta algo difícil 
+apreciar una vela interior apagada.
+<p>
+La variación aleatoria únicamente produce rotaciones en el eje principal.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Agregar mayor aleatoriedad al movimiento, o parámetros para simular flujos de aire.</li>
+  <li>Aumentar la variedad de diseños que pueden generar las macros.</li>
+  <li>Mayor variedad de texturas por defecto funcionales.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="CNVI_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(5/febrero/2019), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="CNVI_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="CNVI_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

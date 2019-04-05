@@ -1,0 +1,425 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>SPHT</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "SPHT_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="SPHT_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"SPHT.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="SPHT_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "SPHT.inc" (SprayerProfessionalHandTool)
+dibuja un rociador simple, como los utilizados en jardinería y limpieza doméstica.
+Tiene una macro para cambiar algunas características y las texturas, 
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Parte importante de la estructura principal del aparato, se 
+desarrolló con la ayuda del programa Epspline.exe para Windows.&nbsp;
+Herramienta auxiliar POV-Ray para modelar los tipos prism y lathe.&nbsp;
+Si le interesa obtener una copia del programa, puede buscarla en el siguiente enlace:<br>
+<table border=0>
+<tr>
+<td>
+<img alt="Epspline..." src="SPHT_Epspline.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://agalena.nfshost.com/b1/" target="_blank">agalena.nfshost.com/b1/</a><br>
+</td>
+</tr>
+</table>
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie los archivos "SPHT.inc" y "SPHT_AUX.inc" en dicho subdirectorio;&nbsp; únicamente 
+estos dos son necesarios.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "SPHT.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "SPHT.inc" y "SPHT_AUX.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="SPHT.jpg" target="_blank" >
+<img alt="Rociador" src="SPHT_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="SPHT.jpg" target="_blank" >
+<font size = -2>
+Rociador
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "SPHT.inc"
+    
+    object      {
+      SPHT_Sprayer( on, 0.0 )
+      translate         <-1.95,+1.60,-4.80>    
+    }
+</pre>
+<p>
+La macro principal tiene dos parámetros.
+<pre>
+    #macro SPHT_Sprayer( BanderaTapilla, FraccionPress )
+</pre>
+<dl>
+<dt><i>BanderaTapilla</i> :
+<dd><i>on</i> dibuja la tapita en la boca del rociador.
+<i>off</i> no la dibuja.
+<dt><i>FraccionPress</i> :
+<dd>Fracción propia o unitaria para presionar el gatillo disparador.
+Utilice <i>0.0</i> para liberar el botón.
+</dl>
+<p>
+La siguiente macro permite un mayor control de las características.
+<pre>
+    #macro SPHT_SprayerProfessionalHandTool( BanderaTapilla, FraccionPress,
+                  DiametroRecipiente, DiametroBoquilla, 
+                  AltoRecipiente, AltoSprayer,
+                  TexturaRecipiente, TexturaSprayer,
+                  TexturaPress, TexturaSuccion )
+</pre>
+<dl>
+<dt><i>BanderaTapilla</i> :
+<dd><i>on</i> dibuja la tapita en la boca del rociador.
+<i>off</i> no la dibuja.
+<dt><i>FraccionPress</i> :
+<dd>Fracción propia o unitaria para presionar el gatillo disparador.
+Utilice <i>0.0</i> para liberar el botón.
+<dt><i>DiametroRecipiente</i> :
+<dd>Diámetro del recipiente contenedor del líquido. Valor por defecto 64*L.
+<dt><i>DiametroBoquilla</i> :
+<dd>Diámetro de la unión con el rociador. Valor por defecto 18*L.
+<dt><i>AltoRecipiente</i> :
+<dd>Alto del recipiente contenedor del líquido anterior a la boquilla. Valor por defecto 86*L.
+<dt><i>AltoSprayer</i> :
+<dd>Referencia para el tamaño de la pistola rociadora. Valor por defecto 50*L.
+<dt><i>TexturaRecipiente</i> :
+<dd>Textura del recipiente para el líquido.
+Valor por defecto SPHT_TexturaRecipiente.
+<dt><i>TexturaSprayer</i> :
+<dd>Textura principal de la pistola rociadora.
+Valor por defecto SPHT_TexturaSprayer.
+<dt><i>TexturaPress</i> :
+<dd>Textura del gatillo y otros elementos de la pistola. Valor por defecto SPHT_TexturaPress.
+<dt><i>TexturaSuccion</i> :
+<dd>Textura de la pajilla de succión. Valor por defecto SPHT_TexturaSuccion.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "SPHT.inc"
+    
+    object      {
+      SPHT_SprayerProfessionalHandTool( on, 0.0, 0.064, 0.018, 0.086, 0.050,
+          SPHT_TexturaRecipiente, SPHT_TexturaSprayer,
+          SPHT_TexturaPress, SPHT_TexturaSuccion )
+      translate         <-1.95,+1.60,-4.80>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El aparato se encuentra contenido entre las siguientes dimensiones:
+<pre>
+    Mínimo              = <  -43,    0,  -32 >*L
+    Máximo              = <  +32,  132,  +32 >*L
+</pre>
+<p>
+El recipiente descansa parcialmente centrado sobre el plano <i>XZ</i>, gravedad <i>Y-</i>.
+La pistola apunta en sentido <i>X-</i>.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>SPHT_VolumenInterior</i> 
+<dd>Se genera en el interior de las macros. Define un <i>object</i> que puede utilizarse para rellenar de líquido el rociador.
+<dt><i>SPHT_VolumenSuccion</i> 
+<dd>Se genera en el interior de las macros. Define un <i>object</i> que puede utilizarse para rellenar de líquido la pajilla.
+<dt><i>SPHT_DefectoTexturaRecipiente</i> 
+<dd>Textura del recipiente para el líquido.
+<dt><i>SPHT_DefectoTexturaSprayer</i> 
+<dd>Textura principal de la pistola rociadora.
+<dt><i>SPHT_DefectoTexturaPress</i> 
+<dd>Textura del gatillo y otros elementos de la pistola.
+<dt><i>SPHT_DefectoTexturaSuccion</i> 
+<dd>Textura de la pajilla de succión.
+</dl>
+El siguiente ejemplo agrega un poco de líquido al rociador.
+<p>
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "SPHT.inc"
+    
+    union                       {
+      object                    {
+        SPHT_Sprayer( on, 0.0 )
+      } 
+      union                     {    
+        difference              {
+          object                    {
+            SPHT_VolumenInterior
+          }
+          plane                 {
+            -y, -0.050
+          }
+        }
+        object                  {
+          SPHT_VolumenSuccion
+        }  
+        pigment                 {
+          Orange
+        }
+      }
+      translate         <-1.95,+1.60,-4.80>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad.
+<p>
+<pre>
+    #declare SPHT_RotateSuccion			= <2,2,2>;
+</pre>
+Se aplica este <i>rotate</i> en el extremo superior de la pajilla de succión.
+<p>
+<pre>
+    #declare SPHT_FactorVolumenInterior		= 0.95;	 
+</pre>
+Para evitar que el líquido tenga un contacto exacto con las paredes interiores se aplica
+una ligera contracción determinada por esta variable. El ajuste perfecto en ocasiones produce
+defectos en el dibujo final.
+<p>
+<pre>
+    #declare SPHT_FactorVolumenSuccion		= 0.95;	 
+</pre>
+Para evitar que el líquido de la pajilla de succión tenga un contacto exacto con la
+superficie interior de la pajilla se disminuye el radio interior al multiplicarlo por este factor.
+<p>
+<pre>
+    #declare SPHT_TexturaRecipiente		=
+		texture  { SPHT_DefectoTexturaRecipiente		}
+</pre>
+Textura del recipiente para el líquido.
+<p>
+<pre>
+    #declare SPHT_TexturaSprayer		=	 
+		texture  { SPHT_DefectoTexturaSprayer			}
+</pre>
+Textura principal de la pistola rociadora.
+<p>
+<pre>
+    #declare SPHT_TexturaPress			=
+		texture  { SPHT_DefectoTexturaPress			}
+</pre>
+Textura del gatillo y otros elementos de la pistola.
+<p>
+<pre>
+    #declare SPHT_TexturaSuccion		=	 
+		texture  { SPHT_DefectoTexturaSuccion			}
+</pre>
+Textura de la pajilla de succión.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "SPHT.inc" 
+    #include "textures.inc"
+                          
+    #declare SPHT_RotateSuccion         = <0,0,0>;
+    #declare SPHT_FactorVolumenInterior = 0.999;
+    #declare SPHT_FactorVolumenSuccion  = 0.25; 
+    
+    #declare SPHT_TexturaRecipiente     = texture { pigment { White transmit 0.9 } }
+    #declare SPHT_TexturaSprayer        = PinkAlabaster
+    #declare SPHT_TexturaPress          = Gold_Metal
+    #declare SPHT_TexturaSuccion        = texture { pigment { Red   transmit 0.9 } }                     
+    
+    union                       {
+      object                    {
+        SPHT_Sprayer( on, 0.0 )
+      } 
+      union                     {    
+        difference              {
+          object                    {
+            SPHT_VolumenInterior
+          }
+          plane                 {
+            -y, -0.050
+          }
+        }
+        object                  {
+          SPHT_VolumenSuccion
+        }  
+        pigment                 {
+          Orange
+        }
+      }
+      translate         <-1.95,+1.60,-4.80>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+El volumen interior de la pajilla y del recipiente se genera por diferencia. Adicionalmente
+se aplica un factor de contracción a las variables de volumen interior.
+<p>
+En algunas versiones de POVRay hemos tenido que aumentar el valor de la variable global 
+<i>max_trace_level</i>, para mitigar algunos defectos de las superficies semitransparentes.
+<p>
+Si utiliza las variables definidas para agregar líquido al recipiente, tome en cuenta que 
+existirá superposición de objetos entre el volumen de la pajilla y el volumen del recipiente.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros modelos de rociador.</li>
+  <li>Ofrecer macros para generar el rocío cercano.</li>
+  <li>Mayor cantidad de texturas por defecto.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="SPHT_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(18/setiembre/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="SPHT_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="SPHT_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

@@ -1,0 +1,4 @@
+La version actual v1.0 de "JBIU.inc" (JoystickButtonInteractiveUser)
+dibuja un joystick para video juegos, basado en el modelo Atari Flashback.
+Tiene una macro para modificar las caracteristicas principales, pero
+es muy poco flexible. Es compatible con POV-Ray 3.1.

@@ -1,0 +1,4 @@
+La version actual v1.0 de "BDCP.inc" (BlurayDvdCdPlayer)
+dibuja un reproductor de video para discos en formato Bluray.
+Puede cambiar la hora, abrir y cerrar el compartimento para discos, y
+otras modificaciones menores. Es compatible con POV-Ray 3.1.

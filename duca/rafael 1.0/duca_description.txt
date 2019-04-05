@@ -1,0 +1,4 @@
+La version actual v1.0 de "DUCA.inc" (DispensadorUniversalCintaAdhesiva)
+dibuja un dispensador de cinta adhesiva, tipo escolar recargable.
+La cinta tiene dos posiciones, una enrollada y otra lista en la cuchilla.
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.

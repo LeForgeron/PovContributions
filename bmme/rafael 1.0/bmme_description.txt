@@ -1,0 +1,4 @@
+La version actual v1.0 de "BMME.inc" (BatidoraManualMotorizadaElectrica)
+dibuja una batidora de mano para cocina.
+Pueden girarse las aspas y permite algunos cambios menores,
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.

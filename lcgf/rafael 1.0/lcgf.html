@@ -1,0 +1,495 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>LCGF</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "LCGF_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="LCGF_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"LCGF.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="LCGF_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "LCGF.inc" (LicuadoraCuchillaGiratoriaFilosa)
+dibuja una licuadora corriente para cocina, de ocho botones.
+Posee una macro para variar sus dimensiones principales y texturas. La base se ajusta en
+ocho posiciones, pueden oprimirse los botones, y separarse algunas partes pero
+es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie el archivo "LCGF.inc" en dicho subdirectorio;&nbsp; 
+únicamente este es necesario.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "LCGF.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "LCGF.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="LCGF.jpg" target="_blank" >
+<img alt="Licuadora" src="LCGF_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="LCGF.jpg" target="_blank" >
+<font size = -2>
+Licuadora
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "LCGF.inc"
+    
+    object      {
+      LCGF_Licuadora( 0 )
+      translate         <-1.800,+1.400,-4.500>    
+    }
+</pre>
+<p>
+La macro principal tiene solo un parámetro.
+<pre>
+    #macro LCGF_Licuadora( IndiceRanura )
+</pre>
+<dl>
+<dt><i>IndiceRanura</i> :
+<dd>Número entero entre 0 y 7, para ubicar la licuadora en una de las
+ocho ranuras (esto orienta la oreja de la licuadora). Un número fraccionario no genera error.
+</dl>
+<p>
+La siguiente macro permite mucha mayor flexibilidad. Es probable, sin embargo, que los botones queden
+mal ubicados (consulte la sección <a href=#modificador>Modificadores</a>).
+<pre>
+    #macro  LCGF_LicuadoraCuchillaGiratoriaFilosa
+              ( IndiceRanura, DiametroBase, DiametroSoporte, 
+            	AltoBase, ProfundidadDelantera,
+            	DiametroPichel, AltoReferenciaPichel, 
+            	GruesoPlastico, AltoInternoTapa, 
+            	DiametroAberturaTapa, AnchoOreja, AltoOreja,
+            	MaterialPrincipal, MaterialPichel, MaterialAccesorios,
+            	MaterialBotones, MaterialPlacaBotones,
+            	MaterialCuchillas, MaterialCuero )
+</pre>
+<dl>
+<dt><i>IndiceRanura</i> :
+<dd>Número entero entre 0 y 7, para ubicar la licuadora en una de las
+ocho ranuras (esto orienta la oreja de la licuadora). Un número fraccionario no genera error.
+<dt><i>DiametroBase</i> :
+<dd>Diámetro de la base inferior a lo ancho en X. Valor por defecto 114*L.
+<dt><i>DiametroSoporte</i> :
+<dd>Diámetro en la zona de contacto con la licuadora. Valor por defecto 73*L.
+<dt><i>AltoBase</i> :
+<dd>Alto referencia para la base de la licuadora. Valor por defecto 112.60*L.
+<dt><i>ProfundidadDelantera</i> :
+<dd>Profundidad en Z de la zona negativa o frente de la licuadora. Valor por defecto 94*L.
+<dt><i>DiametroPichel</i> :
+<dd>Diámetro del pichel de licuado. Valor por defecto 85*L.
+<dt><i>AltoReferenciaPichel</i> :
+<dd>Alto de referencia para el pichel. Valor por defecto 127*L.
+<dt><i>GruesoPlastico</i> :
+<dd>Grueso del material básico del pichel. Valor por defecto 2*L.
+<dt><i>AltoInternoTapa</i> :
+<dd>Alto de la tapa que penetra el recipiente.
+Valor por defecto 22*L.
+<dt><i>DiametroAberturaTapa</i> :
+<dd>Diámetro de la abertura en la tapa. Valor por defecto 37*L. 
+<dt><i>AnchoOreja</i> :
+<dd>Abertura desde el cilindro para agarrar la oreja.
+Valor por defecto 112*L.
+<dt><i>AltoOreja</i> :
+<dd>Porción del pichel a lo alto en Y, abarcado por la oreja.
+Valor por defecto 112*L.
+<dt><i>MaterialPrincipal</i> :
+<dd>Material de la base que soporta al pichel.
+Valor por defecto LCGF_MaterialPrincipal.
+<dt><i>MaterialPichel</i> :
+<dd>Material del pichel contenedor.
+Valor por defecto LCGF_MaterialPichel.
+<dt><i>MaterialAccesorios</i> :
+<dd>Material de algunos elementos del pichel, como la tapa o el cilindro de unión. 
+Valor por defecto LCGF_MaterialAccesorios.
+<dt><i>MaterialBotones</i> :
+<dd>Material para los botones.
+Valor por defecto LCGF_MaterialBotones.
+<dt><i>MaterialPlacaBotones</i> :
+<dd>Material para la placa soporte de botones.
+Valor por defecto LCGF_MaterialPlacaBotones.
+<dt><i>MaterialCuchillas</i> :
+<dd>Material para las cuchillas.
+Valor por defecto LCGF_MaterialCuchillas.
+<dt><i>MaterialCuero</i> :
+<dd>Material para patas y contacto de giro. 
+Valor por defecto LCGF_MaterialCuero.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "LCGF.inc"
+    
+    object      {
+       LCGF_LicuadoraCuchillaGiratoriaFilosa( 0, 
+          0.114, 0.073, 0.1126, 0.094, 0.085, 0.127, 
+          0.002, 0.022, 0.037 , 0.050, 0.112,
+          LCGF_MaterialPrincipal, LCGF_MaterialPichel,
+          LCGF_MaterialAccesorios, LCGF_MaterialBotones,
+          LCGF_MaterialPlacaBotones,LCGF_MaterialCuchillas,
+          LCGF_MaterialCuero )
+      translate         <-1.800,+1.400,-4.500>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+La licuadora, sin oreja de agarre, tiene las siguientes dimensiones:
+<pre>
+    Minimo      = <  -57,    0,  -94 >*L
+    Maximo      = <  +57, +303,  +57 >*L
+</pre>
+<p>
+La oreja se extiende hasta 94*L de radio respecto al eje Y y tiene ocho posiciones. La
+licuadora descansa sobre el plano XZ, su eje de giro coincide con el eje Y.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>LCGF_InteriorBase</i> 
+<dd>Se genera el <i>object</i> al llamar a la macro. Corresponde al volumen interior del pichel.
+No incluye corrección para las cuchillas o la tapa. Puede utilizarla para
+ubicar material en el interior del recipiente.
+<dt><i>LCGF_DefectoMaterialPrincipal</i> 
+<dd>Material de la base que soporta al pichel.
+<dt><i>LCGF_DefectoMaterialPichel</i> 
+<dd>Material del pichel contenedor.
+<dt><i>LCGF_DefectoMaterialAccesorios</i> 
+<dd>Material de algunos elementos del pichel, como la tapa o el cilindro de unión.
+<dt><i>LCGF_DefectoMaterialBotones</i> 
+<dd>Material para los botones.
+<dt><i>LCGF_DefectoMaterialPlacaBotones</i> 
+<dd>Material para la placa soporte de botones.
+<dt><i>LCGF_DefectoMaterialCuchillas</i> 
+<dd>Material para las cuchillas.
+<dt><i>LCGF_DefectoMaterialCuero</i> 
+<dd>Material para patas y contacto de giro.
+</dl>
+<p>
+El siguiente ejemplo muestra una licuadora con una sustancia anaranjada.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "LCGF.inc" 
+   
+    union                  {
+       LCGF_Licuadora(0)   
+       difference               {
+         object                 {
+           LCGF_InteriorBase   
+         }
+         plane                  {
+           -y, -0.22
+         }
+         pigment { Orange  transmit 0.3  }
+         normal  { granite scale    0.01 }
+       }
+       translate         <-1.800,+1.400,-4.500>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad.
+<p>
+<pre>
+    #declare LCGF_TransformPichel		= transform	{ }
+</pre>
+Transform adicional para ubicar el pichel.
+<p>
+<pre>
+    #declare LCGF_TransformTapaPichel		= transform	{ }
+</pre>
+Transform adicional para ubicar la tapa del pichel.
+<p>
+<pre>
+    #declare LCGF_TransformVisorPichel		= transform	{ }
+</pre>
+Transform adicional para ubicar el visor en la tapa del pichel.
+<p>
+<pre>
+    #declare LCGF_AnguloRotarCuchillas		= 0.0;
+</pre>
+Angulo para girar las cuchillas.
+<p>
+<pre>
+    #declare LCGF_ColorLetras			= White;
+</pre>
+Para cambiar el color de las etiquetas de los botones.
+<p>
+<pre>
+    #declare LCGF_BanderaBotones		= on;
+</pre>
+"on" botones visibles, "off" los desactiva. Util si los botones
+quedan mal ubicados al modificar los parámetros, y no sea satisfactoria
+el empleo de <i>LCGF_TransformBotones</i>.
+<p>
+<pre>
+    #declare LCGF_TransformBotones		= transform	{ }
+</pre>
+Para corregir la posición de los botones al cambiar los parámetros. Tomar en cuenta
+que luego de este <i>transform</i>, se aplica un <i>rotate 45*x</i>, de forma tal
+que en muchos casos sea suficiente con desplazar los botones arriba-abajo.
+<p>
+<pre>
+    #declare LCGF_EstadoBotones             	= array [ 8 ]
+          { off, off, off, off, off, off, off, off }
+</pre>
+Permite apretar los botones con el valor <i>on</i>.
+<p>
+<pre>
+  #declare LCGF_LabelBotones               	= array [ 8 ]
+          { "A", "R", "P", "1", "2", "3", "4", "5" }
+</pre>	
+Para cambiar las etiquetas de los botones. Utilice solo caracteres.
+<p>
+<pre>
+    #declare LCGF_MaterialPrincipal		=	 
+		texture  { LCGF_DefectoMaterialPrincipal		}
+</pre>
+Material de la base que soporta el pichel.
+<p>
+<pre>
+    #declare LCGF_MaterialPichel		=	 
+		texture  { LCGF_DefectoMaterialPichel			}
+</pre>
+Material del pichel contenedor.
+<p>
+<pre>
+    #declare LCGF_MaterialAccesorios		=	 
+		texture  { LCGF_DefectoMaterialAccesorios		}
+</pre>
+Material de algunos elementos del pichel, como la tapa o el cilindro de unión.
+<p>
+<pre>
+    #declare LCGF_MaterialBotones		=	 
+		texture  { LCGF_DefectoMaterialBotones			}
+</pre>
+Material para los botones.
+<p>
+<pre>
+    #declare LCGF_MaterialPlacaBotones		=	 
+		texture  { LCGF_DefectoMaterialPlacaBotones		}
+</pre>
+Material para la placa soporte de botones.
+<p>
+<pre>
+    #declare LCGF_MaterialCuchillas		=	 
+		texture  { LCGF_DefectoMaterialCuchillas		}
+</pre>
+Material para las cuchillas.
+<p>
+<pre>
+    #declare LCGF_MaterialCuero			=	 
+		texture  { LCGF_DefectoMaterialCuero			}
+</pre>
+Material para patas y contacto de giro.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "LCGF.inc" 
+    #include "textures.inc"
+    
+    #declare LCGF_TransformPichel           = transform { translate -0.1*x }
+
+    #declare LCGF_TransformTapaPichel       = transform { translate +0.2*x }
+
+    #declare LCGF_TransformVisorPichel      = transform { translate +0.025*y }
+    
+    #declare LCGF_AnguloRotarCuchillas      = 45;
+
+    #declare LCGF_ColorLetras               = Red;
+
+    #declare LCGF_EstadoBotones[ 3 ]        = on;
+
+    #declare LCGF_LabelBotones               = array [ 8 ]
+            { "*", "*", "*", "*", "*", "*", "*", "*" }
+
+    #declare LCGF_MaterialPrincipal         = material { M_Glass2 }
+
+    #declare LCGF_MaterialPichel            = material { M_Green_Glass }
+
+    #declare LCGF_MaterialAccesorios        = material { M_Yellow_Glass }
+
+    #declare LCGF_MaterialBotones           = material { M_NB_Winebottle_Glass }
+
+    #declare LCGF_MaterialPlacaBotones      = material { M_Dark_Green_Glass }
+
+    #declare LCGF_MaterialCuchillas         = material { texture { Gold_Texture } }
+
+    #declare LCGF_MaterialCuero             = material { M_Ruby_Glass }
+    
+    object      {
+       LCGF_Licuadora(0)
+      translate         <-1.800,+1.400,-4.500>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+El modificador <i>LCGF_AnguloRotarCuchillas</i> solo rota las cuchillas, pero no gira el
+motor en la base.
+<p>
+Es de esperar que al cambiar los parámetros, los botones queden mal ubicados. Para corregir
+el problema, puede utilizar el modificador <i>LCGF_TransformBotones</i> o bien 
+<i>LCGF_BanderaBotones</i> para eliminarlos.
+<p>
+Es de esperar alguna superposicion de objetos en la zona interior oculta de contacto entre
+el rotor de giro y la base del recipiente.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros modelos de licuadora.</li>
+  <li>Agregar el cable de corriente.</li>
+  <li>Mayor cantidad de texturas por defecto.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="LCGF_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(03/julio/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="LCGF_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="LCGF_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

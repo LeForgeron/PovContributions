@@ -1,0 +1,4 @@
+La version actual v1.0 de "CNVI.inc" (CandeleroNoVelaIncluida)
+dibuja un candelero con soporte metalico decorado en vidrio.
+Posee una macro para modificar las caracteristicas principales, pero
+es muy poco flexible. Es compatible con POV-Ray 3.1.

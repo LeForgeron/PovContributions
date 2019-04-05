@@ -1,0 +1,23 @@
+2.2 - 2018-09-19
+* Changed textures of planets.
+* Tweak lighting.
+* Tweak grid lines.
+* Can now switch between inner and outer planets.
+
+2.1 - 2018-09-16
+* Added textures to planets.
+* Tweak lighting.
+* Can now switch between gray and black scenes.
+
+2.0 - 2018-09-16
+* Discovered that the calculations were incorrect. Could not recall where I got 
+  the original formulas from, so I switched to a new set of formulas by the JPL.
+
+1.0 - 2018-09-15
+* Initial release.
+* Planets do not have texture maps.
+* Planets are not tilted with respect to their orbital planes.
+* Planets are not oriented such that the correct side of the planet is facing 
+  the sun at a given moment.
+* Does not include a realistic and accurate star field.
+* Does not include Pluto and Ceres.

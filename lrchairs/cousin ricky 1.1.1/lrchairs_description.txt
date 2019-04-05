@@ -1,0 +1,1 @@
+Leroy's cheap chairs macro. This macro lets you change the texture of the frame and seat.

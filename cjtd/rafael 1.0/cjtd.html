@@ -1,0 +1,352 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>CJTD</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "CJTD_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="CJTD_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"CJTD.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="CJTD_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "CJTD.inc" (CultivadorJardinTresDientes)
+dibuja un cultivador para jardinería doméstica.
+Posee una macro para modificar las características principales, pero
+es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie el archivo "CJTD.inc" en dicho subdirectorio;&nbsp; únicamente 
+este es necesario.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "CJTD.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "CJTD.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="CJTD.jpg" target="_blank" >
+<img alt="Candelero" src="CJTD_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="CJTD.jpg" target="_blank" >
+<font size = -2>
+Candelero
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CJTD.inc"
+    
+    object     	{ 
+      CJTD_Cultivador( ) 
+      translate         <-1.98,+1.63,-4.75>    
+    }
+</pre>
+<p>
+La siguiente principal no tiene parámetros:
+<pre>
+    #macro CJTD_Cultivador( )
+</pre>
+<p>
+Puede controlarse el dibujo del cultivador con mayor detalle con la siguiente macro:
+<pre>
+    #macro CJTD_CultivadorJardinTresDientes( LargoBastidor,
+        DiametroMayorBastidor, DiametroMenorBastidor,
+        LargoRectoVarilla, LargoOblicuoVarilla,
+        DiametroVarillaCentral, DiametroVarillaLateral,
+        AnguloAbertura, AnguloArrastre,
+        FraccionOrigenVarillas, RadioCurvaturaVarillas,
+        MaterialDientes, MaterialMetalico,
+        MaterialMadera, MaterialAgarradera )
+</pre>
+<dl>
+<dt><i>LargoBastidor</i> :
+<dd>Largo del mango.
+Valor por defecto 125*L.
+<dt><i>DiametroMayorBastidor</i> :
+<dd>Diámetro mayor del mango.
+Valor por defecto 25*L.
+<dt><i>DiametroMenorBastidor</i> :
+<dd>Diámetro menor del mango.
+Valor por defecto 14.6*L.
+<dt><i>LargoRectoVarilla</i> :
+<dd>Referencia para el largo de varilla.
+Valor por defecto 90*L.
+<dt><i>LargoOblicuoVarilla</i> :
+<dd>Referencia para el largo de arrastre del cultivador.
+Valor por defecto 27*L.
+<dt><i>DiametroVarillaCentral</i> :
+<dd>Diámetro de la varilla central de arrastre.
+Valor por defecto 5.7*L.
+<dt><i>DiametroVarillaLateral</i> :
+<dd>Diámetro de las varillas laterales de arrastre.
+Valor por defecto 4*L.
+<dt><i>AnguloAbertura</i> :
+<dd>Angulo de abertura de las varillas laterales.
+Valor por defecto 15.
+<dt><i>AnguloArrastre</i> :
+<dd>Angulo de inclinación de las varillas de arrastre.
+Valor por defecto 15.
+<dt><i>FraccionOrigenVarillas</i> :
+<dd>Fracción repecto a <i>LargoRectoVarillas</i> en que cruza la extrapolación
+imaginaria de las varillas de arrastre. Valor por defecto 0.0.
+<dt><i>RadioCurvaturaVarillas</i> :
+<dd>Radio para la curva que une la línea horizontal con las líneas de arrastre en las varillas.
+Valor por defecto 7*L.
+<dt><i>MaterialDientes</i> :
+<dd>Material de las varillas.
+Valor por defecto CJTD_MaterialDientes.
+<dt><i>MaterialMetalico</i> :
+<dd>Material de la argolla metálica de unión.
+Valor por defecto CJTD_MaterialMetalico.
+<dt><i>MaterialMadera</i> :
+<dd>Material del mango de madera.
+Valor por defecto CJTD_MaterialMadera.
+<dt><i>MaterialAgarradera</i> :
+<dd>Material de la agarradera de caucho.
+Valor por defecto CJTD_MaterialAgarradera.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CJTD.inc"
+    
+    object     	{ 
+      CJTD_CultivadorJardinTresDientes( 0.125, 0.025, 0.0146, 
+          0.090, 0.027, 0.0057, 0.004, 15, 15, 0, 0.007,
+          CJTD_MaterialDientes, CJTD_MaterialMetalico,
+          CJTD_MaterialMadera, CJTD_MaterialAgarradera )
+      translate         <-1.98,+1.63,-4.75>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El cultivador tiene las siguientes coordenadas:
+<pre>
+    Mínimo          = <  -32, -125, -35 >*L
+    Máximo          = <   32,  107,  13 >*L
+</pre>
+<p>
+Los dientes se curvan hacia <i>Z-</i>. El punto de unión entre el bastidor y los dientes
+se encuentra en el origen de coordenadas.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>CJTD_DefectoMaterialDientes</i> 
+<dd>Material de las varillas. 
+<dt><i>CJTD_DefectoMaterialMetalico</i> 
+<dd>Material de la argolla metálica de unión.
+<dt><i>CJTD_DefectoMaterialMadera</i> 
+<dd>Material del mango de madera.
+<dt><i>CJTD_DefectoMaterialAgarradera</i> 
+<dd>Material de la agarradera de caucho.
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad. Cuando se
+indique, será el valor establecido por defecto. 
+<p>
+<pre>
+    #declare CJTD_MaterialDientes		=
+		material  { CJTD_DefectoMaterialDientes			}
+</pre>
+Material de las varillas.
+<p>
+<pre>
+    #declare CJTD_MaterialMetalico		=
+		material  { CJTD_DefectoMaterialMetalico		}
+</pre>
+Material de la argolla metálico de unión.
+<p>
+<pre>
+    #declare CJTD_MaterialMadera		=
+		material  { CJTD_DefectoMaterialMadera			}
+</pre> 
+Material del mango de madera.
+<p>
+<pre>
+    #declare CJTD_MaterialAgarradera		=
+		material  { CJTD_DefectoMaterialAgarradera       	}
+</pre> 
+Material de la agarradera de caucho.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CJTD.inc"
+    #include "textures.inc"   
+    
+    #declare CJTD_MaterialDientes       =
+      material { texture { PinkAlabaster } }
+    #declare CJTD_MaterialMetalico      =
+      material { texture { Copper_Texture } }
+    #declare CJTD_MaterialMadera        =
+      material { M_Green_Glass }
+    #declare CJTD_MaterialAgarradera    =
+      material { texture { Yellow_Pine } }
+    
+    object     	{ 
+      CJTD_Cultivador( )
+      translate         <-1.98,+1.63,-4.75>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Al variar los parámetros debe hacerlo en forma consistente para lograr buenos resultados.
+<p>
+La punta de los dientes se agranda 1.5 veces respecto a los parámetros introducidos.
+<p>
+Por defecto las líneas de las varillas se cruzan al inicio del mango.
+Este comportamiento puede modificarse con el parámetro <i>FraccionOrigenVarillas</i>.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Permitir etiquetas para identificación de marca.</li>
+  <li>Aumentar la variedad de diseños que pueden generar las macros.</li>
+  <li>Mayor variedad de texturas por defecto funcionales.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="CJTD_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(19/febrero/2019), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="CJTD_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="CJTD_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

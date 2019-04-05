@@ -1,0 +1,4 @@
+La version actual v1.0 de "RABA.inc" (RasuradoraAfeitarBarbaAcero)
+dibuja una rasuradora simple con su navajilla.
+Puede cambiar algunas caracteristicas menores incluyendo su textura,
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.

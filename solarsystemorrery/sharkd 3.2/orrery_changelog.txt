@@ -1,0 +1,55 @@
+CHANGE LOG
+
+3.2 - 2018-10-01
+* Changed how start and stop dates are specified.
+* Fixed orientation of Saturn's rings texture.
+
+3.1 - 2018-09-29
+* Update starting and ending dates for the orbits and trails.
+
+3.0 - 2018-09-28
+* Attempted to model the rotation and obliquity of the planets. Was only 
+  partially successful. The poles are pointing in the correct direction, at the 
+  very least.
+* Added markers to gauge planet orientations.
+* Renamed the scene files.
+* Created another scene file just to monitor planet orientations.
+
+2.2 - 2018-09-19
+* Changed textures of planets.
+* Tweak lighting.
+* Tweak grid lines.
+* Can now switch between inner and outer planets.
+
+2.1 - 2018-09-16
+* Added textures to planets.
+* Tweak lighting.
+* Can now switch between gray and black scenes.
+
+2.0 - 2018-09-16
+* Discovered that the calculations were incorrect. Could not recall where I got 
+  the original formulas from, so I switched to a new set of formulas by the JPL.
+
+1.0 - 2018-09-15
+* Initial release.
+* Planets do not have texture maps.
+* Planets are not tilted with respect to their orbital planes.
+* Planets are not oriented such that the correct side of the planet is facing 
+  the sun at a given moment.
+* Does not include a realistic and accurate star field.
+* Does not include Pluto and Ceres.
+
+
+TO DO LIST
+
+* Should maybe switch the reference frame from the ecliptic to the Sun's 
+  equator or the invariable plane.
+* Don't forget to model each planet's oblateness!
+* Switch to using planet textures from here instead: 
+    http://planetpixelemporium.com/planets.html
+* Add Ceres and some dwarf planets too. Maybe some moons.
+* Planet orientations using rotational elements are still not right. The poles 
+  are pointing in the correct directions, but the rotations around the poles 
+  are off. Except for Earth and Neptune where I eyeballed the correct rotations.
+* Could update to more recently measured planet rotational elements.
+* Use a large interior media for the sun's glow instead of the horizontal plane.

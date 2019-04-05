@@ -1,0 +1,602 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>BDCP</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "BDCP_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="BDCP_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"BDCP.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2018, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="BDCP_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "BDCP.inc" (BlurayDvdCdPlayer)
+dibuja un reproductor de video para discos en formato Bluray.
+Puede cambiar la hora, abrir y cerrar el compartimento para discos, y 
+otras modificaciones menores. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie los archivos "BDCP.inc" y "BDCP_AU1.inc" en dicho subdirectorio;&nbsp; 
+únicamente estos dos son necesarios.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "BDCP.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "BDCP.inc" y "BDCP_AU1.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="BDCP.jpg" target="_blank" >
+<img alt="Reproductor Blu-ray" src="BDCP_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="BDCP.jpg" target="_blank" >
+<font size = -2>
+Reproductor Blu-ray
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "BDCP.inc"
+    
+    object      {
+      BDCP_Bluray( 1.0, 10, 20, 1 )
+      translate         <-1.925,+1.575,-4.700>    
+    }
+</pre>
+<p>
+La macro principal tiene solo cuatro parámetros.
+<pre>
+    #macro BDCP_Bluray( FraccionAbrir, Hora, Minuto, ModoIndicador )
+</pre>
+<dl>
+<dt><i>FraccionAbrir</i> :
+<dd>Fracción para cerrar "0.0" o abrir "1.0" el compartimento de discos.
+<dt><i>Hora</i> :
+<dd>Hora del reloj.
+<dt><i>Minuto</i> :
+<dd>Minutos del reloj.
+<dt><i>ModoIndicador</i> :
+<dd>"1" lucesita verde para encendido, "2" lucesita roja de apagado, "0" inactivo.
+</dl>
+<p>
+La siguiente macro permite mucha mayor flexibilidad.
+<pre>
+    #macro BDCP_BlurayDvdCdPlayer( FraccionAbrir, Hora, Minuto, ModoIndicador, 
+            	FrenteBluray, FraccionFrontal, FraccionInferior,
+            	AltoBluray, PatasBluray, ProfundidadBluray,
+            	AltoBandeja, RadioCD, GruesoCD, 
+            	GruesoPlastico, BocaUSB, GruesoUSB,
+            	ArregloMateriales, ArregloTexturasLED )
+</pre>
+<dl>
+<dt><i>FraccionAbrir</i> :
+<dd>Fracción para cerrar "0.0" o abrir "1.0" el compartimento de discos.
+<dt><i>Hora</i> :
+<dd>Hora del reloj.
+<dt><i>Minuto</i> :
+<dd>Minutos del reloj.
+<dt><i>ModoIndicador</i> :
+<dd>"1" lucesita verde para encendido, "2" lucesita roja de apagado, "0" inactivo.
+<dt><i>FrenteBluray</i> :
+<dd>Frente del aparato de video. Valor por defecto 308*L.
+<dt><i>FraccionFrontal</i> :
+<dd>Fracción que divide la textura frontal de la zona posterior. Valor por defecto 0.15.
+<dt><i>FraccionInferior</i> :
+<dd>Fracción que ubica la cuña decorativa frontal. Valor por defecto 0.40.
+<dt><i>AltoBluray</i> :
+<dd>Alto del aparato de video. Valor por defecto 43.6*L.
+<dt><i>PatasBluray</i> :
+<dd>Alto total de las patillas soporte. Valor por defecto 4.5*L.
+<dt><i>ProfundidadBluray</i> :
+<dd>Profundidad en Z del aparato de video. 
+Valor por defecto 154.4*L.
+<dt><i>CurvaturaBluray</i> :
+<dd>Radio curvatura para extremos en la decoración exterior. Valor por defecto 2*L.
+<dt><i>AltoBandeja</i> :
+<dd>Alto de la bandeja soporte para CD. Valor por defecto 13*L.
+<dt><i>RadioCD</i> :
+<dd>Radio de un disco CD. Valor por defecto 42.7*L.
+<dt><i>GruesoCD</i> :
+<dd>Grueso de un disco CD. Valor por defecto 0.5*L.
+<dt><i>GruesoPlastico</i> :
+<dd>Grueso de plástico para soportes interiores. Valor por defecto 1*L.
+<dt><i>BocaUSB</i> :
+<dd>Frente de la boquilla de un conector USB. Valor por defecto 8.2*L.
+<dt><i>GruesoUSB</i> :
+<dd>Alto de la boquilla de un conector USB. Valor por defecto 2.7*L.
+<dt><i>ArregloMateriales</i> :
+<dd>Lista de los materiales principales <i>array [6] = { MaterialPrincipal, MaterialFrontal,
+MaterialBandeja, MaterialFrenteBandeja, MaterialLetras, MaterialMetalico }</i>. Valor por defecto
+similar a BDCP_DefaultArregloMateriales.
+<table border=2>
+<tr>
+<td>
+MaterialPrincipal
+</td>
+<td>
+Material del cuerpo principal
+</td>
+</tr>
+<tr>
+<td>
+MaterialFrontal
+</td>
+<td>
+Material para el frente
+</td>
+</tr>
+<tr>
+<td>
+MaterialBandeja
+</td>
+<td>
+Material para el interior de la bandeja
+</td>
+</tr>
+<tr>
+<td>
+MaterialFrenteBandeja
+</td>
+<td>
+Material para el frente de la bandeja
+</td>
+</tr>
+<tr>
+<td>
+MaterialLetras
+</td>
+<td>
+Material para letras y logo en el frente de la bandeja
+</td>
+</tr>
+<tr>
+<td>
+MaterialMetalico
+</td>
+<td>
+Material para elementos metálicos
+</td>
+</tr>
+</table>
+<dt><i>ArregloTexturasLED</i> :
+<dd>Lista de las texturas para el reloj <i>array [4] = { TexturaLabelLED,
+TexturaTransparente, TexturaLED, TexturaFondoLED }</i>. Valor por defecto
+similar a BDCP_DefaultArregloTexturasLED.
+<table border=2>
+<tr>
+<td>
+TexturaLabelLED
+</td>
+<td>
+Textura del cuerpo soporte del reloj
+</td>
+</tr>
+<tr>
+<td>
+TexturaTransparente
+</td>
+<td>
+Textura de capa protectora del LED
+</td>
+</tr>
+<tr>
+<td>
+TexturaLED
+</td>
+<td>
+Textura de dígitos
+</td>
+</tr>
+<tr>
+<td>
+TexturaFondoLED
+</td>
+<td>
+Textura de fondo del reloj
+</td>
+</tr>
+</table>
+</dl>
+<p>
+<p>
+Para facilitar el dibujo de objetos emparentados, agregamos una macro que permite dibujar
+la bandeja para discos en forma separada.
+<pre>
+    #macro BDCP_BandejaInterior( FrenteBandeja, AltoBandeja,
+                ProfundidadDelantera, RadioCD, RadioMini,
+                RadioAire, GruesoPlastico, CurvaturaPlastico, GruesoCD,
+                MaterialBandeja, MaterialFrenteBandeja,
+                MaterialLetras )    
+</pre>
+<dl>
+<dt><i>FrenteBandeja</i> :
+<dd>Frente exterior de la bandeja. Valor por defecto 94.5*L.
+<dt><i>AltoBandeja</i> :
+<dd>Alto de la bandeja soporte para CD. Valor por defecto 13*L.
+<dt><i>ProfundidadDelantera</i> :
+<dd>Profundidad Z hasta el centro para ubicar el CD. Valor por defecto 51*L.
+<dt><i>RadioCD</i> :
+<dd>Radio de un disco CD. Valor por defecto 42.7*L.
+<dt><i>RadioMini</i> :
+<dd>Radio de un mini disco CD. Valor por defecto 42.7*L.
+<dt><i>RadioAire</i> :
+<dd>Radio libre o vacío al interior del soporte para discos. Valor por defecto 20*L.
+<dt><i>GruesoPlastico</i> :
+<dd>Grueso de plástico para soportes interiores. Valor por defecto 1*L.
+<dt><i>GruesoCD</i> :
+<dd>Grueso de un disco CD. Valor por defecto 0.5*L.
+<dt><i>CurvaturaPlastico</i> :
+<dd>Radio de curvatura para decorar extremos y bordes. Valor por defecto 1*L.
+<dt><i>MaterialBandeja</i> :
+<dd>Material para el interior de la bandeja. Valor por defecto BDCP_DefaultMaterialBandeja.
+<dt><i>MaterialFrenteBandeja</i> :
+<dd>Material para el frente de la bandeja. Valor por defecto BDCP_DefaultMaterialFrenteBandeja.
+<dt><i>MaterialLetras</i> :
+<dd>Material para letras y logo. Valor por defecto BDCP_DefaultMaterialLetras.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "BDCP.inc"
+    
+    object      {
+      BDCP_BlurayDvdCdPlayer( 1.0, 10, 20, 1,
+        0.308, 0.15, 0.4, 0.0436, 0.0045, 0.1544,  
+        0.013, 0.0427, 0.0005, 0.001, 0.0082, 0.0027,
+        BDCP_DefaultArregloMateriales, BDCP_DefaultArregloTexturasLED )
+      translate         <-1.925,+1.575,-4.700>    
+    }
+</pre>
+<p>
+En el siguiente macro dibujamos solo la bandeja.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "BDCP.inc"
+    
+    object      {
+      BDCP_BandejaInterior( 0.0945, 0.013, 0.051, 0.0427, 0.028, 0.020,
+                0.001, 0.001, 0.0005, BDCP_DefaultMaterialBandeja,
+                BDCP_DefaultMaterialFrenteBandeja, BDCP_DefaultMaterialLetras )
+      translate         <-1.925,+1.575,-4.700>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+La silla desplegada tiene las siguientes dimensiones:
+<pre>
+    Mínimo      	= < -154,    0,  -80 >*L
+    Máximo      	= < +154,  +44,  +80 >*L
+</pre>
+<p>
+El objeto se encuentra por completo en el hemisferio Y+, y las patas
+se encuentran directamente sobre el plano XZ.
+<p>
+La macro genera internamente la variable <i>BDCP_InferiorCD</i>, que da la posición
+virtual inferior de un hipotético CD, en su centro matemático.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>BDCP_DefaultMaterialPrincipal</i> 
+<dd>Material principal del aparato.
+<dt><i>BDCP_DefaultMaterialFrontal</i> 
+<dd>Material del frente del reproductor de discos de video.
+<dt><i>BDCP_DefaultMaterialMetalico</i> 
+<dd>Textura para elementos metálicos.
+<dt><i>BDCP_DefaultMaterialBandeja</i> 
+<dd>Material para la bandeja.
+<dt><i>BDCP_DefaultMaterialFrenteBandeja</i> 
+<dd>Material para el frente de la bandeja.
+<dt><i>BDCP_DefaultMaterialLetras</i> 
+<dd>Material para letras y logo.
+<dt><i>BDCP_DefaultTexturaSoporteLED</i> 
+<dd>Textura para el soporte de LED.
+<dt><i>BDCP_DefaultTexturaTransparente</i> 
+<dd>Textura transparente sobre LED.
+<dt><i>BDCP_DefaultTexturaLED</i> 
+<dd>Textura para LED del reloj.
+<dt><i>BDCP_DefaultTexturaFondoLED</i> 
+<dd>Textura para el fondo de los LED.
+<dt><i>BDCP_DefaultArregloMateriales</i> 
+<dd>Arreglo que sirve como parámetro para los materiales por defecto en las macros.
+<dt><i>BDCP_DefaultArregloTexturasLED</i> 
+<dd>Arreglo que sirve como parametro para las texturas por defecto utilizados por el reloj.
+</dl>
+<p>
+En el siguiente ejemplo ubicamos un false "CD", en el aparato Bluray.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "BDCP.inc"
+    
+    union                   {
+      object                {
+        BDCP_Bluray( 1.0, 10, 20, 1 )
+      }
+      cylinder              {  
+        0, 0.0005*y, 0.0427
+        pigment { onion frequency 200 
+          pigment_map { [ 0.0 color White ] [ 1.0 color Red ] } }
+        translate BDCP_InferiorCD
+      }  
+      translate         <-1.925,+1.575,-4.700>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad.
+<p>
+<pre>
+    #declare BDCP_StringLogo			= "Pov-ray"
+</pre>
+Mensaje para el logo de marca.
+<p>
+<pre>
+    #declare BDCP_StringCompatible		= "CGS-BLOB"
+</pre>
+Mensaje para compatibilidad.
+<p>
+<pre>
+    #declare BDCP_Logo				= object { Povray_Logo } 
+</pre>
+Para cambiar el logo de marca si se desea.
+<p>
+<pre>
+    #declare BDCP_MaterialPrincipal		=	 
+		material { BDCP_DefaultMaterialPrincipal	}
+</pre>
+Material principal del aparato.
+<p>
+<pre>
+    #declare BDCP_MaterialFrontal		=	 
+		material { BDCP_DefaultMaterialFrontal		}
+</pre>
+Material del frente del reproductor de discos de video.
+<p>
+<pre>
+    #declare BDCP_MaterialMetalico		=	 
+		material { BDCP_DefaultMaterialMetalico		}
+</pre>
+Material para elementos metálicos.
+<p>
+<pre>
+    #declare BDCP_MaterialBandeja		=	 
+		material { BDCP_DefaultMaterialBandeja		}
+</pre>
+Material para la bandeja.
+<p>
+<pre>
+    #declare BDCP_MaterialFrenteBandeja		=	 
+		material { BDCP_DefaultMaterialFrenteBandeja	}
+</pre>
+Material para el frente de la bandeja.
+<p>
+<pre>
+    #declare BDCP_MaterialLetras		=	 
+		material { BDCP_DefaultMaterialLetras		}
+</pre>
+Material para letras y logo.
+<p>
+<pre>
+    #declare BDCP_TexturaLabelLED		=	 
+		material { BDCP_DefaultTexturaLabelLED		}
+</pre>
+Textura para el soporte de LED.
+<p>
+<pre>
+    #declare BDCP_TexturaTransparente		=	 
+		material { BDCP_DefaultTexturaTransparente	}
+</pre>
+Textura transparente sobre LED.
+<p>
+<pre>
+    #declare BDCP_TexturaLED			=	 
+		material { BDCP_DefaultTexturaLED		}
+</pre>
+Textura para LED del reloj.
+<p>
+<pre>
+    #declare BDCP_TexturaFondoLED		=	 
+		material { BDCP_DefaultTexturaFondoLED		}
+</pre>
+Textura para el fondo de los LED.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "BDCP.inc"
+    #include "textures.inc" 
+    
+    #declare BDCP_StringLogo            = "Blu-ray" 
+    #declare BDCP_StringCompatible      = "HDMI/USB"
+    #declare BDCP_Logo                  = 
+      union { torus { 0.5, 0.05 } torus { 0.25, 0.05 } rotate 90*x }  
+    #declare BDCP_MaterialPrincipal                  = 
+            material { texture { PinkAlabaster } } 
+    #declare BDCP_MaterialFrontal                    =
+            material { texture { Sandalwood }} 
+    #declare BDCP_MaterialMetalico                   = material { M_Glass }
+    #declare BDCP_MaterialBandeja                    = material { M_Ruby_Glass }
+    #declare BDCP_MaterialFrenteBandeja              = material { M_Yellow_Glass }
+    #declare BDCP_MaterialLetras                     = material { texture { Cork } }
+    #declare BDCP_TexturaLabelLED                    = texture  { pigment { Red } }
+    #declare BDCP_TexturaTransparente                = texture  { pigment { Clear } }
+    #declare BDCP_TexturaLED                         = texture  { pigment { White } }
+    #declare BDCP_TexturaFondoLED                    = texture  { pigment { Black } }
+    
+    object                              {
+      BDCP_Bluray( 1.0, 10, 20, 1 )                                                         
+      translate         <-1.925,+1.575,-4.700>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Utilice la variable <i>BDCP_InferiorCD</i> para ubicar el CD dentro de la bandeja. Considere
+que la ubica al centro inferior de un disco paralelo al plano XZ.
+<p>
+Se ha observado que no conviene modificar los valores de los siguientes parámetros: 
+<i>GruesoPlastico</i>, <i>BocaUSB</i> y <i>GruesoUSB</i>. Considere aumentar o disminuir
+el tamano de variables generales si requiere modificarlos.
+<p>
+Si dibuja la bandeja en forma separada, la posición base del CD en su capa inferior es el origen.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros aparatos con lectores de discos.</li>
+  <li>Agregar un cable y varios sistemas de entrada de video como en los aparatos reales.</li>
+  <li>Crear una pantalla de reloj con más opciones.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="BDCP_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(10/abril/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="BDCP_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="BDCP_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

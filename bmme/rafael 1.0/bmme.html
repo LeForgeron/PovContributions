@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>BMME</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "BMME_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="BMME_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"BMME.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2018, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="BMME_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "BMME.inc" (BatidoraManualMotorizadaElectrica)
+dibuja una batidora de mano para cocina.
+Pueden girarse las aspas y permite algunos cambios menores,
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Parte importante de la estructura principal del aparato, se 
+desarrolló con la ayuda del programa Epspline.exe para Windows.&nbsp;
+Herramienta auxiliar POV-Ray para modelar los tipos prism y lathe.&nbsp;
+Si le interesa obtener una copia del programa, puede buscarla en el siguiente enlace:<br>
+<table border=0>
+<tr>
+<td>
+<img alt="Epspline..." src="BMME_Epspline.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://agalena.nfshost.com/b1/" target="_blank">agalena.nfshost.com/b1/</a><br>
+</td>
+</tr>
+</table>
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie los archivos "BMME.inc" y "BMME_AU1.inc" en dicho subdirectorio;&nbsp; 
+únicamente estos dos son necesarios.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "BMME.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "BMME.inc" y "BMME_AU1.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="BMME.jpg" target="_blank" >
+<img alt="Batidora" src="BMME_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="BMME.jpg" target="_blank" >
+<font size = -2>
+Batidora
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "BMME.inc"
+    
+    object      {
+      BMME_Batidora( 0.0)
+      translate         <-1.925,+1.575,-4.700>    
+    }
+</pre>
+<p>
+La macro principal tiene solo un parámetro.
+<pre>
+    #macro BMME_Batidora( GiroAspas )
+</pre>
+<dl>
+<dt><i>GiroAspas</i> :
+<dd>Ángulo para rotar las aspas de la batidora.
+</dl>
+<p>
+La siguiente macro permite mucha mayor flexibilidad.
+<pre>
+    #macro BMME_BatidoraManualMotorizadaElectrica
+            ( GiroAspas, LateralBatidora, FrenteBatidora, AltoBatidora,
+              SeparacionAspas, FraccionPosAspas,
+              LargoAspas, DiametroSoporte, FraccionAspas, DiametroAspas,
+              TexturaPrincipal, TexturaDecorativa, TexturaTexto, TexturaMetalica )
+</pre>
+<dl>
+<dt><i>GiroAspas</i> :
+<dd>Ángulo para rotar las aspas de la batidora.
+<dt><i>LateralBatidora</i> :
+<dd>Largo en X de la batidora desde el frente hasta su parte posterior.
+Valor por defecto 127*L.
+<dt><i>FrenteBatidora</i> :
+<dd>Ancho frontal en Z de la batidora. Valor por defecto 64*L.
+<dt><i>AltoBatidora</i> :
+<dd>Alto del aparato sin aspas en Y. Valor por defecto 94*L.
+<dt><i>SeparacionAspas</i> :
+<dd>Separación entre las aspas. Valor por defecto 27*L.
+<dt><i>FraccionPosAspas</i> :
+<dd>Fracción para ubicar lateralmente las aspas a partir del frente. Valor por defecto 0.35.
+<dt><i>LargoAspas</i> :
+<dd>Largo externo visible de las aspas. Valor por defecto 113*L.
+<dt><i>DiametroSoporte</i> :
+<dd>Diámetro de los cilindros metálicos que soportan las aspas. Valor por defecto 3.6*L.
+<dt><i>FraccionAspas</i> :
+<dd>Fracción del cilindro de aspas que se encuentre ocupado por las aspas.
+Valor por defecto 0.516.
+<dt><i>DiametroAspas</i> :
+<dd>Diámetro efectivo abarcado por las aspas. Valor por defecto 27*L.
+<dt><i>TexturaPrincipal</i> :
+<dd>Textura principal de la batidora. Valor por defecto BMME_TexturaPrincipal.
+<dt><i>TexturaDecorativa</i> :
+<dd>Textura del lomo superior de la batidora. Valor por defecto BMME_TexturaDecorativa.
+<dt><i>TexturaTexto</i> :
+<dd>Textura del logo de marca. Valor por defecto BMME_TexturaTexto.
+<dt><i>TexturaMetalica</i> :
+<dd>Textura de las aspas. Valor por defecto BMME_TexturaMetalica.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "BMME.inc"
+    
+    object      {
+      BMME_BatidoraManualMotorizadaElectrica( 0.0, 
+          0.127, 0.064, 0.094, 0.027, 0.35, 0.113, 0.0036, 0.516, 0.027,
+          BMME_TexturaPrincipal, BMME_TexturaDecorativa,
+          BMME_TexturaTexto, BMME_TexturaMetalica )
+      translate         <-1.925,+1.575,-4.700>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+La batidora por defecto tiene las siguientes dimensiones:
+<pre>
+    Mínimo      	= <  -64, -122,  -32 >*L
+    Máximo      	= <  +64,  +89,  +32 >*L
+</pre>
+<p>
+El frente del objeto mira hacia X+, es casi simétrico con respecto al plano XY.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>BMME_DefectoTexturaPrincipal</i> 
+<dd>Textura principal del aparato.
+<dt><i>BMME_DefectoTexturaDecorativa</i> 
+<dd>Textura del lomo superior de la batidora.
+<dt><i>BMME_DefectoTexturaTexto</i> 
+<dd>Textura del logo de marca.
+<dt><i>BMME_DefectoTexturaMetalica</i> 
+<dd>Textura de las aspas.
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad.
+<p>
+<pre>
+    #declare BMME_StringLogo			= "POV-Ray"
+</pre>
+Mensaje para el logo de marca.
+<p>
+<pre>
+    #declare BMME_TexturaPrincipal		=	 
+		texture  { BMME_DefectoTexturaPrincipal		}
+</pre>	
+Textura principal del aparato.
+<p>
+<pre>
+    #declare BMME_TexturaDecorativa		=	 
+		texture  { BMME_DefectoTexturaDecorativa	}
+</pre>
+Textura del lomo superior de la batidora.
+<p>
+<pre>
+    #declare BMME_TexturaTexto			=	 
+		texture  { BMME_DefectoTexturaTexto		}
+</pre>
+Textura para el logo de marca.
+<p>
+<pre>
+    #declare BMME_TexturaMetalica		=	 
+		texture  { BMME_DefectoTexturaMetalica		}
+</pre>
+Textura para las aspas.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "BMME.inc"
+    #include "textures.inc"
+
+    #declare BMME_StringLogo        = "PRISM-LATHE" 
+    #declare BMME_TexturaPrincipal  = PinkAlabaster
+    #declare BMME_TexturaDecorativa = Sandalwood
+    #declare BMME_TexturaTexto      = Gold_Texture
+    #declare BMME_TexturaMetalica   = Brass_Texture
+    
+    object      {
+      BMME_Batidora( 0.0 )  
+      rotate            180*y
+      translate         <-1.925,+1.575,-4.700>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+El cuerpo principal de la batidora es muy poco flexible, la mayor variabilidad se encuentra
+en el diseño de las aspas. Puede deformarlas y reubicarlas para crear la apariencia
+de otros aparatos.
+<p>
+Conviene que los parámetros <i>SeparacionAspas</i> y <i>DiametroAspas</i> tengan el mismo valor o muy parecido, para lograr una
+mejor mezcla de los alimentos.
+<p>
+Las aspas tienen una porción interna no visible, casi de la tercera parte del tamaño total.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir el cable de alimentación eléctrica.</li>
+  <li>Agregar soportes y tazones para otros diseños de batidoras.</li>
+  <li>Incluir otras disposiciones de los botones.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="BMME_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(24/abril/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="BMME_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="BMME_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

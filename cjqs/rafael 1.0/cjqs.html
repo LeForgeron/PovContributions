@@ -1,0 +1,476 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>CJQS</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "CJQS_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="CJQS_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"CJQS.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="CJQS_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "CJQS.inc" (CristaleriaJuegoQuimicaSupervisado)
+dibuja un erlenmeyer, tubo de ensayo y gotero para juego de química.
+Posee una macro para modificar las características principales, 
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie el archivo "CJQS.inc" en dicho subdirectorio;&nbsp; únicamente 
+estos es necesario.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "CJQS.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "CJQS.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="CJQS.jpg" target="_blank" >
+<img alt="Erlenmeyer" src="CJQS_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="CJQS.jpg" target="_blank" >
+<font size = -2>
+Erlenmeyer
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar los objetos requeridos.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CJQS.inc"
+    
+    union       {
+      object    { CJQS_Erlenmeyer( ) }
+      object    { CJQS_TuboEnsayo( ) translate  0.04*x }
+      object    { CJQS_Gotero( )     translate  0.06*x }
+      translate         <-1.98,+1.64,-4.85>    
+    }
+</pre>
+<p>
+La siguiente macro dibuja un erlenmeyer:
+<pre>
+    #macro CJQS_Erlenmeyer( )
+</pre>
+<p>
+La siguiente macro dibuja un tubo de ensayo:
+<pre>
+    #macro CJQS_TuboEnsayo( )
+</pre>
+<p>
+La siguiente macro dibuja un gotero:
+<pre>
+    #macro CJQS_Gotero( )
+</pre>
+<p>
+Puede controlarse el dibujo del erlenmeyer con mayor detalle con la siguiente macro:
+<pre>
+    #macro CJQS_ErlenmeyerDetalle( DiametroMayor, DiametroMenor,
+        AltoErlenmeyer, AltoDiametroMayor, AltoDiametroMenor,
+        GruesoVidrio, GruesoLinea, MaterialVidrio )   
+</pre>
+<dl>
+<dt><i>DiametroMayor</i> :
+<dd>Diámetro mayor del erlenmeyer. Valor por defecto 46*L.
+<dt><i>DiametroMenor</i> :
+<dd>Diámetro menor del erlenmeyer. Valor por defecto 16*L.
+<dt><i>AltoErlenmeyer</i> :
+<dd>Alto del erlenmeyer.
+Valor por defecto 75*L.
+<dt><i>AltoDiametroMayor</i> :
+<dd>Alto del diámetro mayor respecto a la base.
+Valor por defecto 9*L.
+<dt><i>AltoDiametroMenor</i> :
+<dd>Alto del diámetro menor respecto a la base.
+Valor por defecto 54*L.
+<dt><i>GruesoVidrio</i> :
+<dd>Grueso del vidrio del erlenmeyer. Valor por defecto 1*L.
+<dt><i>GruesoLinea</i> :
+<dd>Para el grueso de la letra de inscripción. Valor por defecto 0.5*L.
+<dt><i>MaterialVidrio</i> :
+<dd>Material del vidrio.
+Valor por defecto CJQS_MaterialVidrio.
+</dl>
+<p>
+Puede controlarse el dibujo del tubo de ensayo con mayor detalle con la siguiente macro:
+<pre>
+    #macro CJQS_TuboEnsayoDetalle( AltoTubo,
+        DiametroTubo, GruesoVidrio, MaterialVidrio )
+</pre>
+<dl>
+<dt><i>AltoTubo</i> :
+<dd>Alto del tubo de ensayo. Valor por defecto 87*L.
+<dt><i>DiametroTubo</i> :
+<dd>Diámetro principal del tubo. Valor por defecto 11*L.
+<dt><i>GruesoVidrio</i> :
+<dd>Grueso del vidrio. Valor por defecto 0.85*L.
+<dt><i>MaterialVidrio</i> :
+<dd>Material del vidrio.
+Valor por defecto CJQS_MaterialVidrio.
+</dl>
+<p>
+Puede controlarse el dibujo del gotero con mayor detalle con la siguiente macro:
+<pre>
+    #macro CJQS_GoteroDetalle( DiametroGotero, LargoGotero,
+        LargoHule, DiametroTapa, LargoTapa,
+        GruesoVidrio, MaterialVidrio, MaterialHule, MaterialTapa )
+</pre>
+<dl>
+<dt><i>DiametroGotero</i> :
+<dd>Diámetro del vidrio del gotero. Valor por defecto 5*L.
+<dt><i>LargoGotero</i> :
+<dd>Largo total con el bulbo. Valor por defecto 62*L.
+<dt><i>LargoHule</i> :
+<dd>Tamaño en <i>Y</i> del bulbo de succión.
+Valor por defecto 17*L.
+<dt><i>DiametroTapa</i> :
+<dd>Diámetro de la tapilla plástica de unión.
+Valor por defecto 14*L.
+<dt><i>LargoTapa</i> :
+<dd>Tamaño en <i>Y</i> de la tapilla plástica de unión.
+Valor por defecto 8*L.
+<dt><i>GruesoVidrio</i> :
+<dd>Grueso del vidrio del erlenmeyer. Valor por defecto 1*L.
+<dt><i>MaterialVidrio</i> :
+<dd>Material del vidrio.
+Valor por defecto CJQS_MaterialVidrio.
+<dt><i>MaterialHule</i> :
+<dd>Material del bulbo de succión.
+Valor por defecto CJQS_MaterialHule.
+<dt><i>MaterialTapa</i> :
+<dd>Material de la tapilla plástica de rosca.
+Valor por defecto CJQS_MaterialTapa.
+</dl>
+<p>
+El siguiente ejemplo dibuja los mismos objetos por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CJQS.inc"
+    
+    union       {
+      object    {
+        CJQS_ErlenmeyerDetalle( 0.046, 0.016, 0.075, 0.009, 0.054, 
+            0.001, 0.0005, CJQS_MaterialVidrio )
+      }
+      object    { 
+        CJQS_TuboEnsayoDetalle( 0.087, 0.011, 0.00085, CJQS_MaterialVidrio )
+        translate  0.04*x 
+      }
+      object    { 
+        CJQS_GoteroDetalle( 0.005, 0.062, 0.017, 0.014, 0.008, 0.00085,
+            CJQS_MaterialVidrio, CJQS_MaterialHule, CJQS_MaterialTapa )
+        translate  0.06*x 
+      }
+      translate         <-1.98,+1.64,-4.85>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El erlenmeyer se encuentra contenido entre las siguientes coordenadas:
+<pre>
+    Mínimo          = <-23,  0,-23>*L
+    Máximo          = <+23,+75,+23>*L
+    Mínimo          = <-DiametroMayor/2,              0, -DiametroMayor/2>
+    Máximo          = <+DiametroMayor/2, AltoErlenmeyer, +DiametroMayor/2>
+</pre>
+<p>
+El fondo del recipiente descansa sobre el plano <i>XZ</i>, en el hemisferio <i>Y+</i>.
+<p>
+El tubo de ensayo se encuentra contenido entre las siguientes coordenadas:
+<pre>
+    Mínimo          = <- 6,  0,- 6>*L
+    Máximo          = <+ 6,+87,+ 6>*L
+    Mínimo          = <-(DiametroTubo + GruesoVidrio)/2,        0,
+                       -(DiametroTubo + GruesoVidrio)/2>
+    Máximo          = <+(DiametroTubo + GruesoVidrio)/2, AltoTubo,
+                       +(DiametroTubo + GruesoVidrio)/2>
+</pre>
+<p>
+El fondo del tubo de ensayo inmediatamente sobre el plano <i>XZ</i>, 
+en el hemisferio <i>Y+</i>.
+<p>
+El gotero se encuentra contenido entre las siguientes coordenadas:
+<pre>
+    Mínimo          = <- 7,  0,- 7>*L
+    Máximo          = <+ 7,+62,+ 7>*L
+    Mínimo          = <-DiametroTapa/2,          0, -DiametroTapa/2>
+    Máximo          = <+DiametroTapa/2, AltoGotero, +DiametroTapa/2>
+</pre>
+<p>
+La punta del gotero ligeramente por encima del plano <i>XZ</i>, 
+en el hemisferio <i>Y+</i>.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>CJQS_DefectoMaterialVidrio</i> 
+<dd>Material para los instrumentos de vidrio. 
+<dt><i>CJQS_DefectoMaterialHule</i> 
+<dd>Material para la goma de succión del gotero.
+<dt><i>CJQS_DefectoMaterialTapa</i> 
+<dd>Material para la pata sujetadora del gotero.
+<dt><i>CJQS_ErlenmeyerInterior</i> 
+<dd>Luego de llamar a la macro, se genera este <i>object</i> 
+para el interior del erlenmeyer. Se sugiere utilizar con <i>intersection</i>
+para rellenar con líquido.
+<dt><i>CJQS_TuboEnsayoInterior</i> 
+<dd>Luego de llamar a la macro, se genera este <i>object</i> 
+para el interior del tubo de ensayo. Se sugiere utilizar con <i>intersection</i>
+para rellenar con líquido.
+<dt><i>CJQS_GoteroInterior</i> 
+<dd>Luego de llamar a la macro, se genera este <i>object</i> 
+para el interior del gotero. Se sugiere utilizar con <i>intersection</i>
+para rellenar con líquido.
+</dl>
+<p>
+El siguiente ejemplo ilustra un método simple para rellenar con líquido.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CJQS.inc"
+    
+    union       {
+      union     { 
+        object { CJQS_Erlenmeyer( ) }
+        intersection                {
+          object  { CJQS_ErlenmeyerInterior }
+          plane   { y, 0.02 } 
+          pigment { Orange }
+        }
+      }
+      union     { 
+        object { CJQS_TuboEnsayo( ) }
+        intersection                {
+          object  { CJQS_TuboEnsayoInterior }
+          plane   { y, 0.03 } 
+          pigment { Orange }
+        }
+        translate  0.04*x 
+      }
+      union     { 
+        object { CJQS_Gotero( )     }
+        intersection                {
+          object  { CJQS_GoteroInterior }
+          plane   { y, 0.01 } 
+          pigment { Orange }
+        }
+        translate  0.06*x 
+      }
+      translate         <-1.98,+1.64,-4.85>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad. Cuando se
+indique, será el valor establecido por defecto. 
+<p>
+<pre>
+    #declare CJQS_LetraVisible			= on;
+</pre>
+Cuando activa <i>on</i> dibuja las marcas en el erlenmeyer. Si se desactiva
+<i>off</i> no las dibuja.
+<p>
+<pre>
+    #declare CJQS_PigmentLetra			= pigment { White }
+</pre>
+Cuando aplique se utilizará este <i>pigment</i> para las marcas del erlenmeyer.
+<p>
+<pre>
+    #declare CJQS_MaterialVidrio		=
+		material  { CJQS_DefectoMaterialVidrio			}
+</pre>
+Material para los instrumentos de vidrio.
+<p>
+<pre>
+    #declare CJQS_MaterialHule			=
+		material  { CJQS_DefectoMaterialHule			}
+</pre> 
+Material para la goma de succión del gotero.
+<p>
+<pre>
+    #declare CJQS_MaterialTapa			=
+		material  { CJQS_DefectoMaterialTapa			}
+</pre> 
+Material para la tapa sujetadora del gotero.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CJQS.inc"
+    #include "textures.inc"
+    
+    #declare CJQS_MaterialVidrio    = M_Green_Glass  
+    #declare CJQS_MaterialHule      = M_Glass
+    #declare CJQS_MaterialTapa      = M_Ruby_Glass  
+    
+    #declare CJQS_PigmentLetra      = pigment { Black }
+    
+    union       {
+      object    { CJQS_Erlenmeyer( ) }    
+      #declare CJQS_LetraVisible    = off;
+      object    { CJQS_Erlenmeyer( ) translate -0.05*x }    
+      object    { CJQS_TuboEnsayo( ) translate  0.04*x }
+      object    { CJQS_Gotero( )     translate  0.06*x }
+      translate         <-1.98,+1.64,-4.85>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Al variar los parámetros debe hacerlo en forma consistente para lograr buenos resultados.
+<p>
+El gotero se encuentra algo por encima del plano <i>XZ</i> pero no hay contacto.
+<p>
+Las superficies interiores son algo menores a lo real para evitar
+efectos de <i>renderizado</i> desagradables.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluír herramientas para cambiar el grabado de los instrumentos.</li>
+  <li>Aumentar la variedad de diseños que pueden generar las macros.</li>
+  <li>Mayor variedad de texturas por defecto funcionales.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="CJQS_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(24/enero/2019), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="CJQS_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="CJQS_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

@@ -1,0 +1,4 @@
+La version actual v1.0 de "CPRB.inc" (CalibradorPieReyBarato)
+dibuja un modelo sencillo de calibrador con vernier para medidas precisas.
+Las unidades y algunas caracteristicas basicas pueden modificarse facilmente.
+Es compatible con POV-Ray 3.1.

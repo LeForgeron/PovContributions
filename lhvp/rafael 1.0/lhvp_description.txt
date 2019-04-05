@@ -1,0 +1,5 @@
+La version actual v1.0 de "LHVP.inc" (LampadarioHumoVelaParafina)
+dibuja un lampadario de iglesia con alcancia.
+Incluye una macro para modificar algunas caracteristicas. Ademas, la macro calcula
+las posiciones para que el usuario ubique velitas a gusto.
+Es compatible con POV-Ray 3.1.

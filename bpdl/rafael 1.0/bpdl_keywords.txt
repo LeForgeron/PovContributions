@@ -1,0 +1,4 @@
+BPDL
+Lamp
+Electricity
+Blender

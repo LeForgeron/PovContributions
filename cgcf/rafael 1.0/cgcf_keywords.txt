@@ -1,0 +1,4 @@
+CGCF
+Game
+Console
+Classic

@@ -1,0 +1,4 @@
+La version actual v1.0 de "RPPM.inc" (RadiocomunicadorPortatilPersonalManual)
+dibuja un radiocomunicador de mano de corto alcance.
+Posee una macro para modificar las caracteristicas principales,
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.

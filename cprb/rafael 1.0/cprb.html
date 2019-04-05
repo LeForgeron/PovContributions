@@ -1,0 +1,394 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>CPRB</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "CPRB_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="CPRB_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"CPRB.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="CPRB_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "CPRB.inc" (CalibradorPieReyBarato)
+dibuja un modelo sencillo de calibrador con vernier para medidas precisas.
+Las unidades y algunas características básicas pueden modificarse fácilmento.
+Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie el archivo "CPRB.inc" en dicho subdirectorio;&nbsp; únicamente 
+este es necesario.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "CPRB.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "CPRB.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="CPRB.jpg" target="_blank" >
+<img alt="Calibrador" src="CPRB_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="CPRB.jpg" target="_blank" >
+<font size = -2>
+Calibrador
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CPRB.inc"
+    
+    object      {
+      CPRB_Calibrador( 0.0 )  
+      translate         <-1.90,+1.70,-4.90>    
+    }
+</pre>
+<p>
+La macro principal tiene solo un parámetro.
+<pre>
+    #macro CPRB_Calibrador( LecturaPR )
+</pre>
+<dl>
+<dt><i>LecturaPR</i> :
+<dd>Desplaza el vernier en unidades POV-Ray hacia <i>X-</i>.
+</dl>
+<p>
+La siguiente macro permite un mayor control de las características.
+<pre>
+    #macro CPRB_CalibradorPieReyBarato( LecturaPR,
+                LargoFundamental, LargoPie, GruesoFijo,
+                AnchoDeslizante, TamanoPie, FraccionDelanteraPie,
+                GruesoAire, LargoPrecision, AnchoPrecisionPosterior,
+                GruesoPrecision, DiametroAlambre,
+                MaterialPrincipal, MaterialDeslizante, 
+                MaterialAlambre, MaterialMarcas )
+</pre>
+<dl>
+<dt><i>LecturaPR</i> :
+<dd>Desplaza el vernier en unidades POV-Ray hacia <i>X-</i>.
+<dt><i>LargoFundamental</i> :
+<dd>Largo total en <i>X</i> del calibrador.
+Valor por defecto 150*L.
+<dt><i>LargoPie</i> :
+<dd>Tamaño en <i>X</i> del pie fijo del calibrador.
+Valor por defecto 11*L.
+<dt><i>GruesoFijo</i> :
+<dd>Grueso de la regla fija del calibrador.
+Valor por defecto 2*L.
+<dt><i>AnchoDeslizante</i> :
+<dd>Ancho en <i>Y</i> de la regla fija del calibrador.
+Valor por defecto 11*L.
+<dt><i>TamanoPie</i> :
+<dd>Tamaño en <i>Y</i> del pie fijo del calibrador.
+Valor por defecto 53*L.
+<dt><i>FraccionDelanteraPie</i> :
+<dd>Fracción del pie fijo que se encuentra sobre el plano superior <i>Y+</i>.
+Valor por defecto 0.64.
+<dt><i>GruesoAire</i> :
+<dd>Grueso de las aberturas huecas en la mordedura del calibrador.
+Valor por defecto 1*L.
+<dt><i>LargoPrecision</i> :
+<dd>Largo total del vernier móvil.
+Valor por defecto 59*L.
+<dt><i>AnchoPrecisionPosterior</i> :
+<dd>Grosor en <i>Y</i> de la escala inferior móvil.
+Valor por defecto 4*L.
+<dt><i>GruesoPrecision</i> :
+<dd>Grosor en <i>Z</i> del calibrador total.
+Valor por defecto 3.5*L.
+<dt><i>DiametroAlambre</i> :
+<dd>Diámetro del alambrillo para medir profundidad.
+Valor por defecto 1*L.
+<dt><i>MaterialPrincipal</i> :
+<dd>Material de la regla fija.
+Valor por defecto CPRB_MaterialPrincipal.
+<dt><i>MaterialDeslizante</i> :
+<dd>Material del vernier móvil.
+Valor por defecto CPRB_MaterialDeslizante.
+<dt><i>MaterialAlambre</i> :
+<dd>Material del alambrillo para medir profundidad.
+Valor por defecto CPRB_MaterialAlambre.
+<dt><i>MaterialMarcas</i> :
+<dd>Material para números y escalas.
+Valor por defecto CPRB_MaterialMarcas.
+</dl>
+<p>
+La unidad por defecto del calibrador es el mL (miliLisa) que equivale 
+a 0.055063 pulgadas. Se incluye también una escala en fracciones binarias
+de cL (centiLisa). Por razones estéticas, las unidades del vernier
+se ajustan proporcionalmente a <i>LargoPrecision-LargoPie</i>.
+El usuario puede asignar su propio sistema de unidades 
+mediante <a href=#modificador>modificadores</a>, que no presentarán este
+comportamiento proporcional.
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CPRB.inc"
+    
+    object      {
+      CPRB_CalibradorPieReyBarato( 0.0,
+            0.150, 0.011, 0.002, 0.011, 0.053, 0.64, 
+            0.001, 0.059, 0.004, 0.0035, 0.001,              
+            CPRB_MaterialPrincipal, CPRB_MaterialDeslizante,
+            CPRB_MaterialAlambre, CPRB_MaterialMarcas ) 
+      translate         <-1.90,+1.70,-4.90>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El aparato se encuentra contenido entre las siguientes dimensiones:
+<pre>
+    Mínimo (defecto)	= < -139.0,   19.1,   -1.0 >*L
+    Máximo (defecto)    = <   11.0,   33.9,    2.5 >*L
+    Minimo              = < -( LargoFundamental+LecturaPR-LargoPie ),
+                            -( TamanoPie*( 1-FraccionDelantera ) ), -GruesoFijo/2 >                          
+    Maximo              = < LargoPie, FraccionDelantera*TamanoPie, 
+                            ( GruesoPrecision-GruesoFijo/2 ) >
+</pre>
+<p>
+La base del pie fijo se encuentra ajustado con el eje <i>Y</i>. El pie apunta en sentido
+<i>X+</i>. Las marcas se leen invertidas en <i>Z-</i>.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>CPRB_DefectoMaterialPrincipal</i> 
+<dd>Material de la regla fija.
+<dt><i>CPRB_DefectoMaterialDeslizante</i> 
+<dd>Material del vernier móvil.
+<dt><i>CPRB_DefectoMaterialAlambre</i> 
+<dd>Material del alambrillo para medir profundidad.
+<dt><i>CPRB_DefectoMaterialMarcas</i> 
+<dd>Material para números y escalas.
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad. En general los
+índices comienzan en cero y será válido utilizar fracciones impropias en vez de índices
+enteros para los selectores de impresión.
+<p>
+<pre>
+    #declare CPRP_EscalaDecimal
+</pre>
+Valor real. Si se declara sustituye el sistema de medidas superior <i>Y+</i> del
+calibrador. Su valor en unidades POV-Ray debe corresponder al numero 10 de la escala
+superior. Un valor 0.010 corresopndería a la escala actual.
+<p>
+<pre>
+    #declare CPRB_EscalaBinaria
+</pre>
+Valor real. Si se declara sustituye el sistema de medidas inferior <i>Y-</i> del
+calibrador. Su valor en unidades POV-Ray debe corresponder al número 1 de la escala
+inferior. Se modificará la separación en el vernier inferior para que
+concuerde con el patrón del modelo original.
+un valor 0.010 correspondería a la escala actual.
+<p>
+<pre>
+    #declare CPRB_MaterialPrincipal		=
+		material { CPRB_DefectoMaterialPrincipal		}
+</pre>
+Material de la regla fija.
+<p>
+<pre>
+    #declare CPRB_MaterialDeslizante		=	 
+		material { CPRB_DefectoMaterialDeslizante		}
+</pre>
+Material del vernier móvil.
+<p>
+<pre>
+    #declare CPRB_MaterialAlambre		=
+		material { CPRB_DefectoMaterialAlambre 			}
+</pre>
+Material del alambrillo para medir profundidad.
+<p>
+<pre>
+    #declare CPRB_MaterialMarcas		=
+		material { CPRB_DefectoMaterialMarcas	 		}
+</pre>
+Textura decorativa del mango superior.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CPRB.inc"   
+    #include "textures.inc"
+    
+    #declare CPRB_EscalaDecimal     = 0.008;
+    #declare CPRB_EscalaBinaria     = 0.030;   
+    
+    #declare CPRB_MaterialPrincipal     = 
+        material { texture { PinkAlabaster } } 
+    #declare CPRB_MaterialDeslizante    =
+        material { texture { Cork } }
+    #declare CPRB_MaterialAlambre       =
+        material { texture { Gold_Texture } }    
+    #declare CPRB_MaterialMarcas        =
+        material { M_Water }    
+        
+    object      {
+      CPRB_Calibrador( 0.005 )
+      translate         <-1.90,+1.70,-4.90>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Es bastante probable que las marcas queden mal ubicadas al modificar los parámetros.
+El parámetro <i>GruesoFijo</i> puede influir mucho en la posición vertical.
+<p>
+Respete algunas restricciones lógicas como que <i>GruesoPrecision</i> debe ser mayor
+a <i>GruesoFijo</i>, y este último mayor a <i>DiametroAlambre</i>. A su vez
+<i>LargoPie</i> debería ser inferior a <i>LargoPrecision</i> y éste menor
+a <i>LargoFundamental</i>. Existen varias otras complicaciones menos evidentes.
+<p>
+Al utilizar sus propio sistema de unidades, se espera que <i>CPRB_EscalaDecimal</i>
+sea menor o igual a <i>CPRB_EscalaBinaria</i>, aunque no es necesario.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir tornillos de ajuste para mejor manipulación del calibrador.</li>
+  <li>Aumentar y facilitar el control de usuario de las escalas.</li>
+  <li>Incluir mayor variedad de materiales.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="CPRB_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(6/noviembre/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="CPRB_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="CPRB_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

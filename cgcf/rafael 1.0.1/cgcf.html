@@ -1,0 +1,571 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>CGCF</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "CGCF_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="CGCF_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"CGCF.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="CGCF_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "CGCF.inc" (ClassicGameConsoleFull)
+dibuja una consola para video juegos, basado en el modelo Atari Flashback.
+Tiene una macro para modificar las características principales, pero
+es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie el archivos "CGCF.inc" en dicho subdirectorio;&nbsp; únicamente este es necesario.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "CGCF.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "CGCF.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="CGCF.jpg" target="_blank" >
+<img alt="Consola videojuegos" src="CGCF_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="CGCF.jpg" target="_blank" >
+<font size = -2>
+Consola videojuegos
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CGCF.inc"
+    
+    object      {
+      CGCF_Game( on )
+      translate         <-1.9,+1.6,-4.8>    
+    }
+</pre>
+<p>
+La macro principal tiene solo un parámetro.
+<pre>
+    #macro CGCF_Game( BotonEncendido )
+</pre>
+<dl>
+<dt><i>BotonEncendido</i> :
+<dd><i>on</i> enciende el Led del aparato y aprieta el botón respectivo.
+<i>off</i> para apagado.
+</dl>
+<p>
+La siguiente macro permite mayor flexibilidad de diseño.
+<pre>
+    #macro CGCF_ClassicGameConsoleFull( BotonEncendido,
+                FrenteFundamental, ProfundidadFundamental,
+                ProfundidadBaseBotones, AltoFundamental,
+                LineasDecorativas, Cizalla, FraccionCuerpo,
+                FraccionBase, FraccionPatillas, 
+                FrenteConector, AltoConector, 
+                ArregloBotones, ArregloTexturas )
+</pre>
+<dl>
+<dt><i>BotonEncendido</i> :
+<dd><i>on</i> enciende el Led del aparato y aprieta el botón respectivo.
+<i>off</i> para apagado.
+<dt><i>FrenteFundamental</i> :
+<dd>Referencia para el frente X de la consola. Valor por defecto 162*L.
+<dt><i>ProfundidadFundamental</i> :
+<dd>Referencia para la profundidad Z de la consola. Valor por defecto 105*L.
+<dt><i>ProfundidadBaseBotones</i> :
+<dd>Referencia para el tamaño en Z de la base de botones. Valor por defecto 45*L.
+<dt><i>AltoFundamental</i> :
+<dd>Referencia para el alto de la consola. Valor por defecto 40*L.
+<dt><i>LineasDecorativas</i> :
+<dd>Número entero para relieve de líneas en la superficie
+media de la consola. Valor por defecto 10.
+<dt><i>Cizalla</i> :
+<dd>Referencia para la inclinación de las paredes locales.
+Valor por defecto 0.17.
+<dt><i>FraccionCuerpo</i> :
+<dd>Fracción desde el piso de <i>AltoFundamental</i> para ubicar la 
+superficie plana. Debe ser mayor a <i>FraccionBase</i>.
+Valor por defecto 0.73.
+<dt><i>FraccionBase</i> :
+<dd>Fracción desde el piso de <i>AltoFundamental</i> para ubicar el inicio
+de la base principal. Debe ser mayor a <i>FraccionPatillas</i>.
+Valor por defecto 0.30.
+<dt><i>FraccionPatillas</i> :
+<dd>Fracción desde el piso de <i>AltoFundamental</i> para ubicar el final
+de las patitas. Valor por defecto 0.045.
+<dt><i>FrenteConector</i> :
+<dd>Frente en X de la entrada para Joystick. Valor por defecto 8*L.
+<dt><i>AltoConector</i> :
+<dd>Alto en Y de la entrada para Joystick. Valor por defecto 3.5*L.
+<dt><i>ArregloBotones</i> :
+<dd>Es un arreglo que describe los botones. El total de botones puede
+cambiarse. Debe tener el formato <i>array [TotalBotones][2] { { FraccionX, BanderaPresionar },... }</i>.
+Valor por defecto CGCF_ArregloBotones que es modificable.
+<table border=2>
+<tr>
+<td>
+FraccionX
+</td>
+<td>
+Fraccion propia en el rango 0..1. Establece la posición en X del botón. 
+Use valores negativos para desactivar el botón. El primer botón se asume de encendido.
+</td>
+</tr>
+<tr>
+<td>
+BanderaPresionar
+</td>
+<td>
+<i>on</i> presiona el botón, y <i>off</i> para liberar. El primer botón es especial
+y se ignora, se controlará con el parámetro <i>BotonEncendido</i>.
+</td>
+</tr>
+</table>
+<dt><i>ArregloTexturas</i> :
+<dd>Es un arreglo que describe las texturas. <i>array [CGCF_TotalTexturas] = { TexturaPrincipal, TexturaBandaDecorativa, TexturaMetalica, TexturaBaseBotones, 
+TexturaBotonOn, TexturaBotones, TexturaLedOn, TexturaLedOff }</i>.
+<table border=2>
+<tr>
+<td>
+TexturaPrincipal
+</td>
+<td>
+Textura principal del aparato. Valor por defecto CGCF_TexturaPrincipal.
+</td>
+</tr>
+<tr>
+<td>
+TexturaBandaDecorativa
+</td>
+<td>
+Textura de la banda decorativa y logo. Valor por defecto CGCF_TexturaBandaDecorativa.
+</td>
+</tr>
+<tr>
+<td>
+TexturaMetalica
+</td>
+<td>
+Textura de los pines metálicos. Valor por defecto CGCF_TexturaMetalica.
+</td>
+</tr>
+<tr>
+<td>
+TexturaBaseBotones
+</td>
+<td>
+Textura de la placa de botones. Valor por defecto CGCF_TexturaBaseBotones.
+</td>
+</tr>
+<tr>
+<td>
+TexturaBotonOn
+</td>
+<td>
+Textura del botón rojo de encendido. Valor por defecto CGCF_TexturaBotonOn.
+</td>
+</tr>
+<tr>
+<td>
+TexturaBotones
+</td>
+<td>
+Textura de los botones. Valor por defecto CGCF_TexturaBotones.
+</td>
+</tr>
+<tr>
+<td>
+TexturaLedOn
+</td>
+<td>
+Textura para el Led cuando encendido. Valor por defecto CGCF_TexturaLedOn.
+</td>
+</tr>
+<tr>
+<td>
+TexturaLedOff
+</td>
+<td>
+Textura para el Led cuando apagado. Valor por defecto CGCF_TexturaLedOff.
+</td>
+</tr>
+</table>
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CGCF.inc" 
+    
+    object      {
+      CGCF_ClassicGameConsoleFull( on,
+                    0.162, 0.105, 0.045, 0.040, 10, 
+                    0.17, 0.73, 0.30, 0.045, 0.008, 0.0035,    
+                    CGCF_ArregloBotones, CGCF_DefectoArregloTexturas )
+      translate         <-1.9,+1.6,-4.8>    
+    }
+</pre>
+<p>
+En el siguiente ejemplo modificamos el arreglo de botones y algunos parámetros.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CGCF.inc" 
+    
+    #declare CGCF_ArregloBotones[0][0]          = 1.0;
+    #declare CGCF_ArregloBotones[1][0]          = -1;
+    #declare CGCF_ArregloBotones[2][0]          = -1;
+    #declare CGCF_ArregloBotones[3][0]          = -1;
+    #declare CGCF_ArregloBotones[4][0]          = -1;
+    
+    object      {
+      CGCF_ClassicGameConsoleFull( off,
+                    0.125, 0.180, 0.045, 0.080, 20, 
+                    0.37, 0.70, 0.60, 0.45, 0.004, 0.0075,    
+                    CGCF_ArregloBotones, CGCF_DefectoArregloTexturas )
+      translate         <-1.9,+1.6,-4.8>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El aparato se encuentra contenido entre las siguientes dimensiones:
+<pre>
+    Mínimo		= <  -81,   0,  -52 >*L	
+    Máximo		= <  +81, +41,  +51 >*L
+</pre>
+<p>
+El jugador se supone sentado hacia Z-. Con excepción del panel de botones, 
+es simétrico respecto al plano YZ.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>CGCF_TotalTexturas</i>
+<dd>Total de texturas para el parámetro <i>ArregloTexturas</i>.
+<dt><i>CGCF_IndiceTexturaPrincipal</i> 
+<dd>Indice para la textura principal del aparato en el parámetro <i>ArregloTexturas</i>.
+<dt><i>CGCF_IndiceTexturaBandaDecorativa</i> 
+<dd>Indice para la textura de la banda decorativa y logo en el parámetro <i>ArregloTexturas</i>.
+<dt><i>CGCF_IndiceTexturaMetalica</i> 
+<dd>Indice para la textura de los pines metálicos en el parámetro <i>ArregloTexturas</i>.
+<dt><i>CGCF_IndiceTexturaBaseBotones</i> 
+<dd>Indice para la textura de la placa de botones en el parámetro <i>ArregloTexturas</i>.
+<dt><i>CGCF_IndiceTexturaBotonOn</i> 
+<dd>Indice para la textura del botón rojo de encendido en el parámetro <i>ArregloTexturas</i>.
+<dt><i>CGCF_IndiceTexturaBotones</i> 
+<dd>Indice para la textura general de botones en el parámetro <i>ArregloTexturas</i>.
+<dt><i>CGCF_IndiceTexturaLedOn</i> 
+<dd>Indice para la textura del Led encendido en el parámetro <i>ArregloTexturas</i>.
+<dt><i>CGCF_IndiceTexturaLedOff</i> 
+<dd>Indice para la textura del Led apagado en el parámetro <i>ArregloTexturas</i>.
+<dt><i>CGCF_DefectoTexturaPrincipal</i> 
+<dd>Textura principal del aparato.
+<dt><i>CGCF_DefectoTexturaBandaDecorativa</i> 
+<dd>Textura de la banda decorativa y logo.
+<dt><i>CGCF_DefectoTexturaMetalica</i> 
+<dd>Textura de los pines metálicos.
+<dt><i>CGCF_DefectoTexturaBaseBotones</i> 
+<dd>Textura de la placa de botones.
+<dt><i>CGCF_DefectoTexturaBotonOn</i> 
+<dd>Textura del botón rojo de encendido.
+<dt><i>CGCF_DefectoTexturaBotones</i> 
+<dd>Textura general de los botones.
+<dt><i>CGCF_DefectoTexturaLedOn</i> 
+<dd>Textura del Led cuando encendido.
+<dt><i>CGCF_DefectoTexturaLedOff</i> 
+<dd>Textura del Led cuando apagado.
+<dt><i>CGCF_DefectoArregloTexturas</i>
+<dd>Sirve como parámetro <i>ArregloTexturas</i>. Contiene las texturas por defecto
+(no las modificadas por el usuario).
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad.
+<p>
+<pre>
+    #declare CGCF_LogoCustom			= object  { ... }
+</pre>
+Si se define, sustituye el logo de marca por defecto.
+<p>
+<pre>
+    #declare CGCF_SimplificarModelo		= off;
+</pre>
+Si se activa se genera una versión más simple de dibujo, que podría ser útil en procesos
+lentos.
+<p>
+<pre>
+    #declare CGCF_ArregloBotones		= array [5][2]
+</pre>
+Parámetro por defecto modificable para <i>ArregloBotones</i>. Utilice
+para presionar los botones de juego, o si quiere modificar sus posiciones.
+<p>
+<pre>
+    #declare CGCF_FraccionXLogo			= 0.40;
+</pre>
+Para ubicar el logo, se interpreta como fracción del panel de botones.
+Use un valor negativo para desactivar el dibujo.
+<p>
+<pre>
+    #declare CGCF_FraccionXIndicador		= 0.10;
+</pre>
+Para ubicar la lucesita de encendido, se interpreta como fracción del panel de botones.
+Use un valor negativo para desactivar el dibujo.
+<p>
+<pre>
+    #declare CGCF_TexturaPrincipal		=
+		texture  { CGCF_DefectoTexturaPrincipal			}
+</pre>
+Textura principal del aparato.
+<p>
+<pre>
+    #declare CGCF_TexturaBandaDecorativa	=	 
+		texture  { CGCF_DefectoTexturaBandaDecorativa		}
+</pre>
+Textura de la banda decorativa y logo.
+<p>
+<pre>
+    #declare CGCF_TexturaMetalica		=	 
+		texture  { CGCF_DefectoTexturaMetalica			}
+</pre>
+Textura de los pines metálicos.
+<p>
+<pre>
+    #declare CGCF_TexturaBaseBotones		=	 
+		texture  { CGCF_DefectoTexturaBaseBotones		}
+</pre>
+Textura de la placa de botones.
+<p>
+<pre>
+    #declare CGCF_TexturaBotonOn		=	 
+		texture  { CGCF_DefectoTexturaBotonOn			}
+</pre>
+Textura del botón rojo de encendido.
+<p>
+<pre>
+    #declare CGCF_TexturaBotones		=
+		texture  { CGCF_DefectoTexturaBotones			}
+</pre>
+Textura de los botones.
+<p>
+<pre>
+    #declare CGCF_TexturaLedOn			=	 
+		texture  { CGCF_DefectoTexturaLedOn			}
+</pre>
+Textura para el Led cuando encendido.
+<p>
+<pre>
+    #declare CGCF_TexturaLedOff			=	 
+		texture  { CGCF_DefectoTexturaLedOff			}
+</pre>
+Textura para el Led cuando apagado.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CGCF.inc"
+    #include "textures.inc"    
+
+    #declare CGCF_TexturaPrincipal          = PinkAlabaster
+    #declare CGCF_TexturaBandaDecorativa    = Gold_Texture 
+    #declare CGCF_TexturaMetalica           = texture { pigment { Red } }
+    #declare CGCF_TexturaBaseBotones        = Sandalwood
+    #declare CGCF_TexturaBotonOn            = Rust
+    #declare CGCF_TexturaBotones            = Cork
+    #declare CGCF_TexturaLedOff             = texture { pigment { Green } }
+    
+    object      {
+      CGCF_Game( off )
+      translate         <-1.9,+1.6,-4.8>    
+    }
+</pre>
+<p>
+Otro ejemplo con modificadores.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "CGCF.inc"
+    #include "textures.inc"    
+                                                                    
+    #declare CGCF_SimplificarModelo     = on;                                                                
+    #declare CGCF_LogoCustom            = box { -0.5, 0.5 rotate 45*z scale <0.5,1,0.2> } 
+    #declare CGCF_FraccionXLogo         = 0.20;
+    #declare CGCF_FraccionXIndicador    = 0.40;
+    #declare CGCF_ArregloBotones[1][0]  = -1; 
+    #declare CGCF_ArregloBotones[2][1]  = on;
+
+    #declare CGCF_TexturaLedOn          = texture { pigment { Yellow } }
+    
+    object      {
+      CGCF_Game( on )
+      translate         <-1.9,+1.6,-4.8>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Los botones tiene un radio que no se afecta con <i>FrenteFundamental</i> esto
+puede provocar superposición de botones cuando se modifiquen los parámetros por defecto.
+<p>
+Si desea utilizar la macro estructural y a su vez modificar las texturas,
+deberá declarar un nuevo <i>ArregloTexturas</i>. Pues <i>CGCF_DefectoArregloTexturas</i>
+conserva los valores originales, no las texturas modificadas.
+<p>
+Considere modificar <i>CGCF_ArregloBotones</i> para presionar los botones diferentes del 
+botón rojo de encendido.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros modelos de consola para videojuegos.</li>
+  <li>Agregar cables y joystick, con herramientas de interacción con el usuario.</li>
+  <li>Mayor cantidad de texturas por defecto.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="CGCF_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(4/agosto/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="CGCF_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="CGCF_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

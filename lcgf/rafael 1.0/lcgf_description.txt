@@ -1,0 +1,5 @@
+La version actual v1.0 de "LCGF.inc" (LicuadoraCuchillaGiratoriaFilosa)
+dibuja una licuadora corriente para cocina, de ocho botones.
+Posee una macro para variar sus dimensiones principales y texturas. La base se ajusta en
+ocho posiciones, pueden oprimirse los botones, y separarse algunas partes pero
+es muy poco flexible. Es compatible con POV-Ray 3.1.

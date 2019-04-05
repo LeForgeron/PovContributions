@@ -1,0 +1,5 @@
+La version actual v1.0 de "HHBI.inc" (HidranteHumedadBocaIncendio)
+dibuja un modelo sencillo de hidrante municipal.
+Posee una macro para variar sus dimensiones principales y texturas. La base se
+puede extender bajo el suelo para ubicar en terreno irregular.
+Es muy poco flexible. Es compatible con POV-Ray 3.1.

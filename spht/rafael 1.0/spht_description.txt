@@ -1,0 +1,4 @@
+La version actual v1.0 de "SPHT.inc" (SprayerProfessionalHandTool)
+dibuja un rociador simple, como los utilizados en jardineria y limpieza domestica.
+Tiene una macro para cambiar algunas caracteristicas y las texturas,
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.

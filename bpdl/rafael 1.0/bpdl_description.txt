@@ -1,0 +1,5 @@
+La version actual v1.0 de "BPDL.inc" (BaseParaDecorarLampara)
+dibuja una base para lampara, en la parte superior se ubicar a
+un bombillo o algun otro objeto con fines decorativos.
+Tiene una macro para cambiar las texturas,
+y es muy poco flexible. No es compatible con POV-Ray 3.1.

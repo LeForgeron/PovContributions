@@ -1,0 +1,396 @@
+<!DOCTYPE HTML PUBLIC "HTML">
+<html>
+<head>
+<title>DUCA</title>
+</head>
+<! escrito por Rafael Campos Vargas para biblioteca de objetos POV-Ray>
+<body background = "DUCA_backht.jpg" text = #00000 vlink = #CC6699>
+<img alt="Logo POVRay..." src="DUCA_logoPOVht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<font size = +2>Instrucciones para </font>
+<font size = +3 color=#FFFF00 face="Courier">"DUCA.inc" v1.0</font>
+<br clear left><p>
+Donación de Rafael Angel Campos Vargas, en el año 2019, a la
+Biblioteca de objetos de POV-Ray.&nbsp;  Este proyecto se encuentra 
+actualmente suscrito a la patente LGPL;&nbsp;  para libre uso comercial y
+no comercial del software.
+<BLOCKQUOTE>
+    <img alt="CC-GNU LGPL" border="0"  src="DUCA_cc-LGPL-a.png" 
+	align = left align=bottom vspace = 8 hspace = 12/>
+<div align = right>
+The primary purpose of this collection is to make items publicly available under a common license that permits use, modification and re-distribution.
+To support this contributions are donated to the collection with consent for their use under the terms of the 
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >Creative Commons - Lesser General Purpose License</a> 
+    (<a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank" >CC-GNU LGPL</a>). 
+    <!-- Creative Commons License -->
+    <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="licenseWindow"></a>
+    <!-- /Creative Commons License --><br>
+<BLOCKQUOTE>
+<font size = -1><b>Chris Bartlett 2007</b></font><br clear=rigth>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+</div>
+<p>
+La versión actual v1.0 de "DUCA.inc" (DispensadorUniversalCintaAdhesiva)
+dibuja un dispensador de cinta adhesiva, tipo escolar recargable.
+La cinta tiene dos posiciones, una enrollada y otra lista en la cuchilla.
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.
+<p>
+Indice de página:
+<ol>
+  <li><tt><a href=#instalar>Instalación de Archivos</a></tt><br>
+  <li><tt><a href=#instrucciones>Instrucciones básicas</a></tt><br>
+  <li><tt><a href=#caracter>Características del objeto</a></tt><br>
+  <li><tt><a href=#modificador>Modificadores</a></tt><br>
+  <li><tt><a href=#notas>Notas y Advertencias</a></tt><br>
+  <li><tt><a href=#futuro>Sugerencias de modificación</a></tt><br>
+  <li><tt><a href=#sobre>Sobre LibreN3D</a></tt><br>
+</ol>
+<hr size=4>
+<h3><a name="instalar">Instalación de Archivos</h3>
+El procedimiento siguiente es completamente optativo, corresponde simplemente al estándard
+de la Biblioteca de objetos POV-Ray.
+<ol>
+  <li>Cree el subdirectorio "ObjectCollections".&nbsp; Se sugiere un subdirectorio del folder
+POV-Ray, creado por el instalador en algunas versiones en la sección de documentos o bien
+en la de código.</li>
+  <li>Copie el archivo "DUCA.inc" en dicho subdirectorio;&nbsp; 
+únicamente este es necesario.&nbsp;
+En cuanto a la documentación y demás puede colocarla si desea en el mismo subdirectorio, el estándar ha sido diseñado
+para evitar problemas de compatibilidad.</li>
+  <li>Actualice los archivos buscados por POV-Ray, en algún archivo ini pertinente.&nbsp;  Por 
+ejemplo "POVRay.ini";&nbsp;  agregue el comando Library_Path="C:\FDOS\POVRAY31\ObjectCollections"; o
+el que corresponda a su sistema operativo.&nbsp;  POV-Ray ofrece muchas formas de realizar
+esto.&nbsp;  Si no sabe cómo, probablemente convenga leer el manual de referencia en la
+sección "Command-line options". &nbsp; Cada sistema operativo presenta sus propias variantes.
+</li>
+</ol>
+<font size = -1>
+Nota:&nbsp;  El archivo de prueba "DUCA.pov" puede ejecutarse sin ningún proceso
+de instalación.&nbsp;  Unicamente debería estar 
+ubicado en el mismo folder que "DUCA.inc".
+</font>
+<p>
+<hr>
+<h3><a name="instrucciones">Instrucciones básicas</h3>
+<table align = right border=0>
+<tr>
+<td>
+<a href="DUCA.jpg" target="_blank" >
+<img alt="Cinta adhesiva" src="DUCA_Thumbnail.jpg" 
+  width = 160 heigth = 120 vspace = 24 hspace = 18 align = right></a>
+</td>
+</tr>
+<tr>
+<td>
+<div align = center>
+<a href="DUCA.jpg" target="_blank" >
+<font size = -2>
+Cinta adhesiva
+</font>
+</a>
+</div>
+</td>
+</tr>
+</table>
+Muy fácil de usar, tan simple como incluir el archivo y ubicar el objeto.&nbsp;
+El siguiente ejemplo ilustra el procedimiento básico. 
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "DUCA.inc"
+    
+    object      {
+      DUCA_Cinta( 1.0, on )
+      translate         <-1.975,+1.675,-4.900>    
+    }
+</pre>
+<p>
+La macro principal tiene dos parámetros.
+<pre>
+    #macro DUCA_Cinta( FactorRelleno, BanderaCortada )
+</pre>
+<dl>
+<dt><i>FactorRelleno</i> :
+<dd>Fracción de uso, <i>0.0</i> para cinta agotada y <i>1.0</i> para cinta nueva.
+Utilice un valor negativo para no dibujar la cinta del todo.
+<dt><i>BanderaCortada</i> :
+<dd><i>on</i> dibuja la cinta puesta en el cortador metálico, <i>off</i> dibuja
+la cinta enrollada sin ubicar en el cortador.
+</dl>
+<p>
+La siguiente macro permite mucha mayor flexibilidad.
+<pre>
+    #macro DUCA_DispensadorUniversalCintaAdhesiva( FactorRelleno, BanderaCortada,
+                DiametroDespachador, AnchoDespachador, DiametroInternoCinta,
+                DiametroAdhesivoMenor, DiametroAdhesivoMayor, AnchoAdhesivo,
+                GruesoPlastico, GruesoFilo, TotalDientes,
+                TexturaPrincipal, TexturaMetalica,
+                TexturaAdhesiva, TexturaSoporteAdhesivo )
+</pre>
+<dl>
+<dt><i>FactorRelleno</i> :
+<dd>Fracción de uso, <i>0.0</i> para cinta agotada y <i>1.0</i> para cinta nueva.
+Utilice un valor negativo para no dibujar la cinta del todo.
+<dt><i>BanderaCortada</i> :
+<dd><i>on</i> dibuja la cinta puesta en el cortador metálico, <i>off</i> dibuja
+la cinta enrollada sin ubicar en el cortador.
+<dt><i>DiametroDespachador</i> :
+<dd>Medida fundamental del despachador. 
+Corresponde al alto del aparato sin las patillas inferiores.
+Valor por defecto 54.5*L.
+<dt><i>AnchoDespachador</i> :
+<dd>Ancho en Z del despachador.
+Valor por defecto DiametroDespachador/3.
+<dt><i>DiametroInternoCinta</i> :
+<dd>Diámetro del carrete de cinta.
+Valor por defecto DiametroDespachador/3.
+<dt><i>DiametroAdhesivoMenor</i> :
+<dd>Diámetro menor del material adhesivo.
+Valor por defecto 26.33*L.
+<dt><i>DiametroAdhesivoMayor</i> :
+<dd>Diámetro mayor del material adhesivo (<i>FactorRelleno = 1.0</i>).
+Valor por defecto 36.33*L.
+<dt><i>AnchoAdhesivo</i> :
+<dd>Ancho de la cinta.
+Valor por defecto 13.62*L.
+<dt><i>GruesoPlastico</i> :
+<dd>Grueso de las láminas de plástico. 
+Valor por defecto 1*L.
+<dt><i>GruesoFilo</i> :
+<dd>Grueso del filo.
+Valor por defecto GruesoPlastico/5.
+<dt><i>TotalDientes</i> :
+<dd>Total de dientes del filo.
+Valor por defecto 20.
+<dt><i>TexturaPrincipal</i> :
+<dd>Textura principal del dispensador.
+Valor por defecto DUCA_TexturaPrincipal.
+<dt><i>TexturaMetalica</i> :
+<dd>Textura de la laminilla cortante.
+Valor por defecto DUCA_TexturaMetalica.
+<dt><i>TexturaAdhesiva</i> :
+<dd>Textura de la cinta. 
+Valor por defecto DUCA_TexturaAdhesiva.
+<dt><i>TexturaSoporteAdhesivo</i> :
+<dd>Textura del carrete que soporta la cinta.
+Valor por defecto DUCA_TexturaSoporteAdhesivo.
+</dl>
+<p>
+El siguiente ejemplo dibuja el mismo objeto por defecto.
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "DUCA.inc"
+    
+    object      {
+        DUCA_DispensadorUniversalCintaAdhesiva( 1.0, on,
+               0.0545, 0.0545/3, 0.0545/3, 0.02633, 0.03633,
+               0.01362, 0.001, 0.001/5, 20,
+               DUCA_TexturaPrincipal, DUCA_TexturaMetalica,
+               DUCA_TexturaAdhesiva, DUCA_TexturaSoporteAdhesivo )
+      translate         <-1.975,+1.675,-4.900>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="caracter">Características del objeto</h3>
+Mis dibujos están en unidades mL o L (Lisa) según el contexto.&nbsp;
+1 L equivale a 0.055063 pulgadas 
+definido como 0.001 para POVRAY.&nbsp; 
+El dispensador tiene las siguientes dimensiones:
+<pre>
+    Mínimo      	= <  -27,   0,  -9 >*L
+    Máximo      	= <  +42, +56,  +9 >*L
+    Mínimo      	= < -DiametroDespachador/2, 0, -AnchoDespachador/2 >
+    Máximo      	= < +23*DiametroDespachador/50,
+          +DiametroDespachador+GruesoPlastico, +AnchoDespachador/2 >
+</pre>
+<p>
+Es casi simétrico con respecto al plano XY. El centro del carrete sobre el eje Y.
+<p>
+Se generan las siguientes declaraciones que no deberían modificarse.&nbsp;  Para su correcta
+modificación consulte la sección <a href=#modificador>Modificadores</a>.
+<dl>
+<dt><i>DUCA_DefectoTexturaPrincipal</i> 
+<dd>Textura principal del dispensador.
+<dt><i>DUCA_DefectoTexturaMetalica</i> 
+<dd>Textura de la laminilla cortante.
+<dt><i>DUCA_DefectoTexturaAdhesiva</i> 
+<dd>Textura de la cinta.
+<dt><i>DUCA_DefectoTexturaSoporteAdhesivo</i> 
+<dd>Textura del carrete que soporta la cinta.
+</dl>
+<p>
+<hr>
+<h3><a name="modificador">Modificadores</h3>
+La siguiente es la lista de los modificadores permitidos en la unidad.
+<p>
+<pre>
+    #declare DUCA_TransformDispensadorZP	= transform	{ }
+</pre>
+Permite abrir el dispensador, al desplazar su zona Z+.
+<p>
+<pre>
+    #declare DUCA_TransformDispensadorZN	= transform	{ }
+</pre>
+Permite abrir el dispensador, al desplazar su zona Z-.
+<p>
+<pre>
+    #declare DUCA_TransformCinta		= transform	{ }
+</pre>
+Permite un desplazamiento adicional a la cinta de recarga.
+<p>
+<pre>
+    #declare DUCA_FactorAbertura		= 1.0;
+</pre>
+Sirve para cambiar el tamaño de la abertura para empujar la cinta con los dedos.
+Se ha observado que la abertura podría quedar mal ubicada al cambiar los parámetros
+por defecto. Este factor sirve para mitigar el problema.
+<p>
+<pre>
+    #declare DUCA_TexturaPrincipal		=	 
+		texture  { DUCA_DefectoTexturaPrincipal		}
+</pre>	
+Textura principal del dispensador.
+<p>
+<pre>
+    #declare DUCA_TexturaMetalica		=	 
+		texture  { DUCA_DefectoTexturaMetalica		}
+</pre>
+Textura de la laminilla cortante.
+<p>
+<pre>
+    #declare DUCA_TexturaAdhesiva		=	 
+		texture  { DUCA_DefectoTexturaAdhesiva		}
+</pre>
+Textura de la cinta.
+<p>
+<pre>
+    #declare DUCA_TexturaSoporteAdhesivo	=	 
+		texture  { DUCA_DefectoTexturaSoporteAdhesivo	}
+</pre>
+Textura del carrete que soporta la cinta.
+<p>
+El siguiente ejemplo ilustra el uso de los modificadores:
+<pre>
+    #if ( version >= 3.7 )
+      #version 3.7;
+    #end
+    global_settings { assumed_gamma 1.0 }  
+
+    #include "stdinc.inc"
+    #include "stdcam.inc"
+    #include "DUCA.inc"
+    #include "textures.inc" 
+    
+    #declare DUCA_TexturaPrincipal          = texture { pigment { Pink transmit 0.5 } } 
+    #declare DUCA_TexturaMetalica           = Gold_Texture
+    #declare DUCA_TexturaAdhesiva           = 
+      texture           { 
+        pigment         { 
+          leopard 
+          scale 0.001 
+          color_map     { 
+            [0.0 0.1 color White color White] 
+            [0.1 1.0 color Yellow color Yellow] 
+          } 
+        } 
+      }
+    #declare DUCA_TexturaSoporteAdhesivo    = Brass_Texture
+    #declare DUCA_TransformDispensadorZP    = transform { translate +0.02*z }  
+    #declare DUCA_TransformDispensadorZN    = transform { translate -0.02*z }  
+    #declare DUCA_TransformCinta            = transform { rotate  10*y translate 0.03*y }
+    
+    object      {
+      DUCA_Cinta( 1.0, off )
+      translate         <-1.975,+1.675,-4.900>    
+    }
+</pre>
+<p>
+<hr>
+<h3><a name="notas">Notas y Advertencias</h3>
+Al modificar los parámetros, es probable que el filo cortante quede en posición
+inadecuada. En algunas ocasiones pequeños cambios al modificador 
+<i>DUCA_FactorAbertura</i> podría mitigar el problema.
+<p>
+El efecto de los parámetros <i>FactorRelleno</i> y <i>DiametroAdhesivoMayor</i> resulta
+algo redundante. Por ejemplo, para disminuir el diámetro visible de la cinta,
+podría disminuirse cualquiera de los dos, con idénticas consecuencias de despliegue.
+<p>
+El efecto de <i>TotalDientes</i> es algo difícil de percibir, 
+pero se aprecia en el acercamiento.
+<p>
+<hr>
+<h3><a name="futuro">Sugerencias de modificación</h3>
+<ul>
+  <li>Incluir otros modelos de dispensador.</li>
+  <li>Agregar herramientas para facilitar el movimiento interno de la cinta.</li>
+  <li>Mayor cantidad de texturas por defecto.</li>
+</ul>
+<p>
+<hr>
+<h3><a name="sobre">Sobre LibreN3D</h3>
+<img alt="Algo hace falta" src="DUCA_faltaht.jpg" 
+  width = 120 heigth = 90 vspace = 16 hspace = 24 align = right>
+En la actualidad dedico casi unas dos horas todos los días, para desarrollar mis proyectos de animación con el compilador FreePascal para FreeDOS.&nbsp;  
+Mi propuesta original fue
+filmar animaciones de "baja" calidad, con progreso lento y paulatino.  
+Desconocía en ese entonces del programa POV-Ray.&nbsp;  
+Creo que con ayuda de dicho proyecto, podría lograr mucho mejores
+resultados desde un principio.&nbsp;  
+Confío que dentro de algunos años pueda lograr animaciones completas de aceptable calidad. 
+&nbsp;  
+En la actualidad, intento agregarle características elásticas a los objetos.&nbsp;  He tenido
+numerosos retrasos, así que todavía no funciona.&nbsp;  Lo siento...(20/junio/2018), pero
+me siento muy seguro de que pronto lo lograré.&nbsp; 
+De momento, no tiene interface con el usuario, pero se encuentra en desarrollo como intérprete
+de renglón al estilo DOS.
+<p>
+Me sería de muchísima ayuda, que el grupo POV-Ray siguiera desarrollando la versión para DOS.
+&nbsp; Los siguientes son enlaces que podrían ser de utilidad 
+para el interesado en los proyectos FreePascal y FreeDOS.
+<table border=0>
+<tr>
+<td>
+<img alt="Logo FreeDOS..." src="DUCA_freedosht.gif" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freedos.org/" target="_blank" >Descarga sistema operativo FreeDOS</a>
+</td>
+</tr>
+<tr>
+<td>
+<img alt="Logo FreePascal..." src="DUCA_fp32ht.jpg" 
+  width = 40 heigth = 40 vspace = 8 hspace = 12 align = left><br>
+<a href="http://www.freepascal.org/" target="_blank" >Descarga compilador FreePascal</a>
+</td>
+</tr>
+</table>
+<base target="_self">
+<hr size=6 color=#FFFFFF noshade>
+<SCRIPT LANGUAGE="JavaScript">
+document.write('Dedicado a Jesús y María.<br>');
+document.write('<i>Sugerencias a :<br>');
+document.write('<a href="mailto:RofoelCompos@hotmail.com?subject=Objetos POV-Ray en página '+document.title+'">');
+document.write('RofoelCompos@hotmail.com</a><br>');
+document.write('Apdo. 964-1250.    Escazú, San José, Costa Rica<br>');
+document.write('<a href="http://freeray.juegosenlazaruscostarricenses.com" target="_blank" >');
+document.write('http://freeray.juegosenlazaruscostarricenses.com</a><p>');
+if (Date.parse(document.lastModified) > 0) {
+	document.write('Ultima modificación del documento: ' 
+	  + document.lastModified + '<BR>');
+}
+document.write('</i>');
+</SCRIPT>
+</body>
+</html>

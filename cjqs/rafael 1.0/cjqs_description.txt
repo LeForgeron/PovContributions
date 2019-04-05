@@ -1,0 +1,4 @@
+La version actual v1.0 de "CJQS.inc" (CristaleriaJuegoQuimicaSupervisado)
+dibuja un erlenmeyer, tubo de ensayo y gotero para juego de quimica.
+Posee una macro para modificar las caracteristicas principales,
+pero es muy poco flexible. Es compatible con POV-Ray 3.1.
